@@ -1,0 +1,14 @@
+target
+.project
+.settings
+.classpath
+*.class
+*.log
+*.bak
+*~
+work
+bin
+gradle
+gradlew
+.gradle
+build

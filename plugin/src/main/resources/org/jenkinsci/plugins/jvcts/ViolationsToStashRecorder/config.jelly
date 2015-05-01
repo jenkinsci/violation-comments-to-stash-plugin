@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core"
+  xmlns:d="jelly:define"
+  xmlns:f="/lib/form"
+  xmlns:l="/lib/layout"
+  xmlns:st="jelly:stapler"
+  xmlns:t="/lib/hudson">
+
+  <!-- descriptor is ViolationsToStashDescriptor //-->
+  <j:set var="config" value="${descriptor.newConfig}"/>
+  <j:if test="${instance != null}">
+    <!-- instance is ViolationsToStashRecorder //-->
+    <j:set var="config" value="${instance.config}"/>
+  </j:if>
+  
+  
+
+  <f:entry>
+    <table>
+      <tr>
+        <td>
+          Stash server
+        </td>
+      </tr>
+    </table>
+  </f:entry>
+
+  <f:entry title="User">
+    <f:textbox name="stashUser" value="${config.stashUser}" />
+  </f:entry>
+
+  <f:entry title="Password">
+    <f:textbox name="stashPassword" value="${config.stashPassword}" />
+  </f:entry>
+
+  <f:entry title="Base URL">
+    <f:textbox name="stashBaseUrl" value="${config.stashBaseUrl}" />
+  </f:entry>
+  
+  <f:entry title="Project">
+    <f:textbox name="stashProject" value="${config.stashProject}" />
+  </f:entry>
+  
+  <f:entry title="Repository">
+    <f:textbox name="stashRepo" value="${config.stashRepo}" />
+  </f:entry>
+  
+  <f:entry title="Pull Request ID">
+    <f:textbox name="stashPullRequestId" value="${config.stashPullRequestId}" />
+  </f:entry>
+
+
+  <f:entry>
+    <table>
+      <tr>
+        <td>
+          XML filename pattern
+        </td>
+      </tr>
+    </table>
+  </f:entry>
+  
+  <j:forEach var="parserConfig" items="${config.parserConfigs}" indexVar="i">
+    <f:entry title="${parserConfig.parserTypeDescriptorName}">
+      <table>
+        <tr>
+          <td>
+            <f:textbox name="descriptor.config.parserConfigs[${i}].pattern" value="${parserConfig.pattern}" />
+          </td>
+        </tr>
+      </table>
+    </f:entry>
+  </j:forEach>
+
+</j:jelly>

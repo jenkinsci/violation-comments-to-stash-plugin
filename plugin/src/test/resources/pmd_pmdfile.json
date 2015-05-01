@@ -1,0 +1,1 @@
+http://stash.server/rest/api/1.0/projects/stashProject/repos/stashRepo/pull-requests/1/comments POST { "text": "pmd L312 Medium (2) PMD file comment", "anchor": { "line": "312", "lineType": "ADDED", "fileType": "TO", "path": "module/src/main/java/se/bjurr/PMDFile.java" }}

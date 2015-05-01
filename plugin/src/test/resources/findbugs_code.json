@@ -1,0 +1,1 @@
+http://stash.server/rest/api/1.0/projects/stashProject/repos/stashRepo/pull-requests/1/comments POST { "text": "findbugs L8 High (0) EQ_ALWAYS_FALSE", "anchor": { "line": "8", "lineType": "ADDED", "fileType": "TO", "path": "analyzer/Code.java" }}
