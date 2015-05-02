@@ -18,7 +18,6 @@ cp sandbox/settings.xml ~/.m2/settings.xml
 ## Build plugin
 ##
 echo Building plugin
-cd plugin
 mvn -q package || exit 1
 
 ##
@@ -39,7 +38,6 @@ echo Jenkins started at $JENKINS_URL
 ##
 ## Test plugin
 ##
-cd ..
 cd  plugin-test
 mvn -q test -Djenkins=$JENKINS_URL -Dheadless=true || exit 1
 cd ..
@@ -48,6 +46,3 @@ cd ..
 ## Exit
 ##
 build_clean
-
-sleep 5
-echo

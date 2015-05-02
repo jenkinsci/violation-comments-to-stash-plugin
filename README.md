@@ -7,6 +7,8 @@ There is a screenshot of the configuration GUI [here](https://raw.githubusercont
 
 Available in Jenkins [here](https://wiki.jenkins-ci.org/display/JENKINS/violation-comments-to-stash-plugin).
 
+Also built in [CloudBees](https://jenkins.ci.cloudbees.com/job/plugins/job/violation-comments-to-stash-plugin/).
+
 #Features
 * Comment pull requests with code analyzers comments
  * Supporting: CheckStyle, CSSLint, JSLint, CodeNarc, CPPLint, FindBugs, FxCop, Gendarme, JCEReport, PEP8, PerlCritic, PMD, PyLint, Simian, StyleCop
@@ -60,16 +62,8 @@ Instructions for developers.
 
 ### Get the code
 
-Clone repo, including submodules.
-
 ```
-git clone --recursive git@github.com:tomasbjerre/jenkins-violation-comments-to-stash-plugin.git
-```
-
-Or if you already cloned the repo.
-
-```
-git submodule update --init --recursive
+git clone git@github.com:tomasbjerre/jenkins-violation-comments-to-stash-plugin.git
 ```
 
 ### Plugin development
@@ -79,9 +73,7 @@ There is a ```/build.sh``` that will perform a full build and test the plugin.
 
 Some tests are implemented in maven project in ```/plugin-test```. This is to avoid classpath issues with the plugin. These are web tests that will start Jenkins with the plugin on localhost and perform some configuration tests.
 
-The actual plugin is implemented in ```/plugin```.
-
-A release is created like this, in ```plugin```.
+A release is created like this.
 ```
 mvn release:prepare release:perform
 ```
