@@ -83,6 +83,5 @@ The actual plugin is implemented in ```/plugin```.
 
 A release is created like this, in ```plugin```.
 ```
-mvn release:prepare
-mvn release:perform
+mvn release:prepare release:perform
 ```
