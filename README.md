@@ -1,13 +1,16 @@
-# Jenkins Violation Comments to Stash [![Build Status](https://travis-ci.org/tomasbjerre/jenkins-violation-comments-to-stash-plugin.svg?branch=master)](https://travis-ci.org/tomasbjerre/jenkins-violation-comments-to-stash-plugin)
+# Violation Comments to Stash
+
+Travis CI: [![Build Status](https://travis-ci.org/tomasbjerre/violation-comments-to-stash-plugin.svg?branch=master)](https://travis-ci.org/tomasbjerre/violation-comments-to-stash-plugin)
+
+CloudBees: [![Build Status](https://jenkins.ci.cloudbees.com/job/plugins/job/violation-comments-to-stash-plugin/badge/icon)](https://jenkins.ci.cloudbees.com/job/plugins/job/violation-comments-to-stash-plugin/)
+
 This is much like the [Violations](https://wiki.jenkins-ci.org/display/JENKINS/Violations) plugin. Instead of publishing violation reports in Jenkins, it comments pull requests in Stash.
 
 Code from the [Violations](https://wiki.jenkins-ci.org/display/JENKINS/Violations) is used through a dependency.
 
-There is a screenshot of the configuration GUI [here](https://raw.githubusercontent.com/tomasbjerre/jenkins-violation-comments-to-stash-plugin/master/sandbox/screenshot-config.png).
+There is a screenshot of the configuration GUI [here](https://raw.githubusercontent.com/tomasbjerre/violation-comments-to-stash-plugin/master/sandbox/screenshot-config.png) and a sample comment may look like [this](https://raw.githubusercontent.com/tomasbjerre/violation-comments-to-stash-plugin/master/sandbox/screenshot-stash.png).
 
-Available in Jenkins [here](https://wiki.jenkins-ci.org/display/JENKINS/violation-comments-to-stash-plugin).
-
-Also built in [CloudBees](https://jenkins.ci.cloudbees.com/job/plugins/job/violation-comments-to-stash-plugin/).
+Available in Jenkins [here](https://wiki.jenkins-ci.org/display/JENKINS/Violation+Comments+to+Stash+Plugin).
 
 #Features
 * Comment pull requests with code analyzers comments
@@ -52,10 +55,10 @@ your build command here!
 ```
 
 ### Configure plugin
-This plugin may be added as a post build step to analyse the workspace and report comments back to pull request in Stash. [Here](https://raw.githubusercontent.com/tomasbjerre/jenkins-violation-comments-to-stash-plugin/master/sandbox/screenshot-config.png) is an example of how that may look like.
+This plugin may be added as a post build step to analyse the workspace and report comments back to pull request in Stash. [Here](https://raw.githubusercontent.com/tomasbjerre/violation-comments-to-stash-plugin/master/sandbox/screenshot-config.png) is an example of how that may look like.
 
 ### The result
-And finally [here](https://raw.githubusercontent.com/tomasbjerre/jenkins-violation-comments-to-stash-plugin/master/sandbox/screenshot-stash.png) is an example stash comment.
+And finally [here](https://raw.githubusercontent.com/tomasbjerre/violation-comments-to-stash-plugin/master/sandbox/screenshot-stash.png) is an example stash comment.
 
 ## Developer instructions
 Instructions for developers.
@@ -63,7 +66,7 @@ Instructions for developers.
 ### Get the code
 
 ```
-git clone git@github.com:tomasbjerre/jenkins-violation-comments-to-stash-plugin.git
+git clone git@github.com:tomasbjerre/violation-comments-to-stash-plugin.git
 ```
 
 ### Plugin development
