@@ -19,7 +19,7 @@
   <packaging>hpi</packaging>
   <name>Jenkins Violation Comments to Stash Plugin</name>
   <description>Finds violations reported by code analyzers and comments Stash commits or pull requests with them.</description>
-  <url>https://github.com/tomasbjerre/jenkins-violation-comments-to-stash-plugin</url>
+  <url>https://wiki.jenkins-ci.org/display/JENKINS/violation-comments-to-stash-plugin</url>
 
   <licenses>
     <license>

@@ -5,6 +5,8 @@ Code from the [Violations](https://wiki.jenkins-ci.org/display/JENKINS/Violation
 
 There is a screenshot of the configuration GUI [here](https://raw.githubusercontent.com/tomasbjerre/jenkins-violation-comments-to-stash-plugin/master/sandbox/screenshot-config.png).
 
+Available in Jenkins [here](https://wiki.jenkins-ci.org/display/JENKINS/violation-comments-to-stash-plugin).
+
 #Features
 * Comment pull requests with code analyzers comments
  * Supporting: CheckStyle, CSSLint, JSLint, CodeNarc, CPPLint, FindBugs, FxCop, Gendarme, JCEReport, PEP8, PerlCritic, PMD, PyLint, Simian, StyleCop
