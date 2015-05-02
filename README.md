@@ -1,7 +1,7 @@
 # Jenkins Violation Comments to Stash [![Build Status](https://travis-ci.org/tomasbjerre/jenkins-violation-comments-to-stash-plugin.svg?branch=master)](https://travis-ci.org/tomasbjerre/jenkins-violation-comments-to-stash-plugin)
 This is much like the [Violations](https://wiki.jenkins-ci.org/display/JENKINS/Violations) plugin. Instead of publishing violation reports in Jenkins, it comments pull requests in Stash.
 
-Code from the [Violations](https://wiki.jenkins-ci.org/display/JENKINS/Violations) is used through a submodule.
+Code from the [Violations](https://wiki.jenkins-ci.org/display/JENKINS/Violations) is used through a dependency.
 
 There is a screenshot of the configuration GUI [here](https://raw.githubusercontent.com/tomasbjerre/jenkins-violation-comments-to-stash-plugin/master/sandbox/screenshot-config.png).
 

@@ -1,3 +1,0 @@
-[submodule "plugin/violations-plugin"]
-	path = plugin/violations-plugin
-	url = git://github.com/jenkinsci/violations-plugin.git
