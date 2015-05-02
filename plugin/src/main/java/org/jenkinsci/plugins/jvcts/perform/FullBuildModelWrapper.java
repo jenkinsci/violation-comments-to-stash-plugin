@@ -77,6 +77,7 @@ public class FullBuildModelWrapper {
     }
    }
   }
+  doLog(FINE, "Found " + violationsPerFile.size() + " violations");
   return violationsPerFile;
  }
 

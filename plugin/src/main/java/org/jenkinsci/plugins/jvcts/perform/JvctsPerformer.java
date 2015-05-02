@@ -44,7 +44,8 @@ public class JvctsPerformer {
    listener.getLogger().println("Running Jenkins Violation Comments To Stash");
    listener.getLogger().println("Will comment " + config.getStashPullRequestId());
 
-   File workspace = build.getRootDir();
+   File workspace = new File(build.getExecutor().getCurrentWorkspace().toURI());
+   doLog(FINE, "Workspace: " + workspace.getAbsolutePath());
    doPerform(config, workspace, listener);
   } catch (Exception e) {
    logger.log(SEVERE, "", e);
