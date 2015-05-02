@@ -1,6 +1,7 @@
 package org.jenkinsci.plugins.jvcts.perform;
 
 import static com.google.common.base.Joiner.on;
+import static java.nio.charset.Charset.defaultCharset;
 import static org.jenkinsci.plugins.jvcts.stash.StashClientFaker.COMMENTS_1_DELETE;
 import static org.jenkinsci.plugins.jvcts.stash.StashClientFaker.COMMENTS_2_DELETE;
 import static org.jenkinsci.plugins.jvcts.stash.StashClientFaker.COMMENTS_CHECKSTYLEFILE_GET;
@@ -10,8 +11,9 @@ import static org.jenkinsci.plugins.jvcts.stash.StashClientFaker.COMMENTS_PMDFIL
 import static org.jenkinsci.plugins.jvcts.stash.StashClientFaker.fakeStashClient;
 import static org.jenkinsci.plugins.jvcts.stash.StashClientFaker.getRequestsSentToStash;
 import static org.jenkinsci.plugins.jvcts.stash.StashClientFaker.readFile;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+import hudson.model.BuildListener;
+import hudson.model.StreamBuildListener;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,10 +34,16 @@ public class JvctsPerformerParseTest {
  @Before
  public void before() throws IOException {
   config = new ViolationsToStashConfig();
-  for (Parser p : Parser.values()) {
-   config.getParserConfigs().add(
-     new ParserConfig(p.getTypeDescriptorName(), "**/" + p.getTypeDescriptorName() + ".xml"));
-  }
+  ParserConfig checkStyleParserConfig = new ParserConfig(Parser.CHECKSTYLE.getTypeDescriptorName(), "**/"
+    + Parser.CHECKSTYLE.getTypeDescriptorName() + ".xml, **/" + Parser.CHECKSTYLE.getTypeDescriptorName()
+    + "_relativePath.xml");
+  config.getParserConfigs().add(checkStyleParserConfig);
+  config.getParserConfigs().add(
+    new ParserConfig(Parser.PMD.getTypeDescriptorName(), "**/" + Parser.PMD.getTypeDescriptorName() + ".xml"));
+  config.getParserConfigs()
+    .add(
+      new ParserConfig(Parser.FINDBUGS.getTypeDescriptorName(), "**/" + Parser.FINDBUGS.getTypeDescriptorName()
+        + ".xml"));
   config.setStashBaseUrl("http://stash.server/");
   config.setStashUser("stashUser");
   config.setStashPassword("stashPassword");
@@ -47,9 +55,8 @@ public class JvctsPerformerParseTest {
 
   fakeStashClient();
 
-  JvctsPerformer.doPerform(config, getWorkspace());
-
-  assertEquals(14, getRequestsSentToStash().size());
+  BuildListener listener = new StreamBuildListener(System.out, defaultCharset());
+  JvctsPerformer.doPerform(config, getWorkspace(), listener);
  }
 
  private void disableLogging() {
@@ -63,6 +70,7 @@ public class JvctsPerformerParseTest {
  public void testThatCheckstyleIsCommented() throws IOException {
   assertRequested(readFile("checkstyle_checkstylefile_1.json"));
   assertRequested(readFile("checkstyle_checkstylefile_2.json"));
+  assertRequested(readFile("checkstyle_checkstylefile_3_relativePath.json"));
  }
 
  @Test

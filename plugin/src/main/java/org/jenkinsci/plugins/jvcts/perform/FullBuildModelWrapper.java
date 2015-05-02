@@ -3,7 +3,10 @@ package org.jenkinsci.plugins.jvcts.perform;
 import static com.google.common.base.Strings.nullToEmpty;
 import static com.google.common.collect.Maps.newHashMap;
 import static hudson.plugins.violations.TypeDescriptor.TYPES;
+import static java.util.logging.Level.FINE;
 import static java.util.logging.Level.SEVERE;
+import static org.jenkinsci.plugins.jvcts.JvctsLogger.doLog;
+import hudson.model.BuildListener;
 import hudson.plugins.violations.TypeDescriptor;
 import hudson.plugins.violations.model.FullBuildModel;
 import hudson.plugins.violations.model.FullFileModel;
@@ -16,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
-import java.util.logging.Logger;
 
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.FileSet;
@@ -25,19 +27,28 @@ import org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfig;
 
 public class FullBuildModelWrapper {
 
- private static final Logger logger = Logger.getLogger(FullBuildModelWrapper.class.getName());
- private final FullBuildModel model = new FullBuildModel();
+ private final Map<String, FullBuildModel> models = newHashMap();
+ private final ViolationsToStashConfig config;
+ private final BuildListener listener;
 
- public FullBuildModelWrapper(ViolationsToStashConfig config, File workspace) {
+ public FullBuildModelWrapper(ViolationsToStashConfig config, File workspace, BuildListener listener) {
+  this.config = config;
+  this.listener = listener;
   for (ParserConfig parserConfig : config.getParserConfigs()) {
-   for (String fileName : findFilesFromPattern(workspace, parserConfig.getPattern())) {
-    String[] sourcePaths = {};
-    TypeDescriptor type = TYPES.get(parserConfig.getParserTypeDescriptorName());
-    try {
-     type.createParser().parse(model, workspace, fileName, sourcePaths);
-    } catch (IOException e) {
-     logger.log(SEVERE,
-       "Error while parsing \"" + fileName + "\" for type " + parserConfig.getParserTypeDescriptorName(), e);
+   for (String pattern : parserConfig.getPattern().split(",")) {
+    for (String fileName : findFilesFromPattern(workspace, pattern)) {
+     String[] sourcePaths = {};
+     TypeDescriptor type = TYPES.get(parserConfig.getParserTypeDescriptorName());
+     try {
+      if (!models.containsKey(parserConfig.getParserTypeDescriptorName())) {
+       models.put(parserConfig.getParserTypeDescriptorName(), new FullBuildModel());
+      }
+      type.createParser().parse(models.get(parserConfig.getParserTypeDescriptorName()), workspace, fileName,
+        sourcePaths);
+     } catch (IOException e) {
+      doLog(SEVERE, "Error while parsing \"" + fileName + "\" for type " + parserConfig.getParserTypeDescriptorName(),
+        e);
+     }
     }
    }
   }
@@ -45,28 +56,57 @@ public class FullBuildModelWrapper {
 
  public Map<String, List<Violation>> getViolationsPerFile() {
   Map<String, List<Violation>> violationsPerFile = newHashMap();
-  for (String fileModel : model.getFileModelMap().keySet()) {
-   FullFileModel fullFileModel = model.getFileModel(fileModel);
-   String sourceFile = null;
-   if (fullFileModel.getSourceFile() != null) {
-    sourceFile = fullFileModel.getSourceFile().getAbsolutePath();
-   } else if (model.getFileModel(fileModel).getDisplayName() != null) {
-    sourceFile = model.getFileModel(fileModel).getDisplayName();
-   }
-   if (sourceFile == null) {
-    logger.log(SEVERE, "Could not determine source file from: " + fileModel);
-   }
-   TreeMap<String, TreeSet<Violation>> typeMap = model.getFileModel(fileModel).getTypeMap();
-   for (String type : typeMap.keySet()) {
-    for (Violation violation : typeMap.get(type)) {
-     if (!violationsPerFile.containsKey(sourceFile)) {
-      violationsPerFile.put(sourceFile, new ArrayList<Violation>());
+  for (ParserConfig parserConfig : config.getParserConfigs()) {
+   String typeDescriptorName = parserConfig.getParserTypeDescriptorName();
+   if (models.containsKey(typeDescriptorName)) {
+    for (String fileModel : models.get(typeDescriptorName).getFileModelMap().keySet()) {
+     String sourceFile = determineSourcePath(fileModel, parserConfig);
+     if (sourceFile == null) {
+      doLog(listener, SEVERE, "Could not determine source file from: " + fileModel);
+      continue;
      }
-     violationsPerFile.get(sourceFile).add(violation);
+     TreeMap<String, TreeSet<Violation>> typeMap = models.get(typeDescriptorName).getFileModel(fileModel).getTypeMap();
+     for (String type : typeMap.keySet()) {
+      for (Violation violation : typeMap.get(type)) {
+       if (!violationsPerFile.containsKey(sourceFile)) {
+        violationsPerFile.put(sourceFile, new ArrayList<Violation>());
+       }
+       violationsPerFile.get(sourceFile).add(violation);
+      }
+     }
     }
    }
   }
   return violationsPerFile;
+ }
+
+ private String determineSourcePath(String fileModel, ParserConfig parserConfig) {
+  doLog(FINE, "Determining source path for " + fileModel);
+  FullBuildModel model = models.get(parserConfig.getParserTypeDescriptorName());
+  FullFileModel fullFileModel = model.getFileModel(fileModel);
+  if (fullFileModel.getSourceFile() != null) {
+   if (fullFileModel.getSourceFile().exists()) {
+    return fullFileModel.getSourceFile().getAbsolutePath();
+   } else {
+    doLog(FINE, "Not found: " + fullFileModel.getSourceFile().getAbsolutePath());
+   }
+  }
+  File withDisplayName = new File(fullFileModel.getDisplayName());
+  if (withDisplayName.exists()) {
+   return withDisplayName.getAbsolutePath();
+  } else {
+   doLog(FINE, "Not found: " + withDisplayName.getAbsolutePath());
+  }
+  if (parserConfig.getPathPrefixOpt().isPresent()) {
+   File withPrefix = new File(parserConfig.getPathPrefixOpt().get() + fullFileModel.getDisplayName());
+   if (withPrefix.exists()) {
+    return withPrefix.getAbsolutePath();
+   } else {
+    doLog(FINE, "Not found: " + withPrefix.getAbsolutePath());
+   }
+  }
+  doLog(FINE, "Using: " + fullFileModel.getDisplayName());
+  return fullFileModel.getDisplayName();
  }
 
  /**

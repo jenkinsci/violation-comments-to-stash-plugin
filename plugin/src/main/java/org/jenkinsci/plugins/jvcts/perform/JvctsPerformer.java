@@ -4,14 +4,13 @@ import static com.google.common.base.Objects.firstNonNull;
 import static com.google.common.base.Strings.emptyToNull;
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.collect.Lists.newArrayList;
+import static java.util.logging.Level.FINE;
 import static java.util.logging.Level.SEVERE;
+import static org.jenkinsci.plugins.jvcts.JvctsLogger.doLog;
 import static org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfigHelper.FIELD_STASH_BASE_URL;
 import static org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfigHelper.FIELD_STASH_PROJECT;
 import static org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfigHelper.FIELD_STASH_PULL_REQUEST_ID;
 import static org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfigHelper.FIELD_STASH_REPO;
-import static org.jenkinsci.plugins.jvcts.stash.JvctsStashClient.commentPullRequest;
-import static org.jenkinsci.plugins.jvcts.stash.JvctsStashClient.getChangedFileInPullRequest;
-import static org.jenkinsci.plugins.jvcts.stash.JvctsStashClient.removeCommentsFromPullRequest;
 import hudson.EnvVars;
 import hudson.model.BuildListener;
 import hudson.model.AbstractBuild;
@@ -23,13 +22,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import org.jenkinsci.plugins.jvcts.JvctsLogger;
 import org.jenkinsci.plugins.jvcts.config.ParserConfig;
 import org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfig;
+import org.jenkinsci.plugins.jvcts.stash.JvctsStashClient;
 
 import com.google.common.annotations.VisibleForTesting;
 
 public class JvctsPerformer {
- public static final String WORKSPACE = "WORKSPACE";
  private static final Logger logger = Logger.getLogger(JvctsPerformer.class.getName());
 
  public static void jvctsPerform(ViolationsToStashConfig config, AbstractBuild<?, ?> build, BuildListener listener) {
@@ -44,8 +44,8 @@ public class JvctsPerformer {
    listener.getLogger().println("Running Jenkins Violation Comments To Stash");
    listener.getLogger().println("Will comment " + config.getStashPullRequestId());
 
-   File workspace = new File(env.expand("$" + WORKSPACE));
-   doPerform(config, workspace);
+   File workspace = build.getRootDir();
+   doPerform(config, workspace, listener);
   } catch (Exception e) {
    logger.log(SEVERE, "", e);
    return;
@@ -53,20 +53,23 @@ public class JvctsPerformer {
  }
 
  @VisibleForTesting
- static void doPerform(ViolationsToStashConfig config, File workspace) throws MalformedURLException {
-  commentStash(new FullBuildModelWrapper(config, workspace).getViolationsPerFile(), config);
+ static void doPerform(ViolationsToStashConfig config, File workspace, BuildListener listener)
+   throws MalformedURLException {
+  commentStash(new FullBuildModelWrapper(config, workspace, listener).getViolationsPerFile(), config, listener);
  }
 
- private static void commentStash(Map<String, List<Violation>> violationsPerFile, ViolationsToStashConfig config)
-   throws MalformedURLException {
-  for (String changedFileInStash : getChangedFileInPullRequest(config)) {
+ private static void commentStash(Map<String, List<Violation>> violationsPerFile, ViolationsToStashConfig config,
+   BuildListener listener) throws MalformedURLException {
+  JvctsStashClient jvctsStashClient = new JvctsStashClient(config, listener);
+  for (String changedFileInStash : jvctsStashClient.getChangedFileInPullRequest()) {
    /**
     * Should always use filename reported by Stash, then we know Stash will
     * recognize it.
     */
-   removeCommentsFromPullRequest(config, changedFileInStash);
-   for (Violation violation : getViolationsForFile(violationsPerFile, changedFileInStash)) {
-    commentPullRequest(config, changedFileInStash, violation.getLine(), constructCommentMessage(violation));
+   doLog(listener, FINE, "Changed file in pull request: \"" + changedFileInStash + "\"");
+   jvctsStashClient.removeCommentsFromPullRequest(changedFileInStash);
+   for (Violation violation : getViolationsForFile(violationsPerFile, changedFileInStash, listener)) {
+    jvctsStashClient.commentPullRequest(changedFileInStash, violation.getLine(), constructCommentMessage(violation));
    }
   }
  }
@@ -75,12 +78,19 @@ public class JvctsPerformer {
   * Get list of violations that has files ending with changed file in Stash.
   * Violation instances may have absolute or relative paths, we can not trust
   * that.
+  *
+  * @param listener
   */
  private static List<Violation> getViolationsForFile(Map<String, List<Violation>> violationsPerFile,
-   String changedFileInStash) {
-  for (String s : violationsPerFile.keySet()) {
-   if (s.endsWith(changedFileInStash)) {
-    return violationsPerFile.get(s);
+   String changedFileInStash, BuildListener listener) {
+  for (String reportedFile : violationsPerFile.keySet()) {
+   if (reportedFile.endsWith(changedFileInStash)) {
+    JvctsLogger.doLog(listener, FINE, "Changed file and reported file matches. Stash: \"" + changedFileInStash
+      + "\" Reported: \"" + reportedFile + "\"");
+    return violationsPerFile.get(reportedFile);
+   } else {
+    doLog(listener, FINE, "Changed file and reported file not matching. Stash: \"" + changedFileInStash
+      + "\" Reported: \"" + reportedFile + "\"");
    }
   }
   return newArrayList();
@@ -112,6 +122,7 @@ public class JvctsPerformer {
    ParserConfig p = new ParserConfig();
    p.setParserTypeDescriptorName(environment.expand(parserConfig.getParserTypeDescriptorName()));
    p.setPattern(environment.expand(parserConfig.getPattern()));
+   p.setPathPrefix(environment.expand(parserConfig.getPathPrefixOpt().or("")));
    expanded.getParserConfigs().add(p);
   }
   return expanded;
@@ -127,6 +138,10 @@ public class JvctsPerformer {
   listener.getLogger().println(FIELD_STASH_REPO + ": " + config.getStashRepo());
   for (ParserConfig parserConfig : config.getParserConfigs()) {
    listener.getLogger().println(parserConfig.getParserTypeDescriptorName() + ": " + parserConfig.getPattern());
+   if (parserConfig.getPathPrefixOpt().isPresent()) {
+    listener.getLogger().println(
+      parserConfig.getParserTypeDescriptorName() + " pathPrefix: " + parserConfig.getPathPrefix());
+   }
   }
  }
 }

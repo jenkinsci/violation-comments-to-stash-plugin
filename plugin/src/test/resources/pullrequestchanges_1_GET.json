@@ -7,6 +7,11 @@
         },
         {
             "path": {
+                "toString": "module/src/main/java/se/bjurr/code/CheckstyleFileRel.java"
+            }
+        },
+        {
+            "path": {
                 "toString": "module/src/main/java/se/bjurr/PMDAndCheckstyle.java"
             }
         },

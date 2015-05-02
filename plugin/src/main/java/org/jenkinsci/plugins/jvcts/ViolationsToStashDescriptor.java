@@ -1,6 +1,7 @@
 package org.jenkinsci.plugins.jvcts;
 
 import static org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfigHelper.FIELD_PATTERN;
+import static org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfigHelper.FIELD_PREFIX;
 import static org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfigHelper.FIELD_STASH_BASE_URL;
 import static org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfigHelper.FIELD_STASH_PASSWORD;
 import static org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfigHelper.FIELD_STASH_PROJECT;
@@ -54,6 +55,10 @@ public final class ViolationsToStashDescriptor extends BuildStepDescriptor<Publi
   int i = 0;
   for (String pattern : (List<String>) formData.get(FIELD_PATTERN)) {
    config.getParserConfigs().get(i++).setPattern(pattern);
+  }
+  i = 0;
+  for (String pathPrefix : (List<String>) formData.get(FIELD_PREFIX)) {
+   config.getParserConfigs().get(i++).setPathPrefix(pathPrefix);
   }
   ViolationsToStashRecorder publisher = new ViolationsToStashRecorder();
   publisher.setConfig(config);

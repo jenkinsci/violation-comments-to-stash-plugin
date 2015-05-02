@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="5.7">
+<file name="../module/src/main/java/se/bjurr/code/CheckstyleFileRel.java">
+ <error line="10" column="25" severity="warning" message="Relative path." source="com.puppycrawl.tools.checkstyle.checks.naming.MemberNameCheck"/>
+</file>
+</checkstyle>

@@ -22,6 +22,7 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 public class ConfigurationWebTest {
  private static final String CHECKSTYLE_PATTERN = "descriptor.config.parserConfigs[0].pattern";
+ private static final String PATH_PREFIX = "descriptor.config.parserConfigs[0].pathPrefix";
  private static final String CODENARC_PATTERN = "descriptor.config.parserConfigs[1].pattern";
  private static final String CPD_PATTERN = "descriptor.config.parserConfigs[2].pattern";
  private static final String CPPLINT_PATTERN = "descriptor.config.parserConfigs[3].pattern";
@@ -98,6 +99,7 @@ public class ConfigurationWebTest {
   assertTrue(consoleText, consoleText.contains("stashPullRequestId: 100"));
   assertTrue(consoleText, consoleText.contains("stashRepo: a_repo"));
   assertTrue(consoleText, consoleText.contains("checkstyle: **/checkstyle-report.xml"));
+  assertTrue(consoleText, consoleText.contains("checkstyle pathPrefix: pathPrefix"));
   assertTrue(consoleText, consoleText.contains("pmd: **/pmd-report.xml"));
   assertTrue(consoleText, consoleText.contains("jslint: **/jslint-report.xml"));
   assertTrue(consoleText, consoleText.contains("csslint: **/csslint-report.xml"));
@@ -125,6 +127,7 @@ public class ConfigurationWebTest {
   webDriver.findElement(name(STASH_PROJECT)).clear();
   webDriver.findElement(name(STASH_REPO)).clear();
   webDriver.findElement(name(STASH_PULL_REQUEST_ID)).clear();
+  webDriver.findElement(name(PATH_PREFIX)).clear();
   webDriver.findElement(name(CHECKSTYLE_PATTERN)).clear();
   webDriver.findElement(name(CODENARC_PATTERN)).clear();
   webDriver.findElement(name(CPD_PATTERN)).clear();
@@ -329,6 +332,7 @@ public class ConfigurationWebTest {
   webDriver.findElement(name(STASH_PROJECT)).sendKeys("ABC");
   webDriver.findElement(name(STASH_REPO)).sendKeys("a_repo");
   webDriver.findElement(name(STASH_PULL_REQUEST_ID)).sendKeys("100");
+  webDriver.findElement(name(PATH_PREFIX)).sendKeys("pathPrefix");
   webDriver.findElement(name(CHECKSTYLE_PATTERN)).sendKeys("**/checkstyle-report.xml");
   webDriver.findElement(name(PMD_PATTERN)).sendKeys("**/pmd-report.xml");
   webDriver.findElement(name(JSLINT_PATTERN)).sendKeys("**/jslint-report.xml");

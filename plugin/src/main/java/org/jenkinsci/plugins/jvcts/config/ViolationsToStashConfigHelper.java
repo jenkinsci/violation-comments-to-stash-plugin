@@ -22,6 +22,7 @@ public class ViolationsToStashConfigHelper {
  public static final String SIMIAN_NAME = "simian";
  public static final String STYLECOP_NAME = "stylecop";
  public static final String FIELD_PATTERN = "pattern";
+ public static final String FIELD_PREFIX = "pathPrefix";
  public static final String FIELD_STASH_PULL_REQUEST_ID = "stashPullRequestId";
  public static final String FIELD_STASH_REPO = "stashRepo";
  public static final String FIELD_STASH_PROJECT = "stashProject";

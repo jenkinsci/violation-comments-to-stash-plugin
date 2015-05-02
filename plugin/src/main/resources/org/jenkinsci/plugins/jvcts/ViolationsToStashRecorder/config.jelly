@@ -52,24 +52,39 @@
 
 
   <f:entry>
-    <table>
+  <table class="xmlFilenamePatterns">
+    <tr>
+      <td align="left" colspan="2">
+        <b>XML filename pattern</b>
+        <ul>
+          <li>The pattern may be, for example, <i>**/checkstyle-report.xml</i> to match checkstyle-report.xml anywhere in workspace.</li>
+          <li>The path prefix is optional. Some checkers may have relative paths in the reports (xml-files). Stash API:s will report changes, in the pull request, relative to repository root. In order to match changes in pull request to file in report, you may need to set a prefix path.</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <th align="left" width="150">
+        Pattern
+      </th>
+      <th align="left">
+        Path prefix
+      </th>
+    </tr>
+  </table>
+  </f:entry>
+
+  <j:forEach var="parserConfig" items="${config.parserConfigs}" indexVar="i">
+    <f:entry title="${parserConfig.parserTypeDescriptorName}">
+    <table cellspacing="5">
       <tr>
-        <td>
-          XML filename pattern
+        <td width="150">
+          <f:textbox name="descriptor.config.parserConfigs[${i}].pattern" value="${parserConfig.pattern}" />
+        </td>
+        <td width="200">
+          <f:textbox name="descriptor.config.parserConfigs[${i}].pathPrefix" value="${parserConfig.pathPrefix}" />
         </td>
       </tr>
     </table>
-  </f:entry>
-  
-  <j:forEach var="parserConfig" items="${config.parserConfigs}" indexVar="i">
-    <f:entry title="${parserConfig.parserTypeDescriptorName}">
-      <table>
-        <tr>
-          <td>
-            <f:textbox name="descriptor.config.parserConfigs[${i}].pattern" value="${parserConfig.pattern}" />
-          </td>
-        </tr>
-      </table>
     </f:entry>
   </j:forEach>
 

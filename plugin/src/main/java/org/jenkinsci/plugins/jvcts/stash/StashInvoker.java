@@ -3,6 +3,8 @@ package org.jenkinsci.plugins.jvcts.stash;
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static java.util.logging.Level.FINE;
 import static java.util.logging.Level.SEVERE;
+import static org.jenkinsci.plugins.jvcts.JvctsLogger.doLog;
+import hudson.model.BuildListener;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,7 +12,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.logging.Logger;
 
 import javax.annotation.Nullable;
 import javax.xml.bind.DatatypeConverter;
@@ -18,13 +19,14 @@ import javax.xml.bind.DatatypeConverter;
 import org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfig;
 
 public class StashInvoker {
- private static Logger logger = Logger.getLogger(StashInvoker.class.getName());
 
  public enum Method {
   POST, DELETE, GET
  }
 
- public String invokeUrl(ViolationsToStashConfig config, String url, Method method, @Nullable String postContent) {
+ public String invokeUrl(ViolationsToStashConfig config, String url, Method method, @Nullable String postContent,
+   BuildListener listener) {
+  doLog(listener, FINE, "Invoking: " + method.name() + " " + url + " Posting: " + postContent);
   HttpURLConnection conn = null;
   OutputStream output = null;
   BufferedReader reader = null;
@@ -50,10 +52,10 @@ public class StashInvoker {
     stringBuilder.append(line + "\n");
    }
    String json = groovy.json.JsonOutput.prettyPrint(stringBuilder.toString());
-   logger.log(FINE, method.name() + " " + url + "\n" + json);
+   doLog(listener, FINE, json);
    return json;
   } catch (Exception e) {
-   logger.log(SEVERE, url, e);
+   doLog(listener, SEVERE, url, e);
    return "";
   } finally {
    try {
@@ -63,7 +65,7 @@ public class StashInvoker {
      output.close();
     }
    } catch (IOException e) {
-    logger.log(SEVERE, "", e);
+    doLog(listener, SEVERE, url, e);
    }
   }
  }
