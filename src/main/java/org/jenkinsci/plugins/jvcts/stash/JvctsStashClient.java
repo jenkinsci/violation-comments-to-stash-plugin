@@ -32,7 +32,7 @@ public class JvctsStashClient {
  }
 
  public List<String> getChangedFileInPullRequest() {
-  String url = getStashPulLRequestBase() + "/changes";
+  String url = getStashPulLRequestBase() + "/changes?limit=999999";
   return invokeAndParse(url, "$..path.toString");
  }
 
