@@ -76,7 +76,7 @@ There is a ```/build.sh``` that will perform a full build and test the plugin.
 
 Some tests are implemented in maven project in ```/plugin-test```. This is to avoid classpath issues with the plugin. These are web tests that will start Jenkins with the plugin on localhost and perform some configuration tests.
 
-A release is created like this.
+A release is created like this. You need to clone from jenkinsci-repo, with https and have username/password in settings.xml.
 ```
 mvn release:prepare release:perform
 ```
