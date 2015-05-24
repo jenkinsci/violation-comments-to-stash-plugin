@@ -32,8 +32,7 @@ public class JvctsStashClient {
  }
 
  public List<String> getChangedFileInPullRequest() {
-  String url = getStashPulLRequestBase() + "/changes?limit=999999";
-  return invokeAndParse(url, "$..path.toString");
+  return invokeAndParse(getStashPulLRequestBase() + "/changes?limit=999999", "$..path.toString");
  }
 
  public void commentPullRequest(String changedFile, int line, String message) {
@@ -58,8 +57,7 @@ public class JvctsStashClient {
  }
 
  private JSONArray getCommentsOnPullRequest(String changedFile) {
-  String url = getStashPulLRequestBase() + "/comments?path=" + changedFile + "&limit=999999";
-  return invokeAndParse(url, "$.values[*]");
+  return invokeAndParse(getStashPulLRequestBase() + "/comments?path=" + changedFile + "&limit=999999", "$.values[*]");
  }
 
  private <T> T invokeAndParse(String url, String jsonPath) {
@@ -81,5 +79,39 @@ public class JvctsStashClient {
  private String getStashPulLRequestBase() {
   return config.getStashBaseUrl() + "/rest/api/1.0/projects/" + config.getStashProject() + "/repos/"
     + config.getStashRepo() + "/pull-requests/" + config.getStashPullRequestId();
+ }
+
+ private String getStashCommitsBase() {
+  return config.getStashBaseUrl() + "/rest/api/1.0/projects/" + config.getStashProject() + "/repos/"
+    + config.getStashRepo() + "/commits/" + config.getCommitHash();
+ }
+
+ public List<String> getChangedFileInCommit() {
+  return invokeAndParse(getStashCommitsBase() + "/changes?limit=999999", "$..path.toString");
+ }
+
+ private JSONArray getCommentsOnCommit(String changedFile) {
+  return invokeAndParse(getStashCommitsBase() + "/comments?path=" + changedFile + "&limit=999999", "$.values[*]");
+ }
+
+ @SuppressWarnings("rawtypes")
+ public void removeCommentsCommit(String changedFile) {
+  for (Object comment : getCommentsOnCommit(changedFile)) {
+   if (toMap(toMap(comment).get("author")).get("name").equals(config.getStashUser())) {
+    removeCommentFromCommit((Map) comment);
+   }
+  }
+ }
+
+ private void removeCommentFromCommit(@SuppressWarnings("rawtypes") Map comment) {
+  stashInvoker.invokeUrl(config,
+    getStashCommitsBase() + "/comments/" + comment.get(ID) + "?version=" + comment.get(VERSION),
+    StashInvoker.Method.DELETE, "", listener);
+ }
+
+ public void commentCommit(String changedFile, int line, String message) {
+  String postContent = "{ \"text\": \"" + message.replaceAll("\"", "") + "\", \"anchor\": { \"line\": \"" + line
+    + "\", \"lineType\": \"ADDED\", \"fileType\": \"TO\", \"path\": \"" + changedFile + "\" }}";
+  stashInvoker.invokeUrl(config, getStashCommitsBase() + "/comments", StashInvoker.Method.POST, postContent, listener);
  }
 }

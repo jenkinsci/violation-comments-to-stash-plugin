@@ -18,6 +18,7 @@ import com.google.common.io.Resources;
 
 public class StashClientFaker {
 
+ public static final String NO_REPORTABLES = "http://stash.server/rest/api/1.0/projects/stashProject/repos/stashRepo/pull-requests/1/comments?path=src/se/main/java/bjurr/FileThatHasNoReportables.java&limit=999999 GET";
  public static final String COMMENTS_PMDFILE_GET = "http://stash.server/rest/api/1.0/projects/stashProject/repos/stashRepo/pull-requests/1/comments?path=module/src/main/java/se/bjurr/PMDFile.java&limit=999999 GET";
  public static final String COMMENTS_PMDANDCHECKSTYLE_GET = "http://stash.server/rest/api/1.0/projects/stashProject/repos/stashRepo/pull-requests/1/comments?path=module/src/main/java/se/bjurr/PMDAndCheckstyle.java&limit=999999 GET";
  public static final String COMMENTS_2_DELETE = "http://stash.server/rest/api/1.0/projects/stashProject/repos/stashRepo/pull-requests/1/comments/13781?version=1 DELETE";
@@ -48,25 +49,27 @@ public class StashClientFaker {
    }
   });
 
-  fakeResponses.put(CHANGES_GET, readFile("pullrequestchanges_1_GET.json"));
-  fakeResponses.put(COMMENTS_CHECKSTYLEFILE_GET, readFile("pullrequestcomments_GET.json"));
-  fakeResponses.put(COMMENTS_CHECKSTYLEFILE_REL_GET, readFile("pullrequestcomments_GET_none.json"));
-  fakeResponses.put(COMMENTS_1_DELETE, readFile("pullrequestcomments_GET.json"));
-  fakeResponses.put(COMMENTS_2_DELETE, "");
-  fakeResponses.put(COMMENTS_PMDANDCHECKSTYLE_GET, readFile("pullrequestcomments_GET_none.json"));
-  fakeResponses.put(COMMENTS_PMDFILE_GET, readFile("pullrequestcomments_GET_none.json"));
-  fakeResponses.put(COMMENTS_FINDBUGS_GET, readFile("pullrequestcomments_GET_none.json"));
-  fakeResponses.put(readFile("checkstyle_checkstylefile_1.json"), "");
-  fakeResponses.put(readFile("checkstyle_checkstylefile_2.json"), "");
-  fakeResponses.put(readFile("checkstyle_checkstylefile_3_relativePath.json"), "");
-  fakeResponses.put(readFile("checkstyle_pmdandcheckstyle.json"), "");
-  fakeResponses.put(readFile("pmd_pmdandcheckstyle.json"), "");
-  fakeResponses.put(readFile("pmd_pmdfile.json"), "");
-  fakeResponses.put(readFile("findbugs_code.json"), "");
-  fakeResponses
-    .put(
-      "http://stash.server/rest/api/1.0/projects/stashProject/repos/stashRepo/pull-requests/1/comments?path=src/se/main/java/bjurr/FileThatHasNoReportables.java&limit=999999 GET",
-      readFile("pullrequestcomments_GET_none.json"));
+  fake(CHANGES_GET, readFile("pullrequestchanges_1_GET.json"));
+  fake(COMMENTS_CHECKSTYLEFILE_GET, readFile("pullrequestcomments_GET.json"));
+  fake(COMMENTS_CHECKSTYLEFILE_REL_GET, readFile("pullrequestcomments_GET_none.json"));
+  fake(COMMENTS_1_DELETE, readFile("pullrequestcomments_GET.json"));
+  fake(COMMENTS_2_DELETE, "");
+  fake(COMMENTS_PMDANDCHECKSTYLE_GET, readFile("pullrequestcomments_GET_none.json"));
+  fake(COMMENTS_PMDFILE_GET, readFile("pullrequestcomments_GET_none.json"));
+  fake(COMMENTS_FINDBUGS_GET, readFile("pullrequestcomments_GET_none.json"));
+  fake(NO_REPORTABLES, readFile("pullrequestcomments_GET_none.json"));
+  fake(readFile("checkstyle_checkstylefile_1.json"), "");
+  fake(readFile("checkstyle_checkstylefile_2.json"), "");
+  fake(readFile("checkstyle_checkstylefile_3_relativePath.json"), "");
+  fake(readFile("checkstyle_pmdandcheckstyle.json"), "");
+  fake(readFile("pmd_pmdandcheckstyle.json"), "");
+  fake(readFile("pmd_pmdfile.json"), "");
+  fake(readFile("findbugs_code.json"), "");
+ }
+
+ private static void fake(String request, String response) {
+  fakeResponses.put(request, response);
+  fakeResponses.put(prToCommit(request), prToCommit(response));
  }
 
  public static String readFile(String filename) throws IOException {
@@ -79,5 +82,9 @@ public class StashClientFaker {
 
  public static List<String> getRequestsSentToStash() {
   return requestsSentToStash;
+ }
+
+ public static String prToCommit(String string) {
+  return string.replaceAll("pull-requests", "commits");
  }
 }

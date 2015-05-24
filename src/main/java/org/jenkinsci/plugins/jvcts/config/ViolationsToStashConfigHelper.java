@@ -24,6 +24,7 @@ public class ViolationsToStashConfigHelper {
  public static final String FIELD_PATTERN = "pattern";
  public static final String FIELD_PREFIX = "pathPrefix";
  public static final String FIELD_STASH_PULL_REQUEST_ID = "stashPullRequestId";
+ public static final String FIELD_COMMIT_HASH = "commitHash";
  public static final String FIELD_STASH_REPO = "stashRepo";
  public static final String FIELD_STASH_PROJECT = "stashProject";
  public static final String FIELD_STASH_BASE_URL = "stashBaseUrl";

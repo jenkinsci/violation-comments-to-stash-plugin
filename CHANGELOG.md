@@ -1,6 +1,9 @@
-# Jenkins Violation Comments to Stash Plugin
+# Violation Comments to Stash Plugin
 
-Changelog of Jenkins Violation Comments to Stash Plugin
+Changelog of Violation Comments to Stash Plugin
+
+## 1.2
+* Can, optionally, add comments to individual commits. And/Or to pull requests.
 
 ## 1.1
 * Adding limit parameter to changes request in Stash Client. So that all files in PR gets commented.

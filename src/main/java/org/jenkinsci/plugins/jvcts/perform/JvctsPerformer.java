@@ -7,10 +7,12 @@ import static com.google.common.collect.Lists.newArrayList;
 import static java.util.logging.Level.FINE;
 import static java.util.logging.Level.SEVERE;
 import static org.jenkinsci.plugins.jvcts.JvctsLogger.doLog;
+import static org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfigHelper.FIELD_COMMIT_HASH;
 import static org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfigHelper.FIELD_STASH_BASE_URL;
 import static org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfigHelper.FIELD_STASH_PROJECT;
 import static org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfigHelper.FIELD_STASH_PULL_REQUEST_ID;
 import static org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfigHelper.FIELD_STASH_REPO;
+import static org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfigHelper.FIELD_STASH_USER;
 import hudson.EnvVars;
 import hudson.model.BuildListener;
 import hudson.model.AbstractBuild;
@@ -62,15 +64,24 @@ public class JvctsPerformer {
  private static void commentStash(Map<String, List<Violation>> violationsPerFile, ViolationsToStashConfig config,
    BuildListener listener) throws MalformedURLException {
   JvctsStashClient jvctsStashClient = new JvctsStashClient(config, listener);
-  for (String changedFileInStash : jvctsStashClient.getChangedFileInPullRequest()) {
-   /**
-    * Should always use filename reported by Stash, then we know Stash will
-    * recognize it.
-    */
-   doLog(listener, FINE, "Changed file in pull request: \"" + changedFileInStash + "\"");
-   jvctsStashClient.removeCommentsFromPullRequest(changedFileInStash);
-   for (Violation violation : getViolationsForFile(violationsPerFile, changedFileInStash, listener)) {
-    jvctsStashClient.commentPullRequest(changedFileInStash, violation.getLine(), constructCommentMessage(violation));
+  if (!isNullOrEmpty(config.getStashPullRequestId())) {
+   doLog(FINE, "Commenting pull request \"" + config.getStashPullRequestId() + "\"");
+   for (String changedFileInStash : jvctsStashClient.getChangedFileInPullRequest()) {
+    logger.log(FINE, "Changed file in pull request: \"" + changedFileInStash + "\"");
+    jvctsStashClient.removeCommentsFromPullRequest(changedFileInStash);
+    for (Violation violation : getViolationsForFile(violationsPerFile, changedFileInStash, listener)) {
+     jvctsStashClient.commentPullRequest(changedFileInStash, violation.getLine(), constructCommentMessage(violation));
+    }
+   }
+  }
+  if (!isNullOrEmpty(config.getCommitHash())) {
+   doLog(FINE, "Commenting commit \"" + config.getCommitHash() + "\"");
+   for (String changedFileInStash : jvctsStashClient.getChangedFileInCommit()) {
+    logger.log(FINE, "Changed file in commit: \"" + changedFileInStash + "\"");
+    jvctsStashClient.removeCommentsCommit(changedFileInStash);
+    for (Violation violation : getViolationsForFile(violationsPerFile, changedFileInStash, listener)) {
+     jvctsStashClient.commentCommit(changedFileInStash, violation.getLine(), constructCommentMessage(violation));
+    }
    }
   }
  }
@@ -118,6 +129,7 @@ public class JvctsPerformer {
   expanded.setStashPassword(environment.expand(config.getStashPassword()));
   expanded.setStashProject(environment.expand(config.getStashProject()));
   expanded.setStashPullRequestId(environment.expand(config.getStashPullRequestId()));
+  expanded.setCommitHash(environment.expand(config.getCommitHash()));
   expanded.setStashRepo(environment.expand(config.getStashRepo()));
   for (ParserConfig parserConfig : config.getParserConfigs()) {
    ParserConfig p = new ParserConfig();
@@ -133,9 +145,11 @@ public class JvctsPerformer {
   * Enables testing of configuration GUI.
   */
  private static void logConfiguration(ViolationsToStashConfig config, AbstractBuild<?, ?> build, BuildListener listener) {
+  listener.getLogger().println(FIELD_STASH_USER + ": " + config.getCommitHash());
   listener.getLogger().println(FIELD_STASH_BASE_URL + ": " + config.getStashBaseUrl());
   listener.getLogger().println(FIELD_STASH_PROJECT + ": " + config.getStashProject());
   listener.getLogger().println(FIELD_STASH_PULL_REQUEST_ID + ": " + config.getStashPullRequestId());
+  listener.getLogger().println(FIELD_COMMIT_HASH + ": " + config.getCommitHash());
   listener.getLogger().println(FIELD_STASH_REPO + ": " + config.getStashRepo());
   for (ParserConfig parserConfig : config.getParserConfigs()) {
    listener.getLogger().println(parserConfig.getParserTypeDescriptorName() + ": " + parserConfig.getPattern());

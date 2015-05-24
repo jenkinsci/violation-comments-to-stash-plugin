@@ -13,11 +13,13 @@ There is a screenshot of the configuration GUI [here](https://raw.githubusercont
 Available in Jenkins [here](https://wiki.jenkins-ci.org/display/JENKINS/Violation+Comments+to+Stash+Plugin).
 
 #Features
-* Comment pull requests with code analyzers comments
+* Comment pull requests, or individual commits, with code analyzers comments
  * Supporting: CheckStyle, CSSLint, JSLint, CodeNarc, CPPLint, FindBugs, FxCop, Gendarme, JCEReport, PEP8, PerlCritic, PMD, PyLint, Simian, StyleCop
 
 ## Use case
 Here is an example use case where a pull request is triggered from Stash, merged, checked and comments added to pull request in Stash.
+
+You may also use it for an ordinary build job, to simply comment the commit that was built.
 
 ### Notify Jenkins from Stash
 You may use [Pull Request Notifier for Stash](https://github.com/tomasbjerre/pull-request-notifier-for-stash) to trigger a Jenkins build from an event in Stash. It can supply any parameters and variables you may need. Here is an example URL.

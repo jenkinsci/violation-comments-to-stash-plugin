@@ -1,5 +1,6 @@
 package org.jenkinsci.plugins.jvcts;
 
+import static org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfigHelper.FIELD_COMMIT_HASH;
 import static org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfigHelper.FIELD_PATTERN;
 import static org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfigHelper.FIELD_PREFIX;
 import static org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfigHelper.FIELD_STASH_BASE_URL;
@@ -52,6 +53,7 @@ public final class ViolationsToStashDescriptor extends BuildStepDescriptor<Publi
   config.setStashPassword(formData.getString(FIELD_STASH_PASSWORD));
   config.setStashRepo(formData.getString(FIELD_STASH_REPO));
   config.setStashPullRequestId(formData.getString(FIELD_STASH_PULL_REQUEST_ID));
+  config.setCommitHash(formData.getString(FIELD_COMMIT_HASH));
   int i = 0;
   for (String pattern : (List<String>) formData.get(FIELD_PATTERN)) {
    config.getParserConfigs().get(i++).setPattern(pattern);

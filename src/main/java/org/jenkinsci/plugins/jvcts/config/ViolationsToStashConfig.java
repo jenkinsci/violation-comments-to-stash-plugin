@@ -12,6 +12,7 @@ public class ViolationsToStashConfig {
  private String stashProject;
  private String stashRepo;
  private String stashPullRequestId;
+ private String commitHash;
 
  public ViolationsToStashConfig() {
 
@@ -74,5 +75,13 @@ public class ViolationsToStashConfig {
 
  public String getStashUser() {
   return stashUser;
+ }
+
+ public void setCommitHash(String commitHash) {
+  this.commitHash = commitHash;
+ }
+
+ public String getCommitHash() {
+  return commitHash;
  }
 }

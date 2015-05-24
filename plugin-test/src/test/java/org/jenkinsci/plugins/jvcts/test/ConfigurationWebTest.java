@@ -39,6 +39,7 @@ public class ConfigurationWebTest {
  private static final String JSLINT_PATTERN = "descriptor.config.parserConfigs[14].pattern";
  private static final String CSSLINT_PATTERN = "descriptor.config.parserConfigs[15].pattern";
  private static final String STASH_PULL_REQUEST_ID = "stashPullRequestId";
+ private static final String COMMIT_HASH = "commitHash";
  private static final String STASH_REPO = "stashRepo";
  private static final String STASH_PROJECT = "stashProject";
  private static final String STASH_BASE_URL = "stashBaseUrl";
@@ -97,6 +98,7 @@ public class ConfigurationWebTest {
   assertTrue(consoleText, consoleText.contains("stashBaseUrl: " + HTTP_LOCALHOST_8456));
   assertTrue(consoleText, consoleText.contains("stashProject: ABC"));
   assertTrue(consoleText, consoleText.contains("stashPullRequestId: 100"));
+  assertTrue(consoleText, consoleText.contains("commitHash: abcd1234"));
   assertTrue(consoleText, consoleText.contains("stashRepo: a_repo"));
   assertTrue(consoleText, consoleText.contains("checkstyle: **/checkstyle-report.xml"));
   assertTrue(consoleText, consoleText.contains("checkstyle pathPrefix: pathPrefix"));
@@ -127,6 +129,7 @@ public class ConfigurationWebTest {
   webDriver.findElement(name(STASH_PROJECT)).clear();
   webDriver.findElement(name(STASH_REPO)).clear();
   webDriver.findElement(name(STASH_PULL_REQUEST_ID)).clear();
+  webDriver.findElement(name(COMMIT_HASH)).clear();
   webDriver.findElement(name(PATH_PREFIX)).clear();
   webDriver.findElement(name(CHECKSTYLE_PATTERN)).clear();
   webDriver.findElement(name(CODENARC_PATTERN)).clear();
@@ -150,6 +153,7 @@ public class ConfigurationWebTest {
   webDriver.findElement(name(STASH_PROJECT)).sendKeys("DEF");
   webDriver.findElement(name(STASH_REPO)).sendKeys("a_repo2");
   webDriver.findElement(name(STASH_PULL_REQUEST_ID)).sendKeys("101");
+  webDriver.findElement(name(COMMIT_HASH)).sendKeys("abcd12345");
   webDriver.findElement(name(CHECKSTYLE_PATTERN)).sendKeys("**/new-checkstyle-report.xml");
   webDriver.findElement(name(PMD_PATTERN)).sendKeys("**/new-pmd-report.xml");
   webDriver.findElement(name(JSLINT_PATTERN)).sendKeys("**/new-jslint-report.xml");
@@ -174,6 +178,7 @@ public class ConfigurationWebTest {
   assertTrue(consoleText, consoleText.contains("stashBaseUrl: http://changed.com"));
   assertTrue(consoleText, consoleText.contains("stashProject: DEF"));
   assertTrue(consoleText, consoleText.contains("stashPullRequestId: 101"));
+  assertTrue(consoleText, consoleText.contains("commitHash: abcd12345"));
   assertTrue(consoleText, consoleText.contains("stashRepo: a_repo2"));
   assertTrue(consoleText, consoleText.contains("checkstyle: **/new-checkstyle-report.xml"));
   assertTrue(consoleText, consoleText.contains("pmd: **/new-pmd-report.xml"));
@@ -202,6 +207,7 @@ public class ConfigurationWebTest {
   assertEquals("DEF", webDriver.findElement(name(STASH_PROJECT)).getAttribute("value"));
   assertEquals("a_repo2", webDriver.findElement(name(STASH_REPO)).getAttribute("value"));
   assertEquals("101", webDriver.findElement(name(STASH_PULL_REQUEST_ID)).getAttribute("value"));
+  assertEquals("abcd12345", webDriver.findElement(name(COMMIT_HASH)).getAttribute("value"));
   assertEquals("**/new-checkstyle-report.xml", webDriver.findElement(name(CHECKSTYLE_PATTERN)).getAttribute("value"));
   assertEquals("**/new-pmd-report.xml", webDriver.findElement(name(PMD_PATTERN)).getAttribute("value"));
   assertEquals("**/new-jslint-report.xml", webDriver.findElement(name(JSLINT_PATTERN)).getAttribute("value"));
@@ -229,6 +235,7 @@ public class ConfigurationWebTest {
   webDriver.findElement(name(STASH_PROJECT)).clear();
   webDriver.findElement(name(STASH_REPO)).clear();
   webDriver.findElement(name(STASH_PULL_REQUEST_ID)).clear();
+  webDriver.findElement(name(COMMIT_HASH)).clear();
   webDriver.findElement(name(CHECKSTYLE_PATTERN)).clear();
   webDriver.findElement(name(CODENARC_PATTERN)).clear();
   webDriver.findElement(name(CPD_PATTERN)).clear();
@@ -251,6 +258,7 @@ public class ConfigurationWebTest {
   webDriver.findElement(name(STASH_PROJECT)).sendKeys("$BUILD_NUMBER");
   webDriver.findElement(name(STASH_REPO)).sendKeys("$BUILD_NUMBER");
   webDriver.findElement(name(STASH_PULL_REQUEST_ID)).sendKeys("$BUILD_NUMBER");
+  webDriver.findElement(name(COMMIT_HASH)).sendKeys("$BUILD_NUMBER");
   webDriver.findElement(name(CHECKSTYLE_PATTERN)).sendKeys("$BUILD_NUMBER");
   webDriver.findElement(name(CODENARC_PATTERN)).sendKeys("$BUILD_NUMBER");
   webDriver.findElement(name(CPD_PATTERN)).sendKeys("$BUILD_NUMBER");
@@ -275,6 +283,7 @@ public class ConfigurationWebTest {
   assertTrue(consoleText, consoleText.contains("stashBaseUrl: 3"));
   assertTrue(consoleText, consoleText.contains("stashProject: 3"));
   assertTrue(consoleText, consoleText.contains("stashPullRequestId: 3"));
+  assertTrue(consoleText, consoleText.contains("commitHash: 3"));
   assertTrue(consoleText, consoleText.contains("stashRepo: 3"));
   assertTrue(consoleText, consoleText.contains("checkstyle: 3"));
   assertTrue(consoleText, consoleText.contains("pmd: 3"));
@@ -303,6 +312,7 @@ public class ConfigurationWebTest {
   assertEquals("$BUILD_NUMBER", webDriver.findElement(name(STASH_PROJECT)).getAttribute("value"));
   assertEquals("$BUILD_NUMBER", webDriver.findElement(name(STASH_REPO)).getAttribute("value"));
   assertEquals("$BUILD_NUMBER", webDriver.findElement(name(STASH_PULL_REQUEST_ID)).getAttribute("value"));
+  assertEquals("$BUILD_NUMBER", webDriver.findElement(name(COMMIT_HASH)).getAttribute("value"));
   assertEquals("$BUILD_NUMBER", webDriver.findElement(name(CHECKSTYLE_PATTERN)).getAttribute("value"));
   assertEquals("$BUILD_NUMBER", webDriver.findElement(name(CODENARC_PATTERN)).getAttribute("value"));
   assertEquals("$BUILD_NUMBER", webDriver.findElement(name(CPD_PATTERN)).getAttribute("value"));
@@ -332,6 +342,7 @@ public class ConfigurationWebTest {
   webDriver.findElement(name(STASH_PROJECT)).sendKeys("ABC");
   webDriver.findElement(name(STASH_REPO)).sendKeys("a_repo");
   webDriver.findElement(name(STASH_PULL_REQUEST_ID)).sendKeys("100");
+  webDriver.findElement(name(COMMIT_HASH)).sendKeys("abcd1234");
   webDriver.findElement(name(PATH_PREFIX)).sendKeys("pathPrefix");
   webDriver.findElement(name(CHECKSTYLE_PATTERN)).sendKeys("**/checkstyle-report.xml");
   webDriver.findElement(name(PMD_PATTERN)).sendKeys("**/pmd-report.xml");
