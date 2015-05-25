@@ -25,7 +25,7 @@ public class StashClientFaker {
  public static final String COMMENTS_1_DELETE = "http://stash.server/rest/api/1.0/projects/stashProject/repos/stashRepo/pull-requests/1/comments/13780?version=0 DELETE";
  public static final String COMMENTS_CHECKSTYLEFILE_GET = "http://stash.server/rest/api/1.0/projects/stashProject/repos/stashRepo/pull-requests/1/comments?path=module/src/main/java/se/bjurr/code/CheckstyleFile.java&limit=999999 GET";
  public static final String COMMENTS_CHECKSTYLEFILE_REL_GET = "http://stash.server/rest/api/1.0/projects/stashProject/repos/stashRepo/pull-requests/1/comments?path=module/src/main/java/se/bjurr/code/CheckstyleFileRel.java&limit=999999 GET";
- public static final String COMMENTS_FINDBUGS_GET = "http://stash.server/rest/api/1.0/projects/stashProject/repos/stashRepo/pull-requests/1/comments?path=analyzer/Code.java&limit=999999 GET";
+ public static final String COMMENTS_FINDBUGS_GET = "http://stash.server/rest/api/1.0/projects/stashProject/repos/stashRepo/pull-requests/1/comments?path=module/se/bjurr/analyzer/Code.java&limit=999999 GET";
  public static final String CHANGES_GET = "http://stash.server/rest/api/1.0/projects/stashProject/repos/stashRepo/pull-requests/1/changes?limit=999999 GET";
  private static Map<String, String> fakeResponses;
  private static List<String> requestsSentToStash;

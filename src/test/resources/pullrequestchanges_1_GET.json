@@ -27,7 +27,7 @@
         },
         {
             "path": {
-                "toString": "analyzer/Code.java"
+                "toString": "module/se/bjurr/analyzer/Code.java"
             }
         }
     ]
