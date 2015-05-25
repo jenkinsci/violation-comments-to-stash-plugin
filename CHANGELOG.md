@@ -3,7 +3,7 @@
 Changelog of Violation Comments to Stash Plugin
 
 ## 1.3
-* hanged file in Stash may also end with reported file, not only the opposite. Findbugs reports Java-files as package path, this makes sure those files are matched to changed files in Stash.
+* Changed file in Stash may also end with reported file, not only the opposite. Findbugs reports Java-files as package path, this makes sure those files are matched to changed files in Stash.
 
 ## 1.2
 * Can, optionally, add comments to individual commits. And/Or to pull requests.
