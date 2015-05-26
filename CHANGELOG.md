@@ -2,6 +2,9 @@
 
 Changelog of Violation Comments to Stash Plugin
 
+# 1.4
+* Finding all violations for files. Even if same file is reported twice (with absolute and relative path).
+
 ## 1.3
 * Changed file in Stash may also end with reported file, not only the opposite. Findbugs reports Java-files as package path, this makes sure those files are matched to changed files in Stash.
 
