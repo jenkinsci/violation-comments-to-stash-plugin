@@ -95,17 +95,18 @@ public class JvctsPerformer {
   */
  private static List<Violation> getViolationsForFile(Map<String, List<Violation>> violationsPerFile,
    String changedFileInStash, BuildListener listener) {
+  List<Violation> found = newArrayList();
   for (String reportedFile : violationsPerFile.keySet()) {
    if (reportedFile.endsWith(changedFileInStash) || changedFileInStash.endsWith(reportedFile)) {
     JvctsLogger.doLog(listener, FINE, "Changed file and reported file matches. Stash: \"" + changedFileInStash
       + "\" Reported: \"" + reportedFile + "\"");
-    return violationsPerFile.get(reportedFile);
+    found.addAll(violationsPerFile.get(reportedFile));
    } else {
     doLog(listener, FINE, "Changed file and reported file not matching. Stash: \"" + changedFileInStash
       + "\" Reported: \"" + reportedFile + "\"");
    }
   }
-  return newArrayList();
+  return found;
  }
 
  private static String constructCommentMessage(Violation v) {

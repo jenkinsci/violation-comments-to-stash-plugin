@@ -61,6 +61,7 @@ public class StashClientFaker {
   fake(readFile("checkstyle_checkstylefile_1.json"), "");
   fake(readFile("checkstyle_checkstylefile_2.json"), "");
   fake(readFile("checkstyle_checkstylefile_3_relativePath.json"), "");
+  fake(readFile("checkstyle_checkstylefile_3.json"), "");
   fake(readFile("checkstyle_pmdandcheckstyle.json"), "");
   fake(readFile("pmd_pmdandcheckstyle.json"), "");
   fake(readFile("pmd_pmdfile.json"), "");

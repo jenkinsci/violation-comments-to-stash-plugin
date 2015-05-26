@@ -1,0 +1,1 @@
+http://stash.server/rest/api/1.0/projects/stashProject/repos/stashRepo/pull-requests/1/comments POST { "text": "checkstyle L77 Low (4) Same file also rel.", "anchor": { "line": "77", "lineType": "ADDED", "fileType": "TO", "path": "module/src/main/java/se/bjurr/code/CheckstyleFile.java" }}
