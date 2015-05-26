@@ -4,6 +4,7 @@ import static com.gargoylesoftware.htmlunit.BrowserVersion.FIREFOX_24;
 import static com.google.common.base.MoreObjects.firstNonNull;
 import static java.lang.System.getProperty;
 import static java.lang.Thread.sleep;
+import static java.util.logging.Level.OFF;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.By.id;
@@ -12,6 +13,7 @@ import static org.openqa.selenium.By.xpath;
 
 import java.util.logging.Logger;
 
+import org.apache.commons.logging.LogFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -51,6 +53,12 @@ public class ConfigurationWebTest {
  private static final Logger logger = Logger.getLogger(ConfigurationWebTest.class.getName());
  private static final String TEST_JOB_NAME = "testJobb";
  private WebDriver webDriver;
+
+ static {
+  LogFactory.getFactory().setAttribute("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
+  java.util.logging.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(OFF);
+  java.util.logging.Logger.getLogger("org.apache.commons.httpclient").setLevel(OFF);
+ }
 
  private String getJenkinsBaseUrl() {
   return firstNonNull(getProperty(PROP_JENKINS_URL), "http://localhost:8080/jenkins");

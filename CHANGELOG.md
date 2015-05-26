@@ -2,6 +2,9 @@
 
 Changelog of Violation Comments to Stash Plugin
 
+# 1.5
+* Less logging in build log
+
 # 1.4
 * Finding all violations for files. Even if same file is reported twice (with absolute and relative path).
 

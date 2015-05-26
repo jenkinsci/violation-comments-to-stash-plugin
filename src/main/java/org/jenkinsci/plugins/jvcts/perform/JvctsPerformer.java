@@ -22,7 +22,6 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import org.jenkinsci.plugins.jvcts.JvctsLogger;
 import org.jenkinsci.plugins.jvcts.config.ParserConfig;
@@ -32,7 +31,6 @@ import org.jenkinsci.plugins.jvcts.stash.JvctsStashClient;
 import com.google.common.annotations.VisibleForTesting;
 
 public class JvctsPerformer {
- private static final Logger logger = Logger.getLogger(JvctsPerformer.class.getName());
 
  public static void jvctsPerform(ViolationsToStashConfig config, AbstractBuild<?, ?> build, BuildListener listener) {
   try {
@@ -50,7 +48,7 @@ public class JvctsPerformer {
    doLog(FINE, "Workspace: " + workspace.getAbsolutePath());
    doPerform(config, workspace, listener);
   } catch (Exception e) {
-   logger.log(SEVERE, "", e);
+   doLog(SEVERE, "", e);
    return;
   }
  }
@@ -67,7 +65,7 @@ public class JvctsPerformer {
   if (!isNullOrEmpty(config.getStashPullRequestId())) {
    doLog(FINE, "Commenting pull request \"" + config.getStashPullRequestId() + "\"");
    for (String changedFileInStash : jvctsStashClient.getChangedFileInPullRequest()) {
-    logger.log(FINE, "Changed file in pull request: \"" + changedFileInStash + "\"");
+    doLog(FINE, "Changed file in pull request: \"" + changedFileInStash + "\"");
     jvctsStashClient.removeCommentsFromPullRequest(changedFileInStash);
     for (Violation violation : getViolationsForFile(violationsPerFile, changedFileInStash, listener)) {
      jvctsStashClient.commentPullRequest(changedFileInStash, violation.getLine(), constructCommentMessage(violation));
@@ -77,7 +75,7 @@ public class JvctsPerformer {
   if (!isNullOrEmpty(config.getCommitHash())) {
    doLog(FINE, "Commenting commit \"" + config.getCommitHash() + "\"");
    for (String changedFileInStash : jvctsStashClient.getChangedFileInCommit()) {
-    logger.log(FINE, "Changed file in commit: \"" + changedFileInStash + "\"");
+    doLog(FINE, "Changed file in commit: \"" + changedFileInStash + "\"");
     jvctsStashClient.removeCommentsCommit(changedFileInStash);
     for (Violation violation : getViolationsForFile(violationsPerFile, changedFileInStash, listener)) {
      jvctsStashClient.commentCommit(changedFileInStash, violation.getLine(), constructCommentMessage(violation));
@@ -90,20 +88,18 @@ public class JvctsPerformer {
   * Get list of violations that has files ending with changed file in Stash.
   * Violation instances may have absolute or relative paths, we can not trust
   * that.
-  *
-  * @param listener
   */
  private static List<Violation> getViolationsForFile(Map<String, List<Violation>> violationsPerFile,
    String changedFileInStash, BuildListener listener) {
   List<Violation> found = newArrayList();
   for (String reportedFile : violationsPerFile.keySet()) {
    if (reportedFile.endsWith(changedFileInStash) || changedFileInStash.endsWith(reportedFile)) {
-    JvctsLogger.doLog(listener, FINE, "Changed file and reported file matches. Stash: \"" + changedFileInStash
-      + "\" Reported: \"" + reportedFile + "\"");
+    JvctsLogger.doLog(listener, FINE, "Found comments for \"" + changedFileInStash + "\" (reported as \""
+      + reportedFile + "\")");
     found.addAll(violationsPerFile.get(reportedFile));
    } else {
-    doLog(listener, FINE, "Changed file and reported file not matching. Stash: \"" + changedFileInStash
-      + "\" Reported: \"" + reportedFile + "\"");
+    doLog(FINE, "Changed file and reported file not matching. Stash: \"" + changedFileInStash + "\" Reported: \""
+      + reportedFile + "\"");
    }
   }
   return found;
