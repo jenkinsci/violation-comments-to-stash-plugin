@@ -31,7 +31,7 @@
   </f:entry>
 
   <f:entry title="Password">
-    <f:textbox name="stashPassword" value="${config.stashPassword}" />
+    <f:password name="stashPassword" value="${config.stashPassword}" />
   </f:entry>
 
   <f:entry title="Base URL">

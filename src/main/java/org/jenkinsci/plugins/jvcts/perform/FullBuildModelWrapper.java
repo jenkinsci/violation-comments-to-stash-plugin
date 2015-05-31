@@ -25,6 +25,8 @@ import org.apache.tools.ant.types.FileSet;
 import org.jenkinsci.plugins.jvcts.config.ParserConfig;
 import org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfig;
 
+import com.google.common.annotations.VisibleForTesting;
+
 public class FullBuildModelWrapper {
 
  private final Map<String, FullBuildModel> models = newHashMap();
@@ -60,7 +62,7 @@ public class FullBuildModelWrapper {
    String typeDescriptorName = parserConfig.getParserTypeDescriptorName();
    if (models.containsKey(typeDescriptorName)) {
     for (String fileModel : models.get(typeDescriptorName).getFileModelMap().keySet()) {
-     String sourceFile = determineSourcePath(fileModel, parserConfig);
+     String sourceFile = usingForwardSlashes(determineSourcePath(fileModel, parserConfig));
      if (sourceFile == null) {
       doLog(listener, SEVERE, "Could not determine source file from: " + fileModel);
       continue;
@@ -79,6 +81,11 @@ public class FullBuildModelWrapper {
   }
   doLog(FINE, "Found " + violationsPerFile.size() + " violations");
   return violationsPerFile;
+ }
+
+ @VisibleForTesting
+ static String usingForwardSlashes(String unknownSlashed) {
+  return unknownSlashed.replaceAll("\\\\", "/");
  }
 
  private String determineSourcePath(String fileModel, ParserConfig parserConfig) {

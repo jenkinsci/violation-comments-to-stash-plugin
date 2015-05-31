@@ -2,6 +2,10 @@
 
 Changelog of Violation Comments to Stash Plugin
 
+# 1.6
+* Replacing back-slashes (Windows style file paths) from reports with forward-slashes. So that they match file paths reported in Stash Rest API.
+* Using password field for password in configuration GUI
+
 # 1.5
 * Less logging in build log
 
