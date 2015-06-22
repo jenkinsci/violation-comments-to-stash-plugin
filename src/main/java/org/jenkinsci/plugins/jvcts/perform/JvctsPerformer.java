@@ -142,7 +142,7 @@ public class JvctsPerformer {
   * Enables testing of configuration GUI.
   */
  private static void logConfiguration(ViolationsToStashConfig config, AbstractBuild<?, ?> build, BuildListener listener) {
-  listener.getLogger().println(FIELD_STASH_USER + ": " + config.getCommitHash());
+  listener.getLogger().println(FIELD_STASH_USER + ": " + config.getStashUser());
   listener.getLogger().println(FIELD_STASH_BASE_URL + ": " + config.getStashBaseUrl());
   listener.getLogger().println(FIELD_STASH_PROJECT + ": " + config.getStashProject());
   listener.getLogger().println(FIELD_STASH_PULL_REQUEST_ID + ": " + config.getStashPullRequestId());
