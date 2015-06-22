@@ -107,6 +107,7 @@ public class ConfigurationWebTest {
   assertTrue(consoleText, consoleText.contains("stashProject: ABC"));
   assertTrue(consoleText, consoleText.contains("stashPullRequestId: 100"));
   assertTrue(consoleText, consoleText.contains("commitHash: abcd1234"));
+  assertTrue(consoleText, consoleText.contains("stashUser: theuser"));
   assertTrue(consoleText, consoleText.contains("stashRepo: a_repo"));
   assertTrue(consoleText, consoleText.contains("checkstyle: **/checkstyle-report.xml"));
   assertTrue(consoleText, consoleText.contains("checkstyle pathPrefix: pathPrefix"));
