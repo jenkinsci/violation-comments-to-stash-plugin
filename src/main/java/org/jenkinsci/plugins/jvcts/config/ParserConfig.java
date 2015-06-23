@@ -3,20 +3,21 @@ package org.jenkinsci.plugins.jvcts.config;
 import static com.google.common.base.Optional.fromNullable;
 import static com.google.common.base.Strings.emptyToNull;
 import static com.google.common.base.Strings.nullToEmpty;
+import hudson.plugins.violations.TypeDescriptor;
 
 import com.google.common.base.Optional;
 
 public class ParserConfig {
  private String pattern;
- private String parserTypeDescriptorName;
+ private TypeDescriptor parserTypeDescriptor;
  private String pathPrefix;
 
  public ParserConfig() {
 
  }
 
- public ParserConfig(String typeDescriptorName, String pattern) {
-  this.parserTypeDescriptorName = typeDescriptorName;
+ public ParserConfig(TypeDescriptor typeDescriptor, String pattern) {
+  this.parserTypeDescriptor = typeDescriptor;
   this.pattern = pattern;
  }
 
@@ -28,12 +29,12 @@ public class ParserConfig {
   this.pattern = pattern;
  }
 
- public String getParserTypeDescriptorName() {
-  return parserTypeDescriptorName;
+ public TypeDescriptor getParserTypeDescriptor() {
+  return parserTypeDescriptor;
  }
 
- public void setParserTypeDescriptorName(String parserTypeDescriptorName) {
-  this.parserTypeDescriptorName = parserTypeDescriptorName;
+ public void setParserTypeDescriptor(TypeDescriptor parser) {
+  this.parserTypeDescriptor = parser;
  }
 
  public void setPathPrefix(String pathPrefix) {

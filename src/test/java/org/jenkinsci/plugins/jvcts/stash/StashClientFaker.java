@@ -1,6 +1,7 @@
 package org.jenkinsci.plugins.jvcts.stash;
 
 import static com.google.common.base.Charsets.UTF_8;
+import static com.google.common.base.Joiner.on;
 import static com.google.common.base.Strings.nullToEmpty;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
@@ -42,7 +43,8 @@ public class StashClientFaker {
      BuildListener listener) {
     String key = createFakeKey(url, method.name(), postContent);
     if (!fakeResponses.containsKey(key)) {
-     throw new RuntimeException("\"" + key + "\" not faked!");
+     throw new RuntimeException("\"" + key + "\" not faked!\nThese are faked:\n"
+       + on("\n").join(fakeResponses.keySet()));
     }
     requestsSentToStash.add(key);
     return fakeResponses.get(key);

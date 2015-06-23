@@ -78,7 +78,7 @@
   </f:entry>
 
   <j:forEach var="parserConfig" items="${config.parserConfigs}" indexVar="i">
-    <f:entry title="${parserConfig.parserTypeDescriptorName}">
+    <f:entry title="${parserConfig.parserTypeDescriptor.name}">
     <table cellspacing="5">
       <tr>
         <td width="300">

@@ -1,6 +1,10 @@
 package org.jenkinsci.plugins.jvcts.perform;
 
 import static com.google.common.base.Joiner.on;
+import static hudson.plugins.violations.TypeDescriptor.TYPES;
+import static hudson.plugins.violations.types.checkstyle.CheckstyleDescriptor.CHECKSTYLE;
+import static hudson.plugins.violations.types.findbugs.FindBugsDescriptor.FINDBUGS;
+import static hudson.plugins.violations.types.pmd.PMDDescriptor.PMD;
 import static java.nio.charset.Charset.defaultCharset;
 import static org.jenkinsci.plugins.jvcts.perform.JvctsPerformer.doPerform;
 import static org.jenkinsci.plugins.jvcts.stash.StashClientFaker.COMMENTS_1_DELETE;
@@ -21,7 +25,6 @@ import java.io.IOException;
 import java.util.logging.Handler;
 import java.util.logging.Logger;
 
-import org.jenkinsci.plugins.jvcts.config.Parser;
 import org.jenkinsci.plugins.jvcts.config.ParserConfig;
 import org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfig;
 import org.junit.Test;
@@ -33,16 +36,10 @@ public class JvctsPerformerParseTest {
 
  public void preConfigure() throws IOException {
   config = new ViolationsToStashConfig();
-  ParserConfig checkStyleParserConfig = new ParserConfig(Parser.CHECKSTYLE.getTypeDescriptorName(), "**/"
-    + Parser.CHECKSTYLE.getTypeDescriptorName() + ".xml, **/" + Parser.CHECKSTYLE.getTypeDescriptorName()
-    + "_relativePath.xml");
-  config.getParserConfigs().add(checkStyleParserConfig);
   config.getParserConfigs().add(
-    new ParserConfig(Parser.PMD.getTypeDescriptorName(), "**/" + Parser.PMD.getTypeDescriptorName() + ".xml"));
-  config.getParserConfigs()
-    .add(
-      new ParserConfig(Parser.FINDBUGS.getTypeDescriptorName(), "**/" + Parser.FINDBUGS.getTypeDescriptorName()
-        + ".xml"));
+    new ParserConfig(TYPES.get(CHECKSTYLE), "**/" + CHECKSTYLE + ".xml, **/" + CHECKSTYLE + "_relativePath.xml"));
+  config.getParserConfigs().add(new ParserConfig(TYPES.get(PMD), "**/" + PMD + ".xml"));
+  config.getParserConfigs().add(new ParserConfig(TYPES.get(FINDBUGS), "**/" + FINDBUGS + ".xml"));
   config.setStashBaseUrl("http://stash.server/");
   config.setStashUser("stashUser");
   config.setStashPassword("stashPassword");
@@ -52,7 +49,6 @@ public class JvctsPerformerParseTest {
   disableLogging();
 
   fakeStashClient();
-
  }
 
  private void disableLogging() {

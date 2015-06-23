@@ -7,6 +7,11 @@ function build_clean {
  done
 }
 
+function on_exit {
+ build_clean
+}
+trap on_exit EXIT
+
 ##
 ## Setup
 ##
@@ -40,10 +45,5 @@ echo Jenkins started at $JENKINS_URL
 ## Test plugin
 ##
 cd  plugin-test
-mvn -q test -Djenkins=$JENKINS_URL -Dheadless=true || exit 1
+mvn -q test -Djenkins=$JENKINS_URL || exit 1
 cd ..
-
-##
-## Exit
-##
-build_clean

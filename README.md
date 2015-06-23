@@ -13,8 +13,26 @@ There is a screenshot of the configuration GUI [here](https://raw.githubusercont
 Available in Jenkins [here](https://wiki.jenkins-ci.org/display/JENKINS/Violation+Comments+to+Stash+Plugin).
 
 #Features
-* Comment pull requests, or individual commits, with code analyzers comments
- * Supporting: CheckStyle, CSSLint, JSLint, CodeNarc, CPPLint, FindBugs, FxCop, Gendarme, JCEReport, PEP8, PerlCritic, PMD, PyLint, Simian, StyleCop
+* Comment pull requests, or individual commits, with code analyzers comments. Supports:
+  * CheckStyle
+  * CodeNarc
+  * CPPLint
+  * CSSLint
+  * FindBugs
+  * FxCop
+  * Gendarme
+  * JCEReport
+  * JSLint
+  * PEP8
+  * PerlCritic
+  * PMD
+  * PyFlakes
+  * PyLint
+  * Simian
+  * StyleCop
+  * ReSharper
+  * XMLLint
+  * ZPTLint
 
 ## Use case
 Here is an example use case where a pull request is triggered from Stash, merged, checked and comments added to pull request in Stash.

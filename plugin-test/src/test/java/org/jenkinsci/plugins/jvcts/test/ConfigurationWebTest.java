@@ -1,10 +1,8 @@
 package org.jenkinsci.plugins.jvcts.test;
 
-import static com.gargoylesoftware.htmlunit.BrowserVersion.FIREFOX_24;
 import static com.google.common.base.MoreObjects.firstNonNull;
 import static java.lang.System.getProperty;
 import static java.lang.Thread.sleep;
-import static java.util.logging.Level.OFF;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.By.id;
@@ -13,33 +11,33 @@ import static org.openqa.selenium.By.xpath;
 
 import java.util.logging.Logger;
 
-import org.apache.commons.logging.LogFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 public class ConfigurationWebTest {
  private static final String CHECKSTYLE_PATTERN = "descriptor.config.parserConfigs[0].pattern";
- private static final String PATH_PREFIX = "descriptor.config.parserConfigs[0].pathPrefix";
  private static final String CODENARC_PATTERN = "descriptor.config.parserConfigs[1].pattern";
  private static final String CPD_PATTERN = "descriptor.config.parserConfigs[2].pattern";
  private static final String CPPLINT_PATTERN = "descriptor.config.parserConfigs[3].pattern";
- private static final String FINDBUGS_PATTERN = "descriptor.config.parserConfigs[4].pattern";
- private static final String FXCOP_PATTERN = "descriptor.config.parserConfigs[5].pattern";
- private static final String GENDARME_PATTERN = "descriptor.config.parserConfigs[6].pattern";
- private static final String JCEREPORT_PATTERN = "descriptor.config.parserConfigs[7].pattern";
- private static final String PEP8_PATTERN = "descriptor.config.parserConfigs[8].pattern";
- private static final String PERLCRITIC_PATTERN = "descriptor.config.parserConfigs[9].pattern";
- private static final String PMD_PATTERN = "descriptor.config.parserConfigs[10].pattern";
- private static final String PYLINT_PATTERN = "descriptor.config.parserConfigs[11].pattern";
- private static final String SIMIAN_PATTERN = "descriptor.config.parserConfigs[12].pattern";
- private static final String STYLECOP_PATTERN = "descriptor.config.parserConfigs[13].pattern";
- private static final String JSLINT_PATTERN = "descriptor.config.parserConfigs[14].pattern";
- private static final String CSSLINT_PATTERN = "descriptor.config.parserConfigs[15].pattern";
+ private static final String CSSLINT_PATTERN = "descriptor.config.parserConfigs[4].pattern";
+ private static final String FINDBUGS_PATTERN = "descriptor.config.parserConfigs[5].pattern";
+ private static final String FXCOP_PATTERN = "descriptor.config.parserConfigs[6].pattern";
+ private static final String GENDARME_PATTERN = "descriptor.config.parserConfigs[7].pattern";
+ private static final String JCEREPORT_PATTERN = "descriptor.config.parserConfigs[8].pattern";
+ private static final String JSLINT_PATTERN = "descriptor.config.parserConfigs[9].pattern";
+ private static final String PEP8_PATTERN = "descriptor.config.parserConfigs[10].pattern";
+ private static final String PERLCRITIC_PATTERN = "descriptor.config.parserConfigs[11].pattern";
+ private static final String PMD_PATTERN = "descriptor.config.parserConfigs[12].pattern";
+ private static final String PYFLAKES_PATTERN = "descriptor.config.parserConfigs[13].pattern";
+ private static final String PYLINT_PATTERN = "descriptor.config.parserConfigs[14].pattern";
+ private static final String RESHARPER_PATTERN = "descriptor.config.parserConfigs[15].pattern";
+ private static final String SIMIAN_PATTERN = "descriptor.config.parserConfigs[16].pattern";
+ private static final String STYLECOP_PATTERN = "descriptor.config.parserConfigs[17].pattern";
+ private static final String PATH_PREFIX = "descriptor.config.parserConfigs[0].pathPrefix";
  private static final String STASH_PULL_REQUEST_ID = "stashPullRequestId";
  private static final String COMMIT_HASH = "commitHash";
  private static final String STASH_REPO = "stashRepo";
@@ -49,41 +47,27 @@ public class ConfigurationWebTest {
  private static final String STASH_PASSWORD = "stashPassword";
  private static final String HTTP_LOCALHOST_8456 = "http://localhost:8456";
  private static final String PROP_JENKINS_URL = "jenkins";
- private static final String PROP_HEADLESS = "headless";
  private static final Logger logger = Logger.getLogger(ConfigurationWebTest.class.getName());
  private static final String TEST_JOB_NAME = "testJobb";
  private WebDriver webDriver;
-
- static {
-  LogFactory.getFactory().setAttribute("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
-  java.util.logging.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(OFF);
-  java.util.logging.Logger.getLogger("org.apache.commons.httpclient").setLevel(OFF);
- }
 
  private String getJenkinsBaseUrl() {
   return firstNonNull(getProperty(PROP_JENKINS_URL), "http://localhost:8080/jenkins");
  }
 
- private boolean isHeadless() {
-  return !firstNonNull(getProperty(PROP_HEADLESS), "false").equals("false");
- }
-
  @Before
  public void before() throws InterruptedException {
-  if (isHeadless()) {
-   HtmlUnitDriver webDriverHtmlUnit = new HtmlUnitDriver(FIREFOX_24);
-   webDriverHtmlUnit.setJavascriptEnabled(true);
-   this.webDriver = webDriverHtmlUnit;
-  } else {
-   webDriver = new FirefoxDriver();
-  }
+  webDriver = new FirefoxDriver();
   waitForJenkinsToStart();
  }
 
  @After
  public void after() {
-  deleteJob();
-  webDriver.quit();
+  try {
+   deleteJob();
+  } finally {
+   webDriver.quit();
+  }
  }
 
  @Test
@@ -156,6 +140,8 @@ public class ConfigurationWebTest {
   webDriver.findElement(name(STYLECOP_PATTERN)).clear();
   webDriver.findElement(name(JSLINT_PATTERN)).clear();
   webDriver.findElement(name(CSSLINT_PATTERN)).clear();
+  webDriver.findElement(name(PYFLAKES_PATTERN)).clear();
+  webDriver.findElement(name(RESHARPER_PATTERN)).clear();
   webDriver.findElement(name(STASH_BASE_URL)).sendKeys("http://changed.com");
   webDriver.findElement(name(STASH_USER)).sendKeys("theotheruser");
   webDriver.findElement(name(STASH_PASSWORD)).sendKeys("theotherpassword");
@@ -179,6 +165,8 @@ public class ConfigurationWebTest {
   webDriver.findElement(name(PYLINT_PATTERN)).sendKeys("**/new-pylint-report.xml");
   webDriver.findElement(name(SIMIAN_PATTERN)).sendKeys("**/new-simian-report.xml");
   webDriver.findElement(name(STYLECOP_PATTERN)).sendKeys("**/new-stylecop-report.xml");
+  webDriver.findElement(name(PYFLAKES_PATTERN)).sendKeys("**/new-pyflakes-report.xml");
+  webDriver.findElement(name(RESHARPER_PATTERN)).sendKeys("**/new-resharper-report.xml");
   removeOnBeforeUnload();
   saveJob();
   startJob();

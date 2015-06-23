@@ -1,6 +1,7 @@
 package org.jenkinsci.plugins.jvcts.config;
 
 import static com.google.common.collect.Lists.newArrayList;
+import hudson.plugins.violations.TypeDescriptor;
 
 import java.util.List;
 
@@ -34,9 +35,9 @@ public class ViolationsToStashConfigHelper {
  public static ViolationsToStashConfig createNewConfig() {
   ViolationsToStashConfig config = new ViolationsToStashConfig();
   List<ParserConfig> parsers = newArrayList();
-  for (Parser parser : Parser.values()) {
+  for (TypeDescriptor parser : TypeDescriptor.TYPES.values()) {
    ParserConfig parserConfig = new ParserConfig();
-   parserConfig.setParserTypeDescriptorName(parser.getTypeDescriptorName());
+   parserConfig.setParserTypeDescriptor(parser);
    parsers.add(parserConfig);
   }
   config.setParsers(parsers);

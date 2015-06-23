@@ -40,16 +40,16 @@ public class FullBuildModelWrapper {
    for (String pattern : parserConfig.getPattern().split(",")) {
     for (String fileName : findFilesFromPattern(workspace, pattern)) {
      String[] sourcePaths = {};
-     TypeDescriptor type = TYPES.get(parserConfig.getParserTypeDescriptorName());
+     TypeDescriptor type = TYPES.get(parserConfig.getParserTypeDescriptor().getName());
      try {
-      if (!models.containsKey(parserConfig.getParserTypeDescriptorName())) {
-       models.put(parserConfig.getParserTypeDescriptorName(), new FullBuildModel());
+      if (!models.containsKey(parserConfig.getParserTypeDescriptor().getName())) {
+       models.put(parserConfig.getParserTypeDescriptor().getName(), new FullBuildModel());
       }
-      type.createParser().parse(models.get(parserConfig.getParserTypeDescriptorName()), workspace, fileName,
+      type.createParser().parse(models.get(parserConfig.getParserTypeDescriptor().getName()), workspace, fileName,
         sourcePaths);
      } catch (IOException e) {
-      doLog(SEVERE, "Error while parsing \"" + fileName + "\" for type " + parserConfig.getParserTypeDescriptorName(),
-        e);
+      doLog(SEVERE, "Error while parsing \"" + fileName + "\" for type "
+        + parserConfig.getParserTypeDescriptor().getName(), e);
      }
     }
    }
@@ -59,7 +59,7 @@ public class FullBuildModelWrapper {
  public Map<String, List<Violation>> getViolationsPerFile() {
   Map<String, List<Violation>> violationsPerFile = newHashMap();
   for (ParserConfig parserConfig : config.getParserConfigs()) {
-   String typeDescriptorName = parserConfig.getParserTypeDescriptorName();
+   String typeDescriptorName = parserConfig.getParserTypeDescriptor().getName();
    if (models.containsKey(typeDescriptorName)) {
     for (String fileModel : models.get(typeDescriptorName).getFileModelMap().keySet()) {
      String sourceFile = usingForwardSlashes(determineSourcePath(fileModel, parserConfig));
@@ -90,7 +90,7 @@ public class FullBuildModelWrapper {
 
  private String determineSourcePath(String fileModel, ParserConfig parserConfig) {
   doLog(FINE, "Determining source path for " + fileModel);
-  FullBuildModel model = models.get(parserConfig.getParserTypeDescriptorName());
+  FullBuildModel model = models.get(parserConfig.getParserTypeDescriptor().getName());
   FullFileModel fullFileModel = model.getFileModel(fileModel);
   if (fullFileModel.getSourceFile() != null) {
    if (fullFileModel.getSourceFile().exists()) {
