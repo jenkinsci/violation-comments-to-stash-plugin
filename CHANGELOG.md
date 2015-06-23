@@ -2,6 +2,12 @@
 
 Changelog of Violation Comments to Stash Plugin
 
+# 1.7
+* Using Violations 0.8.0-alpha-1
+ * Adds new parsers: PyFlakes, ReSharper, XMLLint, ZPTLint
+ * Adds messages to Findbugs
+ * Bug fixes in parsers, see Violations Plugin changelog
+ 
 # 1.6
 * Replacing back-slashes (Windows style file paths) from reports with forward-slashes. So that they match file paths reported in Stash Rest API.
 * Using password field for password in configuration GUI

@@ -130,7 +130,7 @@ public class JvctsPerformer {
   expanded.setStashRepo(environment.expand(config.getStashRepo()));
   for (ParserConfig parserConfig : config.getParserConfigs()) {
    ParserConfig p = new ParserConfig();
-   p.setParserTypeDescriptorName(environment.expand(parserConfig.getParserTypeDescriptorName()));
+   p.setParserTypeDescriptor(parserConfig.getParserTypeDescriptor());
    p.setPattern(environment.expand(parserConfig.getPattern()));
    p.setPathPrefix(environment.expand(parserConfig.getPathPrefixOpt().or("")));
    expanded.getParserConfigs().add(p);
@@ -149,10 +149,10 @@ public class JvctsPerformer {
   listener.getLogger().println(FIELD_COMMIT_HASH + ": " + config.getCommitHash());
   listener.getLogger().println(FIELD_STASH_REPO + ": " + config.getStashRepo());
   for (ParserConfig parserConfig : config.getParserConfigs()) {
-   listener.getLogger().println(parserConfig.getParserTypeDescriptorName() + ": " + parserConfig.getPattern());
+   listener.getLogger().println(parserConfig.getParserTypeDescriptor().getName() + ": " + parserConfig.getPattern());
    if (parserConfig.getPathPrefixOpt().isPresent()) {
     listener.getLogger().println(
-      parserConfig.getParserTypeDescriptorName() + " pathPrefix: " + parserConfig.getPathPrefix());
+      parserConfig.getParserTypeDescriptor().getName() + " pathPrefix: " + parserConfig.getPathPrefix());
    }
   }
  }
