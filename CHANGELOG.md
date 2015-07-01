@@ -2,6 +2,9 @@
 
 Changelog of Violation Comments to Stash Plugin
 
+# 1.8
+* Accepting cookies sent from Stash server. To prevent infinite redirect if Stash requires authentication.
+
 # 1.7
 * Using Violations 0.8.0-alpha-1
  * Adds new parsers: PyFlakes, ReSharper, XMLLint, ZPTLint
