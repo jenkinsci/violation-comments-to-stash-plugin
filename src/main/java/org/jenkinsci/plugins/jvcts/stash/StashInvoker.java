@@ -10,6 +10,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -31,6 +34,7 @@ public class StashInvoker {
   OutputStream output = null;
   BufferedReader reader = null;
   try {
+   CookieHandler.setDefault(new CookieManager(null, CookiePolicy.ACCEPT_ALL));
    conn = (HttpURLConnection) new URL(url).openConnection();
    String userAndPass = config.getStashUser() + ":" + config.getStashPassword();
    String authString = new String(DatatypeConverter.printBase64Binary(userAndPass.getBytes()));
