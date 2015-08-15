@@ -1,4 +1,4 @@
-package org.jenkinsci.plugins.jvcts.stash;
+package org.jenkinsci.plugins.jvcts.utils;
 
 import static com.google.common.base.Charsets.UTF_8;
 import static com.google.common.base.Joiner.on;
@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfig;
+import org.jenkinsci.plugins.jvcts.stash.StashInvoker;
 
 import com.google.common.io.Resources;
 
@@ -28,15 +29,13 @@ public class StashClientFaker {
  public static final String COMMENTS_CHECKSTYLEFILE_REL_GET = "http://stash.server/rest/api/1.0/projects/stashProject/repos/stashRepo/pull-requests/1/comments?path=module/src/main/java/se/bjurr/code/CheckstyleFileRel.java&limit=999999 GET";
  public static final String COMMENTS_FINDBUGS_GET = "http://stash.server/rest/api/1.0/projects/stashProject/repos/stashRepo/pull-requests/1/comments?path=module/se/bjurr/analyzer/Code.java&limit=999999 GET";
  public static final String CHANGES_GET = "http://stash.server/rest/api/1.0/projects/stashProject/repos/stashRepo/pull-requests/1/changes?limit=999999 GET";
- private static Map<String, String> fakeResponses;
- private static List<String> requestsSentToStash;
+ private static Map<String, String> fakeResponses = newHashMap();
+ private static List<String> requestsSentToStash = newArrayList();
 
  private StashClientFaker() {
  }
 
  public static void fakeStashClient() throws IOException {
-  requestsSentToStash = newArrayList();
-  fakeResponses = newHashMap();
   setStashInvoker(new StashInvoker() {
    @Override
    public String invokeUrl(ViolationsToStashConfig config, String url, Method method, String postContent,
@@ -51,7 +50,6 @@ public class StashClientFaker {
    }
   });
 
-  fake(CHANGES_GET, readFile("pullrequestchanges_1_GET.json"));
   fake(COMMENTS_CHECKSTYLEFILE_GET, readFile("pullrequestcomments_GET.json"));
   fake(COMMENTS_CHECKSTYLEFILE_REL_GET, readFile("pullrequestcomments_GET_none.json"));
   fake(COMMENTS_1_DELETE, readFile("pullrequestcomments_GET.json"));
@@ -70,7 +68,7 @@ public class StashClientFaker {
   fake(readFile("findbugs_code.json"), "");
  }
 
- private static void fake(String request, String response) {
+ public static void fake(String request, String response) {
   fakeResponses.put(request, response);
   fakeResponses.put(prToCommit(request), prToCommit(response));
  }

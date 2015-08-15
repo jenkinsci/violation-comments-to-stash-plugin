@@ -54,7 +54,7 @@ public class JvctsPerformer {
  }
 
  @VisibleForTesting
- static void doPerform(ViolationsToStashConfig config, File workspace, BuildListener listener)
+ public static void doPerform(ViolationsToStashConfig config, File workspace, BuildListener listener)
    throws MalformedURLException {
   commentStash(new FullBuildModelWrapper(config, workspace, listener).getViolationsPerFile(), config, listener);
  }

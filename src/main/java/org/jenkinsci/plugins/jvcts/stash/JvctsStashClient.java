@@ -27,7 +27,7 @@ public class JvctsStashClient {
  }
 
  @VisibleForTesting
- static void setStashInvoker(StashInvoker stashInvoker) {
+ public static void setStashInvoker(StashInvoker stashInvoker) {
   JvctsStashClient.stashInvoker = stashInvoker;
  }
 
