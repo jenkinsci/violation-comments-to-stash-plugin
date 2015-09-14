@@ -42,6 +42,7 @@ public class StashInvoker {
    conn.setRequestMethod(method.name());
    String charset = "UTF-8";
    conn.setDoOutput(true);
+   conn.setRequestProperty("X-Atlassian-Token", "no-check");
    conn.setRequestProperty("Content-Type", "application/json");
    conn.setRequestProperty("Accept", "application/json");
    conn.connect();

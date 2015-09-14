@@ -2,6 +2,9 @@
 
 Changelog of Violation Comments to Stash Plugin
 
+# 1.9
+* Adding header "X-Atlassian-Token: no-check" to be compatible with Stash 4.0 #12
+
 # 1.8
 * Accepting cookies sent from Stash server. To prevent infinite redirect if Stash requires authentication.
 
