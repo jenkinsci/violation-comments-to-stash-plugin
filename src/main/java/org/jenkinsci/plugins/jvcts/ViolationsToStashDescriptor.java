@@ -10,7 +10,6 @@ import static org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfigHelper.F
 import static org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfigHelper.FIELD_STASH_REPO;
 import static org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfigHelper.FIELD_STASH_USER;
 import static org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfigHelper.createNewConfig;
-import hudson.maven.AbstractMavenProject;
 import hudson.model.AbstractProject;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Publisher;
@@ -69,7 +68,7 @@ public final class ViolationsToStashDescriptor extends BuildStepDescriptor<Publi
 
  @Override
  public boolean isApplicable(@SuppressWarnings("rawtypes") final Class<? extends AbstractProject> jobType) {
-  return !AbstractMavenProject.class.isAssignableFrom(jobType);
+  return true;
  }
 
  /**
