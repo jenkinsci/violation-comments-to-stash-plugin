@@ -2,6 +2,9 @@
 
 Changelog of Violation Comments to Stash Plugin
 
+# 1.10
+* Making it applicable for all projects, not just free-style.
+
 # 1.9
 * Adding header "X-Atlassian-Token: no-check" to be compatible with Stash 4.0 #12
 
