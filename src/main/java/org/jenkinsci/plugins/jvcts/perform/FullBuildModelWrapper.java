@@ -23,17 +23,17 @@ import java.util.TreeSet;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.FileSet;
 import org.jenkinsci.plugins.jvcts.config.ParserConfig;
-import org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfig;
+import org.jenkinsci.plugins.jvcts.config.ViolationsToBitbucketServerConfig;
 
 import com.google.common.annotations.VisibleForTesting;
 
 public class FullBuildModelWrapper {
 
  private final Map<String, FullBuildModel> models = newHashMap();
- private final ViolationsToStashConfig config;
+ private final ViolationsToBitbucketServerConfig config;
  private final BuildListener listener;
 
- public FullBuildModelWrapper(ViolationsToStashConfig config, File workspace, BuildListener listener) {
+ public FullBuildModelWrapper(ViolationsToBitbucketServerConfig config, File workspace, BuildListener listener) {
   this.config = config;
   this.listener = listener;
   for (ParserConfig parserConfig : config.getParserConfigs()) {

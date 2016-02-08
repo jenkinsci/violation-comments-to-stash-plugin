@@ -7,10 +7,10 @@
   xmlns:st="jelly:stapler"
   xmlns:t="/lib/hudson">
 
-  <!-- descriptor is ViolationsToStashDescriptor //-->
+  <!-- descriptor is ViolationsToBitbucketServerDescriptor //-->
   <j:set var="config" value="${descriptor.newConfig}"/>
   <j:if test="${instance != null}">
-    <!-- instance is ViolationsToStashRecorder //-->
+    <!-- instance is ViolationsToBitbucketServerRecorder //-->
     <j:set var="config" value="${instance.config}"/>
   </j:if>
   
@@ -20,34 +20,34 @@
     <table>
       <tr>
         <td>
-          Stash server
+          Bitbucket Server
         </td>
       </tr>
     </table>
   </f:entry>
 
   <f:entry title="User">
-    <f:textbox name="stashUser" value="${config.stashUser}" />
+    <f:textbox name="bitbucketServerUser" value="${config.bitbucketServerUser}" />
   </f:entry>
 
   <f:entry title="Password">
-    <f:password name="stashPassword" value="${config.stashPassword}" />
+    <f:password name="bitbucketServerPassword" value="${config.bitbucketServerPassword}" />
   </f:entry>
 
   <f:entry title="Base URL">
-    <f:textbox name="stashBaseUrl" value="${config.stashBaseUrl}" />
+    <f:textbox name="bitbucketServerBaseUrl" value="${config.bitbucketServerBaseUrl}" />
   </f:entry>
   
   <f:entry title="Project">
-    <f:textbox name="stashProject" value="${config.stashProject}" />
+    <f:textbox name="bitbucketServerProject" value="${config.bitbucketServerProject}" />
   </f:entry>
   
   <f:entry title="Repository">
-    <f:textbox name="stashRepo" value="${config.stashRepo}" />
+    <f:textbox name="bitbucketServerRepo" value="${config.bitbucketServerRepo}" />
   </f:entry>
   
   <f:entry title="(Optional) Pull Request ID, if you want to comment on the pull request">
-    <f:textbox name="stashPullRequestId" value="${config.stashPullRequestId}" />
+    <f:textbox name="bitbucketServerPullRequestId" value="${config.bitbucketServerPullRequestId}" />
   </f:entry>
   
   <f:entry title="(Optional) Commit hash, if you want to comment on the commit">
@@ -62,7 +62,7 @@
         <b>XML filename pattern</b>
         <ul>
           <li>The pattern may be, for example, <i>**/checkstyle-report.xml</i> to match checkstyle-report.xml anywhere in workspace.</li>
-          <li>The path prefix is optional. Some checkers may have relative paths in the reports (xml-files). Stash API:s will report changes, in the pull request, relative to repository root. In order to match changes in pull request to file in report, you may need to set a prefix path.</li>
+          <li>The path prefix is optional. Some checkers may have relative paths in the reports (xml-files). Bitbucket Server API:s will report changes, in the pull request, relative to repository root. In order to match changes in pull request to file in report, you may need to set a prefix path.</li>
         </ul>
       </td>
     </tr>

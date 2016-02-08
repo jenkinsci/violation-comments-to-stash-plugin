@@ -7,12 +7,12 @@ import static com.google.common.collect.Lists.newArrayList;
 import static java.util.logging.Level.FINE;
 import static java.util.logging.Level.SEVERE;
 import static org.jenkinsci.plugins.jvcts.JvctsLogger.doLog;
-import static org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfigHelper.FIELD_COMMIT_HASH;
-import static org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfigHelper.FIELD_STASH_BASE_URL;
-import static org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfigHelper.FIELD_STASH_PROJECT;
-import static org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfigHelper.FIELD_STASH_PULL_REQUEST_ID;
-import static org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfigHelper.FIELD_STASH_REPO;
-import static org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfigHelper.FIELD_STASH_USER;
+import static org.jenkinsci.plugins.jvcts.config.ViolationsToBitbucketServerConfigHelper.FIELD_BITBUCKET_SERVER_BASE_URL;
+import static org.jenkinsci.plugins.jvcts.config.ViolationsToBitbucketServerConfigHelper.FIELD_BITBUCKET_SERVER_PROJECT;
+import static org.jenkinsci.plugins.jvcts.config.ViolationsToBitbucketServerConfigHelper.FIELD_BITBUCKET_SERVER_PULL_REQUEST_ID;
+import static org.jenkinsci.plugins.jvcts.config.ViolationsToBitbucketServerConfigHelper.FIELD_BITBUCKET_SERVER_REPO;
+import static org.jenkinsci.plugins.jvcts.config.ViolationsToBitbucketServerConfigHelper.FIELD_BITBUCKET_SERVER_USER;
+import static org.jenkinsci.plugins.jvcts.config.ViolationsToBitbucketServerConfigHelper.FIELD_COMMIT_HASH;
 import hudson.EnvVars;
 import hudson.model.BuildListener;
 import hudson.model.AbstractBuild;
@@ -24,25 +24,26 @@ import java.util.List;
 import java.util.Map;
 
 import org.jenkinsci.plugins.jvcts.JvctsLogger;
+import org.jenkinsci.plugins.jvcts.bitbucketserver.JvctsBitbucketServerClient;
 import org.jenkinsci.plugins.jvcts.config.ParserConfig;
-import org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfig;
-import org.jenkinsci.plugins.jvcts.stash.JvctsStashClient;
+import org.jenkinsci.plugins.jvcts.config.ViolationsToBitbucketServerConfig;
 
 import com.google.common.annotations.VisibleForTesting;
 
 public class JvctsPerformer {
 
- public static void jvctsPerform(ViolationsToStashConfig config, AbstractBuild<?, ?> build, BuildListener listener) {
+ public static void jvctsPerform(ViolationsToBitbucketServerConfig config, AbstractBuild<?, ?> build,
+   BuildListener listener) {
   try {
    EnvVars env = build.getEnvironment(listener);
    config = expand(config, env);
    listener.getLogger().println("---");
-   listener.getLogger().println("--- Jenkins Violation Comments to Stash ---");
+   listener.getLogger().println("--- Jenkins Violation Comments to Bitbucket Server ---");
    listener.getLogger().println("---");
    logConfiguration(config, build, listener);
 
-   listener.getLogger().println("Running Jenkins Violation Comments To Stash");
-   listener.getLogger().println("Will comment " + config.getStashPullRequestId());
+   listener.getLogger().println("Running Jenkins Violation Comments To Bitbucket Server");
+   listener.getLogger().println("Will comment " + config.getBitbucketServerPullRequestId());
 
    File workspace = new File(build.getExecutor().getCurrentWorkspace().toURI());
    doLog(FINE, "Workspace: " + workspace.getAbsolutePath());
@@ -54,52 +55,55 @@ public class JvctsPerformer {
  }
 
  @VisibleForTesting
- public static void doPerform(ViolationsToStashConfig config, File workspace, BuildListener listener)
+ public static void doPerform(ViolationsToBitbucketServerConfig config, File workspace, BuildListener listener)
    throws MalformedURLException {
-  commentStash(new FullBuildModelWrapper(config, workspace, listener).getViolationsPerFile(), config, listener);
+  commentBitbucketServer(new FullBuildModelWrapper(config, workspace, listener).getViolationsPerFile(), config,
+    listener);
  }
 
- private static void commentStash(Map<String, List<Violation>> violationsPerFile, ViolationsToStashConfig config,
-   BuildListener listener) throws MalformedURLException {
-  JvctsStashClient jvctsStashClient = new JvctsStashClient(config, listener);
-  if (!isNullOrEmpty(config.getStashPullRequestId())) {
-   doLog(FINE, "Commenting pull request \"" + config.getStashPullRequestId() + "\"");
-   for (String changedFileInStash : jvctsStashClient.getChangedFileInPullRequest()) {
-    doLog(FINE, "Changed file in pull request: \"" + changedFileInStash + "\"");
-    jvctsStashClient.removeCommentsFromPullRequest(changedFileInStash);
-    for (Violation violation : getViolationsForFile(violationsPerFile, changedFileInStash, listener)) {
-     jvctsStashClient.commentPullRequest(changedFileInStash, violation.getLine(), constructCommentMessage(violation));
+ private static void commentBitbucketServer(Map<String, List<Violation>> violationsPerFile,
+   ViolationsToBitbucketServerConfig config, BuildListener listener) throws MalformedURLException {
+  JvctsBitbucketServerClient jvctsBitbucketServerClient = new JvctsBitbucketServerClient(config, listener);
+  if (!isNullOrEmpty(config.getBitbucketServerPullRequestId())) {
+   doLog(FINE, "Commenting pull request \"" + config.getBitbucketServerPullRequestId() + "\"");
+   for (String changedFileInBitbucketServer : jvctsBitbucketServerClient.getChangedFileInPullRequest()) {
+    doLog(FINE, "Changed file in pull request: \"" + changedFileInBitbucketServer + "\"");
+    jvctsBitbucketServerClient.removeCommentsFromPullRequest(changedFileInBitbucketServer);
+    for (Violation violation : getViolationsForFile(violationsPerFile, changedFileInBitbucketServer, listener)) {
+     jvctsBitbucketServerClient.commentPullRequest(changedFileInBitbucketServer, violation.getLine(),
+       constructCommentMessage(violation));
     }
    }
   }
   if (!isNullOrEmpty(config.getCommitHash())) {
    doLog(FINE, "Commenting commit \"" + config.getCommitHash() + "\"");
-   for (String changedFileInStash : jvctsStashClient.getChangedFileInCommit()) {
-    doLog(FINE, "Changed file in commit: \"" + changedFileInStash + "\"");
-    jvctsStashClient.removeCommentsCommit(changedFileInStash);
-    for (Violation violation : getViolationsForFile(violationsPerFile, changedFileInStash, listener)) {
-     jvctsStashClient.commentCommit(changedFileInStash, violation.getLine(), constructCommentMessage(violation));
+   for (String changedFileInBitbucketServer : jvctsBitbucketServerClient.getChangedFileInCommit()) {
+    doLog(FINE, "Changed file in commit: \"" + changedFileInBitbucketServer + "\"");
+    jvctsBitbucketServerClient.removeCommentsCommit(changedFileInBitbucketServer);
+    for (Violation violation : getViolationsForFile(violationsPerFile, changedFileInBitbucketServer, listener)) {
+     jvctsBitbucketServerClient.commentCommit(changedFileInBitbucketServer, violation.getLine(),
+       constructCommentMessage(violation));
     }
    }
   }
  }
 
  /**
-  * Get list of violations that has files ending with changed file in Stash.
-  * Violation instances may have absolute or relative paths, we can not trust
-  * that.
+  * Get list of violations that has files ending with changed file in Bitbucket
+  * Server. Violation instances may have absolute or relative paths, we can not
+  * trust that.
   */
  private static List<Violation> getViolationsForFile(Map<String, List<Violation>> violationsPerFile,
-   String changedFileInStash, BuildListener listener) {
+   String changedFileInBitbucketServer, BuildListener listener) {
   List<Violation> found = newArrayList();
   for (String reportedFile : violationsPerFile.keySet()) {
-   if (reportedFile.endsWith(changedFileInStash) || changedFileInStash.endsWith(reportedFile)) {
-    JvctsLogger.doLog(listener, FINE, "Found comments for \"" + changedFileInStash + "\" (reported as \""
+   if (reportedFile.endsWith(changedFileInBitbucketServer) || changedFileInBitbucketServer.endsWith(reportedFile)) {
+    JvctsLogger.doLog(listener, FINE, "Found comments for \"" + changedFileInBitbucketServer + "\" (reported as \""
       + reportedFile + "\")");
     found.addAll(violationsPerFile.get(reportedFile));
    } else {
-    doLog(FINE, "Changed file and reported file not matching. Stash: \"" + changedFileInStash + "\" Reported: \""
-      + reportedFile + "\"");
+    doLog(FINE, "Changed file and reported file not matching. Bitbucket Server: \"" + changedFileInBitbucketServer
+      + "\" Reported: \"" + reportedFile + "\"");
    }
   }
   return found;
@@ -119,15 +123,15 @@ public class JvctsPerformer {
   * Makes sure any Jenkins variable, used in the configuration fields, are
   * evaluated.
   */
- private static ViolationsToStashConfig expand(ViolationsToStashConfig config, EnvVars environment) {
-  ViolationsToStashConfig expanded = new ViolationsToStashConfig();
-  expanded.setStashBaseUrl(environment.expand(config.getStashBaseUrl()));
-  expanded.setStashUser(environment.expand(config.getStashUser()));
-  expanded.setStashPassword(environment.expand(config.getStashPassword()));
-  expanded.setStashProject(environment.expand(config.getStashProject()));
-  expanded.setStashPullRequestId(environment.expand(config.getStashPullRequestId()));
+ private static ViolationsToBitbucketServerConfig expand(ViolationsToBitbucketServerConfig config, EnvVars environment) {
+  ViolationsToBitbucketServerConfig expanded = new ViolationsToBitbucketServerConfig();
+  expanded.setBitbucketServerBaseUrl(environment.expand(config.getBitbucketServerBaseUrl()));
+  expanded.setBitbucketServerUser(environment.expand(config.getBitbucketServerUser()));
+  expanded.setBitbucketServerPassword(environment.expand(config.getBitbucketServerPassword()));
+  expanded.setBitbucketServerProject(environment.expand(config.getBitbucketServerProject()));
+  expanded.setBitbucketServerPullRequestId(environment.expand(config.getBitbucketServerPullRequestId()));
   expanded.setCommitHash(environment.expand(config.getCommitHash()));
-  expanded.setStashRepo(environment.expand(config.getStashRepo()));
+  expanded.setBitbucketServerRepo(environment.expand(config.getBitbucketServerRepo()));
   for (ParserConfig parserConfig : config.getParserConfigs()) {
    ParserConfig p = new ParserConfig();
    p.setParserTypeDescriptor(parserConfig.getParserTypeDescriptor());
@@ -141,13 +145,15 @@ public class JvctsPerformer {
  /**
   * Enables testing of configuration GUI.
   */
- private static void logConfiguration(ViolationsToStashConfig config, AbstractBuild<?, ?> build, BuildListener listener) {
-  listener.getLogger().println(FIELD_STASH_USER + ": " + config.getStashUser());
-  listener.getLogger().println(FIELD_STASH_BASE_URL + ": " + config.getStashBaseUrl());
-  listener.getLogger().println(FIELD_STASH_PROJECT + ": " + config.getStashProject());
-  listener.getLogger().println(FIELD_STASH_PULL_REQUEST_ID + ": " + config.getStashPullRequestId());
+ private static void logConfiguration(ViolationsToBitbucketServerConfig config, AbstractBuild<?, ?> build,
+   BuildListener listener) {
+  listener.getLogger().println(FIELD_BITBUCKET_SERVER_USER + ": " + config.getBitbucketServerUser());
+  listener.getLogger().println(FIELD_BITBUCKET_SERVER_BASE_URL + ": " + config.getBitbucketServerBaseUrl());
+  listener.getLogger().println(FIELD_BITBUCKET_SERVER_PROJECT + ": " + config.getBitbucketServerProject());
+  listener.getLogger()
+    .println(FIELD_BITBUCKET_SERVER_PULL_REQUEST_ID + ": " + config.getBitbucketServerPullRequestId());
   listener.getLogger().println(FIELD_COMMIT_HASH + ": " + config.getCommitHash());
-  listener.getLogger().println(FIELD_STASH_REPO + ": " + config.getStashRepo());
+  listener.getLogger().println(FIELD_BITBUCKET_SERVER_REPO + ": " + config.getBitbucketServerRepo());
   for (ParserConfig parserConfig : config.getParserConfigs()) {
    listener.getLogger().println(parserConfig.getParserTypeDescriptor().getName() + ": " + parserConfig.getPattern());
    if (parserConfig.getPathPrefixOpt().isPresent()) {

@@ -10,22 +10,22 @@ import static org.jenkinsci.plugins.jvcts.utils.JvctsTestBuilder.assertThat;
 import static org.jenkinsci.plugins.jvcts.utils.JvctsTestUtils.assertRequested;
 import static org.jenkinsci.plugins.jvcts.utils.JvctsTestUtils.getWorkspace;
 import static org.jenkinsci.plugins.jvcts.utils.JvctsTestUtils.preConfigure;
-import static org.jenkinsci.plugins.jvcts.utils.StashClientFaker.CHANGES_GET;
-import static org.jenkinsci.plugins.jvcts.utils.StashClientFaker.COMMENTS_1_DELETE;
-import static org.jenkinsci.plugins.jvcts.utils.StashClientFaker.COMMENTS_2_DELETE;
-import static org.jenkinsci.plugins.jvcts.utils.StashClientFaker.COMMENTS_CHECKSTYLEFILE_GET;
-import static org.jenkinsci.plugins.jvcts.utils.StashClientFaker.COMMENTS_FINDBUGS_GET;
-import static org.jenkinsci.plugins.jvcts.utils.StashClientFaker.COMMENTS_PMDANDCHECKSTYLE_GET;
-import static org.jenkinsci.plugins.jvcts.utils.StashClientFaker.COMMENTS_PMDFILE_GET;
-import static org.jenkinsci.plugins.jvcts.utils.StashClientFaker.fake;
-import static org.jenkinsci.plugins.jvcts.utils.StashClientFaker.prToCommit;
-import static org.jenkinsci.plugins.jvcts.utils.StashClientFaker.readFile;
+import static org.jenkinsci.plugins.jvcts.utils.BitbucketServerClientFaker.CHANGES_GET;
+import static org.jenkinsci.plugins.jvcts.utils.BitbucketServerClientFaker.COMMENTS_1_DELETE;
+import static org.jenkinsci.plugins.jvcts.utils.BitbucketServerClientFaker.COMMENTS_2_DELETE;
+import static org.jenkinsci.plugins.jvcts.utils.BitbucketServerClientFaker.COMMENTS_CHECKSTYLEFILE_GET;
+import static org.jenkinsci.plugins.jvcts.utils.BitbucketServerClientFaker.COMMENTS_FINDBUGS_GET;
+import static org.jenkinsci.plugins.jvcts.utils.BitbucketServerClientFaker.COMMENTS_PMDANDCHECKSTYLE_GET;
+import static org.jenkinsci.plugins.jvcts.utils.BitbucketServerClientFaker.COMMENTS_PMDFILE_GET;
+import static org.jenkinsci.plugins.jvcts.utils.BitbucketServerClientFaker.fake;
+import static org.jenkinsci.plugins.jvcts.utils.BitbucketServerClientFaker.prToCommit;
+import static org.jenkinsci.plugins.jvcts.utils.BitbucketServerClientFaker.readFile;
 import hudson.model.StreamBuildListener;
 
 import java.io.IOException;
 
 import org.jenkinsci.plugins.jvcts.config.ParserConfig;
-import org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfig;
+import org.jenkinsci.plugins.jvcts.config.ViolationsToBitbucketServerConfig;
 import org.junit.Test;
 
 import com.google.common.collect.ImmutableList;
@@ -35,10 +35,10 @@ public class JvctsPerformerParseTest {
  @Test
  public void testThatPullRequestCheckstyleIsCommented() throws IOException {
   fake(CHANGES_GET, readFile("pullrequestchanges_1_GET.json"));
-  ViolationsToStashConfig config = preConfigure(new ImmutableList.Builder<ParserConfig>().add(
+  ViolationsToBitbucketServerConfig config = preConfigure(new ImmutableList.Builder<ParserConfig>().add(
     new ParserConfig(TYPES.get(CHECKSTYLE), "**/" + CHECKSTYLE + ".xml, **/" + CHECKSTYLE + "_relativePath.xml"))
     .build());
-  config.setStashPullRequestId("1");
+  config.setBitbucketServerPullRequestId("1");
   doPerform(config, getWorkspace(), new StreamBuildListener(System.out, defaultCharset()));
   assertRequested(readFile("checkstyle_checkstylefile_1.json"));
   assertRequested(readFile("checkstyle_checkstylefile_2.json"));
@@ -59,11 +59,11 @@ public class JvctsPerformerParseTest {
  @Test
  public void testThatPullRequestOldCommentsAreDeleted() throws IOException {
   fake(CHANGES_GET, readFile("pullrequestchanges_1_GET.json"));
-  ViolationsToStashConfig config = preConfigure(new ImmutableList.Builder<ParserConfig>().add(
+  ViolationsToBitbucketServerConfig config = preConfigure(new ImmutableList.Builder<ParserConfig>().add(
     new ParserConfig(TYPES.get(PMD), "**/" + PMD + ".xml"),
     new ParserConfig(TYPES.get(CHECKSTYLE), "**/" + CHECKSTYLE + ".xml, **/" + CHECKSTYLE + "_relativePath.xml"),
     new ParserConfig(TYPES.get(FINDBUGS), "**/" + FINDBUGS + ".xml")).build());
-  config.setStashPullRequestId("1");
+  config.setBitbucketServerPullRequestId("1");
   doPerform(config, getWorkspace(), new StreamBuildListener(System.out, defaultCharset()));
   assertRequested(COMMENTS_CHECKSTYLEFILE_GET);
   assertRequested(COMMENTS_PMDANDCHECKSTYLE_GET);
@@ -79,11 +79,11 @@ public class JvctsPerformerParseTest {
   fake(
     "http://stash.server/rest/api/1.0/projects/stashProject/repos/stashRepo/pull-requests/1/comments?path=project/index.html&limit=999999 GET",
     readFile("pullrequestcomments_GET_none.json"));
-  ViolationsToStashConfig config = preConfigure(new ImmutableList.Builder<ParserConfig>().add(
+  ViolationsToBitbucketServerConfig config = preConfigure(new ImmutableList.Builder<ParserConfig>().add(
     new ParserConfig(TYPES.get(PMD), "**/" + PMD + ".xml"),
     new ParserConfig(TYPES.get(CHECKSTYLE), "**/" + CHECKSTYLE + ".xml, **/" + CHECKSTYLE + "_relativePath.xml"),
     new ParserConfig(TYPES.get(FINDBUGS), "**/" + FINDBUGS + ".xml")).build());
-  config.setStashPullRequestId("1");
+  config.setBitbucketServerPullRequestId("1");
   doPerform(config, getWorkspace(), new StreamBuildListener(System.out, defaultCharset()));
   assertRequested(readFile("checkstyle_pmdandcheckstyle.json"));
  }
@@ -91,9 +91,9 @@ public class JvctsPerformerParseTest {
  @Test
  public void testThatPullRequestPmdIsCommented() throws IOException {
   fake(CHANGES_GET, readFile("pullrequestchanges_1_GET.json"));
-  ViolationsToStashConfig config = preConfigure(new ImmutableList.Builder<ParserConfig>().add(
+  ViolationsToBitbucketServerConfig config = preConfigure(new ImmutableList.Builder<ParserConfig>().add(
     new ParserConfig(TYPES.get(PMD), "**/" + PMD + ".xml")).build());
-  config.setStashPullRequestId("1");
+  config.setBitbucketServerPullRequestId("1");
   doPerform(config, getWorkspace(), new StreamBuildListener(System.out, defaultCharset()));
   assertRequested(readFile("pmd_pmdfile.json"));
  }
@@ -101,9 +101,9 @@ public class JvctsPerformerParseTest {
  @Test
  public void testThatPullRequestFindbugsIsCommented() throws IOException {
   fake(CHANGES_GET, readFile("pullrequestchanges_1_GET.json"));
-  ViolationsToStashConfig config = preConfigure(new ImmutableList.Builder<ParserConfig>().add(
+  ViolationsToBitbucketServerConfig config = preConfigure(new ImmutableList.Builder<ParserConfig>().add(
     new ParserConfig(TYPES.get(FINDBUGS), "**/" + FINDBUGS + ".xml")).build());
-  config.setStashPullRequestId("1");
+  config.setBitbucketServerPullRequestId("1");
   doPerform(config, getWorkspace(), new StreamBuildListener(System.out, defaultCharset()));
   assertRequested(readFile("findbugs_code.json"));
  }
@@ -114,7 +114,7 @@ public class JvctsPerformerParseTest {
   fake(
     "http://stash.server/rest/api/1.0/projects/stashProject/repos/stashRepo/pull-requests/1/comments?path=project/index.html&limit=999999 GET",
     readFile("pullrequestcomments_GET_none.json"));
-  ViolationsToStashConfig config = preConfigure(new ImmutableList.Builder<ParserConfig>().add(
+  ViolationsToBitbucketServerConfig config = preConfigure(new ImmutableList.Builder<ParserConfig>().add(
     new ParserConfig(TYPES.get(CHECKSTYLE), "**/" + CHECKSTYLE + ".xml, **/" + CHECKSTYLE + "_relativePath.xml"))
     .build());
   config.setCommitHash("1");

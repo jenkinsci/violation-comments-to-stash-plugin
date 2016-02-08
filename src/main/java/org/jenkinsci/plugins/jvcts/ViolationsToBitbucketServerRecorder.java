@@ -14,12 +14,12 @@ import hudson.tasks.Recorder;
 
 import java.io.IOException;
 
-import org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfig;
+import org.jenkinsci.plugins.jvcts.config.ViolationsToBitbucketServerConfig;
 
-public class ViolationsToStashRecorder extends Recorder {
+public class ViolationsToBitbucketServerRecorder extends Recorder {
  @Extension
- public static final BuildStepDescriptor<Publisher> DESCRIPTOR = new ViolationsToStashDescriptor();
- private ViolationsToStashConfig config;
+ public static final BuildStepDescriptor<Publisher> DESCRIPTOR = new ViolationsToBitbucketServerDescriptor();
+ private ViolationsToBitbucketServerConfig config;
 
  @Override
  public boolean perform(AbstractBuild<?, ?> build, Launcher launcher, BuildListener listener)
@@ -33,7 +33,7 @@ public class ViolationsToStashRecorder extends Recorder {
   return DESCRIPTOR;
  }
 
- public ViolationsToStashRecorder() {
+ public ViolationsToBitbucketServerRecorder() {
  }
 
  @Override
@@ -41,11 +41,11 @@ public class ViolationsToStashRecorder extends Recorder {
   return NONE;
  }
 
- public void setConfig(ViolationsToStashConfig config) {
+ public void setConfig(ViolationsToBitbucketServerConfig config) {
   this.config = config;
  }
 
- public ViolationsToStashConfig getConfig() {
+ public ViolationsToBitbucketServerConfig getConfig() {
   return config;
  }
 }

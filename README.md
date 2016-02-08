@@ -1,16 +1,16 @@
-# Violation Comments to Stash
+# Violation Comments to Bitbucket Server
 
 Travis CI: [![Build Status](https://travis-ci.org/tomasbjerre/violation-comments-to-stash-plugin.svg?branch=master)](https://travis-ci.org/tomasbjerre/violation-comments-to-stash-plugin)
 
 CloudBees: [![Build Status](https://jenkins.ci.cloudbees.com/job/plugins/job/violation-comments-to-stash-plugin/badge/icon)](https://jenkins.ci.cloudbees.com/job/plugins/job/violation-comments-to-stash-plugin/)
 
-This is much like the [Violations](https://wiki.jenkins-ci.org/display/JENKINS/Violations) plugin. Instead of publishing violation reports in Jenkins, it comments pull requests (or individual commits) in Stash.
+This is much like the [Violations](https://wiki.jenkins-ci.org/display/JENKINS/Violations) plugin. Instead of publishing violation reports in Jenkins, it comments pull requests (or individual commits) in  Bitbucket Server (or Stash).
 
 Code from the [Violations](https://wiki.jenkins-ci.org/display/JENKINS/Violations) is used through a dependency.
 
 There is a screenshot of the configuration GUI [here](https://raw.githubusercontent.com/tomasbjerre/violation-comments-to-stash-plugin/master/sandbox/screenshot-config.png) and a sample comment may look like [this](https://raw.githubusercontent.com/tomasbjerre/violation-comments-to-stash-plugin/master/sandbox/screenshot-stash.png).
 
-Available in Jenkins [here](https://wiki.jenkins-ci.org/display/JENKINS/Violation+Comments+to+Stash+Plugin).
+Available in Jenkins [here](https://wiki.jenkins-ci.org/display/JENKINS/Violation+Comments+to+Bitbucket+Server+Plugin).
 
 #Features
 * Comment pull requests, or individual commits, with code analyzers comments. Supports:
@@ -35,12 +35,12 @@ Available in Jenkins [here](https://wiki.jenkins-ci.org/display/JENKINS/Violatio
   * ZPTLint
 
 ## Use case
-Here is an example use case where a pull request is triggered from Stash, merged, checked and comments added to pull request in Stash.
+Here is an example use case where a pull request is triggered from Bitbucket Server, merged, checked and comments added to pull request in Bitbucket Server.
 
 You may also use it for an ordinary build job, to simply comment the commit that was built.
 
-### Notify Jenkins from Stash
-You may use [Pull Request Notifier for Stash](https://github.com/tomasbjerre/pull-request-notifier-for-stash) to trigger a Jenkins build from an event in Stash. It can supply any parameters and variables you may need. Here is an example URL.
+### Notify Jenkins from Bitbucket Server
+You may use [Pull Request Notifier for Bitbucket Server](https://github.com/tomasbjerre/pull-request-notifier-for-bitbucket) to trigger a Jenkins build from an event in Bitbucket Server. It can supply any parameters and variables you may need. Here is an example URL.
 
 ```
 http://localhost:8080/jenkins/job/builder/buildWithParameters?FROM=${PULL_REQUEST_FROM_HASH}&TO=${PULL_REQUEST_TO_HASH}&TOSLUG=${PULL_REQUEST_TO_REPO_SLUG}&TOREPO=${PULL_REQUEST_TO_HTTP_CLONE_URL}&FROMREPO=${PULL_REQUEST_FROM_HTTP_CLONE_URL}&ID=${PULL_REQUEST_ID}&PROJECT=${PULL_REQUEST_TO_REPO_PROJECT_KEY}
@@ -75,10 +75,10 @@ your build command here!
 ```
 
 ### Configure plugin
-This plugin may be added as a post build step to analyse the workspace and report comments back to pull request in Stash. [Here](https://raw.githubusercontent.com/tomasbjerre/violation-comments-to-stash-plugin/master/sandbox/screenshot-config.png) is an example of how that may look like.
+This plugin may be added as a post build step to analyse the workspace and report comments back to pull request in Bitbucket Server. [Here](https://raw.githubusercontent.com/tomasbjerre/violation-comments-to-stash-plugin/master/sandbox/screenshot-config.png) is an example of how that may look like.
 
 ### The result
-And finally [here](https://raw.githubusercontent.com/tomasbjerre/violation-comments-to-stash-plugin/master/sandbox/screenshot-stash.png) is an example stash comment.
+And finally [here](https://raw.githubusercontent.com/tomasbjerre/violation-comments-to-stash-plugin/master/sandbox/screenshot-stash.png) is an example Bitbucket Server comment.
 
 ## Developer instructions
 Instructions for developers.

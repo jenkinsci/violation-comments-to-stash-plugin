@@ -1,6 +1,9 @@
-# Violation Comments to Stash Plugin
+# Violation Comments to Bitbucket Server Plugin
 
-Changelog of Violation Comments to Stash Plugin
+Changelog of Violation Comments to Bitbucket Server Plugin
+
+# 1.11
+* Renaming from Stash to  Bitbucket Server. Atlassian renamed Stash to Bitbucket when version 4 was released.
 
 # 1.10
 * Making it applicable for all projects, not just free-style.

@@ -1,4 +1,4 @@
-package org.jenkinsci.plugins.jvcts.stash;
+package org.jenkinsci.plugins.jvcts.bitbucketserver;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static java.util.logging.Level.FINE;
@@ -19,16 +19,16 @@ import java.net.URL;
 import javax.annotation.Nullable;
 import javax.xml.bind.DatatypeConverter;
 
-import org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfig;
+import org.jenkinsci.plugins.jvcts.config.ViolationsToBitbucketServerConfig;
 
-public class StashInvoker {
+public class BitbucketServerInvoker {
 
  public enum Method {
   POST, DELETE, GET
  }
 
- public String invokeUrl(ViolationsToStashConfig config, String url, Method method, @Nullable String postContent,
-   BuildListener listener) {
+ public String invokeUrl(ViolationsToBitbucketServerConfig config, String url, Method method,
+   @Nullable String postContent, BuildListener listener) {
   doLog(listener, FINE, "Invoking: " + method.name() + " " + url + " Posting: " + postContent);
   HttpURLConnection conn = null;
   OutputStream output = null;
@@ -36,7 +36,7 @@ public class StashInvoker {
   try {
    CookieHandler.setDefault(new CookieManager(null, CookiePolicy.ACCEPT_ALL));
    conn = (HttpURLConnection) new URL(url).openConnection();
-   String userAndPass = config.getStashUser() + ":" + config.getStashPassword();
+   String userAndPass = config.getBitbucketServerUser() + ":" + config.getBitbucketServerPassword();
    String authString = new String(DatatypeConverter.printBase64Binary(userAndPass.getBytes()));
    conn.setRequestProperty("Authorization", "Basic " + authString);
    conn.setRequestMethod(method.name());

@@ -1,8 +1,8 @@
 package org.jenkinsci.plugins.jvcts.utils;
 
 import static com.google.common.base.Joiner.on;
-import static org.jenkinsci.plugins.jvcts.utils.StashClientFaker.fakeStashClient;
-import static org.jenkinsci.plugins.jvcts.utils.StashClientFaker.getRequestsSentToStash;
+import static org.jenkinsci.plugins.jvcts.utils.BitbucketServerClientFaker.fakeBitbucketServerClient;
+import static org.jenkinsci.plugins.jvcts.utils.BitbucketServerClientFaker.getRequestsSentToBitbucketServer;
 import static org.junit.Assert.fail;
 
 import java.io.File;
@@ -12,7 +12,7 @@ import java.util.logging.Handler;
 import java.util.logging.Logger;
 
 import org.jenkinsci.plugins.jvcts.config.ParserConfig;
-import org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfig;
+import org.jenkinsci.plugins.jvcts.config.ViolationsToBitbucketServerConfig;
 
 import com.google.common.io.Resources;
 
@@ -27,20 +27,20 @@ public class JvctsTestUtils {
   }
  }
 
- public static ViolationsToStashConfig preConfigure(List<ParserConfig> pconfigs) throws IOException {
-  ViolationsToStashConfig config = new ViolationsToStashConfig();
+ public static ViolationsToBitbucketServerConfig preConfigure(List<ParserConfig> pconfigs) throws IOException {
+  ViolationsToBitbucketServerConfig config = new ViolationsToBitbucketServerConfig();
   for (ParserConfig pconfig : pconfigs) {
    config.getParserConfigs().add(pconfig);
   }
-  config.setStashBaseUrl("http://stash.server/");
-  config.setStashUser("stashUser");
-  config.setStashPassword("stashPassword");
-  config.setStashProject("stashProject");
-  config.setStashRepo("stashRepo");
+  config.setBitbucketServerBaseUrl("http://stash.server/");
+  config.setBitbucketServerUser("stashUser");
+  config.setBitbucketServerPassword("stashPassword");
+  config.setBitbucketServerProject("stashProject");
+  config.setBitbucketServerRepo("stashRepo");
 
   disableLogging();
 
-  fakeStashClient();
+  fakeBitbucketServerClient();
   return config;
  }
 
@@ -49,11 +49,11 @@ public class JvctsTestUtils {
  }
 
  public static void assertRequested(String request) {
-  for (String requested : getRequestsSentToStash()) {
+  for (String requested : getRequestsSentToBitbucketServer()) {
    if (requested.equals(request)) {
     return;
    }
   }
-  fail("Did not capture:\n" + request + "\nCaptured:\n" + on("\n").join(getRequestsSentToStash()));
+  fail("Did not capture:\n" + request + "\nCaptured:\n" + on("\n").join(getRequestsSentToBitbucketServer()));
  }
 }

@@ -8,16 +8,16 @@ import static org.jenkinsci.plugins.jvcts.perform.JvctsPerformer.doPerform;
 import static org.jenkinsci.plugins.jvcts.utils.JvctsTestUtils.assertRequested;
 import static org.jenkinsci.plugins.jvcts.utils.JvctsTestUtils.getWorkspace;
 import static org.jenkinsci.plugins.jvcts.utils.JvctsTestUtils.preConfigure;
-import static org.jenkinsci.plugins.jvcts.utils.StashClientFaker.CHANGES_GET;
-import static org.jenkinsci.plugins.jvcts.utils.StashClientFaker.fake;
-import static org.jenkinsci.plugins.jvcts.utils.StashClientFaker.readFile;
+import static org.jenkinsci.plugins.jvcts.utils.BitbucketServerClientFaker.CHANGES_GET;
+import static org.jenkinsci.plugins.jvcts.utils.BitbucketServerClientFaker.fake;
+import static org.jenkinsci.plugins.jvcts.utils.BitbucketServerClientFaker.readFile;
 import hudson.model.StreamBuildListener;
 
 import java.util.List;
 import java.util.Map;
 
 import org.jenkinsci.plugins.jvcts.config.ParserConfig;
-import org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfig;
+import org.jenkinsci.plugins.jvcts.config.ViolationsToBitbucketServerConfig;
 
 public class JvctsTestBuilder {
 
@@ -45,8 +45,8 @@ public class JvctsTestBuilder {
   for (String pattern : patternsPerType.keySet()) {
    configs.add(new ParserConfig(TYPES.get(pattern), patternsPerType.get(pattern)));
   }
-  ViolationsToStashConfig config = preConfigure(configs);
-  config.setStashPullRequestId("1");
+  ViolationsToBitbucketServerConfig config = preConfigure(configs);
+  config.setBitbucketServerPullRequestId("1");
   doPerform(config, getWorkspace(), new StreamBuildListener(System.out, defaultCharset()));
   for (String asserted : assertRequested) {
    assertRequested(asserted);

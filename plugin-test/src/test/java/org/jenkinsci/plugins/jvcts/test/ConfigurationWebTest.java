@@ -38,13 +38,13 @@ public class ConfigurationWebTest {
  private static final String SIMIAN_PATTERN = "descriptor.config.parserConfigs[16].pattern";
  private static final String STYLECOP_PATTERN = "descriptor.config.parserConfigs[17].pattern";
  private static final String PATH_PREFIX = "descriptor.config.parserConfigs[0].pathPrefix";
- private static final String STASH_PULL_REQUEST_ID = "stashPullRequestId";
+ private static final String BITBUCKET_SERVER_PULL_REQUEST_ID = "bitbucketServerPullRequestId";
  private static final String COMMIT_HASH = "commitHash";
- private static final String STASH_REPO = "stashRepo";
- private static final String STASH_PROJECT = "stashProject";
- private static final String STASH_BASE_URL = "stashBaseUrl";
- private static final String STASH_USER = "stashUser";
- private static final String STASH_PASSWORD = "stashPassword";
+ private static final String BITBUCKET_SERVER_REPO = "bitbucketServerRepo";
+ private static final String BITBUCKET_SERVER_PROJECT = "bitbucketServerProject";
+ private static final String BITBUCKET_SERVER_BASE_URL = "bitbucketServerBaseUrl";
+ private static final String BITBUCKET_SERVER_USER = "bitbucketServerUser";
+ private static final String BITBUCKET_SERVER_PASSWORD = "bitbucketServerPassword";
  private static final String HTTP_LOCALHOST_8456 = "http://localhost:8456";
  private static final String PROP_JENKINS_URL = "jenkins";
  private static final Logger logger = Logger.getLogger(ConfigurationWebTest.class.getName());
@@ -87,12 +87,12 @@ public class ConfigurationWebTest {
   startJob();
   waitForJob(1);
   String consoleText = consoleText(1);
-  assertTrue(consoleText, consoleText.contains("stashBaseUrl: " + HTTP_LOCALHOST_8456));
-  assertTrue(consoleText, consoleText.contains("stashProject: ABC"));
-  assertTrue(consoleText, consoleText.contains("stashPullRequestId: 100"));
+  assertTrue(consoleText, consoleText.contains("bitbucketServerBaseUrl: " + HTTP_LOCALHOST_8456));
+  assertTrue(consoleText, consoleText.contains("bitbucketServerProject: ABC"));
+  assertTrue(consoleText, consoleText.contains("bitbucketServerPullRequestId: 100"));
   assertTrue(consoleText, consoleText.contains("commitHash: abcd1234"));
-  assertTrue(consoleText, consoleText.contains("stashUser: theuser"));
-  assertTrue(consoleText, consoleText.contains("stashRepo: a_repo"));
+  assertTrue(consoleText, consoleText.contains("bitbucketServerUser: theuser"));
+  assertTrue(consoleText, consoleText.contains("bitbucketServerRepo: a_repo"));
   assertTrue(consoleText, consoleText.contains("checkstyle: **/checkstyle-report.xml"));
   assertTrue(consoleText, consoleText.contains("checkstyle pathPrefix: pathPrefix"));
   assertTrue(consoleText, consoleText.contains("pmd: **/pmd-report.xml"));
@@ -116,12 +116,12 @@ public class ConfigurationWebTest {
    * updated.
    */
   goToConfig();
-  webDriver.findElement(name(STASH_BASE_URL)).clear();
-  webDriver.findElement(name(STASH_USER)).clear();
-  webDriver.findElement(name(STASH_PASSWORD)).clear();
-  webDriver.findElement(name(STASH_PROJECT)).clear();
-  webDriver.findElement(name(STASH_REPO)).clear();
-  webDriver.findElement(name(STASH_PULL_REQUEST_ID)).clear();
+  webDriver.findElement(name(BITBUCKET_SERVER_BASE_URL)).clear();
+  webDriver.findElement(name(BITBUCKET_SERVER_USER)).clear();
+  webDriver.findElement(name(BITBUCKET_SERVER_PASSWORD)).clear();
+  webDriver.findElement(name(BITBUCKET_SERVER_PROJECT)).clear();
+  webDriver.findElement(name(BITBUCKET_SERVER_REPO)).clear();
+  webDriver.findElement(name(BITBUCKET_SERVER_PULL_REQUEST_ID)).clear();
   webDriver.findElement(name(COMMIT_HASH)).clear();
   webDriver.findElement(name(PATH_PREFIX)).clear();
   webDriver.findElement(name(CHECKSTYLE_PATTERN)).clear();
@@ -142,12 +142,12 @@ public class ConfigurationWebTest {
   webDriver.findElement(name(CSSLINT_PATTERN)).clear();
   webDriver.findElement(name(PYFLAKES_PATTERN)).clear();
   webDriver.findElement(name(RESHARPER_PATTERN)).clear();
-  webDriver.findElement(name(STASH_BASE_URL)).sendKeys("http://changed.com");
-  webDriver.findElement(name(STASH_USER)).sendKeys("theotheruser");
-  webDriver.findElement(name(STASH_PASSWORD)).sendKeys("theotherpassword");
-  webDriver.findElement(name(STASH_PROJECT)).sendKeys("DEF");
-  webDriver.findElement(name(STASH_REPO)).sendKeys("a_repo2");
-  webDriver.findElement(name(STASH_PULL_REQUEST_ID)).sendKeys("101");
+  webDriver.findElement(name(BITBUCKET_SERVER_BASE_URL)).sendKeys("http://changed.com");
+  webDriver.findElement(name(BITBUCKET_SERVER_USER)).sendKeys("theotheruser");
+  webDriver.findElement(name(BITBUCKET_SERVER_PASSWORD)).sendKeys("theotherpassword");
+  webDriver.findElement(name(BITBUCKET_SERVER_PROJECT)).sendKeys("DEF");
+  webDriver.findElement(name(BITBUCKET_SERVER_REPO)).sendKeys("a_repo2");
+  webDriver.findElement(name(BITBUCKET_SERVER_PULL_REQUEST_ID)).sendKeys("101");
   webDriver.findElement(name(COMMIT_HASH)).sendKeys("abcd12345");
   webDriver.findElement(name(CHECKSTYLE_PATTERN)).sendKeys("**/new-checkstyle-report.xml");
   webDriver.findElement(name(PMD_PATTERN)).sendKeys("**/new-pmd-report.xml");
@@ -172,11 +172,11 @@ public class ConfigurationWebTest {
   startJob();
   waitForJob(2);
   consoleText = consoleText(2);
-  assertTrue(consoleText, consoleText.contains("stashBaseUrl: http://changed.com"));
-  assertTrue(consoleText, consoleText.contains("stashProject: DEF"));
-  assertTrue(consoleText, consoleText.contains("stashPullRequestId: 101"));
+  assertTrue(consoleText, consoleText.contains("bitbucketServerBaseUrl: http://changed.com"));
+  assertTrue(consoleText, consoleText.contains("bitbucketServerProject: DEF"));
+  assertTrue(consoleText, consoleText.contains("bitbucketServerPullRequestId: 101"));
   assertTrue(consoleText, consoleText.contains("commitHash: abcd12345"));
-  assertTrue(consoleText, consoleText.contains("stashRepo: a_repo2"));
+  assertTrue(consoleText, consoleText.contains("bitbucketServerRepo: a_repo2"));
   assertTrue(consoleText, consoleText.contains("checkstyle: **/new-checkstyle-report.xml"));
   assertTrue(consoleText, consoleText.contains("pmd: **/new-pmd-report.xml"));
   assertTrue(consoleText, consoleText.contains("jslint: **/new-jslint-report.xml"));
@@ -198,12 +198,12 @@ public class ConfigurationWebTest {
    * Open config page and check that configured values are there.
    */
   goToConfig();
-  assertEquals("http://changed.com", webDriver.findElement(name(STASH_BASE_URL)).getAttribute("value"));
-  assertEquals("theotheruser", webDriver.findElement(name(STASH_USER)).getAttribute("value"));
-  assertEquals("theotherpassword", webDriver.findElement(name(STASH_PASSWORD)).getAttribute("value"));
-  assertEquals("DEF", webDriver.findElement(name(STASH_PROJECT)).getAttribute("value"));
-  assertEquals("a_repo2", webDriver.findElement(name(STASH_REPO)).getAttribute("value"));
-  assertEquals("101", webDriver.findElement(name(STASH_PULL_REQUEST_ID)).getAttribute("value"));
+  assertEquals("http://changed.com", webDriver.findElement(name(BITBUCKET_SERVER_BASE_URL)).getAttribute("value"));
+  assertEquals("theotheruser", webDriver.findElement(name(BITBUCKET_SERVER_USER)).getAttribute("value"));
+  assertEquals("theotherpassword", webDriver.findElement(name(BITBUCKET_SERVER_PASSWORD)).getAttribute("value"));
+  assertEquals("DEF", webDriver.findElement(name(BITBUCKET_SERVER_PROJECT)).getAttribute("value"));
+  assertEquals("a_repo2", webDriver.findElement(name(BITBUCKET_SERVER_REPO)).getAttribute("value"));
+  assertEquals("101", webDriver.findElement(name(BITBUCKET_SERVER_PULL_REQUEST_ID)).getAttribute("value"));
   assertEquals("abcd12345", webDriver.findElement(name(COMMIT_HASH)).getAttribute("value"));
   assertEquals("**/new-checkstyle-report.xml", webDriver.findElement(name(CHECKSTYLE_PATTERN)).getAttribute("value"));
   assertEquals("**/new-pmd-report.xml", webDriver.findElement(name(PMD_PATTERN)).getAttribute("value"));
@@ -226,12 +226,12 @@ public class ConfigurationWebTest {
    * Use variable in fields to make sure it gets expanded.
    */
   goToConfig();
-  webDriver.findElement(name(STASH_BASE_URL)).clear();
-  webDriver.findElement(name(STASH_USER)).clear();
-  webDriver.findElement(name(STASH_PASSWORD)).clear();
-  webDriver.findElement(name(STASH_PROJECT)).clear();
-  webDriver.findElement(name(STASH_REPO)).clear();
-  webDriver.findElement(name(STASH_PULL_REQUEST_ID)).clear();
+  webDriver.findElement(name(BITBUCKET_SERVER_BASE_URL)).clear();
+  webDriver.findElement(name(BITBUCKET_SERVER_USER)).clear();
+  webDriver.findElement(name(BITBUCKET_SERVER_PASSWORD)).clear();
+  webDriver.findElement(name(BITBUCKET_SERVER_PROJECT)).clear();
+  webDriver.findElement(name(BITBUCKET_SERVER_REPO)).clear();
+  webDriver.findElement(name(BITBUCKET_SERVER_PULL_REQUEST_ID)).clear();
   webDriver.findElement(name(COMMIT_HASH)).clear();
   webDriver.findElement(name(CHECKSTYLE_PATTERN)).clear();
   webDriver.findElement(name(CODENARC_PATTERN)).clear();
@@ -249,12 +249,12 @@ public class ConfigurationWebTest {
   webDriver.findElement(name(STYLECOP_PATTERN)).clear();
   webDriver.findElement(name(JSLINT_PATTERN)).clear();
   webDriver.findElement(name(CSSLINT_PATTERN)).clear();
-  webDriver.findElement(name(STASH_BASE_URL)).sendKeys("$BUILD_NUMBER");
-  webDriver.findElement(name(STASH_USER)).sendKeys("$BUILD_NUMBER");
-  webDriver.findElement(name(STASH_PASSWORD)).sendKeys("$BUILD_NUMBER");
-  webDriver.findElement(name(STASH_PROJECT)).sendKeys("$BUILD_NUMBER");
-  webDriver.findElement(name(STASH_REPO)).sendKeys("$BUILD_NUMBER");
-  webDriver.findElement(name(STASH_PULL_REQUEST_ID)).sendKeys("$BUILD_NUMBER");
+  webDriver.findElement(name(BITBUCKET_SERVER_BASE_URL)).sendKeys("$BUILD_NUMBER");
+  webDriver.findElement(name(BITBUCKET_SERVER_USER)).sendKeys("$BUILD_NUMBER");
+  webDriver.findElement(name(BITBUCKET_SERVER_PASSWORD)).sendKeys("$BUILD_NUMBER");
+  webDriver.findElement(name(BITBUCKET_SERVER_PROJECT)).sendKeys("$BUILD_NUMBER");
+  webDriver.findElement(name(BITBUCKET_SERVER_REPO)).sendKeys("$BUILD_NUMBER");
+  webDriver.findElement(name(BITBUCKET_SERVER_PULL_REQUEST_ID)).sendKeys("$BUILD_NUMBER");
   webDriver.findElement(name(COMMIT_HASH)).sendKeys("$BUILD_NUMBER");
   webDriver.findElement(name(CHECKSTYLE_PATTERN)).sendKeys("$BUILD_NUMBER");
   webDriver.findElement(name(CODENARC_PATTERN)).sendKeys("$BUILD_NUMBER");
@@ -277,11 +277,11 @@ public class ConfigurationWebTest {
   startJob();
   waitForJob(3);
   consoleText = consoleText(3);
-  assertTrue(consoleText, consoleText.contains("stashBaseUrl: 3"));
-  assertTrue(consoleText, consoleText.contains("stashProject: 3"));
-  assertTrue(consoleText, consoleText.contains("stashPullRequestId: 3"));
+  assertTrue(consoleText, consoleText.contains("bitbucketServerBaseUrl: 3"));
+  assertTrue(consoleText, consoleText.contains("bitbucketServerProject: 3"));
+  assertTrue(consoleText, consoleText.contains("bitbucketServerPullRequestId: 3"));
   assertTrue(consoleText, consoleText.contains("commitHash: 3"));
-  assertTrue(consoleText, consoleText.contains("stashRepo: 3"));
+  assertTrue(consoleText, consoleText.contains("bitbucketServerRepo: 3"));
   assertTrue(consoleText, consoleText.contains("checkstyle: 3"));
   assertTrue(consoleText, consoleText.contains("pmd: 3"));
   assertTrue(consoleText, consoleText.contains("jslint: 3"));
@@ -303,12 +303,12 @@ public class ConfigurationWebTest {
    * Open config page and check that configured variables are there, unexpanded!
    */
   goToConfig();
-  assertEquals("$BUILD_NUMBER", webDriver.findElement(name(STASH_BASE_URL)).getAttribute("value"));
-  assertEquals("$BUILD_NUMBER", webDriver.findElement(name(STASH_USER)).getAttribute("value"));
-  assertEquals("$BUILD_NUMBER", webDriver.findElement(name(STASH_PASSWORD)).getAttribute("value"));
-  assertEquals("$BUILD_NUMBER", webDriver.findElement(name(STASH_PROJECT)).getAttribute("value"));
-  assertEquals("$BUILD_NUMBER", webDriver.findElement(name(STASH_REPO)).getAttribute("value"));
-  assertEquals("$BUILD_NUMBER", webDriver.findElement(name(STASH_PULL_REQUEST_ID)).getAttribute("value"));
+  assertEquals("$BUILD_NUMBER", webDriver.findElement(name(BITBUCKET_SERVER_BASE_URL)).getAttribute("value"));
+  assertEquals("$BUILD_NUMBER", webDriver.findElement(name(BITBUCKET_SERVER_USER)).getAttribute("value"));
+  assertEquals("$BUILD_NUMBER", webDriver.findElement(name(BITBUCKET_SERVER_PASSWORD)).getAttribute("value"));
+  assertEquals("$BUILD_NUMBER", webDriver.findElement(name(BITBUCKET_SERVER_PROJECT)).getAttribute("value"));
+  assertEquals("$BUILD_NUMBER", webDriver.findElement(name(BITBUCKET_SERVER_REPO)).getAttribute("value"));
+  assertEquals("$BUILD_NUMBER", webDriver.findElement(name(BITBUCKET_SERVER_PULL_REQUEST_ID)).getAttribute("value"));
   assertEquals("$BUILD_NUMBER", webDriver.findElement(name(COMMIT_HASH)).getAttribute("value"));
   assertEquals("$BUILD_NUMBER", webDriver.findElement(name(CHECKSTYLE_PATTERN)).getAttribute("value"));
   assertEquals("$BUILD_NUMBER", webDriver.findElement(name(CODENARC_PATTERN)).getAttribute("value"));
@@ -333,12 +333,12 @@ public class ConfigurationWebTest {
  }
 
  private void enterDetails() {
-  webDriver.findElement(name(STASH_USER)).sendKeys("theuser");
-  webDriver.findElement(name(STASH_PASSWORD)).sendKeys("thepassword");
-  webDriver.findElement(name(STASH_BASE_URL)).sendKeys(HTTP_LOCALHOST_8456);
-  webDriver.findElement(name(STASH_PROJECT)).sendKeys("ABC");
-  webDriver.findElement(name(STASH_REPO)).sendKeys("a_repo");
-  webDriver.findElement(name(STASH_PULL_REQUEST_ID)).sendKeys("100");
+  webDriver.findElement(name(BITBUCKET_SERVER_USER)).sendKeys("theuser");
+  webDriver.findElement(name(BITBUCKET_SERVER_PASSWORD)).sendKeys("thepassword");
+  webDriver.findElement(name(BITBUCKET_SERVER_BASE_URL)).sendKeys(HTTP_LOCALHOST_8456);
+  webDriver.findElement(name(BITBUCKET_SERVER_PROJECT)).sendKeys("ABC");
+  webDriver.findElement(name(BITBUCKET_SERVER_REPO)).sendKeys("a_repo");
+  webDriver.findElement(name(BITBUCKET_SERVER_PULL_REQUEST_ID)).sendKeys("100");
   webDriver.findElement(name(COMMIT_HASH)).sendKeys("abcd1234");
   webDriver.findElement(name(PATH_PREFIX)).sendKeys("pathPrefix");
   webDriver.findElement(name(CHECKSTYLE_PATTERN)).sendKeys("**/checkstyle-report.xml");
@@ -393,7 +393,7 @@ public class ConfigurationWebTest {
  private void enablePlugin() throws InterruptedException {
   scrollDown();
   webDriver.findElement(xpath("//button[@suffix='publisher']")).click();
-  webDriver.findElement(xpath("//a[text()='Report Violations to Stash']")).click();
+  webDriver.findElement(xpath("//a[text()='Report Violations to Bitbucket Server']")).click();
   scrollDown();
  }
 

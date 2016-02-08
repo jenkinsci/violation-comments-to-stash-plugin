@@ -6,19 +6,19 @@ import static com.google.common.base.Strings.nullToEmpty;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
 import static com.google.common.io.Resources.getResource;
-import static org.jenkinsci.plugins.jvcts.stash.JvctsStashClient.setStashInvoker;
+import static org.jenkinsci.plugins.jvcts.bitbucketserver.JvctsBitbucketServerClient.setBitbucketServerInvoker;
 import hudson.model.BuildListener;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import org.jenkinsci.plugins.jvcts.config.ViolationsToStashConfig;
-import org.jenkinsci.plugins.jvcts.stash.StashInvoker;
+import org.jenkinsci.plugins.jvcts.bitbucketserver.BitbucketServerInvoker;
+import org.jenkinsci.plugins.jvcts.config.ViolationsToBitbucketServerConfig;
 
 import com.google.common.io.Resources;
 
-public class StashClientFaker {
+public class BitbucketServerClientFaker {
 
  public static final String NO_REPORTABLES = "http://stash.server/rest/api/1.0/projects/stashProject/repos/stashRepo/pull-requests/1/comments?path=src/se/main/java/bjurr/FileThatHasNoReportables.java&limit=999999 GET";
  public static final String COMMENTS_PMDFILE_GET = "http://stash.server/rest/api/1.0/projects/stashProject/repos/stashRepo/pull-requests/1/comments?path=module/src/main/java/se/bjurr/PMDFile.java&limit=999999 GET";
@@ -30,22 +30,22 @@ public class StashClientFaker {
  public static final String COMMENTS_FINDBUGS_GET = "http://stash.server/rest/api/1.0/projects/stashProject/repos/stashRepo/pull-requests/1/comments?path=module/se/bjurr/analyzer/Code.java&limit=999999 GET";
  public static final String CHANGES_GET = "http://stash.server/rest/api/1.0/projects/stashProject/repos/stashRepo/pull-requests/1/changes?limit=999999 GET";
  private static Map<String, String> fakeResponses = newHashMap();
- private static List<String> requestsSentToStash = newArrayList();
+ private static List<String> requestsSentToBitbucketServer = newArrayList();
 
- private StashClientFaker() {
+ private BitbucketServerClientFaker() {
  }
 
- public static void fakeStashClient() throws IOException {
-  setStashInvoker(new StashInvoker() {
+ public static void fakeBitbucketServerClient() throws IOException {
+  setBitbucketServerInvoker(new BitbucketServerInvoker() {
    @Override
-   public String invokeUrl(ViolationsToStashConfig config, String url, Method method, String postContent,
+   public String invokeUrl(ViolationsToBitbucketServerConfig config, String url, Method method, String postContent,
      BuildListener listener) {
     String key = createFakeKey(url, method.name(), postContent);
     if (!fakeResponses.containsKey(key)) {
      throw new RuntimeException("\"" + key + "\" not faked!\nThese are faked:\n"
        + on("\n").join(fakeResponses.keySet()));
     }
-    requestsSentToStash.add(key);
+    requestsSentToBitbucketServer.add(key);
     return fakeResponses.get(key);
    }
   });
@@ -81,8 +81,8 @@ public class StashClientFaker {
   return (url + " " + method + " " + nullToEmpty(postContent)).trim();
  }
 
- public static List<String> getRequestsSentToStash() {
-  return requestsSentToStash;
+ public static List<String> getRequestsSentToBitbucketServer() {
+  return requestsSentToBitbucketServer;
  }
 
  public static String prToCommit(String string) {

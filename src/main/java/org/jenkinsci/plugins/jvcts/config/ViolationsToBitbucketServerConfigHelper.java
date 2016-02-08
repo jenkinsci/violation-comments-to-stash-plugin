@@ -5,7 +5,7 @@ import hudson.plugins.violations.TypeDescriptor;
 
 import java.util.List;
 
-public class ViolationsToStashConfigHelper {
+public class ViolationsToBitbucketServerConfigHelper {
  public static final String CHECKSTYLE_NAME = "checkstyle";
  public static final String CODENARC_NAME = "codenarc";
  public static final String CPD_NAME = "cpd";
@@ -24,16 +24,16 @@ public class ViolationsToStashConfigHelper {
  public static final String STYLECOP_NAME = "stylecop";
  public static final String FIELD_PATTERN = "pattern";
  public static final String FIELD_PREFIX = "pathPrefix";
- public static final String FIELD_STASH_PULL_REQUEST_ID = "stashPullRequestId";
+ public static final String FIELD_BITBUCKET_SERVER_PULL_REQUEST_ID = "bitbucketServerPullRequestId";
  public static final String FIELD_COMMIT_HASH = "commitHash";
- public static final String FIELD_STASH_REPO = "stashRepo";
- public static final String FIELD_STASH_PROJECT = "stashProject";
- public static final String FIELD_STASH_BASE_URL = "stashBaseUrl";
- public static final String FIELD_STASH_USER = "stashUser";
- public static final String FIELD_STASH_PASSWORD = "stashPassword";
+ public static final String FIELD_BITBUCKET_SERVER_REPO = "bitbucketServerRepo";
+ public static final String FIELD_BITBUCKET_SERVER_PROJECT = "bitbucketServerProject";
+ public static final String FIELD_BITBUCKET_SERVER_BASE_URL = "bitbucketServerBaseUrl";
+ public static final String FIELD_BITBUCKET_SERVER_USER = "bitbucketServerUser";
+ public static final String FIELD_BITBUCKET_SERVER_PASSWORD = "bitbucketServerPassword";
 
- public static ViolationsToStashConfig createNewConfig() {
-  ViolationsToStashConfig config = new ViolationsToStashConfig();
+ public static ViolationsToBitbucketServerConfig createNewConfig() {
+  ViolationsToBitbucketServerConfig config = new ViolationsToBitbucketServerConfig();
   List<ParserConfig> parsers = newArrayList();
   for (TypeDescriptor parser : TypeDescriptor.TYPES.values()) {
    ParserConfig parserConfig = new ParserConfig();
