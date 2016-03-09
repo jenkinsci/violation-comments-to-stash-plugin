@@ -1,8 +1,6 @@
 # Violation Comments to Bitbucket Server
 
-Travis CI: [![Build Status](https://travis-ci.org/tomasbjerre/violation-comments-to-stash-plugin.svg?branch=master)](https://travis-ci.org/tomasbjerre/violation-comments-to-stash-plugin)
-
-CloudBees: [![Build Status](https://jenkins.ci.cloudbees.com/job/plugins/job/violation-comments-to-stash-plugin/badge/icon)](https://jenkins.ci.cloudbees.com/job/plugins/job/violation-comments-to-stash-plugin/)
+[![Build Status](https://jenkins.ci.cloudbees.com/job/plugins/job/violation-comments-to-stash-plugin/badge/icon)](https://jenkins.ci.cloudbees.com/job/plugins/job/violation-comments-to-stash-plugin/)
 
 This is much like the [Violations](https://wiki.jenkins-ci.org/display/JENKINS/Violations) plugin. Instead of publishing violation reports in Jenkins, it comments pull requests (or individual commits) in  Bitbucket Server (or Stash).
 
