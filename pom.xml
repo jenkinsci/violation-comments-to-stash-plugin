@@ -5,11 +5,7 @@
   <parent>
     <groupId>org.jenkins-ci.plugins</groupId>
     <artifactId>plugin</artifactId>
-    <!--
-      Released 2014-03-31, to make plugin compatible with older Jenkins installations.
-      There is an issue with older releases and Java 8 (https://issues.jenkins-ci.org/browse/JENKINS-18537).
-    //-->
-    <version>1.557</version>
+    <version>1.609.3</version>
     <relativePath />
   </parent>
 

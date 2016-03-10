@@ -14,11 +14,15 @@ import static org.jenkinsci.plugins.jvcts.config.ViolationsToBitbucketServerConf
 import static org.jenkinsci.plugins.jvcts.config.ViolationsToBitbucketServerConfigHelper.FIELD_BITBUCKET_SERVER_USER;
 import static org.jenkinsci.plugins.jvcts.config.ViolationsToBitbucketServerConfigHelper.FIELD_COMMIT_HASH;
 import hudson.EnvVars;
+import hudson.FilePath;
+import hudson.FilePath.FileCallable;
 import hudson.model.BuildListener;
 import hudson.model.AbstractBuild;
 import hudson.plugins.violations.model.Violation;
+import hudson.remoting.VirtualChannel;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Map;
@@ -27,16 +31,17 @@ import org.jenkinsci.plugins.jvcts.JvctsLogger;
 import org.jenkinsci.plugins.jvcts.bitbucketserver.JvctsBitbucketServerClient;
 import org.jenkinsci.plugins.jvcts.config.ParserConfig;
 import org.jenkinsci.plugins.jvcts.config.ViolationsToBitbucketServerConfig;
+import org.jenkinsci.remoting.RoleChecker;
 
 import com.google.common.annotations.VisibleForTesting;
 
 public class JvctsPerformer {
 
- public static void jvctsPerform(ViolationsToBitbucketServerConfig config, AbstractBuild<?, ?> build,
-   BuildListener listener) {
+ public static void jvctsPerform(ViolationsToBitbucketServerConfig unexpandedConfig, AbstractBuild<?, ?> build,
+   final BuildListener listener) {
   try {
    EnvVars env = build.getEnvironment(listener);
-   config = expand(config, env);
+   final ViolationsToBitbucketServerConfig config = expand(unexpandedConfig, env);
    listener.getLogger().println("---");
    listener.getLogger().println("--- Jenkins Violation Comments to Bitbucket Server ---");
    listener.getLogger().println("---");
@@ -45,9 +50,23 @@ public class JvctsPerformer {
    listener.getLogger().println("Running Jenkins Violation Comments To Bitbucket Server");
    listener.getLogger().println("Will comment " + config.getBitbucketServerPullRequestId());
 
-   File workspace = new File(build.getExecutor().getCurrentWorkspace().toURI());
-   doLog(FINE, "Workspace: " + workspace.getAbsolutePath());
-   doPerform(config, workspace, listener);
+   FilePath workspace = new FilePath(new File(build.getExecutor().getCurrentWorkspace().toURI()));
+   workspace.act(new FileCallable<Void>() {
+
+    private static final long serialVersionUID = 6603308886697471560L;
+
+    @Override
+    public void checkRoles(RoleChecker checker) throws SecurityException {
+
+    }
+
+    @Override
+    public Void invoke(File workspace, VirtualChannel channel) throws IOException, InterruptedException {
+     doLog(FINE, "Workspace: " + workspace.getAbsolutePath());
+     doPerform(config, workspace, listener);
+     return null;
+    }
+   });
   } catch (Exception e) {
    doLog(SEVERE, "", e);
    return;
