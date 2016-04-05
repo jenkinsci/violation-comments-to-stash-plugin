@@ -24,6 +24,7 @@ import hudson.remoting.VirtualChannel;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
@@ -50,8 +51,15 @@ public class JvctsPerformer {
    listener.getLogger().println("Running Jenkins Violation Comments To Bitbucket Server");
    listener.getLogger().println("Will comment " + config.getBitbucketServerPullRequestId());
 
-   FilePath workspace = new FilePath(new File(build.getExecutor().getCurrentWorkspace().toURI()));
-   workspace.act(new FileCallable<Void>() {
+   FilePath workspace = build.getExecutor().getCurrentWorkspace();
+   URI workspacePath = build.getExecutor().getCurrentWorkspace().toURI();
+   FilePath fp;
+   if (workspace.isRemote()) {
+    fp = new FilePath(workspace.getChannel(), workspacePath.getPath());
+   } else {
+    fp = new FilePath(new File(workspacePath));
+   }
+   fp.act(new FileCallable<Void>() {
 
     private static final long serialVersionUID = 6603308886697471560L;
 
