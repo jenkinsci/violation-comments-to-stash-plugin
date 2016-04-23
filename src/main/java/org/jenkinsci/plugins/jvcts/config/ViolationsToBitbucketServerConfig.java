@@ -3,8 +3,9 @@ package org.jenkinsci.plugins.jvcts.config;
 import static com.google.common.collect.Lists.newArrayList;
 
 import java.util.List;
+import java.io.Serializable;
 
-public class ViolationsToBitbucketServerConfig {
+public class ViolationsToBitbucketServerConfig implements Serializable {
  private List<ParserConfig> parsers = newArrayList();
  private String bitbucketServerBaseUrl;
  private String bitbucketServerUser;
