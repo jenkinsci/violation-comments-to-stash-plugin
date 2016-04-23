@@ -4,13 +4,12 @@ import static com.google.common.base.Strings.nullToEmpty;
 import static com.google.common.collect.Maps.newHashMap;
 import static java.util.logging.Level.FINE;
 import static java.util.logging.Level.SEVERE;
+import hudson.FilePath.FileCallable;
 import hudson.plugins.violations.TypeDescriptor;
 import hudson.plugins.violations.model.FullBuildModel;
 import hudson.plugins.violations.model.FullFileModel;
 import hudson.plugins.violations.model.Violation;
-import hudson.FilePath.FileCallable;
 import hudson.remoting.VirtualChannel;
-import org.jenkinsci.remoting.RoleChecker;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,11 +24,13 @@ import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.FileSet;
 import org.jenkinsci.plugins.jvcts.config.ParserConfig;
 import org.jenkinsci.plugins.jvcts.config.ViolationsToBitbucketServerConfig;
+import org.jenkinsci.remoting.RoleChecker;
 
 import com.google.common.annotations.VisibleForTesting;
 
 public class FullBuildModelWrapper implements FileCallable<Map<String, List<Violation>>> {
 
+ private static final long serialVersionUID = -2370149493827167428L;
  private final Map<String, FullBuildModel> models = newHashMap();
  private final ViolationsToBitbucketServerConfig config;
 
@@ -53,8 +54,8 @@ public class FullBuildModelWrapper implements FileCallable<Map<String, List<Viol
       type.createParser().parse(models.get(parserConfig.getParserTypeDescriptorName()), workspace, fileName,
         sourcePaths);
      } catch (IOException e) {
-      logger.log(SEVERE, "Error while parsing \"" + fileName + "\" for type "
-        + parserConfig.getParserTypeDescriptorName(), e);
+      logger.log(SEVERE,
+        "Error while parsing \"" + fileName + "\" for type " + parserConfig.getParserTypeDescriptorName(), e);
      }
     }
    }

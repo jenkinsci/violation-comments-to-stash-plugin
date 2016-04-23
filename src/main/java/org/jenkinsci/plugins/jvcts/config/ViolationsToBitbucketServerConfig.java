@@ -2,10 +2,11 @@ package org.jenkinsci.plugins.jvcts.config;
 
 import static com.google.common.collect.Lists.newArrayList;
 
-import java.util.List;
 import java.io.Serializable;
+import java.util.List;
 
 public class ViolationsToBitbucketServerConfig implements Serializable {
+ private static final long serialVersionUID = -2681014104552938569L;
  private List<ParserConfig> parsers = newArrayList();
  private String bitbucketServerBaseUrl;
  private String bitbucketServerUser;

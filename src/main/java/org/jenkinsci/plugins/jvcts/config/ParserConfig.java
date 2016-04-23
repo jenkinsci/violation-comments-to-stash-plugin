@@ -5,11 +5,12 @@ import static com.google.common.base.Strings.emptyToNull;
 import static com.google.common.base.Strings.nullToEmpty;
 import hudson.plugins.violations.TypeDescriptor;
 
-import com.google.common.base.Optional;
-
 import java.io.Serializable;
 
+import com.google.common.base.Optional;
+
 public class ParserConfig implements Serializable {
+ private static final long serialVersionUID = 5609084544558714042L;
  private String pattern;
  private String parserTypeDescriptorName;
  private String pathPrefix;
