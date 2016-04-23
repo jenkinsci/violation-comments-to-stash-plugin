@@ -1,44 +1,291 @@
-# Violation Comments to Bitbucket Server Plugin
+# Violation Comments to Bitbucket Server Plugin Changelog
 
-Changelog of Violation Comments to Bitbucket Server Plugin
+Changelog of Violation Comments to Bitbucket Server Plugin.
 
-# 1.11
-* Renaming from Stash to  Bitbucket Server. Atlassian renamed Stash to Bitbucket when version 4 was released.
+## Unreleased
+### No issue
 
-# 1.10
-* Making it applicable for all projects, not just free-style.
+**Adding serialVersionUID to config classes**
 
-# 1.9
-* Adding header "X-Atlassian-Token: no-check" to be compatible with Stash 4.0 #12
 
-# 1.8
-* Accepting cookies sent from Stash server. To prevent infinite redirect if Stash requires authentication.
+[fd660e5a2611d6e](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/fd660e5a2611d6e) Tomas Bjerre *2016-04-23 16:46:43*
 
-# 1.7
-* Using Violations 0.8.0-alpha-1
- * Adds new parsers: PyFlakes, ReSharper, XMLLint, ZPTLint
- * Adds messages to Findbugs
- * Bug fixes in parsers, see Violations Plugin changelog
- 
-# 1.6
-* Replacing back-slashes (Windows style file paths) from reports with forward-slashes. So that they match file paths reported in Stash Rest API.
-* Using password field for password in configuration GUI
+**make remoting work**
 
-# 1.5
-* Less logging in build log
+ * requires hudson.plugins.violations.model.Violation to implement Serializable 
 
-# 1.4
-* Finding all violations for files. Even if same file is reported twice (with absolute and relative path).
+[b4e938e9b94fff8](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/b4e938e9b94fff8) Michal Humpula *2016-04-23 16:29:09*
+
+
+## 1.13
+### No issue
+
+**Making it compatible with remote slaves**
+
+
+[75cb46145fe5de0](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/75cb46145fe5de0) Tomas Bjerre *2016-04-05 15:36:11*
+
+
+## 1.12
+### No issue
+
+**Trying to support slaves setup**
+
+
+[f3c4d8822a43dd0](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/f3c4d8822a43dd0) Tomas Bjerre *2016-03-10 18:27:56*
+
+**Update README.md**
+
+
+[27d4315b906adbb](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/27d4315b906adbb) Tomas Bjerre *2016-03-09 08:24:28*
+
+
+## 1.11
+### No issue
+
+**Renaming from Stash to Bitbucket Server**
+
+
+[9941813be1012bf](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/9941813be1012bf) Tomas Bjerre *2016-02-08 18:53:48*
+
+**Updating changelog for 1.10**
+
+
+[6e8dc3bdd32b4e9](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/6e8dc3bdd32b4e9) Tomas Bjerre *2015-12-17 09:47:48*
+
+
+## 1.10
+### No issue
+
+**Making it applicable for all project types**
+
+
+[4f213bcdf933c18](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/4f213bcdf933c18) Tomas Bjerre *2015-12-17 08:03:06*
+
+
+## 1.9
+### GitHub #12 
+
+**Adding header 'X-Atlassian-Token: no-check' to be compatible with Stash 4.0 #12**
+
+
+[36550adbc5ffe83](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/36550adbc5ffe83) Tomas Bjerre *2015-09-14 16:05:11*
+
+
+### No issue
+
+**Adding htmllint checkstyle test**
+
+
+[61a35842b86801f](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/61a35842b86801f) Tomas Bjerre *2015-08-17 16:34:40*
+
+
+## 1.8
+### No issue
+
+**Updating changelog after mergin PR**
+
+
+[180db540dd510ec](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/180db540dd510ec) Tomas Bjerre *2015-07-01 21:03:38*
+
+**Accept cookies sent from server**
+
+ * To prevent infinite redirect if stash requires authentication. 
+
+[429e009777b9b1a](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/429e009777b9b1a) Marcin Zajączkowski *2015-07-01 20:49:27*
+
+
+## 1.7
+### GitHub [#1](https://github.com/jenkinsci/violation-comments-to-stash-plugin/pull/1) Fix displaying stash user in build output
+
+**Using Violations 0.8.0-alpha-1 #1**
+
+
+[c506992c461df21](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/c506992c461df21) Tomas Bjerre *2015-06-23 19:49:00*
+
+
+### Jira alpha-1 
+
+**Using Violations 0.8.0-alpha-1 #1**
+
+
+[c506992c461df21](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/c506992c461df21) Tomas Bjerre *2015-06-23 19:49:00*
+
+
+### No issue
+
+**Adding test cases after merge**
+
+
+[7b07ce13006da3f](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/7b07ce13006da3f) Tomas Bjerre *2015-06-22 14:27:23*
+
+**Fix displaying stash user in build output**
+
+
+[1120331af4a588d](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/1120331af4a588d) Marcin Zajączkowski *2015-06-22 11:07:53*
+
+**Correcting LICENSE**
+
+
+[b10fecd4536de6b](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/b10fecd4536de6b) Tomas Bjerre *2015-06-13 07:13:12*
+
+
+## 1.6
+### GitHub #10 
+
+**Handling Windows-style file paths and using password field in confg GUI #9 #10**
+
+ * Replacing back-slashes (Windows style file paths) from reports with forward-slashes. So that they match file paths reported in Stash Rest API. 
+
+[7539e18f456c585](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/7539e18f456c585) Tomas Bjerre *2015-05-31 15:47:44*
+
+
+### GitHub #9 
+
+**Handling Windows-style file paths and using password field in confg GUI #9 #10**
+
+ * Replacing back-slashes (Windows style file paths) from reports with forward-slashes. So that they match file paths reported in Stash Rest API. 
+
+[7539e18f456c585](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/7539e18f456c585) Tomas Bjerre *2015-05-31 15:47:44*
+
+
+## 1.5
+### No issue
+
+**Less logging**
+
+ * Also creating a backup of settings.xml when running build.sh 
+
+[17e7bc082469153](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/17e7bc082469153) Tomas Bjerre *2015-05-30 07:05:01*
+
+**changelog 1.4**
+
+
+[068b77e1120d1bb](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/068b77e1120d1bb) Tomas Bjerre *2015-05-26 09:54:50*
+
+
+## 1.4
+### No issue
+
+**Finding all violations for files**
+
+ * Even if same file is reported twice (with absolute and relative path) 
+
+[7f8c50de3c82bbf](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/7f8c50de3c82bbf) Tomas Bjerre *2015-05-26 09:43:25*
+
+**Spelling correction**
+
+
+[a37917539bdfbb1](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/a37917539bdfbb1) Tomas Bjerre *2015-05-25 18:05:49*
+
 
 ## 1.3
-* Changed file in Stash may also end with reported file, not only the opposite. Findbugs reports Java-files as package path, this makes sure those files are matched to changed files in Stash.
+### No issue
+
+**Changed file in Stash may also end with reported file, not only the opposite**
+
+ * Findbugs reports Java-files as package path, this makes sure those files are matched to changed files in Stash 
+
+[56010ce57867159](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/56010ce57867159) Tomas Bjerre *2015-05-25 17:58:06*
+
+**Updating doc to make it clear that not only PR:s can be commented**
+
+
+[20fd43bb09d7456](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/20fd43bb09d7456) Tomas Bjerre *2015-05-24 21:19:29*
+
 
 ## 1.2
-* Can, optionally, add comments to individual commits. And/Or to pull requests.
+### No issue
+
+**Comment individual commits**
+
+
+[d5d5c314c1ad9f7](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/d5d5c314c1ad9f7) Tomas Bjerre *2015-05-24 20:46:22*
+
+**Setting correct Jenkins wiki URL**
+
+
+[7068ccd81d0b52a](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/7068ccd81d0b52a) Tomas Bjerre *2015-05-21 19:41:25*
+
+**doc**
+
+
+[233c84324e1eea1](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/233c84324e1eea1) Tomas Bjerre *2015-05-21 09:48:57*
+
 
 ## 1.1
-* Adding limit parameter to changes request in Stash Client. So that all files in PR gets commented.
+### GitHub [#2](https://github.com/jenkinsci/violation-comments-to-stash-plugin/pull/2) Using Violations 0.8.0-alpha-1 #1
+
+**Adding limit parameter to changes request in Stash Client #2**
+
+
+[34b1ba31b493b4f](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/34b1ba31b493b4f) Tomas Bjerre *2015-05-21 09:23:13*
+
+
+### No issue
+
+**Build and doc updates**
+
+ * Removing JDK 7 and 8 from .travis.yml, for faster builds 
+ * Changing screenshot of config to capture entire Jenkins job configuration 
+ * Adding CloudBees build status 
+ * Update README.md with correct URL to Jenkins wiki 
+
+[9d3c37545cc05f1](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/9d3c37545cc05f1) Tomas Bjerre *2015-05-06 18:14:34*
+
+**Moving plugin implementation to root of repo**
+
+ * This is the expected project layout of a Jenkins plugin. Otherwise it wont build in CloudBees. 
+
+[5fab312cb2fef02](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/5fab312cb2fef02) Tomas Bjerre *2015-05-02 16:34:33*
+
+**Correcting release command**
+
+
+[8c59d2285cd0c06](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/8c59d2285cd0c06) Tomas Bjerre *2015-05-02 13:28:46*
+
 
 ## 1.0
-* Initial Release
- * Alot of use cases are untested and any user should expect to find issues. But since I do not have time for testing everything, I'll release 1.0 "as is"! Please report any issues you find =)
+### No issue
+
+**Using Violations plugin code through maven dependency**
+
+ * Instead of GIT submodule 
+
+[81fc8ab3a212cd4](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/81fc8ab3a212cd4) Tomas Bjerre *2015-05-02 12:51:12*
+
+**Removing jenkins from artifact id**
+
+ * This is how the Jenkins team want it to be named 
+
+[b82474c95c8024c](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/b82474c95c8024c) Tomas Bjerre *2015-05-02 12:17:57*
+
+**Link to Jenkins wiki page**
+
+
+[fdf30d7fdad0c62](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/fdf30d7fdad0c62) Tomas Bjerre *2015-05-02 12:14:32*
+
+**Using correct workspace path**
+
+
+[da81731331d996d](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/da81731331d996d) Tomas Bjerre *2015-05-02 11:48:51*
+
+**Refactoring**
+
+ * More logging and also logging more to build log. 
+ * Adding optional path prefix, to adjust to reported file names. 
+ * Getting workspace from build instead of WORKSPACE variable. Variable may not be correct for parallell builds. 
+
+[acc6801a3603f4c](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/acc6801a3603f4c) Tomas Bjerre *2015-05-02 10:09:06*
+
+**Second commit**
+
+
+[deaa65ba9f7dbd7](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/deaa65ba9f7dbd7) Tomas Bjerre *2015-05-01 19:58:47*
+
+**Initial commit**
+
+
+[812f801724fd8e8](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/812f801724fd8e8) Tomas Bjerre *2015-05-01 18:07:36*
+
+
