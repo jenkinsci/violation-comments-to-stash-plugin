@@ -15,7 +15,6 @@ import static org.jenkinsci.plugins.jvcts.config.ViolationsToBitbucketServerConf
 import static org.jenkinsci.plugins.jvcts.config.ViolationsToBitbucketServerConfigHelper.FIELD_COMMIT_HASH;
 import hudson.EnvVars;
 import hudson.FilePath;
-import hudson.FilePath.FileCallable;
 import hudson.model.BuildListener;
 import hudson.model.AbstractBuild;
 import hudson.plugins.violations.model.Violation;
@@ -24,6 +23,7 @@ import hudson.remoting.VirtualChannel;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.lang.InterruptedException;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
@@ -51,30 +51,9 @@ public class JvctsPerformer {
    listener.getLogger().println("Running Jenkins Violation Comments To Bitbucket Server");
    listener.getLogger().println("Will comment " + config.getBitbucketServerPullRequestId());
 
-   FilePath workspace = build.getExecutor().getCurrentWorkspace();
-   URI workspacePath = build.getExecutor().getCurrentWorkspace().toURI();
-   FilePath fp;
-   if (workspace.isRemote()) {
-    fp = new FilePath(workspace.getChannel(), workspacePath.getPath());
-   } else {
-    fp = new FilePath(new File(workspacePath));
-   }
-   fp.act(new FileCallable<Void>() {
-
-    private static final long serialVersionUID = 6603308886697471560L;
-
-    @Override
-    public void checkRoles(RoleChecker checker) throws SecurityException {
-
-    }
-
-    @Override
-    public Void invoke(File workspace, VirtualChannel channel) throws IOException, InterruptedException {
-     doLog(FINE, "Workspace: " + workspace.getAbsolutePath());
-     doPerform(config, workspace, listener);
-     return null;
-    }
-   });
+   FilePath workspace = build.getWorkspace();
+   doLog(FINE, "Workspace: " + workspace.toURI());
+   doPerform(config, workspace, listener);
   } catch (Exception e) {
    doLog(SEVERE, "", e);
    return;
@@ -82,10 +61,10 @@ public class JvctsPerformer {
  }
 
  @VisibleForTesting
- public static void doPerform(ViolationsToBitbucketServerConfig config, File workspace, BuildListener listener)
-   throws MalformedURLException {
-  commentBitbucketServer(new FullBuildModelWrapper(config, workspace, listener).getViolationsPerFile(), config,
-    listener);
+ public static void doPerform(ViolationsToBitbucketServerConfig config, FilePath workspace, BuildListener listener)
+   throws MalformedURLException, IOException, InterruptedException {
+  Map<String, List<Violation>> violations = workspace.act(new FullBuildModelWrapper(config));
+  commentBitbucketServer(violations, config, listener);
  }
 
  private static void commentBitbucketServer(Map<String, List<Violation>> violationsPerFile,
@@ -161,7 +140,7 @@ public class JvctsPerformer {
   expanded.setBitbucketServerRepo(environment.expand(config.getBitbucketServerRepo()));
   for (ParserConfig parserConfig : config.getParserConfigs()) {
    ParserConfig p = new ParserConfig();
-   p.setParserTypeDescriptor(parserConfig.getParserTypeDescriptor());
+   p.setParserTypeDescriptorName(parserConfig.getParserTypeDescriptorName());
    p.setPattern(environment.expand(parserConfig.getPattern()));
    p.setPathPrefix(environment.expand(parserConfig.getPathPrefixOpt().or("")));
    expanded.getParserConfigs().add(p);
@@ -182,10 +161,10 @@ public class JvctsPerformer {
   listener.getLogger().println(FIELD_COMMIT_HASH + ": " + config.getCommitHash());
   listener.getLogger().println(FIELD_BITBUCKET_SERVER_REPO + ": " + config.getBitbucketServerRepo());
   for (ParserConfig parserConfig : config.getParserConfigs()) {
-   listener.getLogger().println(parserConfig.getParserTypeDescriptor().getName() + ": " + parserConfig.getPattern());
+   listener.getLogger().println(parserConfig.getParserTypeDescriptorName() + ": " + parserConfig.getPattern());
    if (parserConfig.getPathPrefixOpt().isPresent()) {
     listener.getLogger().println(
-      parserConfig.getParserTypeDescriptor().getName() + " pathPrefix: " + parserConfig.getPathPrefix());
+      parserConfig.getParserTypeDescriptorName() + " pathPrefix: " + parserConfig.getPathPrefix());
    }
   }
  }

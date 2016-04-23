@@ -7,17 +7,19 @@ import hudson.plugins.violations.TypeDescriptor;
 
 import com.google.common.base.Optional;
 
-public class ParserConfig {
+import java.io.Serializable;
+
+public class ParserConfig implements Serializable {
  private String pattern;
- private TypeDescriptor parserTypeDescriptor;
+ private String parserTypeDescriptorName;
  private String pathPrefix;
 
  public ParserConfig() {
 
  }
 
- public ParserConfig(TypeDescriptor typeDescriptor, String pattern) {
-  this.parserTypeDescriptor = typeDescriptor;
+ public ParserConfig(String typeDescriptorName, String pattern) {
+  this.parserTypeDescriptorName = typeDescriptorName;
   this.pattern = pattern;
  }
 
@@ -30,11 +32,15 @@ public class ParserConfig {
  }
 
  public TypeDescriptor getParserTypeDescriptor() {
-  return parserTypeDescriptor;
+  return TypeDescriptor.TYPES.get(parserTypeDescriptorName);
  }
 
- public void setParserTypeDescriptor(TypeDescriptor parser) {
-  this.parserTypeDescriptor = parser;
+ public String getParserTypeDescriptorName() {
+  return parserTypeDescriptorName;
+ }
+
+ public void setParserTypeDescriptorName(String name) {
+  this.parserTypeDescriptorName = name;
  }
 
  public void setPathPrefix(String pathPrefix) {

@@ -35,9 +35,10 @@ public class ViolationsToBitbucketServerConfigHelper {
  public static ViolationsToBitbucketServerConfig createNewConfig() {
   ViolationsToBitbucketServerConfig config = new ViolationsToBitbucketServerConfig();
   List<ParserConfig> parsers = newArrayList();
-  for (TypeDescriptor parser : TypeDescriptor.TYPES.values()) {
+
+  for (String parser : TypeDescriptor.TYPES.keySet()) {
    ParserConfig parserConfig = new ParserConfig();
-   parserConfig.setParserTypeDescriptor(parser);
+   parserConfig.setParserTypeDescriptorName(parser);
    parsers.add(parserConfig);
   }
   config.setParsers(parsers);

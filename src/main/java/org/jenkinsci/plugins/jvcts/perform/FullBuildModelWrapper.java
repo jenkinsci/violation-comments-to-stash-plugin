@@ -2,15 +2,15 @@ package org.jenkinsci.plugins.jvcts.perform;
 
 import static com.google.common.base.Strings.nullToEmpty;
 import static com.google.common.collect.Maps.newHashMap;
-import static hudson.plugins.violations.TypeDescriptor.TYPES;
 import static java.util.logging.Level.FINE;
 import static java.util.logging.Level.SEVERE;
-import static org.jenkinsci.plugins.jvcts.JvctsLogger.doLog;
-import hudson.model.BuildListener;
 import hudson.plugins.violations.TypeDescriptor;
 import hudson.plugins.violations.model.FullBuildModel;
 import hudson.plugins.violations.model.FullFileModel;
 import hudson.plugins.violations.model.Violation;
+import hudson.FilePath.FileCallable;
+import hudson.remoting.VirtualChannel;
+import org.jenkinsci.remoting.RoleChecker;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.logging.Logger;
 
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.FileSet;
@@ -27,44 +28,50 @@ import org.jenkinsci.plugins.jvcts.config.ViolationsToBitbucketServerConfig;
 
 import com.google.common.annotations.VisibleForTesting;
 
-public class FullBuildModelWrapper {
+public class FullBuildModelWrapper implements FileCallable<Map<String, List<Violation>>> {
 
  private final Map<String, FullBuildModel> models = newHashMap();
  private final ViolationsToBitbucketServerConfig config;
- private final BuildListener listener;
 
- public FullBuildModelWrapper(ViolationsToBitbucketServerConfig config, File workspace, BuildListener listener) {
+ private static final Logger logger = Logger.getLogger(FullBuildModelWrapper.class.getName());
+
+ public FullBuildModelWrapper(ViolationsToBitbucketServerConfig config) {
   this.config = config;
-  this.listener = listener;
+ }
+
+ @Override
+ public Map<String, List<Violation>> invoke(File workspace, VirtualChannel channel) throws IOException {
   for (ParserConfig parserConfig : config.getParserConfigs()) {
    for (String pattern : parserConfig.getPattern().split(",")) {
     for (String fileName : findFilesFromPattern(workspace, pattern)) {
      String[] sourcePaths = {};
-     TypeDescriptor type = TYPES.get(parserConfig.getParserTypeDescriptor().getName());
+     TypeDescriptor type = parserConfig.getParserTypeDescriptor();
      try {
-      if (!models.containsKey(parserConfig.getParserTypeDescriptor().getName())) {
-       models.put(parserConfig.getParserTypeDescriptor().getName(), new FullBuildModel());
+      if (!models.containsKey(parserConfig.getParserTypeDescriptorName())) {
+       models.put(parserConfig.getParserTypeDescriptorName(), new FullBuildModel());
       }
-      type.createParser().parse(models.get(parserConfig.getParserTypeDescriptor().getName()), workspace, fileName,
+      type.createParser().parse(models.get(parserConfig.getParserTypeDescriptorName()), workspace, fileName,
         sourcePaths);
      } catch (IOException e) {
-      doLog(SEVERE, "Error while parsing \"" + fileName + "\" for type "
-        + parserConfig.getParserTypeDescriptor().getName(), e);
+      logger.log(SEVERE, "Error while parsing \"" + fileName + "\" for type "
+        + parserConfig.getParserTypeDescriptorName(), e);
      }
     }
    }
   }
+
+  return getViolationsPerFile();
  }
 
  public Map<String, List<Violation>> getViolationsPerFile() {
   Map<String, List<Violation>> violationsPerFile = newHashMap();
   for (ParserConfig parserConfig : config.getParserConfigs()) {
-   String typeDescriptorName = parserConfig.getParserTypeDescriptor().getName();
+   String typeDescriptorName = parserConfig.getParserTypeDescriptorName();
    if (models.containsKey(typeDescriptorName)) {
     for (String fileModel : models.get(typeDescriptorName).getFileModelMap().keySet()) {
      String sourceFile = usingForwardSlashes(determineSourcePath(fileModel, parserConfig));
      if (sourceFile == null) {
-      doLog(listener, SEVERE, "Could not determine source file from: " + fileModel);
+      logger.log(SEVERE, "Could not determine source file from: " + fileModel);
       continue;
      }
      TreeMap<String, TreeSet<Violation>> typeMap = models.get(typeDescriptorName).getFileModel(fileModel).getTypeMap();
@@ -79,7 +86,7 @@ public class FullBuildModelWrapper {
     }
    }
   }
-  doLog(FINE, "Found " + violationsPerFile.size() + " violations");
+  logger.log(FINE, "Found " + violationsPerFile.size() + " violations");
   return violationsPerFile;
  }
 
@@ -89,31 +96,31 @@ public class FullBuildModelWrapper {
  }
 
  private String determineSourcePath(String fileModel, ParserConfig parserConfig) {
-  doLog(FINE, "Determining source path for " + fileModel);
-  FullBuildModel model = models.get(parserConfig.getParserTypeDescriptor().getName());
+  logger.log(FINE, "Determining source path for " + fileModel);
+  FullBuildModel model = models.get(parserConfig.getParserTypeDescriptorName());
   FullFileModel fullFileModel = model.getFileModel(fileModel);
   if (fullFileModel.getSourceFile() != null) {
    if (fullFileModel.getSourceFile().exists()) {
     return fullFileModel.getSourceFile().getAbsolutePath();
    } else {
-    doLog(FINE, "Not found: " + fullFileModel.getSourceFile().getAbsolutePath());
+    logger.log(FINE, "Not found: " + fullFileModel.getSourceFile().getAbsolutePath());
    }
   }
   File withDisplayName = new File(fullFileModel.getDisplayName());
   if (withDisplayName.exists()) {
    return withDisplayName.getAbsolutePath();
   } else {
-   doLog(FINE, "Not found: " + withDisplayName.getAbsolutePath());
+   logger.log(FINE, "Not found: " + withDisplayName.getAbsolutePath());
   }
   if (parserConfig.getPathPrefixOpt().isPresent()) {
    File withPrefix = new File(parserConfig.getPathPrefixOpt().get() + fullFileModel.getDisplayName());
    if (withPrefix.exists()) {
     return withPrefix.getAbsolutePath();
    } else {
-    doLog(FINE, "Not found: " + withPrefix.getAbsolutePath());
+    logger.log(FINE, "Not found: " + withPrefix.getAbsolutePath());
    }
   }
-  doLog(FINE, "Using: " + fullFileModel.getDisplayName());
+  logger.log(FINE, "Using: " + fullFileModel.getDisplayName());
   return fullFileModel.getDisplayName();
  }
 
@@ -132,5 +139,10 @@ public class FullBuildModelWrapper {
   fileSet.setDir(workspace);
   fileSet.setIncludes(pattern);
   return fileSet.getDirectoryScanner(project).getIncludedFiles();
+ }
+
+ // Needed to build with Jenkins 1.609, dont @Override since it will cause
+ // errors when building for older Jenkins
+ public void checkRoles(RoleChecker checker) throws SecurityException {
  }
 }

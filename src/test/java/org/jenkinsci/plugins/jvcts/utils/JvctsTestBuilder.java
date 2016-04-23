@@ -12,6 +12,7 @@ import static org.jenkinsci.plugins.jvcts.utils.BitbucketServerClientFaker.CHANG
 import static org.jenkinsci.plugins.jvcts.utils.BitbucketServerClientFaker.fake;
 import static org.jenkinsci.plugins.jvcts.utils.BitbucketServerClientFaker.readFile;
 import hudson.model.StreamBuildListener;
+import hudson.FilePath;
 
 import java.util.List;
 import java.util.Map;
@@ -43,11 +44,11 @@ public class JvctsTestBuilder {
  public void test() throws Exception {
   List<ParserConfig> configs = newArrayList();
   for (String pattern : patternsPerType.keySet()) {
-   configs.add(new ParserConfig(TYPES.get(pattern), patternsPerType.get(pattern)));
+   configs.add(new ParserConfig(pattern, patternsPerType.get(pattern)));
   }
   ViolationsToBitbucketServerConfig config = preConfigure(configs);
   config.setBitbucketServerPullRequestId("1");
-  doPerform(config, getWorkspace(), new StreamBuildListener(System.out, defaultCharset()));
+  doPerform(config, new FilePath(getWorkspace()), new StreamBuildListener(System.out, defaultCharset()));
   for (String asserted : assertRequested) {
    assertRequested(asserted);
   }
