@@ -5,6 +5,11 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 ## Unreleased
 ### No issue
 
+**Adding changelog plugin**
+
+
+[89ae5c79195866d](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/89ae5c79195866d) Tomas Bjerre *2016-04-23 17:01:56*
+
 **Adding serialVersionUID to config classes**
 
 
