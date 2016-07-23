@@ -2,6 +2,7 @@ package org.jenkinsci.plugins.jvcts.config;
 
 import static com.google.common.collect.Lists.newArrayList;
 
+import hudson.util.Secret;
 import java.io.Serializable;
 import java.util.List;
 
@@ -64,7 +65,7 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
  }
 
  public void setBitbucketServerPassword(String bitbucketServerPassword) {
-  this.bitbucketServerPassword = bitbucketServerPassword;
+  this.bitbucketServerPassword = Secret.fromString(bitbucketServerPassword).getEncryptedValue();
  }
 
  public void setBitbucketServerUser(String bitbucketServerUser) {
@@ -72,7 +73,7 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
  }
 
  public String getBitbucketServerPassword() {
-  return bitbucketServerPassword;
+  return Secret.fromString(bitbucketServerPassword).getPlainText();
  }
 
  public String getBitbucketServerUser() {
