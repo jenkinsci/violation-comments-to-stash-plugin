@@ -2,37 +2,15 @@
 
 [![Build Status](https://jenkins.ci.cloudbees.com/job/plugins/job/violation-comments-to-stash-plugin/badge/icon)](https://jenkins.ci.cloudbees.com/job/plugins/job/violation-comments-to-stash-plugin/)
 
-This is much like the [Violations](https://wiki.jenkins-ci.org/display/JENKINS/Violations) plugin. Instead of publishing violation reports in Jenkins, it comments pull requests (or individual commits) in  Bitbucket Server (or Stash).
+It comments pull requests in  Bitbucket Server (or Stash) with violations found in report files from static code analysis.
 
-Code from the [Violations](https://wiki.jenkins-ci.org/display/JENKINS/Violations) is used through a dependency.
+It uses [Violation Comments to Bitbucket Server Lib](https://github.com/tomasbjerre/violation-comments-to-bitbucket-server-lib) and supports the same formats as [Violations Lib](https://github.com/tomasbjerre/violations-lib).
 
-There is a screenshot of the configuration GUI [here](https://raw.githubusercontent.com/tomasbjerre/violation-comments-to-stash-plugin/master/sandbox/screenshot-config.png) and a sample comment may look like [this](https://raw.githubusercontent.com/tomasbjerre/violation-comments-to-stash-plugin/master/sandbox/screenshot-stash.png).
+There is a screenshot of the configuration GUI [here](https://raw.githubusercontent.com/jenkinsci/violation-comments-to-stash-plugin/master/sandbox/screenshot-config.png) and a sample comment may look like [this](https://raw.githubusercontent.com/jenkinsci/violation-comments-to-stash-plugin/master/sandbox/screenshot-stash.png).
 
 Available in Jenkins [here](https://wiki.jenkins-ci.org/display/JENKINS/Violation+Comments+to+Bitbucket+Server+Plugin).
 
-#Features
-* Comment pull requests, or individual commits, with code analyzers comments. Supports:
-  * CheckStyle
-  * CodeNarc
-  * CPPLint
-  * CSSLint
-  * FindBugs
-  * FxCop
-  * Gendarme
-  * JCEReport
-  * JSLint
-  * PEP8
-  * PerlCritic
-  * PMD
-  * PyFlakes
-  * PyLint
-  * Simian
-  * StyleCop
-  * ReSharper
-  * XMLLint
-  * ZPTLint
-
-## Use case
+## Example use case
 Here is an example use case where a pull request is triggered from Bitbucket Server, merged, checked and comments added to pull request in Bitbucket Server.
 
 You may also use it for an ordinary build job, to simply comment the commit that was built.
@@ -73,10 +51,59 @@ your build command here!
 ```
 
 ### Configure plugin
-This plugin may be added as a post build step to analyse the workspace and report comments back to pull request in Bitbucket Server. [Here](https://raw.githubusercontent.com/tomasbjerre/violation-comments-to-stash-plugin/master/sandbox/screenshot-config.png) is an example of how that may look like.
+This plugin may be added as a post build step to analyze the workspace and report comments back to pull request in Bitbucket Server. [Here](https://raw.githubusercontent.com/tomasbjerre/violation-comments-to-stash-plugin/master/sandbox/screenshot-config.png) is an example of how that may look like.
 
 ### The result
 And finally [here](https://raw.githubusercontent.com/tomasbjerre/violation-comments-to-stash-plugin/master/sandbox/screenshot-stash.png) is an example Bitbucket Server comment.
+
+## Use in workflow
+
+This plugin can participate in a Jenkins workflow. For example, a ***Jenkinsfile*** like:
+
+```
+import org.jenkinsci.plugins.jvctb.config.ViolationConfig;
+import se.bjurr.violations.lib.reports.Reporter;
+
+node {
+  
+  	stage name:"Checkout";    
+    checkout scm;
+  
+    sh 'git rev-parse HEAD > status'
+    commit = readFile('status').trim()
+  
+    // figure out the branch name
+    def jobName = "${env.JOB_NAME}"
+    def idx = jobName.lastIndexOf('/');
+    branch = jobName.substring(idx+1);
+    // Un-remove the / to - conversion.
+    branch = branch.replace("-","/");
+    branch = branch.replace("%2F","/");
+  
+    theJob = jobName.replace("/", " ");
+  
+    echo "Build of ${env.JOB_NAME} #${env.BUILD_NUMBER} : ${commit} on ${branch}";
+  
+    int pr = 0;
+    if( branch.startsWith("PR/") ) {
+    	pr = Integer.parseInt(branch.substring(3));
+  
+    	echo "This is PR ${pr}";
+
+        // Update comments         
+        def configs = [
+                new ViolationConfig(Reporter.FINDBUGS, ".*/findbugs.*\\.xml\$")
+                ];
+            
+            step([$class: 'ViolationsToBitbucketServerRecorder', 
+        		projectKey: 'PROJ',
+            	repoSlug: 'rep_1',
+            	createSingleFileComments: true,
+            	pullRequestId: "${pr}",
+            violationConfigs: configs]);
+    }
+}
+```
 
 ## Developer instructions
 Instructions for developers.

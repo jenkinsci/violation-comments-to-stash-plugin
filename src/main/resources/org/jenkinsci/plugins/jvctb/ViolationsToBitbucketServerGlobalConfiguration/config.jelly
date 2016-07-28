@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core"
+         xmlns:d="jelly:define"
+         xmlns:f="/lib/form"
+         xmlns:l="/lib/layout"
+         xmlns:st="jelly:stapler"
+         xmlns:t="/lib/hudson">
+
+    <f:section title="Bitbucket Server Violations Server Defaults">
+
+        <f:entry title="User" field="username">
+            <f:textbox />
+        </f:entry>
+
+        <f:entry title="Password" field="password">
+            <f:password />
+        </f:entry>
+
+        <f:entry title="Base URL" field="bitbucketServerUrl">
+            <f:textbox />
+        </f:entry>
+
+        <f:entry title="Project key" field="projectKey">
+            <f:textbox />
+        </f:entry>
+
+        <f:entry title="Repository Slug" field="repoSlug">
+            <f:textbox />
+        </f:entry>
+
+    </f:section>
+</j:jelly>

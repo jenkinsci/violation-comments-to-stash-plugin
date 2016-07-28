@@ -3,6 +3,43 @@
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
 ## Unreleased
+### GitHub [#5](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/5) Use Violation Comments Lib
+
+**Using Violation Comments to Bitbucket Server Lib #5 #6 #7**
+
+ * This is a major change! As I dont have time for proper testing, I will simply release it &quot;as is&quot; =) 
+
+[c2797b39a93f47a](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/c2797b39a93f47a) Tomas Bjerre *2016-07-29 19:52:31*
+
+
+### GitHub [#6](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/6) [Help] java.io.IOException: Unable to serialize
+
+**Using Violation Comments to Bitbucket Server Lib #5 #6 #7**
+
+ * This is a major change! As I dont have time for proper testing, I will simply release it &quot;as is&quot; =) 
+
+[c2797b39a93f47a](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/c2797b39a93f47a) Tomas Bjerre *2016-07-29 19:52:31*
+
+
+### GitHub [#7](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/7) Pipeline plugin compatibility
+
+**Using Violation Comments to Bitbucket Server Lib #5 #6 #7**
+
+ * This is a major change! As I dont have time for proper testing, I will simply release it &quot;as is&quot; =) 
+
+[c2797b39a93f47a](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/c2797b39a93f47a) Tomas Bjerre *2016-07-29 19:52:31*
+
+
+## 1.15
+### No issue
+
+**Dropping Java 6 support**
+
+
+[38eabb0228ae698](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/38eabb0228ae698) Tomas Bjerre *2016-05-02 17:49:23*
+
+
+## 1.14
 ### No issue
 
 **Adding changelog plugin**
@@ -136,7 +173,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.6
-### GitHub #10 
+### GitHub [#10](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/10) Nothing seems to be happening, and no logging for debugging
 
 **Handling Windows-style file paths and using password field in confg GUI #9 #10**
 
@@ -145,7 +182,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 [7539e18f456c585](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/7539e18f456c585) Tomas Bjerre *2015-05-31 15:47:44*
 
 
-### GitHub #9 
+### GitHub [#9](https://github.com/jenkinsci/violation-comments-to-stash-plugin/pull/9) Using hudston.util.Secret to encrypt the password instead of storing plain text
 
 **Handling Windows-style file paths and using password field in confg GUI #9 #10**
 
@@ -287,10 +324,5 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 [deaa65ba9f7dbd7](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/deaa65ba9f7dbd7) Tomas Bjerre *2015-05-01 19:58:47*
-
-**Initial commit**
-
-
-[812f801724fd8e8](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/812f801724fd8e8) Tomas Bjerre *2015-05-01 18:07:36*
 
 
