@@ -3,13 +3,22 @@
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
 ## Unreleased
+### No issue
+
+**doc**
+
+
+[84cd98689620206](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/84cd98689620206) Tomas Bjerre *2016-07-30 11:53:48*
+
+
+## 1.16
 ### GitHub [#5](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/5) Use Violation Comments Lib
 
 **Using Violation Comments to Bitbucket Server Lib #5 #6 #7**
 
  * This is a major change! As I dont have time for proper testing, I will simply release it &quot;as is&quot; =) 
 
-[c2797b39a93f47a](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/c2797b39a93f47a) Tomas Bjerre *2016-07-29 19:52:31*
+[d7cc91692e328b8](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/d7cc91692e328b8) Tomas Bjerre *2016-07-29 20:01:41*
 
 
 ### GitHub [#6](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/6) [Help] java.io.IOException: Unable to serialize
@@ -18,7 +27,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
  * This is a major change! As I dont have time for proper testing, I will simply release it &quot;as is&quot; =) 
 
-[c2797b39a93f47a](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/c2797b39a93f47a) Tomas Bjerre *2016-07-29 19:52:31*
+[d7cc91692e328b8](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/d7cc91692e328b8) Tomas Bjerre *2016-07-29 20:01:41*
 
 
 ### GitHub [#7](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/7) Pipeline plugin compatibility
@@ -27,7 +36,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
  * This is a major change! As I dont have time for proper testing, I will simply release it &quot;as is&quot; =) 
 
-[c2797b39a93f47a](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/c2797b39a93f47a) Tomas Bjerre *2016-07-29 19:52:31*
+[d7cc91692e328b8](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/d7cc91692e328b8) Tomas Bjerre *2016-07-29 20:01:41*
 
 
 ## 1.15
@@ -106,7 +115,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.9
-### GitHub #12 
+### GitHub [#12](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/12) Comment commits
 
 **Adding header 'X-Atlassian-Token: no-check' to be compatible with Stash 4.0 #12**
 
