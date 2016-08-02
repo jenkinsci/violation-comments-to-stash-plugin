@@ -9,15 +9,20 @@ import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConf
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_PULLREQUESTID;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_REPOSLUG;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_USERNAME;
+import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_USERNAMEPASSWORDCREDENTIALSID;
+import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_USEUSERNAMEPASSWORD;
+import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_USEUSERNAMEPASSWORDCREDENTIALS;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.createNewConfig;
 import hudson.model.AbstractProject;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Publisher;
+import hudson.util.ListBoxModel;
 
 import java.util.List;
 
 import net.sf.json.JSONObject;
 
+import org.jenkinsci.plugins.jvctb.config.CredentialsHelper;
 import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
 import org.kohsuke.stapler.StaplerRequest;
 
@@ -30,6 +35,10 @@ public final class ViolationsToBitbucketServerDescriptor extends BuildStepDescri
   if (this.config == null || this.config.getViolationConfigs().size() != createNewConfig().getViolationConfigs().size()) {
    this.config = createNewConfig();
   }
+ }
+
+ public ListBoxModel doFillUsernamePasswordCredentialsIdItems() {
+  return CredentialsHelper.doFillUsernamePasswordCredentialsIdItems();
  }
 
  @Override
@@ -62,10 +71,17 @@ public final class ViolationsToBitbucketServerDescriptor extends BuildStepDescri
   config.setRepoSlug(formData.getString(FIELD_REPOSLUG));
   config.setProjectKey(formData.getString(FIELD_PROJECTKEY));
   config.setPullRequestId(formData.getString(FIELD_PULLREQUESTID));
+
+  config.setUseUsernamePassword(formData.getBoolean(FIELD_USEUSERNAMEPASSWORD));
   config.setUsername(formData.getString(FIELD_USERNAME));
   config.setPassword(formData.getString(FIELD_PASSWORD));
+
+  config.setUseUsernamePasswordCredentials(formData.getBoolean(FIELD_USEUSERNAMEPASSWORDCREDENTIALS));
+  config.setUsernamePasswordCredentialsId(formData.getString(FIELD_USERNAMEPASSWORDCREDENTIALSID));
+
   config.setCreateCommentWithAllSingleFileComments(formData.getString(FIELD_CREATECOMMENTWITHALLSINGLEFILECOMMENTS)
     .equalsIgnoreCase("true"));
+
   config.setCreateSingleFileComments(formData.getString(FIELD_CREATESINGLEFILECOMMENTS).equalsIgnoreCase("true"));
   int i = 0;
   for (String pattern : (List<String>) formData.get(FIELD_PATTERN)) {

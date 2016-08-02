@@ -34,10 +34,12 @@ public class ViolationsToBitbucketServerRecorder extends Recorder implements Sim
  @DataBoundConstructor
  public ViolationsToBitbucketServerRecorder(boolean createSingleFileComments,
    boolean createCommentWithAllSingleFileComments, String repositoryName, String repositoryOwner, String password,
-   String username, String pullRequestId, String bitbucketServerUrl, List<ViolationConfig> violationConfigs) {
+   String username, String pullRequestId, String bitbucketServerUrl, List<ViolationConfig> violationConfigs,
+   String usernamePasswordCredentialsId, boolean useUsernamePasswordCredentials, boolean useUsernamePassword) {
 
   this.config = new ViolationsToBitbucketServerConfig(createSingleFileComments, createCommentWithAllSingleFileComments,
-    repositoryName, repositoryOwner, password, username, pullRequestId, bitbucketServerUrl, violationConfigs);
+    repositoryName, repositoryOwner, password, username, pullRequestId, bitbucketServerUrl, violationConfigs,
+    usernamePasswordCredentialsId, useUsernamePasswordCredentials, useUsernamePassword);
  }
 
  public ViolationsToBitbucketServerConfig getConfig() {
