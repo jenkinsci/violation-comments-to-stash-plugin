@@ -1,12 +1,14 @@
 package org.jenkinsci.plugins.jvctb;
 
 import hudson.Extension;
+import hudson.util.ListBoxModel;
 
 import java.io.Serializable;
 
 import jenkins.model.GlobalConfiguration;
 import net.sf.json.JSONObject;
 
+import org.jenkinsci.plugins.jvctb.config.CredentialsHelper;
 import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.StaplerRequest;
 
@@ -34,6 +36,7 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
  public String projectKey;
  public String repoSlug;
  public String username;
+ private String usernamePasswordCredentialsId;
 
  public ViolationsToBitbucketServerGlobalConfiguration() {
   load();
@@ -44,6 +47,10 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
   req.bindJSON(this, json);
   save();
   return true;
+ }
+
+ public ListBoxModel doFillUsernamePasswordCredentialsIdItems() {
+  return CredentialsHelper.doFillUsernamePasswordCredentialsIdItems();
  }
 
  public String getBitbucketServerUrl() {
@@ -64,6 +71,10 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
 
  public String getUsername() {
   return this.username;
+ }
+
+ public String getUsernamePasswordCredentialsId() {
+  return this.usernamePasswordCredentialsId;
  }
 
  @DataBoundSetter
@@ -90,4 +101,16 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
  public void setUsername(String username) {
   this.username = username;
  }
+
+ public void setUsernamePasswordCredentialsId(String usernamePasswordCredentialsId) {
+  this.usernamePasswordCredentialsId = usernamePasswordCredentialsId;
+ }
+
+ @Override
+ public String toString() {
+  return "ViolationsToBitbucketServerGlobalConfiguration [bitbucketServerUrl=" + this.bitbucketServerUrl
+    + ", password=" + this.password + ", projectKey=" + this.projectKey + ", repoSlug=" + this.repoSlug + ", username="
+    + this.username + ", usernamePasswordCredentialsId=" + this.usernamePasswordCredentialsId + "]";
+ }
+
 }

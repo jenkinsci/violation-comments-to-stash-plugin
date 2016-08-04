@@ -5,7 +5,8 @@
   xmlns:f="/lib/form"
   xmlns:l="/lib/layout"
   xmlns:st="jelly:stapler"
-  xmlns:t="/lib/hudson">
+  xmlns:t="/lib/hudson"
+  xmlns:c="/lib/credentials">
 
   <!-- descriptor is ViolationsToBitbucketServerDescriptor //-->
   <j:set var="config" value="${descriptor.newConfig}"/>
@@ -26,25 +27,43 @@
     </table>
   </f:entry>
 
-  <f:entry title="User">
-    <f:textbox name="username" value="${config.username}" />
+  <f:optionalBlock checked="${config.useUsernamePasswordCredentials}" name="useUsernamePasswordCredentials" title="Use username / password credentials" inline="true">
+    <f:entry title="Username / Password Crendential" field="usernamePasswordCredentialsId">
+      <c:select default="${config.usernamePasswordCredentialsId}"/>
+    </f:entry>
+    <f:description>
+      Will default to global config.
+    </f:description>
+  </f:optionalBlock>
+
+  <f:optionalBlock checked="${config.useUsernamePassword}" name="useUsernamePassword" title="Use username and password" inline="true">
+    <f:entry title="Username">
+      <f:textbox name="username" value="${config.username}" />
+    </f:entry>
+
+    <f:entry title="Password">
+      <f:password name="password" value="${config.password}" />
+    </f:entry>
+    
+    <f:description>
+      Will default to global config.
+    </f:description>
+  </f:optionalBlock>
+
+  <f:entry>
+   You may want to use <a target="_blank" href="https://github.com/tomasbjerre/pull-request-notifier-for-bitbucket">Pull Request Notifier for Bitbucket</a> to get these values.
   </f:entry>
 
-  <f:entry title="Password">
-    <f:password name="password" value="${config.password}" />
-  </f:entry>
-
-
-  <f:entry title="Base URL">
+  <f:entry title="Base URL, will default to global config">
     <f:textbox name="bitbucketServerUrl" value="${config.bitbucketServerUrl}" />
   </f:entry>
-
-  <f:entry title="Project key">
-      <f:textbox name="projectKey" value="${config.projectKey}" />
+  
+  <f:entry title="Project key, will default to global config">
+    <f:textbox name="projectKey" value="${config.projectKey}" />
   </f:entry>
-
-  <f:entry title="Repository Slug">
-      <f:textbox name="repoSlug" value="${config.repoSlug}" />
+  
+  <f:entry title="Repo slug, will default to global config">
+    <f:textbox name="repoSlug" value="${config.repoSlug}" />
   </f:entry>
 
   <f:entry title="Pull Request ID">
@@ -59,14 +78,13 @@
     <f:checkbox name="createCommentWithAllSingleFileComments" checked="${config.createCommentWithAllSingleFileComments}"/>
   </f:entry>
 
-
   <f:entry>
   <table class="xmlFilenamePatterns">
     <tr>
       <td align="left" colspan="2">
         <b>XML filename pattern</b>
         <ul>
-          <li>The pattern may be, for example, <i>.*/findbugs/.*\.xml$</i> to match xml-files, in a folder named findbugs, anywhere in workspace.</li>
+          <li>The pattern may be, for example, <i>.*/findbugs/.*\.xml$</i> to match xml-files, in a folder named findbugs, anywhere in workspace. You try <a href="https://jex.im/regulex/" target="_blank">Regulex</a> for creating your regexp.</li>
         </ul>
       </td>
     </tr>

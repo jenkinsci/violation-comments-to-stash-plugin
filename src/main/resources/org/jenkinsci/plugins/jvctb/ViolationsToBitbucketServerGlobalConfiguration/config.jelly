@@ -5,29 +5,33 @@
          xmlns:f="/lib/form"
          xmlns:l="/lib/layout"
          xmlns:st="jelly:stapler"
-         xmlns:t="/lib/hudson">
+         xmlns:t="/lib/hudson"
+         xmlns:c="/lib/credentials">
+ <f:section title="Bitbucket Server Violations Server Defaults">
 
-    <f:section title="Bitbucket Server Violations Server Defaults">
+  <f:entry title="Username/Password Crendential" field="usernamePasswordCredentialsId">
+    <c:select />
+  </f:entry>
 
-        <f:entry title="User" field="username">
-            <f:textbox />
-        </f:entry>
+  <f:entry title="Username" field="username">
+    <f:textbox value="${config.username}" />
+  </f:entry>
 
-        <f:entry title="Password" field="password">
-            <f:password />
-        </f:entry>
+  <f:entry title="Password" field="password">
+    <f:password value="${config.password}" />
+  </f:entry>
 
-        <f:entry title="Base URL" field="bitbucketServerUrl">
-            <f:textbox />
-        </f:entry>
+  <f:entry title="Base URL (Default is: https://localhost:7990/bitbucket/)" field="bitbucketServerUrl">
+    <f:textbox value="${bitbucketServerUrl}" />
+  </f:entry>
 
-        <f:entry title="Project key" field="projectKey">
-            <f:textbox />
-        </f:entry>
+  <f:entry title="Project key" field="projectKey">
+    <f:textbox />
+  </f:entry>
 
-        <f:entry title="Repository Slug" field="repoSlug">
-            <f:textbox />
-        </f:entry>
+  <f:entry title="Repo slug" field="repoSlug">
+    <f:textbox />
+  </f:entry>
 
-    </f:section>
+ </f:section>
 </j:jelly>

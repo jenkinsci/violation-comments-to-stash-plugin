@@ -17,6 +17,9 @@ public class ViolationsToBitbucketServerConfigHelper {
  public static final String FIELD_REPORTER = "reporter";
  public static final String FIELD_REPOSLUG = "repoSlug";
  public static final String FIELD_USERNAME = "username";
+ public static final String FIELD_USERNAMEPASSWORDCREDENTIALSID = "usernamePasswordCredentialsId";
+ public static final String FIELD_USEUSERNAMEPASSWORD = "useUsernamePassword";
+ public static final String FIELD_USEUSERNAMEPASSWORDCREDENTIALS = "useUsernamePasswordCredentials";
 
  public static ViolationsToBitbucketServerConfig createNewConfig() {
   ViolationsToBitbucketServerConfig config = new ViolationsToBitbucketServerConfig();

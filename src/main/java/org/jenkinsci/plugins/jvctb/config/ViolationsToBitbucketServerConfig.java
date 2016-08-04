@@ -10,7 +10,6 @@ import org.jenkinsci.plugins.jvctb.ViolationsToBitbucketServerGlobalConfiguratio
 
 public class ViolationsToBitbucketServerConfig implements Serializable {
  private static final long serialVersionUID = 4851568645021422528L;
-
  private String bitbucketServerUrl;
  private boolean createCommentWithAllSingleFileComments;
  private boolean createSingleFileComments;
@@ -19,6 +18,9 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
  private String pullRequestId;
  private String repoSlug;
  private String username;
+ private String usernamePasswordCredentialsId;
+ private boolean useUsernamePassword;
+ private boolean useUsernamePasswordCredentials;
  private List<ViolationConfig> violationConfigs = newArrayList();
 
  public ViolationsToBitbucketServerConfig() {
@@ -27,7 +29,8 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
 
  public ViolationsToBitbucketServerConfig(boolean createSingleFileComments,
    boolean createCommentWithAllSingleFileComments, String projectKey, String repoSlug, String password,
-   String username, String pullRequestId, String bitbucketServerUrl, List<ViolationConfig> violationConfigs) {
+   String username, String pullRequestId, String bitbucketServerUrl, List<ViolationConfig> violationConfigs,
+   String usernamePasswordCredentialsId, boolean useUsernamePasswordCredentials, boolean useUsernamePassword) {
   this.violationConfigs = violationConfigs;
   this.createSingleFileComments = createSingleFileComments;
   this.createCommentWithAllSingleFileComments = createCommentWithAllSingleFileComments;
@@ -37,6 +40,9 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
   this.username = username;
   this.pullRequestId = pullRequestId;
   this.bitbucketServerUrl = bitbucketServerUrl;
+  this.usernamePasswordCredentialsId = usernamePasswordCredentialsId;
+  this.useUsernamePasswordCredentials = useUsernamePasswordCredentials;
+  this.useUsernamePassword = useUsernamePassword;
  }
 
  public ViolationsToBitbucketServerConfig(ViolationsToBitbucketServerConfig rhs) {
@@ -49,11 +55,17 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
   this.username = rhs.username;
   this.pullRequestId = rhs.pullRequestId;
   this.bitbucketServerUrl = rhs.bitbucketServerUrl;
+  this.usernamePasswordCredentialsId = rhs.usernamePasswordCredentialsId;
+  this.useUsernamePasswordCredentials = rhs.useUsernamePasswordCredentials;
+  this.useUsernamePassword = rhs.useUsernamePassword;
  }
 
  public void applyDefaults(ViolationsToBitbucketServerGlobalConfiguration defaults) {
   if (isNullOrEmpty(this.bitbucketServerUrl)) {
    this.bitbucketServerUrl = defaults.getBitbucketServerUrl();
+  }
+  if (isNullOrEmpty(this.usernamePasswordCredentialsId)) {
+   this.usernamePasswordCredentialsId = defaults.getUsernamePasswordCredentialsId();
   }
   if (isNullOrEmpty(this.username)) {
    this.username = defaults.getUsername();
@@ -122,11 +134,24 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
   } else if (!this.repoSlug.equals(other.repoSlug)) {
    return false;
   }
+  if (this.useUsernamePassword != other.useUsernamePassword) {
+   return false;
+  }
+  if (this.useUsernamePasswordCredentials != other.useUsernamePasswordCredentials) {
+   return false;
+  }
   if (this.username == null) {
    if (other.username != null) {
     return false;
    }
   } else if (!this.username.equals(other.username)) {
+   return false;
+  }
+  if (this.usernamePasswordCredentialsId == null) {
+   if (other.usernamePasswordCredentialsId != null) {
+    return false;
+   }
+  } else if (!this.usernamePasswordCredentialsId.equals(other.usernamePasswordCredentialsId)) {
    return false;
   }
   if (this.violationConfigs == null) {
@@ -171,6 +196,10 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
   return this.username;
  }
 
+ public String getUsernamePasswordCredentialsId() {
+  return this.usernamePasswordCredentialsId;
+ }
+
  public List<ViolationConfig> getViolationConfigs() {
   return this.violationConfigs;
  }
@@ -186,9 +215,21 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
   result = prime * result + ((this.projectKey == null) ? 0 : this.projectKey.hashCode());
   result = prime * result + ((this.pullRequestId == null) ? 0 : this.pullRequestId.hashCode());
   result = prime * result + ((this.repoSlug == null) ? 0 : this.repoSlug.hashCode());
+  result = prime * result + (this.useUsernamePassword ? 1231 : 1237);
+  result = prime * result + (this.useUsernamePasswordCredentials ? 1231 : 1237);
   result = prime * result + ((this.username == null) ? 0 : this.username.hashCode());
+  result = prime * result
+    + ((this.usernamePasswordCredentialsId == null) ? 0 : this.usernamePasswordCredentialsId.hashCode());
   result = prime * result + ((this.violationConfigs == null) ? 0 : this.violationConfigs.hashCode());
   return result;
+ }
+
+ public boolean isUseUsernamePassword() {
+  return this.useUsernamePassword;
+ }
+
+ public boolean isUseUsernamePasswordCredentials() {
+  return this.useUsernamePasswordCredentials;
  }
 
  public void setBitbucketServerUrl(String bitbucketServerUrl) {
@@ -223,6 +264,18 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
   this.username = username;
  }
 
+ public void setUsernamePasswordCredentialsId(String usernamePasswordCredentialsId) {
+  this.usernamePasswordCredentialsId = usernamePasswordCredentialsId;
+ }
+
+ public void setUseUsernamePassword(boolean useUsernamePassword) {
+  this.useUsernamePassword = useUsernamePassword;
+ }
+
+ public void setUseUsernamePasswordCredentials(boolean useUsernamePasswordCredentials) {
+  this.useUsernamePasswordCredentials = useUsernamePasswordCredentials;
+ }
+
  public void setViolationConfigs(List<ViolationConfig> parsers) {
   this.violationConfigs = parsers;
  }
@@ -233,6 +286,8 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
     + ", createCommentWithAllSingleFileComments=" + this.createCommentWithAllSingleFileComments
     + ", createSingleFileComments=" + this.createSingleFileComments + ", password=" + this.password + ", projectKey="
     + this.projectKey + ", pullRequestId=" + this.pullRequestId + ", repoSlug=" + this.repoSlug + ", username="
-    + this.username + ", violationConfigs=" + this.violationConfigs + "]";
+    + this.username + ", violationConfigs=" + this.violationConfigs + ", usernamePasswordCredentialsId="
+    + this.usernamePasswordCredentialsId + ", useUsernamePasswordCredentials=" + this.useUsernamePasswordCredentials
+    + ", useUsernamePassword=" + this.useUsernamePassword + "]";
  }
 }
