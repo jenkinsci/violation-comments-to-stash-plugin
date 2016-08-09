@@ -1,5 +1,6 @@
 package org.jenkinsci.plugins.jvctb.perform;
 
+import static com.google.common.base.Charsets.UTF_8;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Strings.emptyToNull;
 import static com.google.common.base.Strings.isNullOrEmpty;
@@ -177,7 +178,7 @@ public class JvctbPerformer {
  private static void setupFindBugsMessages() {
   try {
    String findbugsMessagesXml = CharStreams.toString(new InputStreamReader(JvctbPerformer.class
-     .getResourceAsStream("findbugs-messages.xml")));
+     .getResourceAsStream("findbugs-messages.xml"), UTF_8));
    setFindbugsMessagesXml(findbugsMessagesXml);
   } catch (IOException e) {
    propagate(e);
