@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.jenkinsci.plugins.jvctb.ViolationsToBitbucketServerGlobalConfiguration;
+import org.kohsuke.stapler.DataBoundConstructor;
 
 public class ViolationsToBitbucketServerConfig implements Serializable {
  private static final long serialVersionUID = 4851568645021422528L;
@@ -27,11 +28,15 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
 
  }
 
+ @DataBoundConstructor
  public ViolationsToBitbucketServerConfig(boolean createSingleFileComments,
    boolean createCommentWithAllSingleFileComments, String projectKey, String repoSlug, String password,
    String username, String pullRequestId, String bitbucketServerUrl, List<ViolationConfig> violationConfigs,
    String usernamePasswordCredentialsId, boolean useUsernamePasswordCredentials, boolean useUsernamePassword) {
-  this.violationConfigs = violationConfigs;
+
+  List<ViolationConfig> allViolationConfigs = includeAllReporters(violationConfigs);
+
+  this.violationConfigs = allViolationConfigs;
   this.createSingleFileComments = createSingleFileComments;
   this.createCommentWithAllSingleFileComments = createCommentWithAllSingleFileComments;
   this.projectKey = projectKey;
@@ -289,5 +294,17 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
     + this.username + ", violationConfigs=" + this.violationConfigs + ", usernamePasswordCredentialsId="
     + this.usernamePasswordCredentialsId + ", useUsernamePasswordCredentials=" + this.useUsernamePasswordCredentials
     + ", useUsernamePassword=" + this.useUsernamePassword + "]";
+ }
+
+ private List<ViolationConfig> includeAllReporters(List<ViolationConfig> violationConfigs) {
+  List<ViolationConfig> allViolationConfigs = ViolationsToBitbucketServerConfigHelper.getAllViolationConfigs();
+  for (ViolationConfig candidate : allViolationConfigs) {
+   for (ViolationConfig input : violationConfigs) {
+    if (candidate.getReporter() == input.getReporter()) {
+     candidate.setPattern(input.getPattern());
+    }
+   }
+  }
+  return allViolationConfigs;
  }
 }

@@ -23,13 +23,18 @@ public class ViolationsToBitbucketServerConfigHelper {
 
  public static ViolationsToBitbucketServerConfig createNewConfig() {
   ViolationsToBitbucketServerConfig config = new ViolationsToBitbucketServerConfig();
+  List<ViolationConfig> violationConfigs = getAllViolationConfigs();
+  config.setViolationConfigs(violationConfigs);
+  return config;
+ }
+
+ public static List<ViolationConfig> getAllViolationConfigs() {
   List<ViolationConfig> violationConfigs = newArrayList();
   for (Reporter reporter : Reporter.values()) {
    ViolationConfig violationConfig = new ViolationConfig();
    violationConfig.setReporter(reporter);
    violationConfigs.add(violationConfig);
   }
-  config.setViolationConfigs(violationConfigs);
-  return config;
+  return violationConfigs;
  }
 }

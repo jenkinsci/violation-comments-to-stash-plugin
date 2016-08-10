@@ -13,13 +13,11 @@ import hudson.tasks.Publisher;
 import hudson.tasks.Recorder;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.annotation.Nonnull;
 
 import jenkins.tasks.SimpleBuildStep;
 
-import org.jenkinsci.plugins.jvctb.config.ViolationConfig;
 import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
 import org.kohsuke.stapler.DataBoundConstructor;
 
@@ -32,14 +30,8 @@ public class ViolationsToBitbucketServerRecorder extends Recorder implements Sim
  }
 
  @DataBoundConstructor
- public ViolationsToBitbucketServerRecorder(boolean createSingleFileComments,
-   boolean createCommentWithAllSingleFileComments, String repositoryName, String repositoryOwner, String password,
-   String username, String pullRequestId, String bitbucketServerUrl, List<ViolationConfig> violationConfigs,
-   String usernamePasswordCredentialsId, boolean useUsernamePasswordCredentials, boolean useUsernamePassword) {
-
-  this.config = new ViolationsToBitbucketServerConfig(createSingleFileComments, createCommentWithAllSingleFileComments,
-    repositoryName, repositoryOwner, password, username, pullRequestId, bitbucketServerUrl, violationConfigs,
-    usernamePasswordCredentialsId, useUsernamePasswordCredentials, useUsernamePassword);
+ public ViolationsToBitbucketServerRecorder(ViolationsToBitbucketServerConfig config) {
+  this.config = config;
  }
 
  public ViolationsToBitbucketServerConfig getConfig() {

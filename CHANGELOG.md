@@ -5,13 +5,30 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 ## Unreleased
 ### GitHub [#13](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/13) Problem with Pipeline Snippet Generation
 
+**Correcting job DSL #13**
+
+
+[2b02c88b68970bb](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/2b02c88b68970bb) Tomas Bjerre *2016-08-10 15:52:20*
+
+
+### No issue
+
+**Cleaning up pom.xml**
+
+
+[88fd6b877624768](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/88fd6b877624768) Tomas Bjerre *2016-08-10 14:39:12*
+
+
+## 1.19
+### GitHub [#13](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/13) Problem with Pipeline Snippet Generation
+
 **job-dsl-plugin compatible #13**
 
  * Using new Jenkins parent, 2.2. 
  * Building for Jenkins 1.642.3. 
  * Adding @DataBoundConstructor to ViolationConfig to make it compatible with job-dsl-plugin. 
 
-[c70a514ce15f12e](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/c70a514ce15f12e) Tomas Bjerre *2016-08-09 17:58:00*
+[2ef1c84ac4b40e3](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/2ef1c84ac4b40e3) Tomas Bjerre *2016-08-09 17:58:19*
 
 
 ## 1.18

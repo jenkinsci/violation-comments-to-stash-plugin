@@ -56,52 +56,63 @@ This plugin may be added as a post build step to analyze the workspace and repor
 ### The result
 And finally [here](https://raw.githubusercontent.com/tomasbjerre/violation-comments-to-stash-plugin/master/sandbox/screenshot-stash.png) is an example Bitbucket Server comment.
 
-## Use in workflow
+## Job DSL Plugin
 
-This plugin can participate in a Jenkins workflow. For example, a ***Jenkinsfile*** like:
+This plugin can be used with the Job DSL Plugin.
 
 ```
-import org.jenkinsci.plugins.jvctb.config.ViolationConfig;
-import se.bjurr.violations.lib.reports.Reporter;
-
-node {
-  
-  	stage name:"Checkout";    
-    checkout scm;
-  
-    sh 'git rev-parse HEAD > status'
-    commit = readFile('status').trim()
-  
-    // figure out the branch name
-    def jobName = "${env.JOB_NAME}"
-    def idx = jobName.lastIndexOf('/');
-    branch = jobName.substring(idx+1);
-    // Un-remove the / to - conversion.
-    branch = branch.replace("-","/");
-    branch = branch.replace("%2F","/");
-  
-    theJob = jobName.replace("/", " ");
-  
-    echo "Build of ${env.JOB_NAME} #${env.BUILD_NUMBER} : ${commit} on ${branch}";
-  
-    int pr = 0;
-    if( branch.startsWith("PR/") ) {
-    	pr = Integer.parseInt(branch.substring(3));
-  
-    	echo "This is PR ${pr}";
-
-        // Update comments         
-        def configs = [
-                new ViolationConfig(Reporter.FINDBUGS, ".*/findbugs.*\\.xml\$")
-                ];
-            
-            step([$class: 'ViolationsToBitbucketServerRecorder', 
-        		projectKey: 'PROJ',
-            	repoSlug: 'rep_1',
-            	createSingleFileComments: true,
-            	pullRequestId: "${pr}",
-            violationConfigs: configs]);
+job('example') {
+ publishers {
+  violationsToBitbucketServerRecorder {
+   config {
+    createSingleFileComments(true)
+    createCommentWithAllSingleFileComments(true)
+    projectKey("PROJECT_1")
+    repoSlug("repo_1")
+    password("admin")
+    username("admin")
+    pullRequestId("1")
+    bitbucketServerUrl("http://localhost:7990/bitbucket")
+    usernamePasswordCredentialsId(null)
+    useUsernamePasswordCredentials(false)
+    useUsernamePassword(true)
+    violationConfigs {
+     violationConfig {
+      reporter("FINDBUGS")
+      pattern(".*/findbugs/.*\\.xml\$")
+     }
     }
+   }
+  }
+ }
+}
+```
+
+## Pipeline Plugin
+
+This plugin can be used with the Pipeline Plugin:
+
+```
+node {
+ step([
+  $class: 'ViolationsToBitbucketServerRecorder', 
+  config: [
+   bitbucketServerUrl: 'http://localhost:7990/bitbucket', 
+   createCommentWithAllSingleFileComments: true, 
+   createSingleFileComments: true, 
+   projectKey: 'PROJECT_1', 
+   repoSlug: 'rep_1', 
+   pullRequestId: '2', 
+   useUsernamePassword: true, 
+   username: 'admin', 
+   password: 'admin', 
+   useUsernamePasswordCredentials: false, 
+   violationConfigs: [
+    [ pattern: '.*/checkstyle/.*\\.xml$', reporter: 'CHECKSTYLE' ], 
+    [ pattern: '.*/findbugs/.*\\.xml$', reporter: 'FINDBUGS' ], 
+   ]
+  ]
+ ])
 }
 ```
 
