@@ -9,6 +9,12 @@
 		<relativePath />
 	</parent>
 
+	<properties>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<project.build.outputEncoding>UTF-8</project.build.outputEncoding>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
 	<artifactId>violation-comments-to-stash</artifactId>
 	<version>1.20-SNAPSHOT</version>
 	<packaging>hpi</packaging>
@@ -36,12 +42,6 @@
 		<url>https://github.com/tomasbjerre/jenkins-violation-comments-to-stash-plugin</url>
 	</issueManagement>
 
-	<properties>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<project.build.outputEncoding>UTF-8</project.build.outputEncoding>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
-
 	<scm>
 		<connection>scm:git:git://github.com/jenkinsci/${project.artifactId}-plugin.git</connection>
 		<developerConnection>scm:git:git@github.com:jenkinsci/${project.artifactId}-plugin.git</developerConnection>
@@ -68,17 +68,14 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
-				<version>2.5.1</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.18.1</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
-				<version>2.9</version>
 				<configuration>
 					<downloadSources>true</downloadSources>
 					<downloadJavadocs>true</downloadJavadocs>
@@ -177,18 +174,6 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 			<groupId>se.bjurr.violations</groupId>
 			<artifactId>violation-comments-to-bitbucket-server-lib</artifactId>
 			<version>1.3</version>
-		</dependency>
-		<dependency>
-			<groupId>uk.co.jemos.podam</groupId>
-			<artifactId>podam</artifactId>
-			<version>6.0.2.RELEASE</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-			<scope>test</scope>
 		</dependency>
 
 		<!-- test // -->
