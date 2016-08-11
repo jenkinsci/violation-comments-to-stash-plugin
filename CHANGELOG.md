@@ -3,12 +3,21 @@
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
 ## Unreleased
+### No issue
+
+**Allowing pipeline DSL not to specify all reporters**
+
+
+[cc38d2cecff880d](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/cc38d2cecff880d) Tomas Bjerre *2016-08-11 19:03:50*
+
+
+## 1.20
 ### GitHub [#13](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/13) Problem with Pipeline Snippet Generation
 
 **Correcting job DSL #13**
 
 
-[2b02c88b68970bb](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/2b02c88b68970bb) Tomas Bjerre *2016-08-10 15:52:20*
+[26df3123352a132](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/26df3123352a132) Tomas Bjerre *2016-08-10 17:17:00*
 
 
 ### No issue

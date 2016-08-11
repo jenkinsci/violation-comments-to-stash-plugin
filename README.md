@@ -93,7 +93,16 @@ job('example') {
 This plugin can be used with the Pipeline Plugin:
 
 ```
+
 node {
+
+ sh '''
+ rm -rf rep_1
+ git clone http://admin:admin@localhost:7990/bitbucket/scm/project_1/rep_1.git
+ cd *
+ ./gradlew build
+ '''
+
  step([
   $class: 'ViolationsToBitbucketServerRecorder', 
   config: [
@@ -102,7 +111,7 @@ node {
    createSingleFileComments: true, 
    projectKey: 'PROJECT_1', 
    repoSlug: 'rep_1', 
-   pullRequestId: '2', 
+   pullRequestId: '1', 
    useUsernamePassword: true, 
    username: 'admin', 
    password: 'admin', 
