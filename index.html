@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Violation-comments-to-stash-plugin : Analyzes Jenkins workspace to find code analyzer report files, comments Bitbucket Server (or Stash) pull requests with code analyzer comments.">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Violation-comments-to-stash-plugin</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/jenkinsci/violation-comments-to-stash-plugin">View on GitHub</a>
+
+          <h1 id="project_title">Violation-comments-to-stash-plugin</h1>
+          <h2 id="project_tagline">Analyzes Jenkins workspace to find code analyzer report files, comments Bitbucket Server (or Stash) pull requests with code analyzer comments.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/jenkinsci/violation-comments-to-stash-plugin/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/jenkinsci/violation-comments-to-stash-plugin/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="violation-comments-to-bitbucket-server" class="anchor" href="#violation-comments-to-bitbucket-server" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Violation Comments to Bitbucket Server</h1>
+
+<p><a href="https://jenkins.ci.cloudbees.com/job/plugins/job/violation-comments-to-stash-plugin/"><img src="https://jenkins.ci.cloudbees.com/job/plugins/job/violation-comments-to-stash-plugin/badge/icon" alt="Build Status"></a></p>
+
+<p>It comments pull requests in  Bitbucket Server (or Stash) with violations found in report files from static code analysis.</p>
+
+<p>It uses <a href="https://github.com/tomasbjerre/violation-comments-to-bitbucket-server-lib">Violation Comments to Bitbucket Server Lib</a> and supports the same formats as <a href="https://github.com/tomasbjerre/violations-lib">Violations Lib</a>.</p>
+
+<p>The pull request will be commented like this.</p>
+
+<p><img src="https://raw.githubusercontent.com/jenkinsci/violation-comments-to-stash-plugin/master/sandbox/screenshot-stash.png" alt="Pull request comment"></p>
+
+<p>Available in Jenkins <a href="https://wiki.jenkins-ci.org/display/JENKINS/Violation+Comments+to+Bitbucket+Server+Plugin">here</a>.</p>
+
+<h2>
+<a id="example-use-case" class="anchor" href="#example-use-case" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example use case</h2>
+
+<p>Here is an example use case where a pull request is triggered from Bitbucket Server, merged, checked and comments added to pull request in Bitbucket Server.</p>
+
+<p>You may also use it for an ordinary build job, to simply comment the commit that was built.</p>
+
+<h3>
+<a id="notify-jenkins-from-bitbucket-server" class="anchor" href="#notify-jenkins-from-bitbucket-server" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Notify Jenkins from Bitbucket Server</h3>
+
+<p>You may use <a href="https://github.com/tomasbjerre/pull-request-notifier-for-bitbucket">Pull Request Notifier for Bitbucket Server</a> to trigger a Jenkins build from an event in Bitbucket Server. It can supply any parameters and variables you may need. Here is an example URL.</p>
+
+<pre><code>http://localhost:8080/jenkins/job/builder/buildWithParameters?FROM=${PULL_REQUEST_FROM_HASH}&amp;TO=${PULL_REQUEST_TO_HASH}&amp;TOSLUG=${PULL_REQUEST_TO_REPO_SLUG}&amp;TOREPO=${PULL_REQUEST_TO_HTTP_CLONE_URL}&amp;FROMREPO=${PULL_REQUEST_FROM_HTTP_CLONE_URL}&amp;ID=${PULL_REQUEST_ID}&amp;PROJECT=${PULL_REQUEST_TO_REPO_PROJECT_KEY}
+</code></pre>
+
+<h3>
+<a id="jenkins-job" class="anchor" href="#jenkins-job" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Jenkins job</h3>
+
+<p>The Jenkins job may perform the merge, and run any checkers on it, with a shell script build step. It needs to be a parameterized build. To match URL in example above, these parameters are needed.</p>
+
+<ul>
+<li>ID</li>
+<li>TO</li>
+<li>TOSLUG</li>
+<li>TOREPO</li>
+<li>FROM</li>
+<li>FROMREPO</li>
+<li>PROJECT</li>
+</ul>
+
+<p>The shell script may look like this.</p>
+
+<pre><code>echo ---
+echo --- Mergar from $FROM in $FROMREPO to $TO in $TOREPO
+echo ---
+git clone $TOREPO
+cd *
+git reset --hard $TO
+git status
+git remote add from $FROMREPO
+git fetch from
+git merge $FROM
+git --no-pager log --max-count=10 --graph --abbrev-commit
+
+your build command here!
+</code></pre>
+
+<h3>
+<a id="configure-plugin" class="anchor" href="#configure-plugin" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configure plugin</h3>
+
+<p>This plugin may be added as a post build step to analyze the workspace and report comments back to pull request in Bitbucket Server. <a href="https://raw.githubusercontent.com/tomasbjerre/violation-comments-to-stash-plugin/master/sandbox/screenshot-config.png">Here</a> is an example of how that may look like.</p>
+
+<h3>
+<a id="the-result" class="anchor" href="#the-result" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>The result</h3>
+
+<p>And finally <a href="https://raw.githubusercontent.com/tomasbjerre/violation-comments-to-stash-plugin/master/sandbox/screenshot-stash.png">here</a> is an example Bitbucket Server comment.</p>
+
+<h2>
+<a id="job-dsl-plugin" class="anchor" href="#job-dsl-plugin" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Job DSL Plugin</h2>
+
+<p>This plugin can be used with the Job DSL Plugin.</p>
+
+<pre><code>job('example') {
+ publishers {
+  violationsToBitbucketServerRecorder {
+   config {
+    createSingleFileComments(true)
+    createCommentWithAllSingleFileComments(true)
+    projectKey("PROJECT_1")
+    repoSlug("repo_1")
+    password("admin")
+    username("admin")
+    pullRequestId("1")
+    bitbucketServerUrl("http://localhost:7990/bitbucket")
+    usernamePasswordCredentialsId(null)
+    useUsernamePasswordCredentials(false)
+    useUsernamePassword(true)
+    violationConfigs {
+     violationConfig {
+      reporter("FINDBUGS")
+      pattern(".*/findbugs/.*\\.xml\$")
+     }
+    }
+   }
+  }
+ }
+}
+</code></pre>
+
+<h2>
+<a id="pipeline-plugin" class="anchor" href="#pipeline-plugin" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Pipeline Plugin</h2>
+
+<p>This plugin can be used with the Pipeline Plugin:</p>
+
+<pre><code>
+node {
+
+ sh '''
+ rm -rf rep_1
+ git clone http://admin:admin@localhost:7990/bitbucket/scm/project_1/rep_1.git
+ cd *
+ ./gradlew build
+ '''
+
+ step([
+  $class: 'ViolationsToBitbucketServerRecorder', 
+  config: [
+   bitbucketServerUrl: 'http://localhost:7990/bitbucket', 
+   createCommentWithAllSingleFileComments: true, 
+   createSingleFileComments: true, 
+   projectKey: 'PROJECT_1', 
+   repoSlug: 'rep_1', 
+   pullRequestId: '1', 
+   useUsernamePassword: true, 
+   username: 'admin', 
+   password: 'admin', 
+   useUsernamePasswordCredentials: false, 
+   violationConfigs: [
+    [ pattern: '.*/checkstyle/.*\\.xml$', reporter: 'CHECKSTYLE' ], 
+    [ pattern: '.*/findbugs/.*\\.xml$', reporter: 'FINDBUGS' ], 
+   ]
+  ]
+ ])
+}
+</code></pre>
+
+<h2>
+<a id="developer-instructions" class="anchor" href="#developer-instructions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Developer instructions</h2>
+
+<p>Instructions for developers.</p>
+
+<h3>
+<a id="get-the-code" class="anchor" href="#get-the-code" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Get the code</h3>
+
+<pre><code>git clone git@github.com:tomasbjerre/violation-comments-to-stash-plugin.git
+</code></pre>
+
+<h3>
+<a id="plugin-development" class="anchor" href="#plugin-development" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Plugin development</h3>
+
+<p>More details on Jenkins plugin development is available <a href="https://wiki.jenkins-ci.org/display/JENKINS/Plugin+tutorial">here</a>.</p>
+
+<p>There is a <code>/build.sh</code> that will perform a full build and test the plugin.</p>
+
+<p>Some tests are implemented in maven project in <code>/plugin-test</code>. This is to avoid classpath issues with the plugin. These are web tests that will start Jenkins with the plugin on localhost and perform some configuration tests.</p>
+
+<p>A release is created like this. You need to clone from jenkinsci-repo, with https and have username/password in settings.xml.</p>
+
+<pre><code>mvn release:prepare release:perform
+</code></pre>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Violation-comments-to-stash-plugin maintained by <a href="https://github.com/jenkinsci">jenkinsci</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
