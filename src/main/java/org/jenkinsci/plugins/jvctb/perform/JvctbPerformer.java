@@ -69,34 +69,8 @@ public class JvctbPerformer {
    }
   }
 
-  String username = null;
-  String password = null;
-  if (config.isUseUsernamePassword()) {
-   username = checkNotNull(emptyToNull(config.getUsername()), "username selected but not set!");
-   password = checkNotNull(emptyToNull(config.getPassword()), "password selected but not set!");
-   listener.getLogger().println("Using username / password");
-  } else if (config.isUseUsernamePasswordCredentials()) {
-   if (!isNullOrEmpty(config.getUsernamePasswordCredentialsId())) {
-    Optional<StandardUsernamePasswordCredentials> credentials = findCredentials(config
-      .getUsernamePasswordCredentialsId());
-    if (credentials.isPresent()) {
-     username = checkNotNull(emptyToNull(credentials.get().getUsername()), "Credentials username selected but not set!");
-     password = checkNotNull(emptyToNull(credentials.get().getPassword().getPlainText()),
-       "Credentials password selected but not set!");
-     listener.getLogger().println("Using credentials");
-    } else {
-     listener.getLogger().println("Credentials not found!");
-     return;
-    }
-   } else {
-    listener.getLogger().println("No credentials selected!");
-    return;
-   }
-  } else {
-   listener.getLogger().println(
-     "No OAuth2 token and no username/password specified. Will not comment any pull request.");
-   return;
-  }
+  String username = checkNotNull(emptyToNull(config.getUsername()), "username not set!");
+  String password = checkNotNull(emptyToNull(config.getPassword()), "password not set!");
 
   listener.getLogger().println(
     "Will comment PR " + config.getProjectKey() + "/" + config.getRepoSlug() + "/" + config.getPullRequestId() + " on "
@@ -130,7 +104,8 @@ public class JvctbPerformer {
    listener.getLogger().println("---");
    logConfiguration(configExpanded, build, listener);
 
-   listener.getLogger().println("Running Jenkins Violation Comments To Bitbucket Server");
+   setCredentialsIfExists(listener, configExpanded);
+
    listener.getLogger().println("Will comment " + configExpanded.getPullRequestId());
 
    fp.act(new FileCallable<Void>() {
@@ -174,6 +149,33 @@ public class JvctbPerformer {
 
   for (ViolationConfig violationConfig : config.getViolationConfigs()) {
    listener.getLogger().println(violationConfig.getReporter() + " with pattern " + violationConfig.getPattern());
+  }
+ }
+
+ /**
+  * Must be done on master, not on any slave.
+  */
+ private static void setCredentialsIfExists(TaskListener listener, ViolationsToBitbucketServerConfig configExpanded) {
+  if (configExpanded.isUseUsernamePasswordCredentials()) {
+   if (!isNullOrEmpty(configExpanded.getUsernamePasswordCredentialsId())) {
+    Optional<StandardUsernamePasswordCredentials> credentials = findCredentials(configExpanded
+      .getUsernamePasswordCredentialsId());
+    if (credentials.isPresent()) {
+     String username = checkNotNull(emptyToNull(credentials.get().getUsername()),
+       "Credentials username selected but not set!");
+     String password = checkNotNull(emptyToNull(credentials.get().getPassword().getPlainText()),
+       "Credentials password selected but not set!");
+     configExpanded.setUsername(username);
+     configExpanded.setPassword(password);
+     listener.getLogger().println("Using username and password from credentials");
+    } else {
+     listener.getLogger().println("Credentials not found!");
+     return;
+    }
+   } else {
+    listener.getLogger().println("Credentials checked but not selected!");
+    return;
+   }
   }
  }
 

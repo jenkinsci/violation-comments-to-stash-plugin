@@ -3,12 +3,34 @@
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
 ## Unreleased
+### GitHub [#14](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/14) CredentialsId not working
+
+**Evaluating credentials on master #14**
+
+
+[137952adbf3fcaa](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/137952adbf3fcaa) Tomas Bjerre *2016-08-13 08:43:33*
+
+
+### No issue
+
+**doc**
+
+
+[81605d8f3a5ae9a](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/81605d8f3a5ae9a) Tomas Bjerre *2016-08-12 17:20:37*
+
+**Adding screenshot to README**
+
+
+[5876173ae4945c1](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/5876173ae4945c1) Tomas Bjerre *2016-08-11 19:29:05*
+
+
+## 1.21
 ### No issue
 
 **Allowing pipeline DSL not to specify all reporters**
 
 
-[cc38d2cecff880d](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/cc38d2cecff880d) Tomas Bjerre *2016-08-11 19:03:50*
+[3c2d59f63c9a1dd](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/3c2d59f63c9a1dd) Tomas Bjerre *2016-08-11 19:21:39*
 
 
 ## 1.20
