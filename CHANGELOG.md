@@ -3,12 +3,21 @@
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
 ## Unreleased
+### GitHub [#17](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/17) Plugin aborts if it fails to delete a message
+
+**Avoiding crash when unable to remove comment #17**
+
+
+[6b1112806fc3fce](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/6b1112806fc3fce) Tomas Bjerre *2016-08-19 05:09:28*
+
+
+## 1.22
 ### GitHub [#14](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/14) CredentialsId not working
 
 **Evaluating credentials on master #14**
 
 
-[137952adbf3fcaa](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/137952adbf3fcaa) Tomas Bjerre *2016-08-13 08:43:33*
+[50fb4a9190692c3](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/50fb4a9190692c3) Tomas Bjerre *2016-08-13 08:43:53*
 
 
 ### No issue
