@@ -6,6 +6,24 @@ It comments pull requests in  Bitbucket Server (or Stash) with violations found 
 
 It uses [Violation Comments to Bitbucket Server Lib](https://github.com/tomasbjerre/violation-comments-to-bitbucket-server-lib) and supports the same formats as [Violations Lib](https://github.com/tomasbjerre/violations-lib).
 
+It supports:
+ * [_AndoidLint_](http://developer.android.com/tools/help/lint.html)
+ * [_Checkstyle_](http://checkstyle.sourceforge.net/) ([_ESLint_](https://github.com/sindresorhus/grunt-eslint) with `format: 'checkstyle'`)
+ * [_CPPLint_](https://github.com/theandrewdavis/cpplint)
+ * [_CPPCheck_](http://cppcheck.sourceforge.net/)
+ * [_CSSLint_](https://github.com/CSSLint/csslint)
+ * [_Findbugs_](http://findbugs.sourceforge.net/)
+ * [_Flake8_](http://flake8.readthedocs.org/en/latest/) ([_PyLint_](https://www.pylint.org/), [_Pep8_](https://github.com/PyCQA/pycodestyle), [_Mccabe_](https://pypi.python.org/pypi/mccabe), [_PyFlakes_](https://pypi.python.org/pypi/pyflakes))
+ * [_FxCop_](https://en.wikipedia.org/wiki/FxCop)
+ * [_JSHint_](http://jshint.com/)
+ * _Lint_ A common XML format, used by different linters.
+ * [_PerlCritic_](https://github.com/Perl-Critic)
+ * [_PiTest_](http://pitest.org/)
+ * [_PMD_](https://pmd.github.io/)
+ * [_ReSharper_](https://www.jetbrains.com/resharper/)
+ * [_StyleCop_](https://stylecop.codeplex.com/) Not fully supported. Cannot figure out how to get the filename from the reportfile.
+ * [_XMLLint_](http://xmlsoft.org/xmllint.html)
+ 
 The pull request will be commented like this.
 
 ![Pull request comment](https://raw.githubusercontent.com/jenkinsci/violation-comments-to-stash-plugin/master/sandbox/screenshot-stash.png)
