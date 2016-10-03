@@ -21,6 +21,7 @@ It supports:
  * [_PiTest_](http://pitest.org/)
  * [_PMD_](https://pmd.github.io/)
  * [_ReSharper_](https://www.jetbrains.com/resharper/)
+ * [_StyleCop_](https://stylecop.codeplex.com/)
  * [_XMLLint_](http://xmlsoft.org/xmllint.html)
  
 The pull request will be commented like this.
