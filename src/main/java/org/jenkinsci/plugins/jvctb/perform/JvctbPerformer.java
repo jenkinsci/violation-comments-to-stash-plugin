@@ -20,16 +20,12 @@ import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConf
 import static se.bjurr.violations.comments.bitbucketserver.lib.ViolationCommentsToBitbucketServerApi.violationCommentsToBitbucketServerApi;
 import static se.bjurr.violations.lib.ViolationsReporterApi.violationsReporterApi;
 import static se.bjurr.violations.lib.parsers.FindbugsParser.setFindbugsMessagesXml;
-import hudson.EnvVars;
-import hudson.FilePath;
-import hudson.FilePath.FileCallable;
-import hudson.model.TaskListener;
-import hudson.model.Run;
-import hudson.remoting.VirtualChannel;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.util.List;
 import java.util.logging.Logger;
@@ -38,12 +34,18 @@ import org.jenkinsci.plugins.jvctb.config.ViolationConfig;
 import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
 import org.jenkinsci.remoting.RoleChecker;
 
-import se.bjurr.violations.lib.model.Violation;
-
 import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
 import com.google.common.io.CharStreams;
+
+import hudson.EnvVars;
+import hudson.FilePath;
+import hudson.FilePath.FileCallable;
+import hudson.model.Run;
+import hudson.model.TaskListener;
+import hudson.remoting.VirtualChannel;
+import se.bjurr.violations.lib.model.Violation;
 
 public class JvctbPerformer {
 
@@ -72,9 +74,8 @@ public class JvctbPerformer {
   String username = checkNotNull(emptyToNull(config.getUsername()), "username not set!");
   String password = checkNotNull(emptyToNull(config.getPassword()), "password not set!");
 
-  listener.getLogger().println(
-    "Will comment PR " + config.getProjectKey() + "/" + config.getRepoSlug() + "/" + config.getPullRequestId() + " on "
-      + config.getBitbucketServerUrl());
+  listener.getLogger().println("Will comment PR " + config.getProjectKey() + "/" + config.getRepoSlug() + "/"
+    + config.getPullRequestId() + " on " + config.getBitbucketServerUrl());
 
   try {
    violationCommentsToBitbucketServerApi()//
@@ -94,8 +95,8 @@ public class JvctbPerformer {
   }
  }
 
- public static void jvctsPerform(final ViolationsToBitbucketServerConfig configUnexpanded, FilePath fp,
-   Run<?, ?> build, final TaskListener listener) {
+ public static void jvctsPerform(final ViolationsToBitbucketServerConfig configUnexpanded, FilePath fp, Run<?, ?> build,
+   final TaskListener listener) {
   try {
    EnvVars env = build.getEnvironment(listener);
    final ViolationsToBitbucketServerConfig configExpanded = expand(configUnexpanded, env);
@@ -126,26 +127,29 @@ public class JvctbPerformer {
     }
    });
   } catch (Exception e) {
-   listener.getLogger().println(e.getMessage());
    Logger.getLogger(JvctbPerformer.class.getName()).log(SEVERE, "", e);
+   StringWriter sw = new StringWriter();
+   e.printStackTrace(new PrintWriter(sw));
+   listener.getLogger().println(sw.toString());
    return;
   }
  }
 
- private static void logConfiguration(ViolationsToBitbucketServerConfig config, Run<?, ?> build, TaskListener listener) {
+ private static void logConfiguration(ViolationsToBitbucketServerConfig config, Run<?, ?> build,
+   TaskListener listener) {
   listener.getLogger().println(FIELD_BITBUCKETSERVERURL + ": " + config.getBitbucketServerUrl());
   listener.getLogger().println(FIELD_PROJECTKEY + ": " + config.getProjectKey());
   listener.getLogger().println(FIELD_REPOSLUG + ": " + config.getRepoSlug());
   listener.getLogger().println(FIELD_PULLREQUESTID + ": " + config.getPullRequestId());
 
-  listener.getLogger().println(
-    FIELD_USERNAMEPASSWORDCREDENTIALSID + ": " + !isNullOrEmpty(config.getUsernamePasswordCredentialsId()));
+  listener.getLogger()
+    .println(FIELD_USERNAMEPASSWORDCREDENTIALSID + ": " + !isNullOrEmpty(config.getUsernamePasswordCredentialsId()));
   listener.getLogger().println(FIELD_USERNAME + ": " + !isNullOrEmpty(config.getUsername()));
   listener.getLogger().println(FIELD_PASSWORD + ": " + !isNullOrEmpty(config.getPassword()));
 
   listener.getLogger().println(FIELD_CREATESINGLEFILECOMMENTS + ": " + config.getCreateSingleFileComments());
-  listener.getLogger().println(
-    FIELD_CREATECOMMENTWITHALLSINGLEFILECOMMENTS + ": " + config.getCreateCommentWithAllSingleFileComments());
+  listener.getLogger()
+    .println(FIELD_CREATECOMMENTWITHALLSINGLEFILECOMMENTS + ": " + config.getCreateCommentWithAllSingleFileComments());
 
   for (ViolationConfig violationConfig : config.getViolationConfigs()) {
    listener.getLogger().println(violationConfig.getReporter() + " with pattern " + violationConfig.getPattern());
@@ -158,8 +162,8 @@ public class JvctbPerformer {
  private static void setCredentialsIfExists(TaskListener listener, ViolationsToBitbucketServerConfig configExpanded) {
   if (configExpanded.isUseUsernamePasswordCredentials()) {
    if (!isNullOrEmpty(configExpanded.getUsernamePasswordCredentialsId())) {
-    Optional<StandardUsernamePasswordCredentials> credentials = findCredentials(configExpanded
-      .getUsernamePasswordCredentialsId());
+    Optional<StandardUsernamePasswordCredentials> credentials = findCredentials(
+      configExpanded.getUsernamePasswordCredentialsId());
     if (credentials.isPresent()) {
      String username = checkNotNull(emptyToNull(credentials.get().getUsername()),
        "Credentials username selected but not set!");
@@ -181,8 +185,8 @@ public class JvctbPerformer {
 
  private static void setupFindBugsMessages() {
   try {
-   String findbugsMessagesXml = CharStreams.toString(new InputStreamReader(JvctbPerformer.class
-     .getResourceAsStream("findbugs-messages.xml"), UTF_8));
+   String findbugsMessagesXml = CharStreams
+     .toString(new InputStreamReader(JvctbPerformer.class.getResourceAsStream("findbugs-messages.xml"), UTF_8));
    setFindbugsMessagesXml(findbugsMessagesXml);
   } catch (IOException e) {
    propagate(e);

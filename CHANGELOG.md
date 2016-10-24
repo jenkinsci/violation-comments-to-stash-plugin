@@ -5,6 +5,15 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 ## Unreleased
 ### No issue
 
+**PyLint parser**
+
+
+[d75e4b898987ac1](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/d75e4b898987ac1) Tomas Bjerre *2016-10-24 17:47:31*
+
+
+## 1.27
+### No issue
+
 **Supporting StyleCop and fixing FxCop**
 
 
