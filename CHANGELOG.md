@@ -2,7 +2,16 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
-## Unreleased
+## 1.29
+### No issue
+
+**Print entire stacktrace in Jenkins log**
+
+
+[36d14d9365bd0cb](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/36d14d9365bd0cb) Tomas Bjerre *2016-10-24 18:10:02*
+
+
+## 1.28
 ### No issue
 
 **PyLint parser**
