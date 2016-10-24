@@ -3,12 +3,48 @@
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
 ## Unreleased
+### No issue
+
+**Supporting StyleCop and fixing FxCop**
+
+
+[e1f5b515c901a9c](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/e1f5b515c901a9c) Tomas Bjerre *2016-10-03 17:27:03*
+
+**doc**
+
+
+[de5e604a36de286](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/de5e604a36de286) Tomas Bjerre *2016-10-01 13:33:20*
+
+
+## 1.26
+### No issue
+
+**FXCop**
+
+
+[77054e9b4573974](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/77054e9b4573974) Tomas Bjerre *2016-10-01 12:03:28*
+
+
+## 1.25
 ### GitHub [#17](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/17) Plugin aborts if it fails to delete a message
 
 **Avoiding crash when unable to remove comment #17**
 
 
 [6b1112806fc3fce](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/6b1112806fc3fce) Tomas Bjerre *2016-08-19 05:09:28*
+
+
+### No issue
+
+**Updating distributionManagement in pom**
+
+
+[90d4c1793d6137a](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/90d4c1793d6137a) Tomas Bjerre *2016-08-19 15:44:23*
+
+**Updating distributionManagement in pom**
+
+
+[c750b4a53908222](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/c750b4a53908222) Tomas Bjerre *2016-08-19 15:23:29*
 
 
 ## 1.22
