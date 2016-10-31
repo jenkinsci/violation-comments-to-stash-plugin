@@ -5,6 +5,39 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 ## Unreleased
 ### No issue
 
+**Markdown in comments and not commenting unchanged files**
+
+
+[a3b64be3aa05841](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/a3b64be3aa05841) Tomas Bjerre *2016-10-27 17:14:06*
+
+
+## 1.32
+### No issue
+
+**Handling CSS Lint reports without line or evidence**
+
+
+[4715ba317636f61](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/4715ba317636f61) Tomas Bjerre *2016-10-26 15:58:52*
+
+
+## 1.31
+### No issue
+
+**Changing rule format in PyLint to CODE(codeName)**
+
+ * And escaping backslashes in post content. 
+
+[2b314b4cce360f7](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/2b314b4cce360f7) Tomas Bjerre *2016-10-25 18:35:23*
+
+**doc**
+
+
+[3347dd2c2f4a08f](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/3347dd2c2f4a08f) Tomas Bjerre *2016-10-24 20:27:58*
+
+
+## 1.30
+### No issue
+
 **Print entire stacktrace in Jenkins log**
 
 
