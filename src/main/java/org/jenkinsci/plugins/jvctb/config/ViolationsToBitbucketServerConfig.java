@@ -24,6 +24,7 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
  private boolean useUsernamePassword;
  private boolean useUsernamePasswordCredentials;
  private List<ViolationConfig> violationConfigs = newArrayList();
+ private int commentOnlyChangedContentContext;
 
  public ViolationsToBitbucketServerConfig() {
 
@@ -34,7 +35,7 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
    boolean createCommentWithAllSingleFileComments, String projectKey, String repoSlug, String password, String username,
    String pullRequestId, String bitbucketServerUrl, List<ViolationConfig> violationConfigs,
    String usernamePasswordCredentialsId, boolean useUsernamePasswordCredentials, boolean useUsernamePassword,
-   boolean commentOnlyChangedContent) {
+   boolean commentOnlyChangedContent, int commentOnlyChangedContentContext) {
 
   List<ViolationConfig> allViolationConfigs = includeAllReporters(violationConfigs);
 
@@ -51,6 +52,7 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
   this.useUsernamePasswordCredentials = useUsernamePasswordCredentials;
   this.useUsernamePassword = useUsernamePassword;
   this.commentOnlyChangedContent = commentOnlyChangedContent;
+  this.commentOnlyChangedContentContext = commentOnlyChangedContentContext;
  }
 
  public ViolationsToBitbucketServerConfig(ViolationsToBitbucketServerConfig rhs) {
@@ -67,6 +69,7 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
   useUsernamePasswordCredentials = rhs.useUsernamePasswordCredentials;
   useUsernamePassword = rhs.useUsernamePassword;
   commentOnlyChangedContent = rhs.commentOnlyChangedContent;
+  commentOnlyChangedContentContext = rhs.commentOnlyChangedContentContext;
  }
 
  public void applyDefaults(ViolationsToBitbucketServerGlobalConfiguration defaults) {
@@ -110,6 +113,9 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
    return false;
   }
   if (commentOnlyChangedContent != other.commentOnlyChangedContent) {
+   return false;
+  }
+  if (commentOnlyChangedContentContext != other.commentOnlyChangedContentContext) {
    return false;
   }
   if (createCommentWithAllSingleFileComments != other.createCommentWithAllSingleFileComments) {
@@ -184,6 +190,10 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
   return commentOnlyChangedContent;
  }
 
+ public int getCommentOnlyChangedContentContext() {
+  return commentOnlyChangedContentContext;
+ }
+
  public boolean getCreateCommentWithAllSingleFileComments() {
   return createCommentWithAllSingleFileComments;
  }
@@ -226,6 +236,7 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
   int result = 1;
   result = prime * result + (bitbucketServerUrl == null ? 0 : bitbucketServerUrl.hashCode());
   result = prime * result + (commentOnlyChangedContent ? 1231 : 1237);
+  result = prime * result + commentOnlyChangedContentContext;
   result = prime * result + (createCommentWithAllSingleFileComments ? 1231 : 1237);
   result = prime * result + (createSingleFileComments ? 1231 : 1237);
   result = prime * result + (password == null ? 0 : password.hashCode());
@@ -266,6 +277,10 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
 
  public void setCommentOnlyChangedContent(boolean commentOnlyChangedContent) {
   this.commentOnlyChangedContent = commentOnlyChangedContent;
+ }
+
+ public void setCommentOnlyChangedContentContext(int commentOnlyChangedContentContext) {
+  this.commentOnlyChangedContentContext = commentOnlyChangedContentContext;
  }
 
  public void setCreateCommentWithAllSingleFileComments(boolean createCommentWithAllSingleFileComments) {
@@ -320,6 +335,7 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
     + password + ", projectKey=" + projectKey + ", pullRequestId=" + pullRequestId + ", repoSlug=" + repoSlug
     + ", username=" + username + ", usernamePasswordCredentialsId=" + usernamePasswordCredentialsId
     + ", useUsernamePassword=" + useUsernamePassword + ", useUsernamePasswordCredentials="
-    + useUsernamePasswordCredentials + ", violationConfigs=" + violationConfigs + "]";
+    + useUsernamePasswordCredentials + ", violationConfigs=" + violationConfigs + ", commentOnlyChangedContentContext="
+    + commentOnlyChangedContentContext + "]";
  }
 }

@@ -2,7 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
-## Unreleased
+## 1.34
+### GitHub [#27](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/27) Comment only violations that relate to a diff
+
+**Enabling commenting only changed parts of files #27**
+
+
+[fcfe5cd5310e553](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/fcfe5cd5310e553) Tomas Bjerre *2016-11-01 18:30:33*
+
+
 ### No issue
 
 **Optionally let only changed lines to be commented**

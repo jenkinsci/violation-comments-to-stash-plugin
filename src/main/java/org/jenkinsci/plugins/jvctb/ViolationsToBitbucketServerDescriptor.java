@@ -2,6 +2,7 @@ package org.jenkinsci.plugins.jvctb;
 
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_BITBUCKETSERVERURL;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_COMMENTONLYCHANGEDCONTENT;
+import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_COMMENTONLYCHANGEDCONTENTCONTEXT;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_CREATECOMMENTWITHALLSINGLEFILECOMMENTS;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_CREATESINGLEFILECOMMENTS;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_PASSWORD;
@@ -85,6 +86,7 @@ public final class ViolationsToBitbucketServerDescriptor extends BuildStepDescri
 
   config.setCreateSingleFileComments(formData.getString(FIELD_CREATESINGLEFILECOMMENTS).equalsIgnoreCase("true"));
   config.setCommentOnlyChangedContent(formData.getString(FIELD_COMMENTONLYCHANGEDCONTENT).equalsIgnoreCase("true"));
+  config.setCommentOnlyChangedContentContext(formData.getInt(FIELD_COMMENTONLYCHANGEDCONTENTCONTEXT));
   int i = 0;
   for (String pattern : (List<String>) formData.get(FIELD_PATTERN)) {
    config.getViolationConfigs().get(i++).setPattern(pattern);

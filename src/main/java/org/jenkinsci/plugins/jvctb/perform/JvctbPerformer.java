@@ -10,6 +10,7 @@ import static java.util.logging.Level.SEVERE;
 import static org.jenkinsci.plugins.jvctb.config.CredentialsHelper.findCredentials;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_BITBUCKETSERVERURL;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_COMMENTONLYCHANGEDCONTENT;
+import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_COMMENTONLYCHANGEDCONTENTCONTEXT;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_CREATECOMMENTWITHALLSINGLEFILECOMMENTS;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_CREATESINGLEFILECOMMENTS;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_PASSWORD;
@@ -90,6 +91,7 @@ public class JvctbPerformer {
      .withCreateCommentWithAllSingleFileComments(config.getCreateCommentWithAllSingleFileComments())//
      .withCreateSingleFileComments(config.getCreateSingleFileComments())//
      .withCommentOnlyChangedContent(config.getCommentOnlyChangedContent())//
+     .withCommentOnlyChangedContentContext(config.getCommentOnlyChangedContentContext())//
      .toPullRequest();
   } catch (final Exception e) {
    Logger.getLogger(JvctbPerformer.class.getName()).log(SEVERE, "", e);
@@ -119,6 +121,7 @@ public class JvctbPerformer {
   expanded.setUseUsernamePassword(config.isUseUsernamePassword());
   expanded.setUseUsernamePasswordCredentials(config.isUseUsernamePasswordCredentials());
   expanded.setCommentOnlyChangedContent(config.getCommentOnlyChangedContent());
+  expanded.setCommentOnlyChangedContentContext(config.getCommentOnlyChangedContentContext());
 
   for (final ViolationConfig violationConfig : config.getViolationConfigs()) {
    final ViolationConfig p = new ViolationConfig();
@@ -185,6 +188,8 @@ public class JvctbPerformer {
   listener.getLogger()
     .println(FIELD_CREATECOMMENTWITHALLSINGLEFILECOMMENTS + ": " + config.getCreateCommentWithAllSingleFileComments());
   listener.getLogger().println(FIELD_COMMENTONLYCHANGEDCONTENT + ": " + config.getCommentOnlyChangedContent());
+  listener.getLogger()
+    .println(FIELD_COMMENTONLYCHANGEDCONTENTCONTEXT + ": " + config.getCommentOnlyChangedContentContext());
 
   for (final ViolationConfig violationConfig : config.getViolationConfigs()) {
    listener.getLogger().println(violationConfig.getReporter() + " with pattern " + violationConfig.getPattern());

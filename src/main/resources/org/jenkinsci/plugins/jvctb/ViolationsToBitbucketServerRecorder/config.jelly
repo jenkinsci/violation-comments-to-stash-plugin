@@ -78,9 +78,15 @@
     <f:checkbox name="createCommentWithAllSingleFileComments" checked="${config.createCommentWithAllSingleFileComments}"/>
   </f:entry>
 
-  <f:entry title="Comment only changed part of files">
-    <f:checkbox name="commentOnlyChangedContent" checked="${config.commentOnlyChangedContent}"/>
-  </f:entry>
+  <f:optionalBlock checked="${config.commentOnlyChangedContent}" name="commentOnlyChangedContent" title="Comment only changed part of files" inline="true">
+    <f:entry title="Context lines">
+      <f:textbox name="commentOnlyChangedContentContext" value="${config.commentOnlyChangedContentContext}" />
+    </f:entry>
+    
+    <f:description>
+      Any comment within a changed line +/- context will be used.
+    </f:description>
+  </f:optionalBlock>
 
   <f:entry>
   <table class="xmlFilenamePatterns">

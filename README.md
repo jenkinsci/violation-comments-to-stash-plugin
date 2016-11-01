@@ -99,6 +99,7 @@ job('example') {
     useUsernamePassword(true)
     createCommentWithAllSingleFileComments(true)
     commentOnlyChangedContent(true)
+    commentOnlyChangedContentContext(5)
     violationConfigs {
      violationConfig {
       reporter("FINDBUGS")
