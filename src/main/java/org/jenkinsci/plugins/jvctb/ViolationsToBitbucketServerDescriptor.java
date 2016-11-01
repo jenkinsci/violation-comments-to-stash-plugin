@@ -1,6 +1,7 @@
 package org.jenkinsci.plugins.jvctb;
 
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_BITBUCKETSERVERURL;
+import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_COMMENTONLYCHANGEDCONTENT;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_CREATECOMMENTWITHALLSINGLEFILECOMMENTS;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_CREATESINGLEFILECOMMENTS;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_PASSWORD;
@@ -13,18 +14,18 @@ import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConf
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_USEUSERNAMEPASSWORD;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_USEUSERNAMEPASSWORDCREDENTIALS;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.createNewConfig;
-import hudson.model.AbstractProject;
-import hudson.tasks.BuildStepDescriptor;
-import hudson.tasks.Publisher;
-import hudson.util.ListBoxModel;
 
 import java.util.List;
-
-import net.sf.json.JSONObject;
 
 import org.jenkinsci.plugins.jvctb.config.CredentialsHelper;
 import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
 import org.kohsuke.stapler.StaplerRequest;
+
+import hudson.model.AbstractProject;
+import hudson.tasks.BuildStepDescriptor;
+import hudson.tasks.Publisher;
+import hudson.util.ListBoxModel;
+import net.sf.json.JSONObject;
 
 public final class ViolationsToBitbucketServerDescriptor extends BuildStepDescriptor<Publisher> {
  private ViolationsToBitbucketServerConfig config;
@@ -32,8 +33,8 @@ public final class ViolationsToBitbucketServerDescriptor extends BuildStepDescri
  public ViolationsToBitbucketServerDescriptor() {
   super(ViolationsToBitbucketServerRecorder.class);
   load();
-  if (this.config == null || this.config.getViolationConfigs().size() != createNewConfig().getViolationConfigs().size()) {
-   this.config = createNewConfig();
+  if (config == null || config.getViolationConfigs().size() != createNewConfig().getViolationConfigs().size()) {
+   config = createNewConfig();
   }
  }
 
@@ -79,10 +80,11 @@ public final class ViolationsToBitbucketServerDescriptor extends BuildStepDescri
   config.setUseUsernamePasswordCredentials(formData.getBoolean(FIELD_USEUSERNAMEPASSWORDCREDENTIALS));
   config.setUsernamePasswordCredentialsId(formData.getString(FIELD_USERNAMEPASSWORDCREDENTIALSID));
 
-  config.setCreateCommentWithAllSingleFileComments(formData.getString(FIELD_CREATECOMMENTWITHALLSINGLEFILECOMMENTS)
-    .equalsIgnoreCase("true"));
+  config.setCreateCommentWithAllSingleFileComments(
+    formData.getString(FIELD_CREATECOMMENTWITHALLSINGLEFILECOMMENTS).equalsIgnoreCase("true"));
 
   config.setCreateSingleFileComments(formData.getString(FIELD_CREATESINGLEFILECOMMENTS).equalsIgnoreCase("true"));
+  config.setCommentOnlyChangedContent(formData.getString(FIELD_COMMENTONLYCHANGEDCONTENT).equalsIgnoreCase("true"));
   int i = 0;
   for (String pattern : (List<String>) formData.get(FIELD_PATTERN)) {
    config.getViolationConfigs().get(i++).setPattern(pattern);

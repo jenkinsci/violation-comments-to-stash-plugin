@@ -9,6 +9,7 @@ import se.bjurr.violations.lib.reports.Reporter;
 public class ViolationsToBitbucketServerConfigHelper {
  public static final String FIELD_BITBUCKETSERVERURL = "bitbucketServerUrl";
  public static final String FIELD_CREATECOMMENTWITHALLSINGLEFILECOMMENTS = "createCommentWithAllSingleFileComments";
+ public static final String FIELD_COMMENTONLYCHANGEDCONTENT = "commentOnlyChangedContent";
  public static final String FIELD_CREATESINGLEFILECOMMENTS = "createSingleFileComments";
  public static final String FIELD_PASSWORD = "password";
  public static final String FIELD_PATTERN = "pattern";

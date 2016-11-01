@@ -97,6 +97,8 @@ job('example') {
     usernamePasswordCredentialsId(null)
     useUsernamePasswordCredentials(false)
     useUsernamePassword(true)
+    createCommentWithAllSingleFileComments(true)
+    commentOnlyChangedContent(true)
     violationConfigs {
      violationConfig {
       reporter("FINDBUGS")

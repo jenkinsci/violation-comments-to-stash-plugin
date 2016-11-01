@@ -78,6 +78,10 @@
     <f:checkbox name="createCommentWithAllSingleFileComments" checked="${config.createCommentWithAllSingleFileComments}"/>
   </f:entry>
 
+  <f:entry title="Comment only changed part of files">
+    <f:checkbox name="commentOnlyChangedContent" checked="${config.commentOnlyChangedContent}"/>
+  </f:entry>
+
   <f:entry>
   <table class="xmlFilenamePatterns">
     <tr>

@@ -11,6 +11,7 @@ import org.kohsuke.stapler.DataBoundConstructor;
 
 public class ViolationsToBitbucketServerConfig implements Serializable {
  private static final long serialVersionUID = 4851568645021422528L;
+ private boolean commentOnlyChangedContent;
  private String bitbucketServerUrl;
  private boolean createCommentWithAllSingleFileComments;
  private boolean createSingleFileComments;
@@ -30,9 +31,10 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
 
  @DataBoundConstructor
  public ViolationsToBitbucketServerConfig(boolean createSingleFileComments,
-   boolean createCommentWithAllSingleFileComments, String projectKey, String repoSlug, String password,
-   String username, String pullRequestId, String bitbucketServerUrl, List<ViolationConfig> violationConfigs,
-   String usernamePasswordCredentialsId, boolean useUsernamePasswordCredentials, boolean useUsernamePassword) {
+   boolean createCommentWithAllSingleFileComments, String projectKey, String repoSlug, String password, String username,
+   String pullRequestId, String bitbucketServerUrl, List<ViolationConfig> violationConfigs,
+   String usernamePasswordCredentialsId, boolean useUsernamePasswordCredentials, boolean useUsernamePassword,
+   boolean commentOnlyChangedContent) {
 
   List<ViolationConfig> allViolationConfigs = includeAllReporters(violationConfigs);
 
@@ -48,41 +50,43 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
   this.usernamePasswordCredentialsId = usernamePasswordCredentialsId;
   this.useUsernamePasswordCredentials = useUsernamePasswordCredentials;
   this.useUsernamePassword = useUsernamePassword;
+  this.commentOnlyChangedContent = commentOnlyChangedContent;
  }
 
  public ViolationsToBitbucketServerConfig(ViolationsToBitbucketServerConfig rhs) {
-  this.violationConfigs = rhs.violationConfigs;
-  this.createSingleFileComments = rhs.createSingleFileComments;
-  this.createCommentWithAllSingleFileComments = rhs.createCommentWithAllSingleFileComments;
-  this.projectKey = rhs.projectKey;
-  this.repoSlug = rhs.repoSlug;
-  this.password = rhs.password;
-  this.username = rhs.username;
-  this.pullRequestId = rhs.pullRequestId;
-  this.bitbucketServerUrl = rhs.bitbucketServerUrl;
-  this.usernamePasswordCredentialsId = rhs.usernamePasswordCredentialsId;
-  this.useUsernamePasswordCredentials = rhs.useUsernamePasswordCredentials;
-  this.useUsernamePassword = rhs.useUsernamePassword;
+  violationConfigs = rhs.violationConfigs;
+  createSingleFileComments = rhs.createSingleFileComments;
+  createCommentWithAllSingleFileComments = rhs.createCommentWithAllSingleFileComments;
+  projectKey = rhs.projectKey;
+  repoSlug = rhs.repoSlug;
+  password = rhs.password;
+  username = rhs.username;
+  pullRequestId = rhs.pullRequestId;
+  bitbucketServerUrl = rhs.bitbucketServerUrl;
+  usernamePasswordCredentialsId = rhs.usernamePasswordCredentialsId;
+  useUsernamePasswordCredentials = rhs.useUsernamePasswordCredentials;
+  useUsernamePassword = rhs.useUsernamePassword;
+  commentOnlyChangedContent = rhs.commentOnlyChangedContent;
  }
 
  public void applyDefaults(ViolationsToBitbucketServerGlobalConfiguration defaults) {
-  if (isNullOrEmpty(this.bitbucketServerUrl)) {
-   this.bitbucketServerUrl = defaults.getBitbucketServerUrl();
+  if (isNullOrEmpty(bitbucketServerUrl)) {
+   bitbucketServerUrl = defaults.getBitbucketServerUrl();
   }
-  if (isNullOrEmpty(this.usernamePasswordCredentialsId)) {
-   this.usernamePasswordCredentialsId = defaults.getUsernamePasswordCredentialsId();
+  if (isNullOrEmpty(usernamePasswordCredentialsId)) {
+   usernamePasswordCredentialsId = defaults.getUsernamePasswordCredentialsId();
   }
-  if (isNullOrEmpty(this.username)) {
-   this.username = defaults.getUsername();
+  if (isNullOrEmpty(username)) {
+   username = defaults.getUsername();
   }
-  if (isNullOrEmpty(this.password)) {
-   this.password = defaults.getPassword();
+  if (isNullOrEmpty(password)) {
+   password = defaults.getPassword();
   }
-  if (isNullOrEmpty(this.repoSlug)) {
-   this.repoSlug = defaults.getRepoSlug();
+  if (isNullOrEmpty(repoSlug)) {
+   repoSlug = defaults.getRepoSlug();
   }
-  if (isNullOrEmpty(this.projectKey)) {
-   this.projectKey = defaults.getProjectKey();
+  if (isNullOrEmpty(projectKey)) {
+   projectKey = defaults.getProjectKey();
   }
  }
 
@@ -98,147 +102,170 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
    return false;
   }
   ViolationsToBitbucketServerConfig other = (ViolationsToBitbucketServerConfig) obj;
-  if (this.bitbucketServerUrl == null) {
+  if (bitbucketServerUrl == null) {
    if (other.bitbucketServerUrl != null) {
     return false;
    }
-  } else if (!this.bitbucketServerUrl.equals(other.bitbucketServerUrl)) {
+  } else if (!bitbucketServerUrl.equals(other.bitbucketServerUrl)) {
    return false;
   }
-  if (this.createCommentWithAllSingleFileComments != other.createCommentWithAllSingleFileComments) {
+  if (commentOnlyChangedContent != other.commentOnlyChangedContent) {
    return false;
   }
-  if (this.createSingleFileComments != other.createSingleFileComments) {
+  if (createCommentWithAllSingleFileComments != other.createCommentWithAllSingleFileComments) {
    return false;
   }
-  if (this.password == null) {
+  if (createSingleFileComments != other.createSingleFileComments) {
+   return false;
+  }
+  if (password == null) {
    if (other.password != null) {
     return false;
    }
-  } else if (!this.password.equals(other.password)) {
+  } else if (!password.equals(other.password)) {
    return false;
   }
-  if (this.projectKey == null) {
+  if (projectKey == null) {
    if (other.projectKey != null) {
     return false;
    }
-  } else if (!this.projectKey.equals(other.projectKey)) {
+  } else if (!projectKey.equals(other.projectKey)) {
    return false;
   }
-  if (this.pullRequestId == null) {
+  if (pullRequestId == null) {
    if (other.pullRequestId != null) {
     return false;
    }
-  } else if (!this.pullRequestId.equals(other.pullRequestId)) {
+  } else if (!pullRequestId.equals(other.pullRequestId)) {
    return false;
   }
-  if (this.repoSlug == null) {
+  if (repoSlug == null) {
    if (other.repoSlug != null) {
     return false;
    }
-  } else if (!this.repoSlug.equals(other.repoSlug)) {
+  } else if (!repoSlug.equals(other.repoSlug)) {
    return false;
   }
-  if (this.useUsernamePassword != other.useUsernamePassword) {
+  if (useUsernamePassword != other.useUsernamePassword) {
    return false;
   }
-  if (this.useUsernamePasswordCredentials != other.useUsernamePasswordCredentials) {
+  if (useUsernamePasswordCredentials != other.useUsernamePasswordCredentials) {
    return false;
   }
-  if (this.username == null) {
+  if (username == null) {
    if (other.username != null) {
     return false;
    }
-  } else if (!this.username.equals(other.username)) {
+  } else if (!username.equals(other.username)) {
    return false;
   }
-  if (this.usernamePasswordCredentialsId == null) {
+  if (usernamePasswordCredentialsId == null) {
    if (other.usernamePasswordCredentialsId != null) {
     return false;
    }
-  } else if (!this.usernamePasswordCredentialsId.equals(other.usernamePasswordCredentialsId)) {
+  } else if (!usernamePasswordCredentialsId.equals(other.usernamePasswordCredentialsId)) {
    return false;
   }
-  if (this.violationConfigs == null) {
+  if (violationConfigs == null) {
    if (other.violationConfigs != null) {
     return false;
    }
-  } else if (!this.violationConfigs.equals(other.violationConfigs)) {
+  } else if (!violationConfigs.equals(other.violationConfigs)) {
    return false;
   }
   return true;
  }
 
  public String getBitbucketServerUrl() {
-  return this.bitbucketServerUrl;
+  return bitbucketServerUrl;
+ }
+
+ public boolean getCommentOnlyChangedContent() {
+  return commentOnlyChangedContent;
  }
 
  public boolean getCreateCommentWithAllSingleFileComments() {
-  return this.createCommentWithAllSingleFileComments;
+  return createCommentWithAllSingleFileComments;
  }
 
  public boolean getCreateSingleFileComments() {
-  return this.createSingleFileComments;
+  return createSingleFileComments;
  }
 
  public String getPassword() {
-  return this.password;
+  return password;
  }
 
  public String getProjectKey() {
-  return this.projectKey;
+  return projectKey;
  }
 
  public String getPullRequestId() {
-  return this.pullRequestId;
+  return pullRequestId;
  }
 
  public String getRepoSlug() {
-  return this.repoSlug;
+  return repoSlug;
  }
 
  public String getUsername() {
-  return this.username;
+  return username;
  }
 
  public String getUsernamePasswordCredentialsId() {
-  return this.usernamePasswordCredentialsId;
+  return usernamePasswordCredentialsId;
  }
 
  public List<ViolationConfig> getViolationConfigs() {
-  return this.violationConfigs;
+  return violationConfigs;
  }
 
  @Override
  public int hashCode() {
   final int prime = 31;
   int result = 1;
-  result = prime * result + ((this.bitbucketServerUrl == null) ? 0 : this.bitbucketServerUrl.hashCode());
-  result = prime * result + (this.createCommentWithAllSingleFileComments ? 1231 : 1237);
-  result = prime * result + (this.createSingleFileComments ? 1231 : 1237);
-  result = prime * result + ((this.password == null) ? 0 : this.password.hashCode());
-  result = prime * result + ((this.projectKey == null) ? 0 : this.projectKey.hashCode());
-  result = prime * result + ((this.pullRequestId == null) ? 0 : this.pullRequestId.hashCode());
-  result = prime * result + ((this.repoSlug == null) ? 0 : this.repoSlug.hashCode());
-  result = prime * result + (this.useUsernamePassword ? 1231 : 1237);
-  result = prime * result + (this.useUsernamePasswordCredentials ? 1231 : 1237);
-  result = prime * result + ((this.username == null) ? 0 : this.username.hashCode());
-  result = prime * result
-    + ((this.usernamePasswordCredentialsId == null) ? 0 : this.usernamePasswordCredentialsId.hashCode());
-  result = prime * result + ((this.violationConfigs == null) ? 0 : this.violationConfigs.hashCode());
+  result = prime * result + (bitbucketServerUrl == null ? 0 : bitbucketServerUrl.hashCode());
+  result = prime * result + (commentOnlyChangedContent ? 1231 : 1237);
+  result = prime * result + (createCommentWithAllSingleFileComments ? 1231 : 1237);
+  result = prime * result + (createSingleFileComments ? 1231 : 1237);
+  result = prime * result + (password == null ? 0 : password.hashCode());
+  result = prime * result + (projectKey == null ? 0 : projectKey.hashCode());
+  result = prime * result + (pullRequestId == null ? 0 : pullRequestId.hashCode());
+  result = prime * result + (repoSlug == null ? 0 : repoSlug.hashCode());
+  result = prime * result + (useUsernamePassword ? 1231 : 1237);
+  result = prime * result + (useUsernamePasswordCredentials ? 1231 : 1237);
+  result = prime * result + (username == null ? 0 : username.hashCode());
+  result = prime * result + (usernamePasswordCredentialsId == null ? 0 : usernamePasswordCredentialsId.hashCode());
+  result = prime * result + (violationConfigs == null ? 0 : violationConfigs.hashCode());
   return result;
  }
 
+ private List<ViolationConfig> includeAllReporters(List<ViolationConfig> violationConfigs) {
+  List<ViolationConfig> allViolationConfigs = ViolationsToBitbucketServerConfigHelper.getAllViolationConfigs();
+  for (ViolationConfig candidate : allViolationConfigs) {
+   for (ViolationConfig input : violationConfigs) {
+    if (candidate.getReporter() == input.getReporter()) {
+     candidate.setPattern(input.getPattern());
+    }
+   }
+  }
+  return allViolationConfigs;
+ }
+
  public boolean isUseUsernamePassword() {
-  return this.useUsernamePassword;
+  return useUsernamePassword;
  }
 
  public boolean isUseUsernamePasswordCredentials() {
-  return this.useUsernamePasswordCredentials;
+  return useUsernamePasswordCredentials;
  }
 
  public void setBitbucketServerUrl(String bitbucketServerUrl) {
   this.bitbucketServerUrl = bitbucketServerUrl;
+ }
+
+ public void setCommentOnlyChangedContent(boolean commentOnlyChangedContent) {
+  this.commentOnlyChangedContent = commentOnlyChangedContent;
  }
 
  public void setCreateCommentWithAllSingleFileComments(boolean createCommentWithAllSingleFileComments) {
@@ -258,7 +285,7 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
  }
 
  public void setPullRequestId(String string) {
-  this.pullRequestId = string;
+  pullRequestId = string;
  }
 
  public void setRepoSlug(String repoSlug) {
@@ -282,29 +309,17 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
  }
 
  public void setViolationConfigs(List<ViolationConfig> parsers) {
-  this.violationConfigs = parsers;
+  violationConfigs = parsers;
  }
 
  @Override
  public String toString() {
-  return "ViolationsToBitbucketServerConfig [bitbucketServerUrl=" + this.bitbucketServerUrl
-    + ", createCommentWithAllSingleFileComments=" + this.createCommentWithAllSingleFileComments
-    + ", createSingleFileComments=" + this.createSingleFileComments + ", password=" + this.password + ", projectKey="
-    + this.projectKey + ", pullRequestId=" + this.pullRequestId + ", repoSlug=" + this.repoSlug + ", username="
-    + this.username + ", violationConfigs=" + this.violationConfigs + ", usernamePasswordCredentialsId="
-    + this.usernamePasswordCredentialsId + ", useUsernamePasswordCredentials=" + this.useUsernamePasswordCredentials
-    + ", useUsernamePassword=" + this.useUsernamePassword + "]";
- }
-
- private List<ViolationConfig> includeAllReporters(List<ViolationConfig> violationConfigs) {
-  List<ViolationConfig> allViolationConfigs = ViolationsToBitbucketServerConfigHelper.getAllViolationConfigs();
-  for (ViolationConfig candidate : allViolationConfigs) {
-   for (ViolationConfig input : violationConfigs) {
-    if (candidate.getReporter() == input.getReporter()) {
-     candidate.setPattern(input.getPattern());
-    }
-   }
-  }
-  return allViolationConfigs;
+  return "ViolationsToBitbucketServerConfig [commentOnlyChangedContent=" + commentOnlyChangedContent
+    + ", bitbucketServerUrl=" + bitbucketServerUrl + ", createCommentWithAllSingleFileComments="
+    + createCommentWithAllSingleFileComments + ", createSingleFileComments=" + createSingleFileComments + ", password="
+    + password + ", projectKey=" + projectKey + ", pullRequestId=" + pullRequestId + ", repoSlug=" + repoSlug
+    + ", username=" + username + ", usernamePasswordCredentialsId=" + usernamePasswordCredentialsId
+    + ", useUsernamePassword=" + useUsernamePassword + ", useUsernamePasswordCredentials="
+    + useUsernamePasswordCredentials + ", violationConfigs=" + violationConfigs + "]";
  }
 }

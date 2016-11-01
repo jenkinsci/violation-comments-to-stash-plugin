@@ -5,6 +5,15 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 ## Unreleased
 ### No issue
 
+**Optionally let only changed lines to be commented**
+
+
+[9c284a3635144d7](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/9c284a3635144d7) Tomas Bjerre *2016-10-31 21:19:34*
+
+
+## 1.33
+### No issue
+
 **Markdown in comments and not commenting unchanged files**
 
 
