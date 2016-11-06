@@ -9,21 +9,27 @@ It uses [Violation Comments to Bitbucket Server Lib](https://github.com/tomasbje
 It supports:
  * [_AndoidLint_](http://developer.android.com/tools/help/lint.html)
  * [_Checkstyle_](http://checkstyle.sourceforge.net/) ([_ESLint_](https://github.com/sindresorhus/grunt-eslint) with `format: 'checkstyle'`)
+ * [_CodeNarc_](http://codenarc.sourceforge.net/)
+ * [_CPD_](http://pmd.sourceforge.net/pmd-4.3.0/cpd.html)
  * [_CPPLint_](https://github.com/theandrewdavis/cpplint)
  * [_CPPCheck_](http://cppcheck.sourceforge.net/)
  * [_CSSLint_](https://github.com/CSSLint/csslint)
  * [_Findbugs_](http://findbugs.sourceforge.net/)
  * [_Flake8_](http://flake8.readthedocs.org/en/latest/) ([_Pep8_](https://github.com/PyCQA/pycodestyle), [_Mccabe_](https://pypi.python.org/pypi/mccabe), [_PyFlakes_](https://pypi.python.org/pypi/pyflakes))
  * [_FxCop_](https://en.wikipedia.org/wiki/FxCop)
+ * [_Gendarme_](http://www.mono-project.com/docs/tools+libraries/tools/gendarme/)
  * [_JSHint_](http://jshint.com/)
  * _Lint_ A common XML format, used by different linters.
+ * [_JCReport_](https://github.com/jCoderZ/fawkez/wiki/JcReport)
  * [_PerlCritic_](https://github.com/Perl-Critic)
  * [_PiTest_](http://pitest.org/)
- * [_PMD_](https://pmd.github.io/)
  * [_PyLint_](https://www.pylint.org/)
+ * [_PMD_](https://pmd.github.io/)
  * [_ReSharper_](https://www.jetbrains.com/resharper/)
+ * [_Simian_](http://www.harukizaemon.com/simian/)
  * [_StyleCop_](https://stylecop.codeplex.com/)
  * [_XMLLint_](http://xmlsoft.org/xmllint.html)
+ * [_ZPTLint_](https://pypi.python.org/pypi/zptlint)
  
 The pull request will be commented like this.
 
