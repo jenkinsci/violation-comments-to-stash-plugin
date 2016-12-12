@@ -2,6 +2,24 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## Unreleased
+### No issue
+
+**Codenarc, Cpd, Gendarme, Jcereport, Simian, ZptLint**
+
+
+[f3db73cac2ea2f5](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/f3db73cac2ea2f5) Tomas Bjerre *2016-11-06 07:10:34*
+
+
+## 1.35
+### GitHub [#27](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/27) Comment only violations that relate to a diff
+
+**Adding context lines field #27**
+
+
+[5f1805b5f22a0a3](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/5f1805b5f22a0a3) Tomas Bjerre *2016-11-01 20:18:20*
+
+
 ## 1.34
 ### GitHub [#27](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/27) Comment only violations that relate to a diff
 
