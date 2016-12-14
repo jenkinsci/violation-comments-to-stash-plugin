@@ -2,7 +2,16 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
-## Unreleased
+## 1.37
+### GitHub [#29](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/29) Error when enabling the commentOnlyChangedContent option
+
+**More details if response cannot be parsed #29**
+
+
+[40be4277acb46de](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/40be4277acb46de) Tomas Bjerre *2016-12-12 17:15:34*
+
+
+## 1.36
 ### No issue
 
 **Codenarc, Cpd, Gendarme, Jcereport, Simian, ZptLint**
