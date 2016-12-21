@@ -16,7 +16,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 **Handling PR:s with deleted files**
 
 
-[e174a860ee66d81](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/e174a860ee66d81) Tomas Bjerre *2016-12-21 17:27:35*
+[d44df03bbd768ab](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/d44df03bbd768ab) Tomas Bjerre *2016-12-21 17:28:07*
 
 
 ## 1.37
