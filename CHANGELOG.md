@@ -2,6 +2,23 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## Unreleased
+### GitHub [#30](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/30) Changelog missing from last few releases
+
+**Updating changelog #30**
+
+
+[d3fabd6d41680ef](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/d3fabd6d41680ef) Tomas Bjerre *2016-12-14 16:31:17*
+
+
+### No issue
+
+**Handling PR:s with deleted files**
+
+
+[e174a860ee66d81](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/e174a860ee66d81) Tomas Bjerre *2016-12-21 17:27:35*
+
+
 ## 1.37
 ### GitHub [#29](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/29) Error when enabling the commentOnlyChangedContent option
 
