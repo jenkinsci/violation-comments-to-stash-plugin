@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.43
+### No issue
+
+**Adding MyPy and PyDocStyle parsers**
+
+
+[f4174f1fa5faeab](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/f4174f1fa5faeab) Tomas Bjerre *2017-02-06 17:57:18*
+
+
 ## 1.40
 ### No issue
 
