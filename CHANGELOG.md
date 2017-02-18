@@ -2,6 +2,20 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.44
+### No issue
+
+**Finding findbugsmessages and correcting codenarc**
+
+
+[255fbf1d2592655](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/255fbf1d2592655) Tomas Bjerre *2017-02-16 21:12:17*
+
+**doc**
+
+
+[02443ffc6f55efe](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/02443ffc6f55efe) Tomas Bjerre *2017-02-06 18:44:46*
+
+
 ## 1.43
 ### No issue
 
