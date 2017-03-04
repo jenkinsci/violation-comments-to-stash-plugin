@@ -5,15 +5,14 @@
 	<parent>
 		<groupId>org.jenkins-ci.plugins</groupId>
 		<artifactId>plugin</artifactId>
-		<!--version>1.642.4</version// -->
-		<version>1.609.3</version>
-		<relativePath />
+		<version>2.23</version>
 	</parent>
 
 	<properties>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<project.build.outputEncoding>UTF-8</project.build.outputEncoding>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<jenkins.version>2.1</jenkins.version>
+		<hpi-plugin.version>1.115</hpi-plugin.version>
+		<jenkins-test-harness.version>2.19</jenkins-test-harness.version>
+		<findbugs.failOnError>false</findbugs.failOnError>
 	</properties>
 
 	<artifactId>violation-comments-to-stash</artifactId>
@@ -192,7 +191,6 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

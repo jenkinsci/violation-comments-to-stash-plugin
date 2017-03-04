@@ -5,10 +5,32 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 ## Unreleased
 ### No issue
 
+**Jenkinsfile**
+
+
+[a46bd8cd4e13233](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/a46bd8cd4e13233) Tomas Bjerre *2017-03-04 23:03:28*
+
 **doc**
 
 
-[11c8d7f48af4423](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/11c8d7f48af4423) Tomas Bjerre *2017-02-18 22:08:23*
+[ac5e706706cdbae](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/ac5e706706cdbae) Tomas Bjerre *2017-03-04 09:29:40*
+
+
+## 1.46
+### GitHub [#15](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/15) File path on all comments in one message is absolute
+
+**Commenting with file name from server #15**
+
+
+[1f2901d8bbe75c9](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/1f2901d8bbe75c9) Tomas Bjerre *2017-02-19 21:33:11*
+
+
+### No issue
+
+**doc**
+
+
+[aca0e3fd98c4d97](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/aca0e3fd98c4d97) Tomas Bjerre *2017-02-18 22:08:39*
 
 
 ## 1.45
