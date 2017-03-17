@@ -1,10 +1,12 @@
 package org.jenkinsci.plugins.jvctb;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_BITBUCKETSERVERURL;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_COMMENTONLYCHANGEDCONTENT;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_COMMENTONLYCHANGEDCONTENTCONTEXT;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_CREATECOMMENTWITHALLSINGLEFILECOMMENTS;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_CREATESINGLEFILECOMMENTS;
+import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_MINSEVERITY;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_PASSWORD;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_PATTERN;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_PROJECTKEY;
@@ -27,6 +29,7 @@ import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Publisher;
 import hudson.util.ListBoxModel;
 import net.sf.json.JSONObject;
+import se.bjurr.violations.lib.model.SEVERITY;
 
 public final class ViolationsToBitbucketServerDescriptor extends BuildStepDescriptor<Publisher> {
   private ViolationsToBitbucketServerConfig config;
@@ -93,6 +96,14 @@ public final class ViolationsToBitbucketServerDescriptor extends BuildStepDescri
         formData.getString(FIELD_COMMENTONLYCHANGEDCONTENT).equalsIgnoreCase("true"));
     config.setCommentOnlyChangedContentContext(
         formData.getInt(FIELD_COMMENTONLYCHANGEDCONTENTCONTEXT));
+
+    String minSeverityString = formData.getString(FIELD_MINSEVERITY);
+    if (!isNullOrEmpty(minSeverityString)) {
+      config.setMinSeverity(SEVERITY.valueOf(minSeverityString));
+    } else {
+      config.setMinSeverity(null);
+    }
+
     int i = 0;
     for (String pattern : (List<String>) formData.get(FIELD_PATTERN)) {
       config.getViolationConfigs().get(i++).setPattern(pattern);

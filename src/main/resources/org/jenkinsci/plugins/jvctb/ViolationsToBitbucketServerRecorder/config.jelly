@@ -69,6 +69,15 @@
   <f:entry title="Pull Request ID">
     <f:textbox name="pullRequestId" value="${config.pullRequestId}" />
   </f:entry>
+  
+  <f:entry name="minSeverity" title="Comment only if severity at least" field="minSeverity">
+     <select name="minSeverity">
+        <f:option value="">Default, global config or INFO if no global config</f:option>
+         <f:option value="INFO" selected="${config.minSeverity == 'INFO'}">INFO</f:option>
+         <f:option value="WARN" selected="${config.minSeverity == 'WARN'}">WARN</f:option>
+         <f:option value="ERROR" selected="${config.minSeverity == 'ERROR'}">ERROR</f:option>
+     </select>
+  </f:entry>
 
   <f:entry title="Create one comment per violation">
     <f:checkbox name="createSingleFileComments" checked="${config.createSingleFileComments}"/>

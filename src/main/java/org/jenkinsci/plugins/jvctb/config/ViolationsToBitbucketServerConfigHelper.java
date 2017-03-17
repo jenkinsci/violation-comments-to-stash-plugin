@@ -25,6 +25,7 @@ public class ViolationsToBitbucketServerConfigHelper {
   public static final String FIELD_USEUSERNAMEPASSWORD = "useUsernamePassword";
   public static final String FIELD_USEUSERNAMEPASSWORDCREDENTIALS =
       "useUsernamePasswordCredentials";
+  public static final String FIELD_MINSEVERITY = "minSeverity";
 
   public static ViolationsToBitbucketServerConfig createNewConfig() {
     ViolationsToBitbucketServerConfig config = new ViolationsToBitbucketServerConfig();

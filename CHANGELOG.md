@@ -5,6 +5,11 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 ## Unreleased
 ### No issue
 
+**Google java code standard**
+
+
+[1dbafea7db87701](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/1dbafea7db87701) Tomas Bjerre *2017-03-17 15:38:37*
+
 **Jenkinsfile**
 
 

@@ -9,6 +9,8 @@ import java.util.List;
 import org.jenkinsci.plugins.jvctb.ViolationsToBitbucketServerGlobalConfiguration;
 import org.kohsuke.stapler.DataBoundConstructor;
 
+import se.bjurr.violations.lib.model.SEVERITY;
+
 public class ViolationsToBitbucketServerConfig implements Serializable {
   private static final long serialVersionUID = 4851568645021422528L;
   private boolean commentOnlyChangedContent;
@@ -25,6 +27,7 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
   private boolean useUsernamePasswordCredentials;
   private List<ViolationConfig> violationConfigs = newArrayList();
   private int commentOnlyChangedContentContext;
+  private SEVERITY minSeverity;
 
   public ViolationsToBitbucketServerConfig() {}
 
@@ -43,7 +46,8 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
       boolean useUsernamePasswordCredentials,
       boolean useUsernamePassword,
       boolean commentOnlyChangedContent,
-      int commentOnlyChangedContentContext) {
+      int commentOnlyChangedContentContext,
+      SEVERITY minSeverity) {
 
     List<ViolationConfig> allViolationConfigs = includeAllReporters(violationConfigs);
 
@@ -61,6 +65,7 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
     this.useUsernamePassword = useUsernamePassword;
     this.commentOnlyChangedContent = commentOnlyChangedContent;
     this.commentOnlyChangedContentContext = commentOnlyChangedContentContext;
+    this.minSeverity = minSeverity;
   }
 
   public ViolationsToBitbucketServerConfig(ViolationsToBitbucketServerConfig rhs) {
@@ -78,6 +83,7 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
     useUsernamePassword = rhs.useUsernamePassword;
     commentOnlyChangedContent = rhs.commentOnlyChangedContent;
     commentOnlyChangedContentContext = rhs.commentOnlyChangedContentContext;
+    this.minSeverity = rhs.minSeverity;
   }
 
   public void applyDefaults(ViolationsToBitbucketServerGlobalConfiguration defaults) {
@@ -98,6 +104,9 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
     }
     if (isNullOrEmpty(projectKey)) {
       projectKey = defaults.getProjectKey();
+    }
+    if (this.minSeverity == null) {
+      this.minSeverity = defaults.getMinSeverity();
     }
   }
 
@@ -130,6 +139,9 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
       return false;
     }
     if (createSingleFileComments != other.createSingleFileComments) {
+      return false;
+    }
+    if (minSeverity != other.minSeverity) {
       return false;
     }
     if (password == null) {
@@ -247,6 +259,7 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
     result = prime * result + commentOnlyChangedContentContext;
     result = prime * result + (createCommentWithAllSingleFileComments ? 1231 : 1237);
     result = prime * result + (createSingleFileComments ? 1231 : 1237);
+    result = prime * result + (minSeverity == null ? 0 : minSeverity.hashCode());
     result = prime * result + (password == null ? 0 : password.hashCode());
     result = prime * result + (projectKey == null ? 0 : projectKey.hashCode());
     result = prime * result + (pullRequestId == null ? 0 : pullRequestId.hashCode());
@@ -303,6 +316,14 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
 
   public void setCreateSingleFileComments(boolean createSingleFileComments) {
     this.createSingleFileComments = createSingleFileComments;
+  }
+
+  public SEVERITY getMinSeverity() {
+    return minSeverity;
+  }
+
+  public void setMinSeverity(SEVERITY minSeverity) {
+    this.minSeverity = minSeverity;
   }
 
   public void setPassword(String password) {
@@ -371,6 +392,8 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
         + violationConfigs
         + ", commentOnlyChangedContentContext="
         + commentOnlyChangedContentContext
+        + ", minSeverity="
+        + minSeverity
         + "]";
   }
 }

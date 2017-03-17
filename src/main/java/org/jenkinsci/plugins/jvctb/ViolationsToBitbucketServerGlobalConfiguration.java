@@ -1,18 +1,18 @@
 package org.jenkinsci.plugins.jvctb;
 
-import hudson.Extension;
-import hudson.util.ListBoxModel;
-
 import java.io.Serializable;
-
-import jenkins.model.GlobalConfiguration;
-import net.sf.json.JSONObject;
 
 import org.jenkinsci.plugins.jvctb.config.CredentialsHelper;
 import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.StaplerRequest;
 
 import com.google.common.base.Optional;
+
+import hudson.Extension;
+import hudson.util.ListBoxModel;
+import jenkins.model.GlobalConfiguration;
+import net.sf.json.JSONObject;
+import se.bjurr.violations.lib.model.SEVERITY;
 
 /** Created by magnayn on 07/04/2016. */
 @Extension
@@ -37,6 +37,7 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
   public String repoSlug;
   public String username;
   private String usernamePasswordCredentialsId;
+  private SEVERITY minSeverity;
 
   public ViolationsToBitbucketServerGlobalConfiguration() {
     load();
@@ -78,6 +79,15 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
   }
 
   @DataBoundSetter
+  public void setMinSeverity(SEVERITY minSeverity) {
+    this.minSeverity = minSeverity;
+  }
+
+  public SEVERITY getMinSeverity() {
+    return minSeverity;
+  }
+
+  @DataBoundSetter
   public void setBitbucketServerUrl(String bitbucketServerUrl) {
     this.bitbucketServerUrl = bitbucketServerUrl;
   }
@@ -107,19 +117,100 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
   }
 
   @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + (bitbucketServerUrl == null ? 0 : bitbucketServerUrl.hashCode());
+    result = prime * result + (minSeverity == null ? 0 : minSeverity.hashCode());
+    result = prime * result + (password == null ? 0 : password.hashCode());
+    result = prime * result + (projectKey == null ? 0 : projectKey.hashCode());
+    result = prime * result + (repoSlug == null ? 0 : repoSlug.hashCode());
+    result = prime * result + (username == null ? 0 : username.hashCode());
+    result =
+        prime * result
+            + (usernamePasswordCredentialsId == null
+                ? 0
+                : usernamePasswordCredentialsId.hashCode());
+    return result;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    ViolationsToBitbucketServerGlobalConfiguration other =
+        (ViolationsToBitbucketServerGlobalConfiguration) obj;
+    if (bitbucketServerUrl == null) {
+      if (other.bitbucketServerUrl != null) {
+        return false;
+      }
+    } else if (!bitbucketServerUrl.equals(other.bitbucketServerUrl)) {
+      return false;
+    }
+    if (minSeverity != other.minSeverity) {
+      return false;
+    }
+    if (password == null) {
+      if (other.password != null) {
+        return false;
+      }
+    } else if (!password.equals(other.password)) {
+      return false;
+    }
+    if (projectKey == null) {
+      if (other.projectKey != null) {
+        return false;
+      }
+    } else if (!projectKey.equals(other.projectKey)) {
+      return false;
+    }
+    if (repoSlug == null) {
+      if (other.repoSlug != null) {
+        return false;
+      }
+    } else if (!repoSlug.equals(other.repoSlug)) {
+      return false;
+    }
+    if (username == null) {
+      if (other.username != null) {
+        return false;
+      }
+    } else if (!username.equals(other.username)) {
+      return false;
+    }
+    if (usernamePasswordCredentialsId == null) {
+      if (other.usernamePasswordCredentialsId != null) {
+        return false;
+      }
+    } else if (!usernamePasswordCredentialsId.equals(other.usernamePasswordCredentialsId)) {
+      return false;
+    }
+    return true;
+  }
+
+  @Override
   public String toString() {
     return "ViolationsToBitbucketServerGlobalConfiguration [bitbucketServerUrl="
-        + this.bitbucketServerUrl
+        + bitbucketServerUrl
         + ", password="
-        + this.password
+        + password
         + ", projectKey="
-        + this.projectKey
+        + projectKey
         + ", repoSlug="
-        + this.repoSlug
+        + repoSlug
         + ", username="
-        + this.username
+        + username
         + ", usernamePasswordCredentialsId="
-        + this.usernamePasswordCredentialsId
+        + usernamePasswordCredentialsId
+        + ", minSeverity="
+        + minSeverity
         + "]";
   }
 }

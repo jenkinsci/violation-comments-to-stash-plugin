@@ -13,6 +13,7 @@ import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConf
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_COMMENTONLYCHANGEDCONTENTCONTEXT;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_CREATECOMMENTWITHALLSINGLEFILECOMMENTS;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_CREATESINGLEFILECOMMENTS;
+import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_MINSEVERITY;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_PASSWORD;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_PROJECTKEY;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_PULLREQUESTID;
@@ -47,7 +48,9 @@ import hudson.FilePath.FileCallable;
 import hudson.model.Run;
 import hudson.model.TaskListener;
 import hudson.remoting.VirtualChannel;
+import se.bjurr.violations.lib.model.SEVERITY;
 import se.bjurr.violations.lib.model.Violation;
+import se.bjurr.violations.lib.util.Filtering;
 
 public class JvctbPerformer {
 
@@ -69,12 +72,17 @@ public class JvctbPerformer {
     final List<Violation> allParsedViolations = newArrayList();
     for (final ViolationConfig violationConfig : config.getViolationConfigs()) {
       if (!isNullOrEmpty(violationConfig.getPattern())) {
-        final List<Violation> parsedViolations =
+        List<Violation> parsedViolations =
             violationsReporterApi() //
                 .findAll(violationConfig.getReporter()) //
                 .inFolder(workspace.getAbsolutePath()) //
                 .withPattern(violationConfig.getPattern()) //
                 .violations();
+        SEVERITY minSeverity = config.getMinSeverity();
+        if (minSeverity != null) {
+          parsedViolations = Filtering.withAtLEastSeverity(parsedViolations, minSeverity);
+        }
+
         allParsedViolations.addAll(parsedViolations);
         listener
             .getLogger()
@@ -140,6 +148,7 @@ public class JvctbPerformer {
     expanded.setUseUsernamePasswordCredentials(config.isUseUsernamePasswordCredentials());
     expanded.setCommentOnlyChangedContent(config.getCommentOnlyChangedContent());
     expanded.setCommentOnlyChangedContentContext(config.getCommentOnlyChangedContentContext());
+    expanded.setMinSeverity(config.getMinSeverity());
 
     for (final ViolationConfig violationConfig : config.getViolationConfigs()) {
       final ViolationConfig p = new ViolationConfig();
@@ -229,6 +238,7 @@ public class JvctbPerformer {
             FIELD_COMMENTONLYCHANGEDCONTENTCONTEXT
                 + ": "
                 + config.getCommentOnlyChangedContentContext());
+    listener.getLogger().println(FIELD_MINSEVERITY + ": " + config.getMinSeverity());
 
     for (final ViolationConfig violationConfig : config.getViolationConfigs()) {
       listener

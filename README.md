@@ -120,6 +120,7 @@ job('example') {
     createCommentWithAllSingleFileComments(true)
     commentOnlyChangedContent(true)
     commentOnlyChangedContentContext(5)
+    minSeverity('INFO')
     violationConfigs {
      violationConfig {
       reporter("FINDBUGS")
@@ -160,6 +161,7 @@ node {
    username: 'admin', 
    password: 'admin', 
    useUsernamePasswordCredentials: false, 
+   minSeverity: 'INFO',
    violationConfigs: [
     [ pattern: '.*/checkstyle/.*\\.xml$', reporter: 'CHECKSTYLE' ], 
     [ pattern: '.*/findbugs/.*\\.xml$', reporter: 'FINDBUGS' ], 
