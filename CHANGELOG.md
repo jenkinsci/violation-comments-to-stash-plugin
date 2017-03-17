@@ -8,7 +8,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 **Jenkinsfile**
 
 
-[a46bd8cd4e13233](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/a46bd8cd4e13233) Tomas Bjerre *2017-03-04 23:03:28*
+[12e227314c669b2](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/12e227314c669b2) Tomas Bjerre *2017-03-08 05:27:26*
 
 **doc**
 

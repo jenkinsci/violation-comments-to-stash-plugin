@@ -8,11 +8,11 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 public class ViolationsToBitbucketServerConfigTest {
 
- @Test
- public void testThatCopyConstructorCopiesEverything() {
-  ViolationsToBitbucketServerConfig original = new PodamFactoryImpl()
-    .manufacturePojo(ViolationsToBitbucketServerConfig.class);
-  ViolationsToBitbucketServerConfig actual = new ViolationsToBitbucketServerConfig(original);
-  assertEquals(original, actual);
- }
+  @Test
+  public void testThatCopyConstructorCopiesEverything() {
+    ViolationsToBitbucketServerConfig original =
+        new PodamFactoryImpl().manufacturePojo(ViolationsToBitbucketServerConfig.class);
+    ViolationsToBitbucketServerConfig actual = new ViolationsToBitbucketServerConfig(original);
+    assertEquals(original, actual);
+  }
 }

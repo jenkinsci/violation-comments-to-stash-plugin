@@ -22,47 +22,53 @@ import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 public class ViolationsToBitbucketServerRecorder extends Recorder implements SimpleBuildStep {
- @Extension
- public static final BuildStepDescriptor<Publisher> DESCRIPTOR = new ViolationsToBitbucketServerDescriptor();
- private ViolationsToBitbucketServerConfig config;
+  @Extension
+  public static final BuildStepDescriptor<Publisher> DESCRIPTOR =
+      new ViolationsToBitbucketServerDescriptor();
 
- public ViolationsToBitbucketServerRecorder() {
- }
+  private ViolationsToBitbucketServerConfig config;
 
- @DataBoundConstructor
- public ViolationsToBitbucketServerRecorder(ViolationsToBitbucketServerConfig config) {
-  this.config = config;
- }
+  public ViolationsToBitbucketServerRecorder() {}
 
- public ViolationsToBitbucketServerConfig getConfig() {
-  return this.config;
- }
+  @DataBoundConstructor
+  public ViolationsToBitbucketServerRecorder(ViolationsToBitbucketServerConfig config) {
+    this.config = config;
+  }
 
- @Override
- public BuildStepDescriptor<Publisher> getDescriptor() {
-  return DESCRIPTOR;
- }
+  public ViolationsToBitbucketServerConfig getConfig() {
+    return this.config;
+  }
 
- @Override
- public BuildStepMonitor getRequiredMonitorService() {
-  return NONE;
- }
+  @Override
+  public BuildStepDescriptor<Publisher> getDescriptor() {
+    return DESCRIPTOR;
+  }
 
- @Override
- public void perform(@Nonnull Run<?, ?> build, @Nonnull FilePath filePath, @Nonnull Launcher launcher,
-   @Nonnull TaskListener listener) throws InterruptedException, IOException {
+  @Override
+  public BuildStepMonitor getRequiredMonitorService() {
+    return NONE;
+  }
 
-  ViolationsToBitbucketServerConfig combinedConfig = new ViolationsToBitbucketServerConfig(this.config);
-  ViolationsToBitbucketServerGlobalConfiguration defaults = ViolationsToBitbucketServerGlobalConfiguration.get().or(
-    new ViolationsToBitbucketServerGlobalConfiguration());
+  @Override
+  public void perform(
+      @Nonnull Run<?, ?> build,
+      @Nonnull FilePath filePath,
+      @Nonnull Launcher launcher,
+      @Nonnull TaskListener listener)
+      throws InterruptedException, IOException {
 
-  combinedConfig.applyDefaults(defaults);
+    ViolationsToBitbucketServerConfig combinedConfig =
+        new ViolationsToBitbucketServerConfig(this.config);
+    ViolationsToBitbucketServerGlobalConfiguration defaults =
+        ViolationsToBitbucketServerGlobalConfiguration.get()
+            .or(new ViolationsToBitbucketServerGlobalConfiguration());
 
-  jvctsPerform(combinedConfig, filePath, build, listener);
- }
+    combinedConfig.applyDefaults(defaults);
 
- public void setConfig(ViolationsToBitbucketServerConfig config) {
-  this.config = config;
- }
+    jvctsPerform(combinedConfig, filePath, build, listener);
+  }
 
+  public void setConfig(ViolationsToBitbucketServerConfig config) {
+    this.config = config;
+  }
 }

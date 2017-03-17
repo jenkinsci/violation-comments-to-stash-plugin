@@ -23,31 +23,32 @@ import com.cloudbees.plugins.credentials.domains.DomainRequirement;
 import com.google.common.base.Optional;
 
 public class CredentialsHelper {
- public static ListBoxModel doFillUsernamePasswordCredentialsIdItems() {
-  List<StandardUsernamePasswordCredentials> credentials = getAllCredentials();
-  AbstractIdCredentialsListBoxModel<StandardUsernameListBoxModel, StandardUsernameCredentials> listBoxModel = new StandardUsernameListBoxModel()
-    .includeEmptyValue();
-  for (StandardUsernamePasswordCredentials credential : credentials) {
-   listBoxModel.with(credential);
-  }
-  return listBoxModel;
- }
-
- public static Optional<StandardUsernamePasswordCredentials> findCredentials(String usernamePasswordCredentialsId) {
-  if (isNullOrEmpty(usernamePasswordCredentialsId)) {
-   return absent();
+  public static ListBoxModel doFillUsernamePasswordCredentialsIdItems() {
+    List<StandardUsernamePasswordCredentials> credentials = getAllCredentials();
+    AbstractIdCredentialsListBoxModel<StandardUsernameListBoxModel, StandardUsernameCredentials>
+        listBoxModel = new StandardUsernameListBoxModel().includeEmptyValue();
+    for (StandardUsernamePasswordCredentials credential : credentials) {
+      listBoxModel.with(credential);
+    }
+    return listBoxModel;
   }
 
-  return fromNullable(firstOrNull(getAllCredentials(), allOf(withId(usernamePasswordCredentialsId))));
- }
+  public static Optional<StandardUsernamePasswordCredentials> findCredentials(
+      String usernamePasswordCredentialsId) {
+    if (isNullOrEmpty(usernamePasswordCredentialsId)) {
+      return absent();
+    }
 
- public static List<StandardUsernamePasswordCredentials> getAllCredentials() {
-  Class<StandardUsernamePasswordCredentials> type = StandardUsernamePasswordCredentials.class;
-  ItemGroup<?> itemGroup = null;
-  Authentication authentication = SYSTEM;
-  DomainRequirement domainRequirement = null;
+    return fromNullable(
+        firstOrNull(getAllCredentials(), allOf(withId(usernamePasswordCredentialsId))));
+  }
 
-  return lookupCredentials(type, itemGroup, authentication, domainRequirement);
- }
+  public static List<StandardUsernamePasswordCredentials> getAllCredentials() {
+    Class<StandardUsernamePasswordCredentials> type = StandardUsernamePasswordCredentials.class;
+    ItemGroup<?> itemGroup = null;
+    Authentication authentication = SYSTEM;
+    DomainRequirement domainRequirement = null;
 
+    return lookupCredentials(type, itemGroup, authentication, domainRequirement);
+  }
 }
