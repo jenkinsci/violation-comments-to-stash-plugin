@@ -2,8 +2,13 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
-## Unreleased
+## 1.47
 ### No issue
+
+**Allowing filter comments on severity**
+
+
+[8f4e59723a76e87](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/8f4e59723a76e87) Tomas Bjerre *2017-03-17 20:55:07*
 
 **Google java code standard**
 

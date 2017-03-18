@@ -99,28 +99,116 @@ And finally [here](https://raw.githubusercontent.com/tomasbjerre/violation-comme
 
 ## Job DSL Plugin
 
-This plugin can be used with the Job DSL Plugin.
+This plugin can be used with the Job DSL Plugin. Here is an example.
+
+I trigger it with [Pull Request Notifier for Bitbucket Server](https://github.com/tomasbjerre/pull-request-notifier-for-bitbucket) with URL like `http://jenkins:8080/job/Bitbucket_Server_PR_Builder/buildWithParameters?${EVERYTHING_URL}`,  I report back to Bitbucket Server with [HTTP Request Plugin](https://wiki.jenkins-ci.org/display/JENKINS/HTTP+Request+Plugin) and [Conditional BuildStep Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Conditional+BuildStep+Plugin).
 
 ```
-job('example') {
+job('Bitbucket_Server_PR_Builder') {
+ concurrentBuild()
+ quietPeriod(0)
+ parameters {
+  stringParam('PULL_REQUEST_TO_HTTP_CLONE_URL', '')
+  stringParam('PULL_REQUEST_TO_HASH', '')
+  stringParam('PULL_REQUEST_FROM_HTTP_CLONE_URL', '')
+  stringParam('PULL_REQUEST_FROM_HASH', '')
+  stringParam('PULL_REQUEST_TO_REPO_PROJECT_KEY', '')
+  stringParam('PULL_REQUEST_TO_REPO_SLUG', '')
+  stringParam('PULL_REQUEST_TO_REPO_PROJECT_ID','')
+  stringParam('PULL_REQUEST_ID','')
+ }
+ steps {
+  httpRequest {
+   url("http://admin:admin@bitbucket:7990/rest/api/1.0/projects/\$PULL_REQUEST_TO_REPO_PROJECT_KEY/repos/\$PULL_REQUEST_TO_REPO_SLUG/pull-requests/\$PULL_REQUEST_ID/comments")
+   consoleLogResponseBody(true)
+   httpMode("POST")
+   acceptType('APPLICATION_JSON')
+   contentType('APPLICATION_JSON')
+   requestBody('{ "text": "Building... \$BUILD_URL" }')
+  }
+
+  shell('''
+echo ---
+echo --- Merging from $FROM in $FROMREPO to $TO in $TOREPO
+echo ---
+git clone $PULL_REQUEST_TO_HTTP_CLONE_URL
+cd *
+git reset --hard $PULL_REQUEST_TO_HASH
+git status
+git remote add from $PULL_REQUEST_FROM_HTTP_CLONE_URL
+git fetch from
+git merge $PULL_REQUEST_FROM_HASH
+git --no-pager log --max-count=10 --graph --abbrev-commit
+
+./gradlew build
+  ''')
+
+  conditionalBuilder {
+   runCondition {
+    statusCondition {
+     worstResult('SUCCESS')
+     bestResult('SUCCESS')
+    }
+    runner {
+     runUnstable()
+    }
+    conditionalbuilders {
+     httpRequest {
+      url("http://admin:admin@bitbucket:7990/rest/api/1.0/projects/\$PULL_REQUEST_TO_REPO_PROJECT_KEY/repos/\$PULL_REQUEST_TO_REPO_SLUG/pull-requests/\$PULL_REQUEST_ID/comments")
+      consoleLogResponseBody(true)
+      httpMode("POST")
+      acceptType('APPLICATION_JSON')
+      contentType('APPLICATION_JSON')
+      requestBody('{ "text": "Success... \$BUILD_URL" }')
+     }
+    }
+   }
+  }
+
+  conditionalBuilder {
+   runCondition {
+    statusCondition {
+     worstResult('FAILURE')
+     bestResult('FAILURE')
+    }
+    runner {
+     runUnstable()
+    }
+    conditionalbuilders {
+     httpRequest {
+      url("http://admin:admin@bitbucket:7990/rest/api/1.0/projects/\$PULL_REQUEST_TO_REPO_PROJECT_KEY/repos/\$PULL_REQUEST_TO_REPO_SLUG/pull-requests/\$PULL_REQUEST_ID/comments")
+      consoleLogResponseBody(true)
+      httpMode("POST")
+      acceptType('APPLICATION_JSON')
+      contentType('APPLICATION_JSON')
+      requestBody('{ "text": "Failure... \$BUILD_URL" }')
+     }
+    }
+   }
+  }
+ }
  publishers {
   violationsToBitbucketServerRecorder {
    config {
+    bitbucketServerUrl("http://bitbucket:7990")
+    projectKey("\$PULL_REQUEST_TO_REPO_PROJECT_KEY")
+    repoSlug("\$PULL_REQUEST_TO_REPO_SLUG")
+    pullRequestId("\$PULL_REQUEST_TO_REPO_PROJECT_ID")
+
+    useUsernamePasswordCredentials(false)
+    usernamePasswordCredentialsId(null)
+
+    useUsernamePassword(true)
+    username("admin")
+    password("admin")
+
+    minSeverity('INFO')
     createSingleFileComments(true)
     createCommentWithAllSingleFileComments(true)
-    projectKey("PROJECT_1")
-    repoSlug("repo_1")
-    password("admin")
-    username("admin")
-    pullRequestId("1")
-    bitbucketServerUrl("http://localhost:7990/bitbucket")
-    usernamePasswordCredentialsId(null)
-    useUsernamePasswordCredentials(false)
-    useUsernamePassword(true)
     createCommentWithAllSingleFileComments(true)
     commentOnlyChangedContent(true)
     commentOnlyChangedContentContext(5)
-    minSeverity('INFO')
+
     violationConfigs {
      violationConfig {
       reporter("FINDBUGS")
@@ -128,7 +216,7 @@ job('example') {
      }
     }
    }
-  }
+  }  
  }
 }
 ```
