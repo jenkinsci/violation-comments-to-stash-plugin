@@ -2,6 +2,20 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## Unreleased
+### No issue
+
+**Klocwork parser**
+
+
+[237e0ec6b33c103](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/237e0ec6b33c103) Tomas Bjerre *2017-03-30 17:38:20*
+
+**Job DSL**
+
+
+[b485a8b1cf8d129](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/b485a8b1cf8d129) Tomas Bjerre *2017-03-18 13:19:57*
+
+
 ## 1.47
 ### No issue
 

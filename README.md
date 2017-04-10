@@ -39,6 +39,7 @@ It supports:
  * [_PMD_](https://pmd.github.io/)
   * [_PHPPMD_](https://phpmd.org/) with `phpmd api.php xml ruleset.xml`.
  * [_ReSharper_](https://www.jetbrains.com/resharper/)
+ * [_SbtScalac_](http://www.scala-sbt.org/)
  * [_Simian_](http://www.harukizaemon.com/simian/)
  * [_StyleCop_](https://stylecop.codeplex.com/)
  * [_XMLLint_](http://xmlsoft.org/xmllint.html)
