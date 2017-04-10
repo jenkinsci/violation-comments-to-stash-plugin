@@ -2,7 +2,16 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
-## Unreleased
+## 1.49
+### No issue
+
+**SbtScalac**
+
+
+[bec1bb90360e8fa](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/bec1bb90360e8fa) Tomas Bjerre *2017-04-10 18:45:08*
+
+
+## 1.48
 ### No issue
 
 **Klocwork parser**
