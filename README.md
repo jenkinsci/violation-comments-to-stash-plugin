@@ -230,36 +230,42 @@ git --no-pager log --max-count=10 --graph --abbrev-commit
 This plugin can be used with the Pipeline Plugin:
 
 ```
-
 node {
+ def mvnHome = tool 'Maven 3.3.9'
+ deleteDir()
+ 
+ stage('Merge') {
+  sh "git init"
+  sh "git fetch --no-tags --progress git@git:group/reponame.git +refs/heads/*:refs/remotes/origin/* --depth=200"
+  sh "git checkout origin/${env.targetBranch}"
+  sh "git merge origin/${env.sourceBranch}"
+  sh "git log --graph --abbrev-commit --max-count=10"
+ }
 
- sh '''
- rm -rf rep_1
- git clone http://admin:admin@localhost:7990/bitbucket/scm/project_1/rep_1.git
- cd *
- ./gradlew build
- '''
+ stage('Static code analysis') {
+  sh "${mvnHome}/bin/mvn package -DskipTests -Dmaven.test.failure.ignore=false -Dsurefire.skip=true -Dmaven.compile.fork=true -Dmaven.javadoc.skip=true"
 
- step([
-  $class: 'ViolationsToBitbucketServerRecorder', 
-  config: [
-   bitbucketServerUrl: 'http://localhost:7990/bitbucket', 
-   createCommentWithAllSingleFileComments: true, 
-   createSingleFileComments: true, 
-   projectKey: 'PROJECT_1', 
-   repoSlug: 'rep_1', 
-   pullRequestId: '1', 
-   useUsernamePassword: true, 
-   username: 'admin', 
-   password: 'admin', 
-   useUsernamePasswordCredentials: false, 
-   minSeverity: 'INFO',
-   violationConfigs: [
-    [ pattern: '.*/checkstyle/.*\\.xml$', reporter: 'CHECKSTYLE' ], 
-    [ pattern: '.*/findbugs/.*\\.xml$', reporter: 'FINDBUGS' ], 
+  step([
+   $class: 'ViolationsToBitbucketServerRecorder', 
+   config: [
+    bitbucketServerUrl: 'http://localhost:7990/bitbucket', 
+    createCommentWithAllSingleFileComments: true, 
+    createSingleFileComments: true, 
+    projectKey: 'PROJECT_1', 
+    repoSlug: 'rep_1', 
+    pullRequestId: '1', 
+    useUsernamePassword: true, 
+    username: 'admin', 
+    password: 'admin', 
+    useUsernamePasswordCredentials: false, 
+    minSeverity: 'INFO',
+    violationConfigs: [
+     [ pattern: '.*/checkstyle/.*\\.xml$', reporter: 'CHECKSTYLE' ], 
+     [ pattern: '.*/findbugs/.*\\.xml$', reporter: 'FINDBUGS' ], 
+    ]
    ]
-  ]
- ])
+  ])
+ }
 }
 ```
 
