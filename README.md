@@ -118,7 +118,6 @@ job('Bitbucket_Server_PR_Builder') {
   stringParam('PULL_REQUEST_FROM_HASH', '')
   stringParam('PULL_REQUEST_TO_REPO_PROJECT_KEY', '')
   stringParam('PULL_REQUEST_TO_REPO_SLUG', '')
-  stringParam('PULL_REQUEST_TO_REPO_PROJECT_ID','')
   stringParam('PULL_REQUEST_ID','')
  }
  steps {
@@ -197,7 +196,7 @@ git --no-pager log --max-count=10 --graph --abbrev-commit
     bitbucketServerUrl("http://bitbucket:7990")
     projectKey("\$PULL_REQUEST_TO_REPO_PROJECT_KEY")
     repoSlug("\$PULL_REQUEST_TO_REPO_SLUG")
-    pullRequestId("\$PULL_REQUEST_TO_REPO_PROJECT_ID")
+    pullRequestId("\$PULL_REQUEST_ID")
 
     useUsernamePasswordCredentials(false)
     usernamePasswordCredentialsId(null)
