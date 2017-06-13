@@ -5,10 +5,29 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 ## Unreleased
 ### No issue
 
+**Correcting PULL_REQUEST_ID in example DSL**
+
+
+[c134216a4ec5686](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/c134216a4ec5686) Tomas Bjerre *2017-05-14 08:59:01*
+
 **doc**
 
 
-[167ef9bc2f8febc](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/167ef9bc2f8febc) Tomas Bjerre *2017-04-10 19:13:07*
+[5b01650eb0fd575](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/5b01650eb0fd575) Tomas Bjerre *2017-04-22 04:32:45*
+
+
+## 1.50
+### No issue
+
+**URL in Klocwork**
+
+
+[6b0f88b7f9673a2](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/6b0f88b7f9673a2) Tomas Bjerre *2017-04-11 18:30:15*
+
+**doc**
+
+
+[655f47e20ade468](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/655f47e20ade468) Tomas Bjerre *2017-04-10 20:17:59*
 
 **doc**
 
