@@ -101,7 +101,7 @@
   <table class="xmlFilenamePatterns" cellspacing="5">
     <tr>
       <td align="left" colspan="2">
-        <b>XML filename pattern</b>
+        <b>Violations configuration</b>
         <ul>
           <li>The <b>pattern</b> may be, for example, <i>.*/findbugs/.*\.xml$</i> to match xml-files, in a folder named findbugs, anywhere in workspace. You try <a href="https://jex.im/regulex/" target="_blank">Regulex</a> for creating your regexp.</li>
           <li>The <b>reporter</b> is optional. The parser name will be used if no reporter specified. It is intended to be the name of the tool reporting the violations. For example if Detekt is used to produce a checkstyle-report, then you may specify Detekt in the reporter field.</li>
