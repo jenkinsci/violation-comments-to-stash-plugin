@@ -4,19 +4,21 @@ import java.io.Serializable;
 
 import org.kohsuke.stapler.DataBoundConstructor;
 
-import se.bjurr.violations.lib.reports.Reporter;
+import se.bjurr.violations.lib.reports.Parser;
 
 public class ViolationConfig implements Serializable {
   private static final long serialVersionUID = 6664329842273455651L;
   private String pattern;
-  private Reporter reporter;
+  private String reporter;
+  private Parser parser;
 
   public ViolationConfig() {}
 
   @DataBoundConstructor
-  public ViolationConfig(Reporter reporter, String pattern) {
+  public ViolationConfig(String reporter, String pattern, Parser parser) {
     this.reporter = reporter;
     this.pattern = pattern;
+    this.parser = parser;
   }
 
   @Override
@@ -31,14 +33,21 @@ public class ViolationConfig implements Serializable {
       return false;
     }
     ViolationConfig other = (ViolationConfig) obj;
-    if (this.pattern == null) {
+    if (parser != other.parser) {
+      return false;
+    }
+    if (pattern == null) {
       if (other.pattern != null) {
         return false;
       }
-    } else if (!this.pattern.equals(other.pattern)) {
+    } else if (!pattern.equals(other.pattern)) {
       return false;
     }
-    if (this.reporter != other.reporter) {
+    if (reporter == null) {
+      if (other.reporter != null) {
+        return false;
+      }
+    } else if (!reporter.equals(other.reporter)) {
       return false;
     }
     return true;
@@ -48,7 +57,7 @@ public class ViolationConfig implements Serializable {
     return this.pattern;
   }
 
-  public Reporter getReporter() {
+  public String getReporter() {
     return this.reporter;
   }
 
@@ -56,8 +65,9 @@ public class ViolationConfig implements Serializable {
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + ((this.pattern == null) ? 0 : this.pattern.hashCode());
-    result = prime * result + ((this.reporter == null) ? 0 : this.reporter.hashCode());
+    result = prime * result + (parser == null ? 0 : parser.hashCode());
+    result = prime * result + (pattern == null ? 0 : pattern.hashCode());
+    result = prime * result + (reporter == null ? 0 : reporter.hashCode());
     return result;
   }
 
@@ -65,12 +75,26 @@ public class ViolationConfig implements Serializable {
     this.pattern = pattern;
   }
 
-  public void setReporter(Reporter reporter) {
+  public void setParser(Parser parser) {
+    this.parser = parser;
+  }
+
+  public Parser getParser() {
+    return parser;
+  }
+
+  public void setReporter(String reporter) {
     this.reporter = reporter;
   }
 
   @Override
   public String toString() {
-    return "ViolationConfig [reporter=" + this.reporter + ", pattern=" + this.pattern + "]";
+    return "ViolationConfig [pattern="
+        + pattern
+        + ", reporter="
+        + reporter
+        + ", parser="
+        + parser
+        + "]";
   }
 }

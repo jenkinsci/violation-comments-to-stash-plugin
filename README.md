@@ -216,8 +216,14 @@ git --no-pager log --max-count=10 --graph --abbrev-commit
 
     violationConfigs {
      violationConfig {
-      reporter("FINDBUGS")
+      parser("FINDBUGS")
+      reporter("Findbugs")
       pattern(".*/findbugs/.*\\.xml\$")
+     }
+     violationConfig {
+      parser("CHECKSTYLE")
+      reporter("Checkstyle")
+      pattern(".*/checkstyle/.*\\.xml\$")
      }
     }
    }
@@ -261,8 +267,9 @@ node {
     useUsernamePasswordCredentials: false, 
     minSeverity: 'INFO',
     violationConfigs: [
-     [ pattern: '.*/checkstyle/.*\\.xml$', reporter: 'CHECKSTYLE' ], 
-     [ pattern: '.*/findbugs/.*\\.xml$', reporter: 'FINDBUGS' ], 
+     [ pattern: '.*/checkstyle-result\\.xml$', parser: 'CHECKSTYLE', reporter: 'Checkstyle' ], 
+     [ pattern: '.*/findbugsXml\\.xml$', parser: 'FINDBUGS', reporter: 'Findbugs' ], 
+     [ pattern: '.*/pmd\\.xml$', parser: 'PMD', reporter: 'PMD' ], 
     ]
    ]
   ])

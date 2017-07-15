@@ -4,7 +4,7 @@ import static com.google.common.collect.Lists.newArrayList;
 
 import java.util.List;
 
-import se.bjurr.violations.lib.reports.Reporter;
+import se.bjurr.violations.lib.reports.Parser;
 
 public class ViolationsToBitbucketServerConfigHelper {
   public static final String FIELD_BITBUCKETSERVERURL = "bitbucketServerUrl";
@@ -36,9 +36,9 @@ public class ViolationsToBitbucketServerConfigHelper {
 
   public static List<ViolationConfig> getAllViolationConfigs() {
     List<ViolationConfig> violationConfigs = newArrayList();
-    for (Reporter reporter : Reporter.values()) {
+    for (Parser parser : Parser.values()) {
       ViolationConfig violationConfig = new ViolationConfig();
-      violationConfig.setReporter(reporter);
+      violationConfig.setParser(parser);
       violationConfigs.add(violationConfig);
     }
     return violationConfigs;

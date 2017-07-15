@@ -23,10 +23,17 @@ import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConf
 import static se.bjurr.violations.comments.bitbucketserver.lib.ViolationCommentsToBitbucketServerApi.violationCommentsToBitbucketServerApi;
 import static se.bjurr.violations.lib.ViolationsReporterApi.violationsReporterApi;
 import static se.bjurr.violations.lib.parsers.FindbugsParser.setFindbugsMessagesXml;
+import hudson.EnvVars;
+import hudson.FilePath;
+import hudson.FilePath.FileCallable;
+import hudson.model.TaskListener;
+import hudson.model.Run;
+import hudson.remoting.VirtualChannel;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
@@ -37,20 +44,14 @@ import org.jenkinsci.plugins.jvctb.config.ViolationConfig;
 import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
 import org.jenkinsci.remoting.RoleChecker;
 
+import se.bjurr.violations.lib.model.SEVERITY;
+import se.bjurr.violations.lib.model.Violation;
+import se.bjurr.violations.lib.util.Filtering;
+
 import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
 import com.google.common.io.CharStreams;
-
-import hudson.EnvVars;
-import hudson.FilePath;
-import hudson.FilePath.FileCallable;
-import hudson.model.Run;
-import hudson.model.TaskListener;
-import hudson.remoting.VirtualChannel;
-import se.bjurr.violations.lib.model.SEVERITY;
-import se.bjurr.violations.lib.model.Violation;
-import se.bjurr.violations.lib.util.Filtering;
 
 public class JvctbPerformer {
 
@@ -74,7 +75,8 @@ public class JvctbPerformer {
       if (!isNullOrEmpty(violationConfig.getPattern())) {
         List<Violation> parsedViolations =
             violationsReporterApi() //
-                .findAll(violationConfig.getReporter()) //
+                .findAll(violationConfig.getParser()) //
+                .withReporter(violationConfig.getReporter()) //
                 .inFolder(workspace.getAbsolutePath()) //
                 .withPattern(violationConfig.getPattern()) //
                 .violations();
@@ -154,6 +156,7 @@ public class JvctbPerformer {
       final ViolationConfig p = new ViolationConfig();
       p.setPattern(environment.expand(violationConfig.getPattern()));
       p.setReporter(violationConfig.getReporter());
+      p.setParser(violationConfig.getParser());
       expanded.getViolationConfigs().add(p);
     }
     return expanded;
@@ -206,44 +209,34 @@ public class JvctbPerformer {
       final ViolationsToBitbucketServerConfig config,
       final Run<?, ?> build,
       final TaskListener listener) {
-    listener.getLogger().println(FIELD_BITBUCKETSERVERURL + ": " + config.getBitbucketServerUrl());
-    listener.getLogger().println(FIELD_PROJECTKEY + ": " + config.getProjectKey());
-    listener.getLogger().println(FIELD_REPOSLUG + ": " + config.getRepoSlug());
-    listener.getLogger().println(FIELD_PULLREQUESTID + ": " + config.getPullRequestId());
+    PrintStream logger = listener.getLogger();
+    logger.println(FIELD_BITBUCKETSERVERURL + ": " + config.getBitbucketServerUrl());
+    logger.println(FIELD_PROJECTKEY + ": " + config.getProjectKey());
+    logger.println(FIELD_REPOSLUG + ": " + config.getRepoSlug());
+    logger.println(FIELD_PULLREQUESTID + ": " + config.getPullRequestId());
 
-    listener
-        .getLogger()
-        .println(
-            FIELD_USERNAMEPASSWORDCREDENTIALSID
-                + ": "
-                + !isNullOrEmpty(config.getUsernamePasswordCredentialsId()));
-    listener.getLogger().println(FIELD_USERNAME + ": " + !isNullOrEmpty(config.getUsername()));
-    listener.getLogger().println(FIELD_PASSWORD + ": " + !isNullOrEmpty(config.getPassword()));
+    logger.println(
+        FIELD_USERNAMEPASSWORDCREDENTIALSID
+            + ": "
+            + !isNullOrEmpty(config.getUsernamePasswordCredentialsId()));
+    logger.println(FIELD_USERNAME + ": " + !isNullOrEmpty(config.getUsername()));
+    logger.println(FIELD_PASSWORD + ": " + !isNullOrEmpty(config.getPassword()));
 
-    listener
-        .getLogger()
-        .println(FIELD_CREATESINGLEFILECOMMENTS + ": " + config.getCreateSingleFileComments());
-    listener
-        .getLogger()
-        .println(
-            FIELD_CREATECOMMENTWITHALLSINGLEFILECOMMENTS
-                + ": "
-                + config.getCreateCommentWithAllSingleFileComments());
-    listener
-        .getLogger()
-        .println(FIELD_COMMENTONLYCHANGEDCONTENT + ": " + config.getCommentOnlyChangedContent());
-    listener
-        .getLogger()
-        .println(
-            FIELD_COMMENTONLYCHANGEDCONTENTCONTEXT
-                + ": "
-                + config.getCommentOnlyChangedContentContext());
-    listener.getLogger().println(FIELD_MINSEVERITY + ": " + config.getMinSeverity());
+    logger.println(FIELD_CREATESINGLEFILECOMMENTS + ": " + config.getCreateSingleFileComments());
+    logger.println(
+        FIELD_CREATECOMMENTWITHALLSINGLEFILECOMMENTS
+            + ": "
+            + config.getCreateCommentWithAllSingleFileComments());
+    logger.println(FIELD_COMMENTONLYCHANGEDCONTENT + ": " + config.getCommentOnlyChangedContent());
+    logger.println(
+        FIELD_COMMENTONLYCHANGEDCONTENTCONTEXT
+            + ": "
+            + config.getCommentOnlyChangedContentContext());
+    logger.println(FIELD_MINSEVERITY + ": " + config.getMinSeverity());
 
     for (final ViolationConfig violationConfig : config.getViolationConfigs()) {
-      listener
-          .getLogger()
-          .println(violationConfig.getReporter() + " with pattern " + violationConfig.getPattern());
+      logger.println(
+          violationConfig.getReporter() + " with pattern " + violationConfig.getPattern());
     }
   }
 

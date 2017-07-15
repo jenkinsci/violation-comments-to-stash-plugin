@@ -11,24 +11,27 @@ import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConf
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_PATTERN;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_PROJECTKEY;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_PULLREQUESTID;
+import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_REPORTER;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_REPOSLUG;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_USERNAME;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_USERNAMEPASSWORDCREDENTIALSID;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_USEUSERNAMEPASSWORD;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_USEUSERNAMEPASSWORDCREDENTIALS;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.createNewConfig;
-
-import java.util.List;
-
-import org.jenkinsci.plugins.jvctb.config.CredentialsHelper;
-import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
-import org.kohsuke.stapler.StaplerRequest;
-
 import hudson.model.AbstractProject;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Publisher;
 import hudson.util.ListBoxModel;
+
+import java.util.List;
+
 import net.sf.json.JSONObject;
+
+import org.jenkinsci.plugins.jvctb.config.CredentialsHelper;
+import org.jenkinsci.plugins.jvctb.config.ViolationConfig;
+import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
+import org.kohsuke.stapler.StaplerRequest;
+
 import se.bjurr.violations.lib.model.SEVERITY;
 
 public final class ViolationsToBitbucketServerDescriptor extends BuildStepDescriptor<Publisher> {
@@ -105,8 +108,14 @@ public final class ViolationsToBitbucketServerDescriptor extends BuildStepDescri
     }
 
     int i = 0;
-    for (String pattern : (List<String>) formData.get(FIELD_PATTERN)) {
-      config.getViolationConfigs().get(i++).setPattern(pattern);
+    List<String> patterns = (List<String>) formData.get(FIELD_PATTERN);
+    List<String> reporters = (List<String>) formData.get(FIELD_REPORTER);
+    for (String pattern : patterns) {
+      ViolationConfig violationConfig = config.getViolationConfigs().get(i);
+      violationConfig.setPattern(pattern);
+      String reporter = reporters.get(i);
+      violationConfig.setReporter(reporter);
+      i++;
     }
     ViolationsToBitbucketServerRecorder publisher = new ViolationsToBitbucketServerRecorder();
     publisher.setConfig(config);

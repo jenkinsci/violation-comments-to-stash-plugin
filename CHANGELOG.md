@@ -5,6 +5,21 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 ## Unreleased
 ### No issue
 
+**Violations-lib 1.29 with reporter field**
+
+
+[4c7a4dbd799175c](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/4c7a4dbd799175c) Tomas Bjerre *2017-07-15 13:37:30*
+
+**Updating doc on Infer**
+
+
+[f655d1abb667a16](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/f655d1abb667a16) Tomas Bjerre *2017-06-23 12:54:11*
+
+**doc**
+
+
+[491121e6e5978ac](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/491121e6e5978ac) Tomas Bjerre *2017-06-13 18:01:57*
+
 **Correcting PULL_REQUEST_ID in example DSL**
 
 
