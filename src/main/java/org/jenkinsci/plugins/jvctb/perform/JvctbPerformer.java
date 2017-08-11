@@ -23,6 +23,7 @@ import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConf
 import static se.bjurr.violations.comments.bitbucketserver.lib.ViolationCommentsToBitbucketServerApi.violationCommentsToBitbucketServerApi;
 import static se.bjurr.violations.lib.ViolationsReporterApi.violationsReporterApi;
 import static se.bjurr.violations.lib.parsers.FindbugsParser.setFindbugsMessagesXml;
+import static se.bjurr.violations.lib.util.Filtering.withAtLEastSeverity;
 import hudson.EnvVars;
 import hudson.FilePath;
 import hudson.FilePath.FileCallable;
@@ -46,7 +47,7 @@ import org.jenkinsci.remoting.RoleChecker;
 
 import se.bjurr.violations.lib.model.SEVERITY;
 import se.bjurr.violations.lib.model.Violation;
-import se.bjurr.violations.lib.util.Filtering;
+import se.bjurr.violations.lib.reports.Parser;
 
 import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
 import com.google.common.annotations.VisibleForTesting;
@@ -54,6 +55,7 @@ import com.google.common.base.Optional;
 import com.google.common.io.CharStreams;
 
 public class JvctbPerformer {
+  private static Logger LOG = Logger.getLogger(JvctbPerformer.class.getSimpleName());
 
   @VisibleForTesting
   public static void doPerform(
@@ -80,9 +82,9 @@ public class JvctbPerformer {
                 .inFolder(workspace.getAbsolutePath()) //
                 .withPattern(violationConfig.getPattern()) //
                 .violations();
-        SEVERITY minSeverity = config.getMinSeverity();
+        final SEVERITY minSeverity = config.getMinSeverity();
         if (minSeverity != null) {
-          parsedViolations = Filtering.withAtLEastSeverity(parsedViolations, minSeverity);
+          parsedViolations = withAtLEastSeverity(parsedViolations, minSeverity);
         }
 
         allParsedViolations.addAll(parsedViolations);
@@ -153,10 +155,17 @@ public class JvctbPerformer {
     expanded.setMinSeverity(config.getMinSeverity());
 
     for (final ViolationConfig violationConfig : config.getViolationConfigs()) {
+      final String pattern = environment.expand(violationConfig.getPattern());
+      final String reporter = violationConfig.getReporter();
+      final Parser parser = violationConfig.getParser();
+      if (isNullOrEmpty(pattern) || isNullOrEmpty(reporter) || parser == null) {
+        LOG.fine("Ignoring violationConfig because of null/empty -values: " + violationConfig);
+        continue;
+      }
       final ViolationConfig p = new ViolationConfig();
-      p.setPattern(environment.expand(violationConfig.getPattern()));
-      p.setReporter(violationConfig.getReporter());
-      p.setParser(violationConfig.getParser());
+      p.setPattern(pattern);
+      p.setReporter(reporter);
+      p.setParser(parser);
       expanded.getViolationConfigs().add(p);
     }
     return expanded;
@@ -209,7 +218,7 @@ public class JvctbPerformer {
       final ViolationsToBitbucketServerConfig config,
       final Run<?, ?> build,
       final TaskListener listener) {
-    PrintStream logger = listener.getLogger();
+    final PrintStream logger = listener.getLogger();
     logger.println(FIELD_BITBUCKETSERVERURL + ": " + config.getBitbucketServerUrl());
     logger.println(FIELD_PROJECTKEY + ": " + config.getProjectKey());
     logger.println(FIELD_REPOSLUG + ": " + config.getRepoSlug());

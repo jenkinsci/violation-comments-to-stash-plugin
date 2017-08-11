@@ -3,12 +3,20 @@
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
 ## Unreleased
+### GitHub [#36](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/36) java.lang.NullPointerException from violations-lib
+
+**Ignoring violation configs with null config #36**
+
+
+[3371d0a64306695](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/3371d0a64306695) Tomas Bjerre *2017-08-11 10:17:17*
+
+
 ### No issue
 
 **doc**
 
 
-[660761046a7050b](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/660761046a7050b) Tomas Bjerre *2017-08-02 15:38:11*
+[5e436b254438d7f](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/5e436b254438d7f) Tomas Bjerre *2017-08-02 15:38:36*
 
 
 ## 1.52
