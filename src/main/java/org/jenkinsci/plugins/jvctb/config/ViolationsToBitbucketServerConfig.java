@@ -28,6 +28,7 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
   private List<ViolationConfig> violationConfigs = newArrayList();
   private int commentOnlyChangedContentContext;
   private SEVERITY minSeverity;
+  private boolean keepOldComments;
 
   public ViolationsToBitbucketServerConfig() {}
 
@@ -47,9 +48,10 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
       boolean useUsernamePassword,
       boolean commentOnlyChangedContent,
       int commentOnlyChangedContentContext,
-      SEVERITY minSeverity) {
+      SEVERITY minSeverity,
+      boolean keepOldComments) {
 
-    List<ViolationConfig> allViolationConfigs = includeAllReporters(violationConfigs);
+    final List<ViolationConfig> allViolationConfigs = includeAllReporters(violationConfigs);
 
     this.violationConfigs = allViolationConfigs;
     this.createSingleFileComments = createSingleFileComments;
@@ -66,6 +68,7 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
     this.commentOnlyChangedContent = commentOnlyChangedContent;
     this.commentOnlyChangedContentContext = commentOnlyChangedContentContext;
     this.minSeverity = minSeverity;
+    this.keepOldComments = keepOldComments;
   }
 
   public ViolationsToBitbucketServerConfig(ViolationsToBitbucketServerConfig rhs) {
@@ -84,6 +87,7 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
     commentOnlyChangedContent = rhs.commentOnlyChangedContent;
     commentOnlyChangedContentContext = rhs.commentOnlyChangedContentContext;
     this.minSeverity = rhs.minSeverity;
+    this.keepOldComments = rhs.keepOldComments;
   }
 
   public void applyDefaults(ViolationsToBitbucketServerGlobalConfiguration defaults) {
@@ -121,7 +125,7 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    ViolationsToBitbucketServerConfig other = (ViolationsToBitbucketServerConfig) obj;
+    final ViolationsToBitbucketServerConfig other = (ViolationsToBitbucketServerConfig) obj;
     if (bitbucketServerUrl == null) {
       if (other.bitbucketServerUrl != null) {
         return false;
@@ -139,6 +143,9 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
       return false;
     }
     if (createSingleFileComments != other.createSingleFileComments) {
+      return false;
+    }
+    if (keepOldComments != other.keepOldComments) {
       return false;
     }
     if (minSeverity != other.minSeverity) {
@@ -259,6 +266,7 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
     result = prime * result + commentOnlyChangedContentContext;
     result = prime * result + (createCommentWithAllSingleFileComments ? 1231 : 1237);
     result = prime * result + (createSingleFileComments ? 1231 : 1237);
+    result = prime * result + (keepOldComments ? 1231 : 1237);
     result = prime * result + (minSeverity == null ? 0 : minSeverity.hashCode());
     result = prime * result + (password == null ? 0 : password.hashCode());
     result = prime * result + (projectKey == null ? 0 : projectKey.hashCode());
@@ -277,10 +285,10 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
   }
 
   private List<ViolationConfig> includeAllReporters(List<ViolationConfig> violationConfigs) {
-    List<ViolationConfig> allViolationConfigs =
+    final List<ViolationConfig> allViolationConfigs =
         ViolationsToBitbucketServerConfigHelper.getAllViolationConfigs();
-    for (ViolationConfig candidate : allViolationConfigs) {
-      for (ViolationConfig input : violationConfigs) {
+    for (final ViolationConfig candidate : allViolationConfigs) {
+      for (final ViolationConfig input : violationConfigs) {
         if (candidate.getParser() == input.getParser()) {
           candidate.setPattern(input.getPattern());
           candidate.setReporter(input.getReporter());
@@ -395,6 +403,16 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
         + commentOnlyChangedContentContext
         + ", minSeverity="
         + minSeverity
+        + ", keepOldComments="
+        + keepOldComments
         + "]";
+  }
+
+  public boolean isKeepOldComments() {
+    return keepOldComments;
+  }
+
+  public void setKeepOldComments(boolean keepOldComments) {
+    this.keepOldComments = keepOldComments;
   }
 }

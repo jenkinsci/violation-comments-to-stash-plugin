@@ -3,12 +3,24 @@
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
 ## Unreleased
+### GitHub [#37](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/37) Individual comments and keeping previous comments
+
+**Keeping comments and adjusting checkstyle #37**
+
+ * Checkstyle now allows empty source attribute. 
+ * Comments can optionaly be kept and not removed when new comments are added. 
+ * Will no longer re-create identical comments. 
+
+[a2c186f61ea1ea4](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/a2c186f61ea1ea4) Tomas Bjerre *2017-09-02 16:55:28*
+
+
+## 1.53
 ### GitHub [#36](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/36) java.lang.NullPointerException from violations-lib
 
 **Ignoring violation configs with null config #36**
 
 
-[3371d0a64306695](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/3371d0a64306695) Tomas Bjerre *2017-08-11 10:17:17*
+[0f4e03444485c59](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/0f4e03444485c59) Tomas Bjerre *2017-08-11 11:30:01*
 
 
 ### No issue

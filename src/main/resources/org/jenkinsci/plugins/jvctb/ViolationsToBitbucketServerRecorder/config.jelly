@@ -79,6 +79,10 @@
      </select>
   </f:entry>
 
+  <f:entry title="Keep old comments">
+    <f:checkbox name="keepOldComments" checked="${config.keepOldComments}"/>
+  </f:entry>
+
   <f:entry title="Create one comment per violation">
     <f:checkbox name="createSingleFileComments" checked="${config.createSingleFileComments}"/>
   </f:entry>

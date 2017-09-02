@@ -1,0 +1,41 @@
+node {
+ deleteDir()
+
+ stage('Merge') {
+  sh "git init"
+  sh "git fetch --no-tags --progress https://github.com/tomasbjerre/violations-test.git +refs/heads/*:refs/remotes/origin/* --depth=200"
+  sh "git checkout origin/master"
+  sh "git merge origin/feature/addingcrap"
+  sh "git log --graph --abbrev-commit --max-count=10"
+ }
+ 
+ stage('Analyze') {
+  sh "./gradlew build"
+  sh "find"
+ }
+ 
+ stage('Static code analysis') {
+  step([
+   $class: 'ViolationsToBitbucketServerRecorder', 
+   config: [
+    bitbucketServerUrl: 'http://localhost:7990/', 
+    createCommentWithAllSingleFileComments: false, 
+    createSingleFileComments: true, 
+    projectKey: 'PROJ', 
+    repoSlug: 'violations-test', 
+    pullRequestId: '1', 
+    useUsernamePassword: true, 
+    username: 'admin', 
+    password: 'admin', 
+    useUsernamePasswordCredentials: false, 
+    minSeverity: 'INFO',
+    keepOldComments: false, 
+    violationConfigs: [
+     [ pattern: '.*/checkstyle/.*\\.xml$', parser: 'CHECKSTYLE', reporter: 'Checkstyle' ], 
+     [ pattern: '.*/findbugs/.*\\.xml$', parser: 'FINDBUGS', reporter: 'Findbugs' ], 
+     [ pattern: '.*/pmd/.*\\.xml$', parser: 'PMD', reporter: 'PMD' ], 
+    ]
+   ]
+  ])
+ }
+}

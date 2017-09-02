@@ -6,6 +6,7 @@ import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConf
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_COMMENTONLYCHANGEDCONTENTCONTEXT;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_CREATECOMMENTWITHALLSINGLEFILECOMMENTS;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_CREATESINGLEFILECOMMENTS;
+import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_KEEP_OLD_COMMENTS;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_MINSEVERITY;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_PASSWORD;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_PATTERN;
@@ -75,7 +76,7 @@ public final class ViolationsToBitbucketServerDescriptor extends BuildStepDescri
   @Override
   public Publisher newInstance(StaplerRequest req, JSONObject formData)
       throws hudson.model.Descriptor.FormException {
-    ViolationsToBitbucketServerConfig config = createNewConfig();
+    final ViolationsToBitbucketServerConfig config = createNewConfig();
     config.setBitbucketServerUrl(formData.getString(FIELD_BITBUCKETSERVERURL));
     config.setRepoSlug(formData.getString(FIELD_REPOSLUG));
     config.setProjectKey(formData.getString(FIELD_PROJECTKEY));
@@ -100,7 +101,8 @@ public final class ViolationsToBitbucketServerDescriptor extends BuildStepDescri
     config.setCommentOnlyChangedContentContext(
         formData.getInt(FIELD_COMMENTONLYCHANGEDCONTENTCONTEXT));
 
-    String minSeverityString = formData.getString(FIELD_MINSEVERITY);
+    final String minSeverityString = formData.getString(FIELD_MINSEVERITY);
+    config.setKeepOldComments(formData.getString(FIELD_KEEP_OLD_COMMENTS).equalsIgnoreCase("true"));
     if (!isNullOrEmpty(minSeverityString)) {
       config.setMinSeverity(SEVERITY.valueOf(minSeverityString));
     } else {
@@ -108,16 +110,16 @@ public final class ViolationsToBitbucketServerDescriptor extends BuildStepDescri
     }
 
     int i = 0;
-    List<String> patterns = (List<String>) formData.get(FIELD_PATTERN);
-    List<String> reporters = (List<String>) formData.get(FIELD_REPORTER);
-    for (String pattern : patterns) {
-      ViolationConfig violationConfig = config.getViolationConfigs().get(i);
+    final List<String> patterns = (List<String>) formData.get(FIELD_PATTERN);
+    final List<String> reporters = (List<String>) formData.get(FIELD_REPORTER);
+    for (final String pattern : patterns) {
+      final ViolationConfig violationConfig = config.getViolationConfigs().get(i);
       violationConfig.setPattern(pattern);
-      String reporter = reporters.get(i);
+      final String reporter = reporters.get(i);
       violationConfig.setReporter(reporter);
       i++;
     }
-    ViolationsToBitbucketServerRecorder publisher = new ViolationsToBitbucketServerRecorder();
+    final ViolationsToBitbucketServerRecorder publisher = new ViolationsToBitbucketServerRecorder();
     publisher.setConfig(config);
     return publisher;
   }

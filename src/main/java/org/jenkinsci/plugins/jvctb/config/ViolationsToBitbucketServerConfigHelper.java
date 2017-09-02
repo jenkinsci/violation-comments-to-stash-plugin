@@ -26,18 +26,19 @@ public class ViolationsToBitbucketServerConfigHelper {
   public static final String FIELD_USEUSERNAMEPASSWORDCREDENTIALS =
       "useUsernamePasswordCredentials";
   public static final String FIELD_MINSEVERITY = "minSeverity";
+  public static final String FIELD_KEEP_OLD_COMMENTS = "keepOldComments";
 
   public static ViolationsToBitbucketServerConfig createNewConfig() {
-    ViolationsToBitbucketServerConfig config = new ViolationsToBitbucketServerConfig();
-    List<ViolationConfig> violationConfigs = getAllViolationConfigs();
+    final ViolationsToBitbucketServerConfig config = new ViolationsToBitbucketServerConfig();
+    final List<ViolationConfig> violationConfigs = getAllViolationConfigs();
     config.setViolationConfigs(violationConfigs);
     return config;
   }
 
   public static List<ViolationConfig> getAllViolationConfigs() {
-    List<ViolationConfig> violationConfigs = newArrayList();
-    for (Parser parser : Parser.values()) {
-      ViolationConfig violationConfig = new ViolationConfig();
+    final List<ViolationConfig> violationConfigs = newArrayList();
+    for (final Parser parser : Parser.values()) {
+      final ViolationConfig violationConfig = new ViolationConfig();
       violationConfig.setParser(parser);
       violationConfigs.add(violationConfig);
     }

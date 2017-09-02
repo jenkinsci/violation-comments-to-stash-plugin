@@ -209,10 +209,10 @@ git --no-pager log --max-count=10 --graph --abbrev-commit
 
     minSeverity('INFO')
     createSingleFileComments(true)
-    createCommentWithAllSingleFileComments(true)
-    createCommentWithAllSingleFileComments(true)
+    createCommentWithAllSingleFileComments(false)
     commentOnlyChangedContent(true)
     commentOnlyChangedContentContext(5)
+    keepOldComments(false)
 
     violationConfigs {
      violationConfig {
@@ -256,7 +256,7 @@ node {
    $class: 'ViolationsToBitbucketServerRecorder', 
    config: [
     bitbucketServerUrl: 'http://localhost:7990/bitbucket', 
-    createCommentWithAllSingleFileComments: true, 
+    createCommentWithAllSingleFileComments: false, 
     createSingleFileComments: true, 
     projectKey: 'PROJECT_1', 
     repoSlug: 'rep_1', 
@@ -266,6 +266,7 @@ node {
     password: 'admin', 
     useUsernamePasswordCredentials: false, 
     minSeverity: 'INFO',
+    keepOldComments: false, 
     violationConfigs: [
      [ pattern: '.*/checkstyle-result\\.xml$', parser: 'CHECKSTYLE', reporter: 'Checkstyle' ], 
      [ pattern: '.*/findbugsXml\\.xml$', parser: 'FINDBUGS', reporter: 'Findbugs' ], 

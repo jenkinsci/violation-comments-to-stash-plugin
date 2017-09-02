@@ -13,6 +13,7 @@ import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConf
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_COMMENTONLYCHANGEDCONTENTCONTEXT;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_CREATECOMMENTWITHALLSINGLEFILECOMMENTS;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_CREATESINGLEFILECOMMENTS;
+import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_KEEP_OLD_COMMENTS;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_MINSEVERITY;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_PASSWORD;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_PROJECTKEY;
@@ -101,7 +102,7 @@ public class JvctbPerformer {
     listener
         .getLogger()
         .println(
-            "Will comment PR "
+            "PR: "
                 + config.getProjectKey()
                 + "/"
                 + config.getRepoSlug()
@@ -124,6 +125,7 @@ public class JvctbPerformer {
           .withCreateSingleFileComments(config.getCreateSingleFileComments()) //
           .withCommentOnlyChangedContent(config.getCommentOnlyChangedContent()) //
           .withCommentOnlyChangedContentContext(config.getCommentOnlyChangedContentContext()) //
+          .withShouldKeepOldComments(config.isKeepOldComments()) //
           .toPullRequest();
     } catch (final Exception e) {
       Logger.getLogger(JvctbPerformer.class.getName()).log(SEVERE, "", e);
@@ -153,6 +155,7 @@ public class JvctbPerformer {
     expanded.setCommentOnlyChangedContent(config.getCommentOnlyChangedContent());
     expanded.setCommentOnlyChangedContentContext(config.getCommentOnlyChangedContentContext());
     expanded.setMinSeverity(config.getMinSeverity());
+    expanded.setKeepOldComments(config.isKeepOldComments());
 
     for (final ViolationConfig violationConfig : config.getViolationConfigs()) {
       final String pattern = environment.expand(violationConfig.getPattern());
@@ -186,7 +189,7 @@ public class JvctbPerformer {
 
       setCredentialsIfExists(listener, configExpanded);
 
-      listener.getLogger().println("Will comment " + configExpanded.getPullRequestId());
+      listener.getLogger().println("Pull request: " + configExpanded.getPullRequestId());
 
       fp.act(
           new FileCallable<Void>() {
@@ -242,6 +245,7 @@ public class JvctbPerformer {
             + ": "
             + config.getCommentOnlyChangedContentContext());
     logger.println(FIELD_MINSEVERITY + ": " + config.getMinSeverity());
+    logger.println(FIELD_KEEP_OLD_COMMENTS + ": " + config.isKeepOldComments());
 
     for (final ViolationConfig violationConfig : config.getViolationConfigs()) {
       logger.println(
