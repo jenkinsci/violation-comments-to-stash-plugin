@@ -32,7 +32,7 @@ public class ViolationConfig implements Serializable {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    ViolationConfig other = (ViolationConfig) obj;
+    final ViolationConfig other = (ViolationConfig) obj;
     if (parser != other.parser) {
       return false;
     }
@@ -58,6 +58,9 @@ public class ViolationConfig implements Serializable {
   }
 
   public String getReporter() {
+	  if (this.reporter == null) {
+		return this.parser.name();
+	}
     return this.reporter;
   }
 
