@@ -58,9 +58,9 @@ public class ViolationConfig implements Serializable {
   }
 
   public String getReporter() {
-	  if (this.reporter == null) {
-		return this.parser.name();
-	}
+    if (this.reporter == null) {
+      return this.parser.name();
+    }
     return this.reporter;
   }
 

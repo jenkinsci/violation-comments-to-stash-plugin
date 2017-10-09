@@ -3,6 +3,15 @@
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
 ## Unreleased
+### No issue
+
+**Allowing reporter to be unset**
+
+
+[fb9641682ce8222](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/fb9641682ce8222) Tomas Bjerre *2017-09-26 19:46:31*
+
+
+## 1.54
 ### GitHub [#37](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/37) Individual comments and keeping previous comments
 
 **Keeping comments and adjusting checkstyle #37**
