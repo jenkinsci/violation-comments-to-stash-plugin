@@ -5,6 +5,15 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 ## Unreleased
 ### No issue
 
+**Added handling for empty IssueType Description attributes for Resharper**
+
+
+[d37fce66fee32b0](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/d37fce66fee32b0) Tomas Bjerre *2017-10-09 16:47:26*
+
+
+## 1.55
+### No issue
+
 **Allowing reporter to be unset**
 
 
