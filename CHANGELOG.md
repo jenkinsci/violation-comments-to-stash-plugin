@@ -5,6 +5,29 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 ## Unreleased
 ### No issue
 
+**Accepting PMD files without ruleset-tag**
+
+
+[8f2312c4dc6f718](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/8f2312c4dc6f718) Tomas Bjerre *2017-12-07 16:05:41*
+
+**Doc**
+
+
+[5812bab1c41c983](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/5812bab1c41c983) Tomas Bjerre *2017-11-18 13:46:55*
+
+
+## 1.57
+### No issue
+
+**Resharper WikiUrl**
+
+
+[4d0bd0a21e6479b](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/4d0bd0a21e6479b) Tomas Bjerre *2017-10-13 11:38:03*
+
+
+## 1.56
+### No issue
+
 **Added handling for empty IssueType Description attributes for Resharper**
 
 
