@@ -8,7 +8,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 **Accepting PMD files without ruleset-tag**
 
 
-[8f2312c4dc6f718](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/8f2312c4dc6f718) Tomas Bjerre *2017-12-07 16:05:41*
+[6d1764f807c93fb](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/6d1764f807c93fb) Tomas Bjerre *2017-12-07 16:07:07*
 
 **Doc**
 
