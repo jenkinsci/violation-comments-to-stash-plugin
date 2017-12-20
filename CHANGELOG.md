@@ -2,7 +2,16 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
-## Unreleased
+## 1.59
+### Jira JENKINS-48648 
+
+**Using UTF-8 in Bitbucket client JENKINS-48648**
+
+
+[e64417e9dc01233](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/e64417e9dc01233) Tomas Bjerre *2017-12-20 20:31:01*
+
+
+## 1.58
 ### No issue
 
 **Accepting PMD files without ruleset-tag**
@@ -638,14 +647,6 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 ## 1.7
 ### GitHub [#1](https://github.com/jenkinsci/violation-comments-to-stash-plugin/pull/1) Fix displaying stash user in build output
-
-**Using Violations 0.8.0-alpha-1 #1**
-
-
-[c506992c461df21](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/c506992c461df21) Tomas Bjerre *2015-06-23 19:49:00*
-
-
-### Jira alpha-1 
 
 **Using Violations 0.8.0-alpha-1 #1**
 

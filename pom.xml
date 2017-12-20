@@ -121,6 +121,7 @@
 							<gitHubApi>https://api.github.com/repos/jenkinsci/violation-comments-to-stash-plugin</gitHubApi>
 							<gitHubToken>${GITHUB_OAUTH2TOKEN}</gitHubToken>
 							<gitHubIssuePattern>#([0-9]*)</gitHubIssuePattern>
+							<jiraIssuePattern>\bJENKINS-([0-9]+)\b</jiraIssuePattern>
 							<filePath>CHANGELOG.md</filePath>
 							<templateContent>
         <![CDATA[
