@@ -203,7 +203,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 		<dependency>
 			<groupId>se.bjurr.violations</groupId>
 			<artifactId>violation-comments-to-bitbucket-server-lib</artifactId>
-			<version>1.36</version>
+			<version>1.38</version>
 		</dependency>
 
 		<!-- test // -->
