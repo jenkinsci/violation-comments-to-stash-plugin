@@ -2,6 +2,20 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## Unreleased
+### No issue
+
+**DocFX**
+
+
+[45b66f538356c01](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/45b66f538356c01) Tomas Bjerre *2017-12-21 14:53:18*
+
+**Doc**
+
+
+[cd702874980fc8f](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/cd702874980fc8f) Tomas Bjerre *2017-12-20 21:29:12*
+
+
 ## 1.59
 ### Jira JENKINS-48648 
 
