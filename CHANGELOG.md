@@ -5,6 +5,15 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 ## Unreleased
 ### No issue
 
+**DocFX parsing JSON with Gson, not ScriptEngine**
+
+
+[7f8ab340a68c539](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/7f8ab340a68c539) Tomas Bjerre *2017-12-22 12:46:49*
+
+
+## 1.60
+### No issue
+
 **DocFX**
 
 
