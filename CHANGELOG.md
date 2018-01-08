@@ -839,7 +839,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
  * More logging and also logging more to build log. 
  * Adding optional path prefix, to adjust to reported file names. 
- * Getting workspace from build instead of WORKSPACE variable. Variable may not be correct for parallell builds. 
+ * Getting workspace from build instead of WORKSPACE variable. Variable may not be correct for parallel builds. 
 
 [acc6801a3603f4c](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/acc6801a3603f4c) Tomas Bjerre *2015-05-02 10:09:06*
 
