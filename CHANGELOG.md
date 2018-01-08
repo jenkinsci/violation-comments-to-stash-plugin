@@ -656,7 +656,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 ## 1.8
 ### No issue
 
-**Updating changelog after mergin PR**
+**Updating changelog after merging PR**
 
 
 [180db540dd510ec](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/180db540dd510ec) Tomas Bjerre *2015-07-01 21:03:38*
