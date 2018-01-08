@@ -705,7 +705,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 [7539e18f456c585](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/7539e18f456c585) Tomas Bjerre *2015-05-31 15:47:44*
 
 
-### GitHub [#9](https://github.com/jenkinsci/violation-comments-to-stash-plugin/pull/9) Using hudston.util.Secret to encrypt the password instead of storing plain text
+### GitHub [#9](https://github.com/jenkinsci/violation-comments-to-stash-plugin/pull/9) Using hudson.util.Secret to encrypt the password instead of storing plain text
 
 **Handling Windows-style file paths and using password field in confg GUI #9 #10**
 
