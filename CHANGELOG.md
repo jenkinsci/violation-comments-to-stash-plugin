@@ -81,7 +81,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 **Keeping comments and adjusting checkstyle #37**
 
  * Checkstyle now allows empty source attribute. 
- * Comments can optionaly be kept and not removed when new comments are added. 
+ * Comments can optionally be kept and not removed when new comments are added. 
  * Will no longer re-create identical comments. 
 
 [61d8abc9aa05c0f](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/61d8abc9aa05c0f) Tomas Bjerre *2017-09-02 17:33:45*
