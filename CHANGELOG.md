@@ -233,7 +233,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 ## 1.45
 ### No issue
 
-**CLang, RubyCop, GoLint, GoVet, PHPMD, PHPCS**
+**CLang, RuboCop, GoLint, GoVet, PHPMD, PHPCS**
 
 
 [ab7122d6f8e53ad](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/ab7122d6f8e53ad) Tomas Bjerre *2017-02-18 22:05:15*
