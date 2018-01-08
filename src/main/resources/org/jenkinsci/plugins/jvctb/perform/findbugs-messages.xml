@@ -1735,7 +1735,7 @@ of the double to create the BigDecimal (e.g., BigDecimal.valueOf(0.1) gives 0.1)
         <Details>
       <![CDATA[
     <p>
-This partical method invocation doesn't make sense, for reasons that should be apparent from inspection.
+This pratical method invocation doesn't make sense, for reasons that should be apparent from inspection.
 </p>
 
 ]]>

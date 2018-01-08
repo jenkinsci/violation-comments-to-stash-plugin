@@ -81,7 +81,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 **Keeping comments and adjusting checkstyle #37**
 
  * Checkstyle now allows empty source attribute. 
- * Comments can optionaly be kept and not removed when new comments are added. 
+ * Comments can optionally be kept and not removed when new comments are added. 
  * Will no longer re-create identical comments. 
 
 [61d8abc9aa05c0f](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/61d8abc9aa05c0f) Tomas Bjerre *2017-09-02 17:33:45*
@@ -233,7 +233,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 ## 1.45
 ### No issue
 
-**CLang, RubyCop, GoLint, GoVet, PHPMD, PHPCS**
+**CLang, RuboCop, GoLint, GoVet, PHPMD, PHPCS**
 
 
 [ab7122d6f8e53ad](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/ab7122d6f8e53ad) Tomas Bjerre *2017-02-18 22:05:15*
@@ -656,7 +656,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 ## 1.8
 ### No issue
 
-**Updating changelog after mergin PR**
+**Updating changelog after merging PR**
 
 
 [180db540dd510ec](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/180db540dd510ec) Tomas Bjerre *2015-07-01 21:03:38*
@@ -705,7 +705,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 [7539e18f456c585](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/7539e18f456c585) Tomas Bjerre *2015-05-31 15:47:44*
 
 
-### GitHub [#9](https://github.com/jenkinsci/violation-comments-to-stash-plugin/pull/9) Using hudston.util.Secret to encrypt the password instead of storing plain text
+### GitHub [#9](https://github.com/jenkinsci/violation-comments-to-stash-plugin/pull/9) Using hudson.util.Secret to encrypt the password instead of storing plain text
 
 **Handling Windows-style file paths and using password field in confg GUI #9 #10**
 
@@ -839,7 +839,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
  * More logging and also logging more to build log. 
  * Adding optional path prefix, to adjust to reported file names. 
- * Getting workspace from build instead of WORKSPACE variable. Variable may not be correct for parallell builds. 
+ * Getting workspace from build instead of WORKSPACE variable. Variable may not be correct for parallel builds. 
 
 [acc6801a3603f4c](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/acc6801a3603f4c) Tomas Bjerre *2015-05-02 10:09:06*
 
