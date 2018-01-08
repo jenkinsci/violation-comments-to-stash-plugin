@@ -28,7 +28,7 @@
   </f:entry>
 
   <f:optionalBlock checked="${config.useUsernamePasswordCredentials}" name="useUsernamePasswordCredentials" title="Use username / password credentials" inline="true">
-    <f:entry title="Username / Password Crendential" field="usernamePasswordCredentialsId">
+    <f:entry title="Username / Password Credential" field="usernamePasswordCredentialsId">
       <c:select default="${config.usernamePasswordCredentialsId}"/>
     </f:entry>
     <f:description>
