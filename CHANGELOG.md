@@ -5,6 +5,29 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 ## Unreleased
 ### No issue
 
+**Relocating to correct Java identifier**
+
+
+[c39db70f8e192eb](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/c39db70f8e192eb) Tomas Bjerre *2017-12-31 11:51:34*
+
+
+## 1.62
+### No issue
+
+**Fixing encoding issues**
+
+
+[905fe575edbdeec](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/905fe575edbdeec) Tomas Bjerre *2017-12-25 20:17:00*
+
+**Bumping version to fix faulty release**
+
+
+[acd5079c1becb74](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/acd5079c1becb74) Tomas Bjerre *2017-12-22 18:59:28*
+
+
+## 1.61
+### No issue
+
 **DocFX parsing JSON with Gson, not ScriptEngine**
 
 
