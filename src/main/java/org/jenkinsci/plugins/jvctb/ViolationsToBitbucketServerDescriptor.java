@@ -19,6 +19,8 @@ import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConf
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_USEUSERNAMEPASSWORD;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_USEUSERNAMEPASSWORDCREDENTIALS;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.createNewConfig;
+
+import hudson.Extension;
 import hudson.model.AbstractProject;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Publisher;
@@ -28,6 +30,7 @@ import java.util.List;
 
 import net.sf.json.JSONObject;
 
+import org.jenkinsci.Symbol;
 import org.jenkinsci.plugins.jvctb.config.CredentialsHelper;
 import org.jenkinsci.plugins.jvctb.config.ViolationConfig;
 import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
@@ -35,6 +38,8 @@ import org.kohsuke.stapler.StaplerRequest;
 
 import se.bjurr.violations.lib.model.SEVERITY;
 
+@Extension
+@Symbol("ViolationsToBitbucketServer")
 public final class ViolationsToBitbucketServerDescriptor extends BuildStepDescriptor<Publisher> {
   private ViolationsToBitbucketServerConfig config;
 
