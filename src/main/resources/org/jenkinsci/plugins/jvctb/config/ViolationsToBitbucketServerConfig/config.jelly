@@ -76,7 +76,13 @@
     </f:entry>
 
     <f:entry title="Parsers">
-        <f:repeatableProperty field="violationConfigs" />
+        <f:repeatableProperty field="violationConfigs">
+            <f:entry title="">
+                <div align="right">
+                    <f:repeatableDeleteButton/>
+                </div>
+            </f:entry>
+        </f:repeatableProperty>
     </f:entry>
 
 </j:jelly>
