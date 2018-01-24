@@ -11,7 +11,6 @@ import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
 import org.kohsuke.stapler.StaplerRequest;
 
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_MINSEVERITY;
-import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.createNewConfig;
 
 @Extension
 @Symbol("ViolationsToBitbucketServer")
@@ -21,9 +20,8 @@ public final class ViolationsToBitbucketServerDescriptor extends BuildStepDescri
   public ViolationsToBitbucketServerDescriptor() {
     super(ViolationsToBitbucketServerRecorder.class);
     load();
-    if (config == null
-        || config.getViolationConfigs().size() != createNewConfig().getViolationConfigs().size()) {
-      config = createNewConfig();
+    if (config == null) {
+      config = new ViolationsToBitbucketServerConfig();
     }
   }
 
@@ -35,11 +33,6 @@ public final class ViolationsToBitbucketServerDescriptor extends BuildStepDescri
   @Override
   public String getHelpFile() {
     return super.getHelpFile();
-  }
-
-  /** Create new blank configuration. Used when job is created. */
-  public ViolationsToBitbucketServerConfig getNewConfig() {
-    return createNewConfig();
   }
 
   @Override
