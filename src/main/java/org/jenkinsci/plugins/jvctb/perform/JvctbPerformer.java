@@ -41,11 +41,9 @@ import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConf
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_CREATESINGLEFILECOMMENTS;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_KEEP_OLD_COMMENTS;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_MINSEVERITY;
-import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_PASSWORD;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_PROJECTKEY;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_PULLREQUESTID;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_REPOSLUG;
-import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_USERNAME;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_USERNAMEPASSWORDCREDENTIALSID;
 import static se.bjurr.violations.comments.bitbucketserver.lib.ViolationCommentsToBitbucketServerApi.violationCommentsToBitbucketServerApi;
 import static se.bjurr.violations.lib.ViolationsApi.violationsApi;
@@ -57,9 +55,10 @@ public class JvctbPerformer {
 
   @VisibleForTesting
   public static void doPerform(
-          final ViolationsToBitbucketServerConfig config,
-          final File workspace,
-          StandardUsernamePasswordCredentials standardUsernamePasswordCredentials, final TaskListener listener)
+      final ViolationsToBitbucketServerConfig config,
+      final File workspace,
+      StandardUsernamePasswordCredentials standardUsernamePasswordCredentials,
+      final TaskListener listener)
       throws MalformedURLException {
     if (isNullOrEmpty(config.getPullRequestId())) {
       listener
@@ -178,7 +177,7 @@ public class JvctbPerformer {
       logConfiguration(configExpanded, build, listener);
 
       final Optional<StandardUsernamePasswordCredentials> credentials =
-              findCredentials(configExpanded.getUsernamePasswordCredentialsId());
+          findCredentials(configExpanded.getUsernamePasswordCredentialsId());
       if (!credentials.isPresent()) {
         listener.getLogger().println("Credentials not found!");
         return;
@@ -226,8 +225,6 @@ public class JvctbPerformer {
         FIELD_USERNAMEPASSWORDCREDENTIALSID
             + ": "
             + !isNullOrEmpty(config.getUsernamePasswordCredentialsId()));
-    logger.println(FIELD_USERNAME + ": " + !isNullOrEmpty(config.getUsername()));
-    logger.println(FIELD_PASSWORD + ": " + !isNullOrEmpty(config.getPassword()));
 
     logger.println(FIELD_CREATESINGLEFILECOMMENTS + ": " + config.getCreateSingleFileComments());
     logger.println(

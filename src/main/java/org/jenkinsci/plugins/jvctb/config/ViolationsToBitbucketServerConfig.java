@@ -9,6 +9,7 @@ import hudson.Util;
 import hudson.model.AbstractDescribableImpl;
 import hudson.model.Descriptor;
 import hudson.util.ListBoxModel;
+import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.plugins.jvctb.ViolationsToBitbucketServerGlobalConfiguration;
 import org.kohsuke.accmod.Restricted;
 import org.kohsuke.accmod.restrictions.NoExternalUse;
@@ -18,20 +19,20 @@ import se.bjurr.violations.lib.model.SEVERITY;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.collect.Lists.newArrayList;
+import static org.jenkinsci.plugins.jvctb.config.CredentialsHelper.migrateCredentials;
 
-public class ViolationsToBitbucketServerConfig extends AbstractDescribableImpl<ViolationsToBitbucketServerConfig> implements Serializable {
+public class ViolationsToBitbucketServerConfig
+    extends AbstractDescribableImpl<ViolationsToBitbucketServerConfig> implements Serializable {
   private static final long serialVersionUID = 4851568645021422528L;
   private boolean commentOnlyChangedContent;
   private String bitbucketServerUrl;
   private boolean createCommentWithAllSingleFileComments;
   private boolean createSingleFileComments;
-  @Deprecated
-  private transient String password;
+  @Deprecated private transient String password;
   private String projectKey;
   private String pullRequestId;
   private String repoSlug;
-  @Deprecated
-  private transient String username;
+  @Deprecated private transient String username;
   private String usernamePasswordCredentialsId;
   private List<ViolationConfig> violationConfigs = newArrayList();
   private int commentOnlyChangedContentContext;
@@ -41,7 +42,8 @@ public class ViolationsToBitbucketServerConfig extends AbstractDescribableImpl<V
   public ViolationsToBitbucketServerConfig() {}
 
   @DataBoundConstructor
-  public ViolationsToBitbucketServerConfig(String projectKey, String repoSlug, String pullRequestId) {
+  public ViolationsToBitbucketServerConfig(
+      String projectKey, String repoSlug, String pullRequestId) {
     this.projectKey = Util.fixEmptyAndTrim(projectKey);
     this.repoSlug = Util.fixEmptyAndTrim(repoSlug);
     this.pullRequestId = Util.fixEmptyAndTrim(pullRequestId);
@@ -53,8 +55,6 @@ public class ViolationsToBitbucketServerConfig extends AbstractDescribableImpl<V
     createCommentWithAllSingleFileComments = rhs.createCommentWithAllSingleFileComments;
     projectKey = rhs.projectKey;
     repoSlug = rhs.repoSlug;
-    password = rhs.password;
-    username = rhs.username;
     pullRequestId = rhs.pullRequestId;
     bitbucketServerUrl = rhs.bitbucketServerUrl;
     usernamePasswordCredentialsId = rhs.usernamePasswordCredentialsId;
@@ -71,12 +71,6 @@ public class ViolationsToBitbucketServerConfig extends AbstractDescribableImpl<V
     if (isNullOrEmpty(usernamePasswordCredentialsId)) {
       usernamePasswordCredentialsId = defaults.getUsernamePasswordCredentialsId();
     }
-    if (isNullOrEmpty(username)) {
-      username = defaults.getUsername();
-    }
-    if (isNullOrEmpty(password)) {
-      password = defaults.getPassword();
-    }
     if (isNullOrEmpty(repoSlug)) {
       repoSlug = defaults.getRepoSlug();
     }
@@ -87,6 +81,13 @@ public class ViolationsToBitbucketServerConfig extends AbstractDescribableImpl<V
       this.minSeverity = defaults.getMinSeverity();
     }
   }
+
+    private Object readResolve() {
+      if (StringUtils.isBlank(usernamePasswordCredentialsId) && username != null && password != null) {
+        usernamePasswordCredentialsId = migrateCredentials(username, password);
+      }
+      return this;
+    }
 
   @Override
   public boolean equals(Object obj) {
@@ -123,13 +124,6 @@ public class ViolationsToBitbucketServerConfig extends AbstractDescribableImpl<V
       return false;
     }
     if (minSeverity != other.minSeverity) {
-      return false;
-    }
-    if (password == null) {
-      if (other.password != null) {
-        return false;
-      }
-    } else if (!password.equals(other.password)) {
       return false;
     }
     if (projectKey == null) {
@@ -197,10 +191,6 @@ public class ViolationsToBitbucketServerConfig extends AbstractDescribableImpl<V
     return createSingleFileComments;
   }
 
-  public String getPassword() {
-    return password;
-  }
-
   public String getProjectKey() {
     return projectKey;
   }
@@ -211,10 +201,6 @@ public class ViolationsToBitbucketServerConfig extends AbstractDescribableImpl<V
 
   public String getRepoSlug() {
     return repoSlug;
-  }
-
-  public String getUsername() {
-    return username;
   }
 
   public String getUsernamePasswordCredentialsId() {
@@ -246,20 +232,6 @@ public class ViolationsToBitbucketServerConfig extends AbstractDescribableImpl<V
                 : usernamePasswordCredentialsId.hashCode());
     result = prime * result + (violationConfigs == null ? 0 : violationConfigs.hashCode());
     return result;
-  }
-
-  private List<ViolationConfig> includeAllReporters(List<ViolationConfig> violationConfigs) {
-    final List<ViolationConfig> allViolationConfigs =
-        ViolationsToBitbucketServerConfigHelper.getAllViolationConfigs();
-    for (final ViolationConfig candidate : allViolationConfigs) {
-      for (final ViolationConfig input : violationConfigs) {
-        if (candidate.getParser() == input.getParser()) {
-          candidate.setPattern(input.getPattern());
-          candidate.setReporter(input.getReporter());
-        }
-      }
-    }
-    return allViolationConfigs;
   }
 
   @DataBoundSetter
@@ -297,11 +269,6 @@ public class ViolationsToBitbucketServerConfig extends AbstractDescribableImpl<V
     this.minSeverity = minSeverity;
   }
 
-  @Deprecated
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
   public void setProjectKey(String projectKey) {
     this.projectKey = projectKey;
   }
@@ -312,11 +279,6 @@ public class ViolationsToBitbucketServerConfig extends AbstractDescribableImpl<V
 
   public void setRepoSlug(String repoSlug) {
     this.repoSlug = repoSlug;
-  }
-
-  @Deprecated
-  public void setUsername(String username) {
-    this.username = username;
   }
 
   @DataBoundSetter
@@ -375,16 +337,14 @@ public class ViolationsToBitbucketServerConfig extends AbstractDescribableImpl<V
       return "Violations To Bitbucket Server Config";
     }
 
-    public static final ListBoxModel TYPES = new ListBoxModel(
-      new ListBoxModel.Option("Default, Global Config or Info", ""),
-      new ListBoxModel.Option("Info", SEVERITY.INFO.toString()),
-      new ListBoxModel.Option("Warning", SEVERITY.WARN.toString()),
-      new ListBoxModel.Option("Error", SEVERITY.ERROR.toString())
-    );
-
     @Restricted(NoExternalUse.class)
     public ListBoxModel doFillMinSeverityItems() {
-      return TYPES;
+      ListBoxModel items = new ListBoxModel();
+      items.add("Default, Global Config or Info", "");
+      for (SEVERITY severity : SEVERITY.values()) {
+        items.add(severity.name());
+      }
+      return items;
     }
 
     public ListBoxModel doFillUsernamePasswordCredentialsIdItems() {

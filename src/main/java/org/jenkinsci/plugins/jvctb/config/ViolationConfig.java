@@ -12,7 +12,8 @@ import org.kohsuke.accmod.restrictions.NoExternalUse;
 import org.kohsuke.stapler.DataBoundConstructor;
 import se.bjurr.violations.lib.reports.Parser;
 
-public class ViolationConfig extends AbstractDescribableImpl<ViolationConfig> implements Serializable {
+public class ViolationConfig extends AbstractDescribableImpl<ViolationConfig>
+    implements Serializable {
   private static final long serialVersionUID = 6664329842273455651L;
   private String pattern;
   private String reporter;
@@ -118,7 +119,7 @@ public class ViolationConfig extends AbstractDescribableImpl<ViolationConfig> im
     @Restricted(NoExternalUse.class)
     public ListBoxModel doFillParserItems() {
       ListBoxModel items = new ListBoxModel();
-      for (Parser parser: Parser.values()) {
+      for (Parser parser : Parser.values()) {
         items.add(parser.name());
       }
       return items;
