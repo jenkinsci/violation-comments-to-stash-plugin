@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core"
+         xmlns:d="jelly:define"
+         xmlns:f="/lib/form"
+         xmlns:l="/lib/layout"
+         xmlns:st="jelly:stapler"
+         xmlns:t="/lib/hudson"
+         xmlns:c="/lib/credentials">
+
+    <f:entry title="Username / Password Crendential" field="usernamePasswordCredentialsId">
+        <c:select />
+        <f:description>
+            Will default to global config.
+        </f:description>
+    </f:entry>
+
+    <f:entry>
+        You may want to use <a target="_blank" href="https://github.com/tomasbjerre/pull-request-notifier-for-bitbucket">Pull Request Notifier for Bitbucket</a> to get these values.
+    </f:entry>
+
+    <f:entry title="Base URL, will default to global config" field="bitbucketServerUrl">
+        <f:textbox />
+    </f:entry>
+
+    <f:entry title="Project key, will default to global config" field="projectKey">
+        <f:textbox />
+    </f:entry>
+
+    <f:entry title="Repo slug, will default to global config" field="repoSlug">
+        <f:textbox />
+    </f:entry>
+
+    <f:entry title="Pull Request ID" field="pullRequestId">
+        <f:textbox />
+    </f:entry>
+
+    <f:entry title="Comment only if severity at least" field="minSeverity">
+        <f:select />
+    </f:entry>
+
+    <f:entry title="Keep old comments" field="keepOldComments">
+        <f:checkbox />
+    </f:entry>
+
+    <f:entry title="Create one comment per violation" field="createSingleFileComments">
+        <f:checkbox default="true" />
+    </f:entry>
+
+    <f:entry title="Create one big comment with all violations" field="createCommentWithAllSingleFileComments">
+        <f:checkbox />
+    </f:entry>
+
+    <f:optionalBlock field="commentOnlyChangedContent" title="Comment only changed part of files" inline="true">
+        <f:entry title="Context lines" field="commentOnlyChangedContentContext">
+            <f:number />
+        </f:entry>
+
+        <f:description>
+            Any comment within a changed line +/- context will be used.
+        </f:description>
+    </f:optionalBlock>
+
+    <f:entry>
+        <table class="xmlFilenamePatterns" cellspacing="5">
+            <tr>
+                <td align="left" colspan="2">
+                    <b>Violations configuration</b>
+                    <ul>
+                        <li>The <b>pattern</b> may be, for example, <i>.*/findbugs/.*\.xml$</i> to match xml-files, in a folder named findbugs, anywhere in workspace. You try <a href="https://jex.im/regulex/" target="_blank">Regulex</a> for creating your regexp.</li>
+                        <li>The <b>reporter</b> is optional. The parser name will be used if no reporter specified. It is intended to be the name of the tool reporting the violations. For example if Detekt is used to produce a checkstyle-report, then you may specify Detekt in the reporter field.</li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </f:entry>
+
+    <f:entry title="Parsers">
+        <f:repeatableProperty field="violationConfigs" />
+    </f:entry>
+
+</j:jelly>

@@ -1,30 +1,38 @@
 package org.jenkinsci.plugins.jvctb.config;
 
-import static com.google.common.base.Strings.isNullOrEmpty;
-import static com.google.common.collect.Lists.newArrayList;
-
+import javax.annotation.Nonnull;
 import java.io.Serializable;
 import java.util.List;
 
+import hudson.Extension;
+import hudson.Util;
+import hudson.model.AbstractDescribableImpl;
+import hudson.model.Descriptor;
+import hudson.util.ListBoxModel;
 import org.jenkinsci.plugins.jvctb.ViolationsToBitbucketServerGlobalConfiguration;
+import org.kohsuke.accmod.Restricted;
+import org.kohsuke.accmod.restrictions.NoExternalUse;
 import org.kohsuke.stapler.DataBoundConstructor;
-
+import org.kohsuke.stapler.DataBoundSetter;
 import se.bjurr.violations.lib.model.SEVERITY;
 
-public class ViolationsToBitbucketServerConfig implements Serializable {
+import static com.google.common.base.Strings.isNullOrEmpty;
+import static com.google.common.collect.Lists.newArrayList;
+
+public class ViolationsToBitbucketServerConfig extends AbstractDescribableImpl<ViolationsToBitbucketServerConfig> implements Serializable {
   private static final long serialVersionUID = 4851568645021422528L;
   private boolean commentOnlyChangedContent;
   private String bitbucketServerUrl;
   private boolean createCommentWithAllSingleFileComments;
   private boolean createSingleFileComments;
-  private String password;
+  @Deprecated
+  private transient String password;
   private String projectKey;
   private String pullRequestId;
   private String repoSlug;
-  private String username;
+  @Deprecated
+  private transient String username;
   private String usernamePasswordCredentialsId;
-  private boolean useUsernamePassword;
-  private boolean useUsernamePasswordCredentials;
   private List<ViolationConfig> violationConfigs = newArrayList();
   private int commentOnlyChangedContentContext;
   private SEVERITY minSeverity;
@@ -33,42 +41,10 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
   public ViolationsToBitbucketServerConfig() {}
 
   @DataBoundConstructor
-  public ViolationsToBitbucketServerConfig(
-      boolean createSingleFileComments,
-      boolean createCommentWithAllSingleFileComments,
-      String projectKey,
-      String repoSlug,
-      String password,
-      String username,
-      String pullRequestId,
-      String bitbucketServerUrl,
-      List<ViolationConfig> violationConfigs,
-      String usernamePasswordCredentialsId,
-      boolean useUsernamePasswordCredentials,
-      boolean useUsernamePassword,
-      boolean commentOnlyChangedContent,
-      int commentOnlyChangedContentContext,
-      SEVERITY minSeverity,
-      boolean keepOldComments) {
-
-    final List<ViolationConfig> allViolationConfigs = includeAllReporters(violationConfigs);
-
-    this.violationConfigs = allViolationConfigs;
-    this.createSingleFileComments = createSingleFileComments;
-    this.createCommentWithAllSingleFileComments = createCommentWithAllSingleFileComments;
-    this.projectKey = projectKey;
-    this.repoSlug = repoSlug;
-    this.password = password;
-    this.username = username;
-    this.pullRequestId = pullRequestId;
-    this.bitbucketServerUrl = bitbucketServerUrl;
-    this.usernamePasswordCredentialsId = usernamePasswordCredentialsId;
-    this.useUsernamePasswordCredentials = useUsernamePasswordCredentials;
-    this.useUsernamePassword = useUsernamePassword;
-    this.commentOnlyChangedContent = commentOnlyChangedContent;
-    this.commentOnlyChangedContentContext = commentOnlyChangedContentContext;
-    this.minSeverity = minSeverity;
-    this.keepOldComments = keepOldComments;
+  public ViolationsToBitbucketServerConfig(String projectKey, String repoSlug, String pullRequestId) {
+    this.projectKey = Util.fixEmptyAndTrim(projectKey);
+    this.repoSlug = Util.fixEmptyAndTrim(repoSlug);
+    this.pullRequestId = Util.fixEmptyAndTrim(pullRequestId);
   }
 
   public ViolationsToBitbucketServerConfig(ViolationsToBitbucketServerConfig rhs) {
@@ -82,8 +58,6 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
     pullRequestId = rhs.pullRequestId;
     bitbucketServerUrl = rhs.bitbucketServerUrl;
     usernamePasswordCredentialsId = rhs.usernamePasswordCredentialsId;
-    useUsernamePasswordCredentials = rhs.useUsernamePasswordCredentials;
-    useUsernamePassword = rhs.useUsernamePassword;
     commentOnlyChangedContent = rhs.commentOnlyChangedContent;
     commentOnlyChangedContentContext = rhs.commentOnlyChangedContentContext;
     this.minSeverity = rhs.minSeverity;
@@ -179,12 +153,6 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
     } else if (!repoSlug.equals(other.repoSlug)) {
       return false;
     }
-    if (useUsernamePassword != other.useUsernamePassword) {
-      return false;
-    }
-    if (useUsernamePasswordCredentials != other.useUsernamePasswordCredentials) {
-      return false;
-    }
     if (username == null) {
       if (other.username != null) {
         return false;
@@ -268,13 +236,9 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
     result = prime * result + (createSingleFileComments ? 1231 : 1237);
     result = prime * result + (keepOldComments ? 1231 : 1237);
     result = prime * result + (minSeverity == null ? 0 : minSeverity.hashCode());
-    result = prime * result + (password == null ? 0 : password.hashCode());
     result = prime * result + (projectKey == null ? 0 : projectKey.hashCode());
     result = prime * result + (pullRequestId == null ? 0 : pullRequestId.hashCode());
     result = prime * result + (repoSlug == null ? 0 : repoSlug.hashCode());
-    result = prime * result + (useUsernamePassword ? 1231 : 1237);
-    result = prime * result + (useUsernamePasswordCredentials ? 1231 : 1237);
-    result = prime * result + (username == null ? 0 : username.hashCode());
     result =
         prime * result
             + (usernamePasswordCredentialsId == null
@@ -298,31 +262,28 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
     return allViolationConfigs;
   }
 
-  public boolean isUseUsernamePassword() {
-    return useUsernamePassword;
-  }
-
-  public boolean isUseUsernamePasswordCredentials() {
-    return useUsernamePasswordCredentials;
-  }
-
+  @DataBoundSetter
   public void setBitbucketServerUrl(String bitbucketServerUrl) {
-    this.bitbucketServerUrl = bitbucketServerUrl;
+    this.bitbucketServerUrl = Util.fixEmptyAndTrim(bitbucketServerUrl);
   }
 
+  @DataBoundSetter
   public void setCommentOnlyChangedContent(boolean commentOnlyChangedContent) {
     this.commentOnlyChangedContent = commentOnlyChangedContent;
   }
 
+  @DataBoundSetter
   public void setCommentOnlyChangedContentContext(int commentOnlyChangedContentContext) {
     this.commentOnlyChangedContentContext = commentOnlyChangedContentContext;
   }
 
+  @DataBoundSetter
   public void setCreateCommentWithAllSingleFileComments(
       boolean createCommentWithAllSingleFileComments) {
     this.createCommentWithAllSingleFileComments = createCommentWithAllSingleFileComments;
   }
 
+  @DataBoundSetter
   public void setCreateSingleFileComments(boolean createSingleFileComments) {
     this.createSingleFileComments = createSingleFileComments;
   }
@@ -331,10 +292,12 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
     return minSeverity;
   }
 
+  @DataBoundSetter
   public void setMinSeverity(SEVERITY minSeverity) {
     this.minSeverity = minSeverity;
   }
 
+  @Deprecated
   public void setPassword(String password) {
     this.password = password;
   }
@@ -351,22 +314,17 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
     this.repoSlug = repoSlug;
   }
 
+  @Deprecated
   public void setUsername(String username) {
     this.username = username;
   }
 
+  @DataBoundSetter
   public void setUsernamePasswordCredentialsId(String usernamePasswordCredentialsId) {
-    this.usernamePasswordCredentialsId = usernamePasswordCredentialsId;
+    this.usernamePasswordCredentialsId = Util.fixEmptyAndTrim(usernamePasswordCredentialsId);
   }
 
-  public void setUseUsernamePassword(boolean useUsernamePassword) {
-    this.useUsernamePassword = useUsernamePassword;
-  }
-
-  public void setUseUsernamePasswordCredentials(boolean useUsernamePasswordCredentials) {
-    this.useUsernamePasswordCredentials = useUsernamePasswordCredentials;
-  }
-
+  @DataBoundSetter
   public void setViolationConfigs(List<ViolationConfig> parsers) {
     violationConfigs = parsers;
   }
@@ -381,22 +339,14 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
         + createCommentWithAllSingleFileComments
         + ", createSingleFileComments="
         + createSingleFileComments
-        + ", password="
-        + password
         + ", projectKey="
         + projectKey
         + ", pullRequestId="
         + pullRequestId
         + ", repoSlug="
         + repoSlug
-        + ", username="
-        + username
         + ", usernamePasswordCredentialsId="
         + usernamePasswordCredentialsId
-        + ", useUsernamePassword="
-        + useUsernamePassword
-        + ", useUsernamePasswordCredentials="
-        + useUsernamePasswordCredentials
         + ", violationConfigs="
         + violationConfigs
         + ", commentOnlyChangedContentContext="
@@ -412,7 +362,33 @@ public class ViolationsToBitbucketServerConfig implements Serializable {
     return keepOldComments;
   }
 
+  @DataBoundSetter
   public void setKeepOldComments(boolean keepOldComments) {
     this.keepOldComments = keepOldComments;
+  }
+
+  @Extension
+  public static class DescriptorImpl extends Descriptor<ViolationsToBitbucketServerConfig> {
+    @Nonnull
+    @Override
+    public String getDisplayName() {
+      return "Violations To Bitbucket Server Config";
+    }
+
+    public static final ListBoxModel TYPES = new ListBoxModel(
+      new ListBoxModel.Option("Default, Global Config or Info", ""),
+      new ListBoxModel.Option("Info", SEVERITY.INFO.toString()),
+      new ListBoxModel.Option("Warning", SEVERITY.WARN.toString()),
+      new ListBoxModel.Option("Error", SEVERITY.ERROR.toString())
+    );
+
+    @Restricted(NoExternalUse.class)
+    public ListBoxModel doFillMinSeverityItems() {
+      return TYPES;
+    }
+
+    public ListBoxModel doFillUsernamePasswordCredentialsIdItems() {
+      return CredentialsHelper.doFillUsernamePasswordCredentialsIdItems();
+    }
   }
 }

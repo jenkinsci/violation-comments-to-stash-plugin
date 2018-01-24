@@ -1,8 +1,34 @@
 package org.jenkinsci.plugins.jvctb.perform;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.net.MalformedURLException;
+import java.util.List;
+import java.util.logging.Logger;
+
+import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Optional;
+import com.google.common.io.CharStreams;
+import hudson.EnvVars;
+import hudson.FilePath;
+import hudson.FilePath.FileCallable;
+import hudson.model.Run;
+import hudson.model.TaskListener;
+import hudson.remoting.VirtualChannel;
+import hudson.util.Secret;
+import org.jenkinsci.plugins.jvctb.config.ViolationConfig;
+import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
+import org.jenkinsci.remoting.RoleChecker;
+import se.bjurr.violations.lib.model.SEVERITY;
+import se.bjurr.violations.lib.model.Violation;
+import se.bjurr.violations.lib.reports.Parser;
+
 import static com.google.common.base.Charsets.UTF_8;
-import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Strings.emptyToNull;
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.base.Throwables.propagate;
 import static com.google.common.collect.Lists.newArrayList;
@@ -25,44 +51,15 @@ import static se.bjurr.violations.comments.bitbucketserver.lib.ViolationComments
 import static se.bjurr.violations.lib.ViolationsApi.violationsApi;
 import static se.bjurr.violations.lib.parsers.FindbugsParser.setFindbugsMessagesXml;
 import static se.bjurr.violations.lib.util.Filtering.withAtLEastSeverity;
-import hudson.EnvVars;
-import hudson.FilePath;
-import hudson.FilePath.FileCallable;
-import hudson.model.TaskListener;
-import hudson.model.Run;
-import hudson.remoting.VirtualChannel;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.net.MalformedURLException;
-import java.util.List;
-import java.util.logging.Logger;
-
-import org.jenkinsci.plugins.jvctb.config.ViolationConfig;
-import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
-import org.jenkinsci.remoting.RoleChecker;
-
-import se.bjurr.violations.lib.model.SEVERITY;
-import se.bjurr.violations.lib.model.Violation;
-import se.bjurr.violations.lib.reports.Parser;
-
-import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Optional;
-import com.google.common.io.CharStreams;
 
 public class JvctbPerformer {
   private static Logger LOG = Logger.getLogger(JvctbPerformer.class.getSimpleName());
 
   @VisibleForTesting
   public static void doPerform(
-      final ViolationsToBitbucketServerConfig config,
-      final File workspace,
-      final TaskListener listener)
+          final ViolationsToBitbucketServerConfig config,
+          final File workspace,
+          StandardUsernamePasswordCredentials standardUsernamePasswordCredentials, final TaskListener listener)
       throws MalformedURLException {
     if (isNullOrEmpty(config.getPullRequestId())) {
       listener
@@ -96,9 +93,6 @@ public class JvctbPerformer {
       }
     }
 
-    final String username = checkNotNull(emptyToNull(config.getUsername()), "username not set!");
-    final String password = checkNotNull(emptyToNull(config.getPassword()), "password not set!");
-
     listener
         .getLogger()
         .println(
@@ -113,8 +107,8 @@ public class JvctbPerformer {
 
     try {
       violationCommentsToBitbucketServerApi() //
-          .withUsername(username) //
-          .withPassword(password) //
+          .withUsername(standardUsernamePasswordCredentials.getUsername()) //
+          .withPassword(Secret.toString(standardUsernamePasswordCredentials.getPassword())) //
           .withBitbucketServerUrl(config.getBitbucketServerUrl()) //
           .withPullRequestId(pullRequestIdInt) //
           .withProjectKey(config.getProjectKey()) //
@@ -141,8 +135,6 @@ public class JvctbPerformer {
       final ViolationsToBitbucketServerConfig config, final EnvVars environment) {
     final ViolationsToBitbucketServerConfig expanded = new ViolationsToBitbucketServerConfig();
     expanded.setBitbucketServerUrl(environment.expand(config.getBitbucketServerUrl()));
-    expanded.setUsername(environment.expand(config.getUsername()));
-    expanded.setPassword(environment.expand(config.getPassword()));
     expanded.setPullRequestId(environment.expand(config.getPullRequestId()));
     expanded.setProjectKey(environment.expand(config.getProjectKey()));
     expanded.setRepoSlug(environment.expand(config.getRepoSlug()));
@@ -150,8 +142,6 @@ public class JvctbPerformer {
         config.getCreateCommentWithAllSingleFileComments());
     expanded.setCreateSingleFileComments(config.getCreateSingleFileComments());
     expanded.setUsernamePasswordCredentialsId(config.getUsernamePasswordCredentialsId());
-    expanded.setUseUsernamePassword(config.isUseUsernamePassword());
-    expanded.setUseUsernamePasswordCredentials(config.isUseUsernamePasswordCredentials());
     expanded.setCommentOnlyChangedContent(config.getCommentOnlyChangedContent());
     expanded.setCommentOnlyChangedContentContext(config.getCommentOnlyChangedContentContext());
     expanded.setMinSeverity(config.getMinSeverity());
@@ -187,7 +177,12 @@ public class JvctbPerformer {
       listener.getLogger().println("---");
       logConfiguration(configExpanded, build, listener);
 
-      setCredentialsIfExists(listener, configExpanded);
+      final Optional<StandardUsernamePasswordCredentials> credentials =
+              findCredentials(configExpanded.getUsernamePasswordCredentialsId());
+      if (!credentials.isPresent()) {
+        listener.getLogger().println("Credentials not found!");
+        return;
+      }
 
       listener.getLogger().println("Pull request: " + configExpanded.getPullRequestId());
 
@@ -204,7 +199,7 @@ public class JvctbPerformer {
                 throws IOException, InterruptedException {
               setupFindBugsMessages();
               listener.getLogger().println("Workspace: " + workspace.getAbsolutePath());
-              doPerform(configExpanded, workspace, listener);
+              doPerform(configExpanded, workspace, credentials.get(), listener);
               return null;
             }
           });
@@ -250,36 +245,6 @@ public class JvctbPerformer {
     for (final ViolationConfig violationConfig : config.getViolationConfigs()) {
       logger.println(
           violationConfig.getReporter() + " with pattern " + violationConfig.getPattern());
-    }
-  }
-
-  /** Must be done on master, not on any slave. */
-  private static void setCredentialsIfExists(
-      final TaskListener listener, final ViolationsToBitbucketServerConfig configExpanded) {
-    if (configExpanded.isUseUsernamePasswordCredentials()) {
-      if (!isNullOrEmpty(configExpanded.getUsernamePasswordCredentialsId())) {
-        final Optional<StandardUsernamePasswordCredentials> credentials =
-            findCredentials(configExpanded.getUsernamePasswordCredentialsId());
-        if (credentials.isPresent()) {
-          final String username =
-              checkNotNull(
-                  emptyToNull(credentials.get().getUsername()),
-                  "Credentials username selected but not set!");
-          final String password =
-              checkNotNull(
-                  emptyToNull(credentials.get().getPassword().getPlainText()),
-                  "Credentials password selected but not set!");
-          configExpanded.setUsername(username);
-          configExpanded.setPassword(password);
-          listener.getLogger().println("Using username and password from credentials");
-        } else {
-          listener.getLogger().println("Credentials not found!");
-          return;
-        }
-      } else {
-        listener.getLogger().println("Credentials checked but not selected!");
-        return;
-      }
     }
   }
 

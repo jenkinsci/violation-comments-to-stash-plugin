@@ -1,12 +1,18 @@
 package org.jenkinsci.plugins.jvctb.config;
 
+import javax.annotation.Nonnull;
 import java.io.Serializable;
 
+import hudson.Extension;
+import hudson.model.AbstractDescribableImpl;
+import hudson.model.Descriptor;
+import hudson.util.ListBoxModel;
+import org.kohsuke.accmod.Restricted;
+import org.kohsuke.accmod.restrictions.NoExternalUse;
 import org.kohsuke.stapler.DataBoundConstructor;
-
 import se.bjurr.violations.lib.reports.Parser;
 
-public class ViolationConfig implements Serializable {
+public class ViolationConfig extends AbstractDescribableImpl<ViolationConfig> implements Serializable {
   private static final long serialVersionUID = 6664329842273455651L;
   private String pattern;
   private String reporter;
@@ -99,5 +105,23 @@ public class ViolationConfig implements Serializable {
         + ", parser="
         + parser
         + "]";
+  }
+
+  @Extension
+  public static class DescriptorImpl extends Descriptor<ViolationConfig> {
+    @Nonnull
+    @Override
+    public String getDisplayName() {
+      return "Violations Parser Config";
+    }
+
+    @Restricted(NoExternalUse.class)
+    public ListBoxModel doFillParserItems() {
+      ListBoxModel items = new ListBoxModel();
+      for (Parser parser: Parser.values()) {
+        items.add(parser.name());
+      }
+      return items;
+    }
   }
 }

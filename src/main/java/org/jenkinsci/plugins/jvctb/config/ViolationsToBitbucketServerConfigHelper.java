@@ -1,10 +1,10 @@
 package org.jenkinsci.plugins.jvctb.config;
 
-import static com.google.common.collect.Lists.newArrayList;
-
 import java.util.List;
 
 import se.bjurr.violations.lib.reports.Parser;
+
+import static com.google.common.collect.Lists.newArrayList;
 
 public class ViolationsToBitbucketServerConfigHelper {
   public static final String FIELD_BITBUCKETSERVERURL = "bitbucketServerUrl";
@@ -22,17 +22,11 @@ public class ViolationsToBitbucketServerConfigHelper {
   public static final String FIELD_REPOSLUG = "repoSlug";
   public static final String FIELD_USERNAME = "username";
   public static final String FIELD_USERNAMEPASSWORDCREDENTIALSID = "usernamePasswordCredentialsId";
-  public static final String FIELD_USEUSERNAMEPASSWORD = "useUsernamePassword";
-  public static final String FIELD_USEUSERNAMEPASSWORDCREDENTIALS =
-      "useUsernamePasswordCredentials";
   public static final String FIELD_MINSEVERITY = "minSeverity";
   public static final String FIELD_KEEP_OLD_COMMENTS = "keepOldComments";
 
   public static ViolationsToBitbucketServerConfig createNewConfig() {
-    final ViolationsToBitbucketServerConfig config = new ViolationsToBitbucketServerConfig();
-    final List<ViolationConfig> violationConfigs = getAllViolationConfigs();
-    config.setViolationConfigs(violationConfigs);
-    return config;
+    return new ViolationsToBitbucketServerConfig();
   }
 
   public static List<ViolationConfig> getAllViolationConfigs() {

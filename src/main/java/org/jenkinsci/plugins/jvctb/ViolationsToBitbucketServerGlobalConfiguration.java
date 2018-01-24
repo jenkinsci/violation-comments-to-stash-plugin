@@ -2,16 +2,16 @@ package org.jenkinsci.plugins.jvctb;
 
 import java.io.Serializable;
 
-import org.jenkinsci.plugins.jvctb.config.CredentialsHelper;
-import org.kohsuke.stapler.DataBoundSetter;
-import org.kohsuke.stapler.StaplerRequest;
-
 import com.google.common.base.Optional;
-
 import hudson.Extension;
 import hudson.util.ListBoxModel;
 import jenkins.model.GlobalConfiguration;
 import net.sf.json.JSONObject;
+import org.jenkinsci.plugins.jvctb.config.CredentialsHelper;
+import org.kohsuke.accmod.Restricted;
+import org.kohsuke.accmod.restrictions.NoExternalUse;
+import org.kohsuke.stapler.DataBoundSetter;
+import org.kohsuke.stapler.StaplerRequest;
 import se.bjurr.violations.lib.model.SEVERITY;
 
 /** Created by magnayn on 07/04/2016. */
@@ -37,7 +37,7 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
   public String repoSlug;
   public String username;
   private String usernamePasswordCredentialsId;
-  private SEVERITY minSeverity;
+  private SEVERITY minSeverity = SEVERITY.INFO;
 
   public ViolationsToBitbucketServerGlobalConfiguration() {
     load();
@@ -48,6 +48,17 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
     req.bindJSON(this, json);
     save();
     return true;
+  }
+
+  public static final ListBoxModel TYPES = new ListBoxModel(
+    new ListBoxModel.Option("Info", SEVERITY.INFO.toString()),
+    new ListBoxModel.Option("Warning", SEVERITY.WARN.toString()),
+    new ListBoxModel.Option("Error", SEVERITY.ERROR.toString())
+  );
+
+  @Restricted(NoExternalUse.class)
+  public ListBoxModel doFillMinSeverityItems() {
+    return TYPES;
   }
 
   public ListBoxModel doFillUsernamePasswordCredentialsIdItems() {

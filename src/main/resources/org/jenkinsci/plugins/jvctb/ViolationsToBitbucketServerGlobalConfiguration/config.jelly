@@ -13,16 +13,8 @@
     <c:select />
   </f:entry>
 
-  <f:entry title="Username" field="username">
-    <f:textbox value="${config.username}" />
-  </f:entry>
-
-  <f:entry title="Password" field="password">
-    <f:password value="${config.password}" />
-  </f:entry>
-
   <f:entry title="Base URL (Default is: https://localhost:7990/bitbucket/)" field="bitbucketServerUrl">
-    <f:textbox value="${bitbucketServerUrl}" />
+    <f:textbox />
   </f:entry>
 
   <f:entry title="Project key" field="projectKey">
@@ -33,16 +25,8 @@
     <f:textbox />
   </f:entry>
 
-  <f:entry name="minSeverity" title="Comment only if severity at least" field="minSeverity">
-   <j:set var="selectedMinSeverity" value=""/>
-   <j:if test="${instance != null}">
-    <j:set var="selectedMinSeverity" value="${instance.minSeverity}"/>
-   </j:if>
-   <select name="minSeverity">
-    <f:option value="INFO" selected="${selectedMinSeverity == 'INFO'}">INFO</f:option>
-    <f:option value="WARN" selected="${selectedMinSeverity == 'WARN'}">WARN</f:option>
-    <f:option value="ERROR" selected="${selectedMinSeverity == 'ERROR'}">ERROR</f:option>
-   </select>
+  <f:entry title="Comment only if severity at least" field="minSeverity">
+   <f:select />
   </f:entry>
  </f:section>
 </j:jelly>
