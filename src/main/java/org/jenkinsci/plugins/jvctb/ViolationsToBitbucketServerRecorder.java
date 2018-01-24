@@ -20,7 +20,7 @@ import static hudson.tasks.BuildStepMonitor.NONE;
 import static org.jenkinsci.plugins.jvctb.perform.JvctbPerformer.jvctsPerform;
 
 public class ViolationsToBitbucketServerRecorder extends Recorder implements SimpleBuildStep {
-  @Extension
+
   public static final BuildStepDescriptor<Publisher> DESCRIPTOR =
       new ViolationsToBitbucketServerDescriptor();
 
