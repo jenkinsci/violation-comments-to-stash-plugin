@@ -82,12 +82,14 @@ public class ViolationsToBitbucketServerConfig
     }
   }
 
-    private Object readResolve() {
-      if (StringUtils.isBlank(usernamePasswordCredentialsId) && username != null && password != null) {
-        usernamePasswordCredentialsId = migrateCredentials(username, password);
-      }
-      return this;
+  private Object readResolve() {
+    if (StringUtils.isBlank(usernamePasswordCredentialsId)
+        && username != null
+        && password != null) {
+      usernamePasswordCredentialsId = migrateCredentials(username, password);
     }
+    return this;
+  }
 
   @Override
   public boolean equals(Object obj) {

@@ -112,7 +112,9 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
   }
 
   private Object readResolve() {
-    if (StringUtils.isBlank(usernamePasswordCredentialsId) && username != null && password != null) {
+    if (StringUtils.isBlank(usernamePasswordCredentialsId)
+        && username != null
+        && password != null) {
       usernamePasswordCredentialsId = migrateCredentials(username, password);
     }
     return this;
