@@ -5,14 +5,14 @@
 	<parent>
 		<groupId>org.jenkins-ci.plugins</groupId>
 		<artifactId>plugin</artifactId>
-		<version>2.23</version>
+		<version>3.2</version>
 	</parent>
 
 	<properties>
+		<java.level>7</java.level>
 		<jenkins.version>2.7.4</jenkins.version>
-		<hpi-plugin.version>1.115</hpi-plugin.version>
-		<jenkins-test-harness.version>2.19</jenkins-test-harness.version>
 		<findbugs.failOnError>false</findbugs.failOnError>
+		<maven.javadoc.skip>true</maven.javadoc.skip>
 	</properties>
 
 	<artifactId>violation-comments-to-stash</artifactId>
@@ -63,23 +63,8 @@
 		</pluginRepository>
 	</pluginRepositories>
 
-	<distributionManagement>
-		<repository>
-			<id>repo.jenkins-ci.org</id>
-			<url>https://repo.jenkins-ci.org/releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>maven.jenkins-ci.org</id>
-			<url>https://repo.jenkins-ci.org/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
-
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -90,19 +75,6 @@
 				<configuration>
 					<downloadSources>true</downloadSources>
 					<downloadJavadocs>true</downloadJavadocs>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<configuration>
-					<skip>true</skip>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -176,25 +148,9 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 				</executions>
 			</plugin>
 		</plugins>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-			</resource>
-		</resources>
-		<testResources>
-			<testResource>
-				<directory>src/test/resources</directory>
-			</testResource>
-		</testResources>
 	</build>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.jenkins-ci.main</groupId>
-			<artifactId>maven-plugin</artifactId>
-			<version>2.9</version>
-		</dependency>
 		<dependency>
 			<groupId>org.jenkins-ci.plugins</groupId>
 			<artifactId>credentials</artifactId>
@@ -227,6 +183,12 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
 			<version>2.5.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>4.1.6.RELEASE</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
