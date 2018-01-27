@@ -1,6 +1,6 @@
 # Violation Comments to Bitbucket Server
 
-[![Build Status](https://jenkins.ci.cloudbees.com/job/plugins/job/violation-comments-to-stash-plugin/badge/icon)](https://jenkins.ci.cloudbees.com/job/plugins/job/violation-comments-to-stash-plugin/)
+[![Build Status](https://ci.jenkins.io/job/Plugins/job/violation-comments-to-stash-plugin/job/master/badge/icon)](https://ci.jenkins.io/job/Plugins/job/violation-comments-to-stash-plugin)
 
 It comments pull requests in  Bitbucket Server (or Stash) with violations found in report files from static code analysis.
 
@@ -59,13 +59,15 @@ The pull request will be commented like this.
 
 Available in Jenkins [here](https://wiki.jenkins-ci.org/display/JENKINS/Violation+Comments+to+Bitbucket+Server+Plugin).
 
-### Notify Jenkins from Bitbucket Server
+## Notify Jenkins from Bitbucket Server
 
-* You may trigger with a [webhook](https://confluence.atlassian.com/bitbucketserver/managing-webhooks-in-bitbucket-server-938025878.html) in Bitbucket Server. And consume it with [Generic Webhook Trigger plugin](https://github.com/tomasbjerre/generic-webhook-trigger-plugin) to get the variables you need.
+* You may trigger with a [webhook](https://confluence.atlassian.com/bitbucketserver/managing-webhooks-in-bitbucket-server-938025878.html) in Bitbucket Server. And consume it with [Generic Webhook Trigger plugin](https://github.com/jenkinsci/generic-webhook-trigger-plugin) to get the variables you need.
 
 * Or, trigger with [Pull Request Notifier for Bitbucket Server](https://github.com/tomasbjerre/pull-request-notifier-for-bitbucket). It can supply any parameters and variables you may need. Here is an example URL. `http://localhost:8080/jenkins/job/builder/buildWithParameters?FROM=${PULL_REQUEST_FROM_HASH}&TO=${PULL_REQUEST_TO_HASH}&TOSLUG=${PULL_REQUEST_TO_REPO_SLUG}&TOREPO=${PULL_REQUEST_TO_HTTP_CLONE_URL}&FROMREPO=${PULL_REQUEST_FROM_HTTP_CLONE_URL}&ID=${PULL_REQUEST_ID}&PROJECT=${PULL_REQUEST_TO_REPO_PROJECT_KEY}`
 
-*You must perform the merge before build*. If you don't perform the merge, the reported violations will refer to other lines then those in the pull request. The merge can be done with a shell script like this.
+## Merge
+
+**You must perform the merge before build**. If you don't perform the merge, the reported violations will refer to other lines then those in the pull request. The merge can be done with a shell script like this.
 
 ```
 echo ---
