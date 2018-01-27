@@ -23,11 +23,8 @@ node {
     createSingleFileComments: true, 
     projectKey: 'PROJ', 
     repoSlug: 'violations-test', 
+    usernamePasswordCredentialsId: 'bitbucketservercredentials'
     pullRequestId: '1', 
-    useUsernamePassword: true, 
-    username: 'admin', 
-    password: 'admin', 
-    useUsernamePasswordCredentials: false, 
     minSeverity: 'INFO',
     keepOldComments: false, 
     violationConfigs: [

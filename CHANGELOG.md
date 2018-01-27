@@ -5,6 +5,75 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 ## Unreleased
 ### No issue
 
+**Doc**
+
+
+[6f886c350391fca](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/6f886c350391fca) Tomas Bjerre *2018-01-27 18:25:25*
+
+**Formatting**
+
+
+[32a070215959c69](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/32a070215959c69) Joseph Petersen *2018-01-25 07:18:04*
+
+**Provide descriptors and config jelly**
+
+ * Begin work on deprecated password 
+
+[ac7ee1d0ac3e013](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/ac7ee1d0ac3e013) Joseph *2018-01-25 07:12:12*
+
+**Fix upperbound requirement due to parent POM upgrade**
+
+
+[82c791dfac4fb09](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/82c791dfac4fb09) Joseph *2018-01-25 07:12:12*
+
+**One too many extension**
+
+
+[794b26ab74ce4ef](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/794b26ab74ce4ef) Joseph *2018-01-25 07:12:12*
+
+**Delete button**
+
+
+[6121212b8c5134c](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/6121212b8c5134c) Joseph *2018-01-25 07:12:12*
+
+**Migrate to credentials**
+
+
+[5438932ae8da3a3](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/5438932ae8da3a3) Joseph *2018-01-25 07:12:12*
+
+**Update and cleanup POM**
+
+
+[2a919e623566d04](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/2a919e623566d04) Joseph *2018-01-25 07:12:12*
+
+**cleanup dead code**
+
+
+[037e30e6268e71b](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/037e30e6268e71b) Joseph *2018-01-25 07:12:12*
+
+**Update Jenkinsfile**
+
+
+[d54f6eb2cfbe9aa](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/d54f6eb2cfbe9aa) Joseph Petersen *2018-01-24 21:33:31*
+
+**Give it a symbol and extension**
+
+
+[811b69be0183ca2](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/811b69be0183ca2) Joseph *2018-01-24 15:31:14*
+
+
+## 1.64
+### No issue
+
+**Google error-prone**
+
+
+[187c30137e46d29](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/187c30137e46d29) Tomas Bjerre *2018-01-14 11:59:05*
+
+
+## 1.63
+### No issue
+
 **Relocating to correct Java identifier**
 
 

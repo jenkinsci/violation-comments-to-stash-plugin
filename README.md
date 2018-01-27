@@ -59,35 +59,17 @@ The pull request will be commented like this.
 
 Available in Jenkins [here](https://wiki.jenkins-ci.org/display/JENKINS/Violation+Comments+to+Bitbucket+Server+Plugin).
 
-## Example use case
-Here is an example use case where a pull request is triggered from Bitbucket Server, merged, checked and comments added to pull request in Bitbucket Server.
-
-You may also use it for an ordinary build job, to simply comment the commit that was built.
-
 ### Notify Jenkins from Bitbucket Server
-You can use [Generic Webhook Trigger plugin](https://github.com/tomasbjerre/generic-webhook-trigger-plugin) to get the variables you need.
 
-You may also use [Pull Request Notifier for Bitbucket Server](https://github.com/tomasbjerre/pull-request-notifier-for-bitbucket) to trigger a Jenkins build from an event in Bitbucket Server. It can supply any parameters and variables you may need. Here is an example URL.
+* You may trigger with a [webhook](https://confluence.atlassian.com/bitbucketserver/managing-webhooks-in-bitbucket-server-938025878.html) in Bitbucket Server. And consume it with [Generic Webhook Trigger plugin](https://github.com/tomasbjerre/generic-webhook-trigger-plugin) to get the variables you need.
 
-```
-http://localhost:8080/jenkins/job/builder/buildWithParameters?FROM=${PULL_REQUEST_FROM_HASH}&TO=${PULL_REQUEST_TO_HASH}&TOSLUG=${PULL_REQUEST_TO_REPO_SLUG}&TOREPO=${PULL_REQUEST_TO_HTTP_CLONE_URL}&FROMREPO=${PULL_REQUEST_FROM_HTTP_CLONE_URL}&ID=${PULL_REQUEST_ID}&PROJECT=${PULL_REQUEST_TO_REPO_PROJECT_KEY}
-```
+* Or, trigger with [Pull Request Notifier for Bitbucket Server](https://github.com/tomasbjerre/pull-request-notifier-for-bitbucket). It can supply any parameters and variables you may need. Here is an example URL. `http://localhost:8080/jenkins/job/builder/buildWithParameters?FROM=${PULL_REQUEST_FROM_HASH}&TO=${PULL_REQUEST_TO_HASH}&TOSLUG=${PULL_REQUEST_TO_REPO_SLUG}&TOREPO=${PULL_REQUEST_TO_HTTP_CLONE_URL}&FROMREPO=${PULL_REQUEST_FROM_HTTP_CLONE_URL}&ID=${PULL_REQUEST_ID}&PROJECT=${PULL_REQUEST_TO_REPO_PROJECT_KEY}`
 
-### Jenkins job
-The Jenkins job may perform the merge, and run any checkers on it, with a shell script build step. It needs to be a parameterized build. To match URL in example above, these parameters are needed.
- * ID
- * TO
- * TOSLUG
- * TOREPO
- * FROM
- * FROMREPO
- * PROJECT
-
-The shell script may look like this.
+*You must perform the merge before build*. If you don't perform the merge, the reported violations will refer to other lines then those in the pull request. The merge can be done with a shell script like this.
 
 ```
 echo ---
-echo --- Mergar from $FROM in $FROMREPO to $TO in $TOREPO
+echo --- Merging from $FROM in $FROMREPO to $TO in $TOREPO
 echo ---
 git clone $TOREPO
 cd *
@@ -98,14 +80,8 @@ git fetch from
 git merge $FROM
 git --no-pager log --max-count=10 --graph --abbrev-commit
 
-your build command here!
+Your build command here!
 ```
-
-### Configure plugin
-This plugin may be added as a post build step to analyze the workspace and report comments back to pull request in Bitbucket Server. [Here](https://raw.githubusercontent.com/tomasbjerre/violation-comments-to-stash-plugin/master/sandbox/screenshot-config.png) is an example of how that may look like.
-
-### The result
-And finally [here](https://raw.githubusercontent.com/tomasbjerre/violation-comments-to-stash-plugin/master/sandbox/screenshot-stash.png) is an example Bitbucket Server comment.
 
 ## Job DSL Plugin
 
@@ -204,12 +180,7 @@ git --no-pager log --max-count=10 --graph --abbrev-commit
     repoSlug("\$PULL_REQUEST_TO_REPO_SLUG")
     pullRequestId("\$PULL_REQUEST_ID")
 
-    useUsernamePasswordCredentials(false)
-    usernamePasswordCredentialsId(null)
-
-    useUsernamePassword(true)
-    username("admin")
-    password("admin")
+    usernamePasswordCredentialsId('bitbucketservercredentials')
 
     minSeverity('INFO')
     createSingleFileComments(true)
@@ -242,40 +213,38 @@ This plugin can be used with the Pipeline Plugin:
 
 ```
 node {
- def mvnHome = tool 'Maven 3.3.9'
  deleteDir()
  
  stage('Merge') {
-  sh "git init"
-  sh "git fetch --no-tags --progress git@git:group/reponame.git +refs/heads/*:refs/remotes/origin/* --depth=200"
-  sh "git checkout origin/${env.targetBranch}"
-  sh "git merge origin/${env.sourceBranch}"
-  sh "git log --graph --abbrev-commit --max-count=10"
+  sh '''
+  git clone git@github.com:tomasbjerre/violations-test.git .
+  git checkout master
+  git merge origin/feature/addingcrap
+  '''
+ }
+
+ stage('Build') {
+  sh '''
+  ./build.sh || ls
+  '''
  }
 
  stage('Static code analysis') {
-  sh "${mvnHome}/bin/mvn package -DskipTests -Dmaven.test.failure.ignore=false -Dsurefire.skip=true -Dmaven.compile.fork=true -Dmaven.javadoc.skip=true"
-
-  step([
-   $class: 'ViolationsToBitbucketServerRecorder', 
-   config: [
-    bitbucketServerUrl: 'http://localhost:7990/bitbucket', 
-    createCommentWithAllSingleFileComments: false, 
-    createSingleFileComments: true, 
-    projectKey: 'PROJECT_1', 
-    repoSlug: 'rep_1', 
-    pullRequestId: '1', 
-    useUsernamePassword: true, 
-    username: 'admin', 
-    password: 'admin', 
-    useUsernamePasswordCredentials: false, 
-    minSeverity: 'INFO',
-    keepOldComments: false, 
-    violationConfigs: [
-     [ pattern: '.*/checkstyle-result\\.xml$', parser: 'CHECKSTYLE', reporter: 'Checkstyle' ], 
-     [ pattern: '.*/findbugsXml\\.xml$', parser: 'FINDBUGS', reporter: 'Findbugs' ], 
-     [ pattern: '.*/pmd\\.xml$', parser: 'PMD', reporter: 'PMD' ], 
-    ]
+  ViolationsToBitbucketServer([
+   bitbucketServerUrl: 'http://localhost:7990/',
+   commentOnlyChangedContent: true,
+   commentOnlyChangedContentContext: 5,
+   createCommentWithAllSingleFileComments: false,
+   createSingleFileComments: true,
+   keepOldComments: true,
+   projectKey: 'PROJ', // Use environment variable here
+   pullRequestId: '1', // Use environment variable here
+   repoSlug: 'violations-test', // Use environment variable here
+   usernamePasswordCredentialsId: 'bitbucketservercredentials', //Create a Username/Passwords credential with this ID
+   violationConfigs: [
+    // Many more formats available, check https://github.com/tomasbjerre/violations-lib
+    [parser: 'FINDBUGS', pattern: '.*/findbugs/.*\\.xml\$', reporter: 'Findbugs'],
+    [parser: 'CHECKSTYLE', pattern: '.*/checkstyle/.*\\.xml\$', reporter: 'Checkstyle']
    ]
   ])
  }
@@ -284,12 +253,6 @@ node {
 
 ## Developer instructions
 Instructions for developers.
-
-### Get the code
-
-```
-git clone git@github.com:tomasbjerre/violation-comments-to-stash-plugin.git
-```
 
 ### Plugin development
 More details on Jenkins plugin development is available [here](https://wiki.jenkins-ci.org/display/JENKINS/Plugin+tutorial).
