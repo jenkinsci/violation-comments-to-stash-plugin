@@ -1,16 +1,17 @@
 package org.jenkinsci.plugins.jvctb;
 
-import hudson.Extension;
-import hudson.model.AbstractProject;
-import hudson.tasks.BuildStepDescriptor;
-import hudson.tasks.Publisher;
-import net.sf.json.JSONObject;
+import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_MINSEVERITY;
+
 import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.Symbol;
 import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
 import org.kohsuke.stapler.StaplerRequest;
 
-import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_MINSEVERITY;
+import hudson.Extension;
+import hudson.model.AbstractProject;
+import hudson.tasks.BuildStepDescriptor;
+import hudson.tasks.Publisher;
+import net.sf.json.JSONObject;
 
 @Extension
 @Symbol("ViolationsToBitbucketServer")
@@ -41,13 +42,12 @@ public final class ViolationsToBitbucketServerDescriptor extends BuildStepDescri
     return true;
   }
 
-  @SuppressWarnings("unchecked")
   @Override
-  public Publisher newInstance(StaplerRequest req, JSONObject formData)
+  public Publisher newInstance(final StaplerRequest req, final JSONObject formData)
       throws hudson.model.Descriptor.FormException {
     if (formData != null) {
-      JSONObject config = formData.getJSONObject("config");
-      String minSeverity = config.getString(FIELD_MINSEVERITY);
+      final JSONObject config = formData.getJSONObject("config");
+      final String minSeverity = config.getString(FIELD_MINSEVERITY);
       if (StringUtils.isBlank(minSeverity)) {
         config.remove(FIELD_MINSEVERITY);
       }

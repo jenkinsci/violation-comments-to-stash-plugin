@@ -147,6 +147,33 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>se.bjurr.violations</groupId>
+				<artifactId>violations-maven-plugin</artifactId>
+				<version>1.7</version>
+				<configuration>
+					<minSeverity>INFO</minSeverity>
+					<detailLevel>VERBOSE</detailLevel>
+					<maxViolations>99999999</maxViolations>
+					<printViolations>true</printViolations>
+					<violations>
+						<violation>
+							<parser>FINDBUGS</parser>
+							<reporter>Findbugs</reporter>
+							<folder>.</folder>
+							<pattern>.*/findbugsXml.*\.xml$</pattern>
+						</violation>
+					</violations>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>verify</phase>
+						<goals>
+							<goal>violations</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
