@@ -28,5 +28,6 @@
   <f:entry title="Comment only if severity at least" field="minSeverity">
    <f:select />
   </f:entry>
+
  </f:section>
 </j:jelly>

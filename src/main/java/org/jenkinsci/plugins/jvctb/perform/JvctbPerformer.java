@@ -1,33 +1,5 @@
 package org.jenkinsci.plugins.jvctb.perform;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.net.MalformedURLException;
-import java.util.List;
-import java.util.logging.Logger;
-
-import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Optional;
-import com.google.common.io.CharStreams;
-import hudson.EnvVars;
-import hudson.FilePath;
-import hudson.FilePath.FileCallable;
-import hudson.model.Run;
-import hudson.model.TaskListener;
-import hudson.remoting.VirtualChannel;
-import hudson.util.Secret;
-import org.jenkinsci.plugins.jvctb.config.ViolationConfig;
-import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
-import org.jenkinsci.remoting.RoleChecker;
-import se.bjurr.violations.lib.model.SEVERITY;
-import se.bjurr.violations.lib.model.Violation;
-import se.bjurr.violations.lib.reports.Parser;
-
 import static com.google.common.base.Charsets.UTF_8;
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.base.Throwables.propagate;
@@ -50,6 +22,36 @@ import static se.bjurr.violations.lib.ViolationsApi.violationsApi;
 import static se.bjurr.violations.lib.parsers.FindbugsParser.setFindbugsMessagesXml;
 import static se.bjurr.violations.lib.util.Filtering.withAtLEastSeverity;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.net.MalformedURLException;
+import java.util.List;
+import java.util.logging.Logger;
+
+import org.jenkinsci.plugins.jvctb.config.ViolationConfig;
+import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
+import org.jenkinsci.remoting.RoleChecker;
+
+import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Optional;
+import com.google.common.io.CharStreams;
+
+import hudson.EnvVars;
+import hudson.FilePath;
+import hudson.FilePath.FileCallable;
+import hudson.model.Run;
+import hudson.model.TaskListener;
+import hudson.remoting.VirtualChannel;
+import hudson.util.Secret;
+import se.bjurr.violations.lib.model.SEVERITY;
+import se.bjurr.violations.lib.model.Violation;
+import se.bjurr.violations.lib.reports.Parser;
+
 public class JvctbPerformer {
   private static Logger LOG = Logger.getLogger(JvctbPerformer.class.getSimpleName());
 
@@ -57,7 +59,7 @@ public class JvctbPerformer {
   public static void doPerform(
       final ViolationsToBitbucketServerConfig config,
       final File workspace,
-      StandardUsernamePasswordCredentials standardUsernamePasswordCredentials,
+      final StandardUsernamePasswordCredentials standardUsernamePasswordCredentials,
       final TaskListener listener)
       throws MalformedURLException {
     if (isNullOrEmpty(config.getPullRequestId())) {
@@ -150,7 +152,7 @@ public class JvctbPerformer {
       final String pattern = environment.expand(violationConfig.getPattern());
       final String reporter = violationConfig.getReporter();
       final Parser parser = violationConfig.getParser();
-      if (isNullOrEmpty(pattern) || isNullOrEmpty(reporter) || parser == null) {
+      if (isNullOrEmpty(pattern) || parser == null) {
         LOG.fine("Ignoring violationConfig because of null/empty -values: " + violationConfig);
         continue;
       }
