@@ -2,8 +2,22 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
-## Unreleased
+## 1.67
+### GitHub [#48](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/48) Plugin causes job hangs
+
+**Setting timeout to 30s #48**
+
+
+[3234f72e0379fb6](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/3234f72e0379fb6) Tomas Bjerre *2018-02-06 18:08:03*
+
+
+## 1.66
 ### No issue
+
+**Making reporter field optional**
+
+
+[2bff949f05e9925](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/2bff949f05e9925) Tomas Bjerre *2018-01-28 13:15:38*
 
 **Cleanup**
 
