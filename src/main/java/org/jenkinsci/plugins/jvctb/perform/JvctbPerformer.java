@@ -6,6 +6,7 @@ import static com.google.common.base.Throwables.propagate;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.util.logging.Level.SEVERE;
 import static org.jenkinsci.plugins.jvctb.config.CredentialsHelper.findCredentials;
+import static org.jenkinsci.plugins.jvctb.config.CredentialsHelper.findStringCredentials;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_BITBUCKETSERVERURL;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_COMMENTONLYCHANGEDCONTENT;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_COMMENTONLYCHANGEDCONTENTCONTEXT;
@@ -13,6 +14,7 @@ import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConf
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_CREATESINGLEFILECOMMENTS;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_KEEP_OLD_COMMENTS;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_MINSEVERITY;
+import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_PERSONALACCESSTOKEN;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_PROJECTKEY;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_PULLREQUESTID;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_REPOSLUG;
@@ -34,6 +36,7 @@ import java.util.logging.Logger;
 
 import org.jenkinsci.plugins.jvctb.config.ViolationConfig;
 import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
+import org.jenkinsci.plugins.plaincredentials.StringCredentials;
 import org.jenkinsci.remoting.RoleChecker;
 
 import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
@@ -48,6 +51,7 @@ import hudson.model.Run;
 import hudson.model.TaskListener;
 import hudson.remoting.VirtualChannel;
 import hudson.util.Secret;
+import se.bjurr.violations.comments.bitbucketserver.lib.ViolationCommentsToBitbucketServerApi;
 import se.bjurr.violations.lib.model.SEVERITY;
 import se.bjurr.violations.lib.model.Violation;
 import se.bjurr.violations.lib.reports.Parser;
@@ -60,6 +64,7 @@ public class JvctbPerformer {
       final ViolationsToBitbucketServerConfig config,
       final File workspace,
       final StandardUsernamePasswordCredentials standardUsernamePasswordCredentials,
+      final StringCredentials personalAccessToken,
       final TaskListener listener)
       throws MalformedURLException {
     if (isNullOrEmpty(config.getPullRequestId())) {
@@ -107,9 +112,17 @@ public class JvctbPerformer {
                 + config.getBitbucketServerUrl());
 
     try {
-      violationCommentsToBitbucketServerApi() //
-          .withUsername(standardUsernamePasswordCredentials.getUsername()) //
-          .withPassword(Secret.toString(standardUsernamePasswordCredentials.getPassword())) //
+      final ViolationCommentsToBitbucketServerApi b = violationCommentsToBitbucketServerApi();
+      if (standardUsernamePasswordCredentials != null) {
+        b //
+            .withUsername(standardUsernamePasswordCredentials.getUsername()) //
+            .withPassword(Secret.toString(standardUsernamePasswordCredentials.getPassword()));
+      }
+      if (personalAccessToken != null) {
+        b //
+            .withPersonalAccessToken(personalAccessToken.getSecret().getPlainText());
+      }
+      b //
           .withBitbucketServerUrl(config.getBitbucketServerUrl()) //
           .withPullRequestId(pullRequestIdInt) //
           .withProjectKey(config.getProjectKey()) //
@@ -143,6 +156,7 @@ public class JvctbPerformer {
         config.getCreateCommentWithAllSingleFileComments());
     expanded.setCreateSingleFileComments(config.getCreateSingleFileComments());
     expanded.setUsernamePasswordCredentialsId(config.getUsernamePasswordCredentialsId());
+    expanded.setPersonalAccessTokenId(config.getPersonalAccessTokenId());
     expanded.setCommentOnlyChangedContent(config.getCommentOnlyChangedContent());
     expanded.setCommentOnlyChangedContentContext(config.getCommentOnlyChangedContentContext());
     expanded.setMinSeverity(config.getMinSeverity());
@@ -178,9 +192,13 @@ public class JvctbPerformer {
       listener.getLogger().println("---");
       logConfiguration(configExpanded, build, listener);
 
+      final Optional<StringCredentials> personalAccessToken =
+          findStringCredentials(configExpanded.getPersonalAccessTokenId());
+
       final Optional<StandardUsernamePasswordCredentials> credentials =
           findCredentials(configExpanded.getUsernamePasswordCredentialsId());
-      if (!credentials.isPresent()) {
+
+      if (!credentials.isPresent() && !personalAccessToken.isPresent()) {
         listener.getLogger().println("Credentials not found!");
         return;
       }
@@ -200,7 +218,12 @@ public class JvctbPerformer {
                 throws IOException, InterruptedException {
               setupFindBugsMessages();
               listener.getLogger().println("Workspace: " + workspace.getAbsolutePath());
-              doPerform(configExpanded, workspace, credentials.get(), listener);
+              doPerform(
+                  configExpanded,
+                  workspace,
+                  credentials.orNull(),
+                  personalAccessToken.orNull(),
+                  listener);
               return null;
             }
           });
@@ -222,12 +245,12 @@ public class JvctbPerformer {
     logger.println(FIELD_PROJECTKEY + ": " + config.getProjectKey());
     logger.println(FIELD_REPOSLUG + ": " + config.getRepoSlug());
     logger.println(FIELD_PULLREQUESTID + ": " + config.getPullRequestId());
-
     logger.println(
         FIELD_USERNAMEPASSWORDCREDENTIALSID
             + ": "
             + !isNullOrEmpty(config.getUsernamePasswordCredentialsId()));
-
+    logger.println(
+        FIELD_PERSONALACCESSTOKEN + ": " + !isNullOrEmpty(config.getPersonalAccessTokenId()));
     logger.println(FIELD_CREATESINGLEFILECOMMENTS + ": " + config.getCreateSingleFileComments());
     logger.println(
         FIELD_CREATECOMMENTWITHALLSINGLEFILECOMMENTS

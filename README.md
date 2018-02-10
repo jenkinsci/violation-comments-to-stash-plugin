@@ -182,7 +182,8 @@ git --no-pager log --max-count=10 --graph --abbrev-commit
     repoSlug("\$PULL_REQUEST_TO_REPO_SLUG")
     pullRequestId("\$PULL_REQUEST_ID")
 
-    usernamePasswordCredentialsId('bitbucketservercredentials')
+    usernamePasswordCredentialsId('bitbucketservercredentials'), // You only need one of these
+    personalAccessTokenId('bitbucketservertextcredentials'),
 
     minSeverity('INFO')
     createSingleFileComments(true)
@@ -242,7 +243,10 @@ node {
    projectKey: 'PROJ', // Use environment variable here
    pullRequestId: '1', // Use environment variable here
    repoSlug: 'violations-test', // Use environment variable here
-   usernamePasswordCredentialsId: 'bitbucketservercredentials', //Create a Username/Passwords credential with this ID
+   
+   usernamePasswordCredentialsId: 'theid', // You only need one of these
+   personalAccessTokenId: 'theid',
+   
    violationConfigs: [
     // Many more formats available, check https://github.com/tomasbjerre/violations-lib
     [parser: 'FINDBUGS', pattern: '.*/findbugs/.*\\.xml\$', reporter: 'Findbugs'],

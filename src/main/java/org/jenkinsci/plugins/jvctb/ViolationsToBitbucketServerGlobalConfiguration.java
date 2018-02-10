@@ -1,22 +1,23 @@
 package org.jenkinsci.plugins.jvctb;
 
+import static org.jenkinsci.plugins.jvctb.config.CredentialsHelper.migrateCredentials;
+
 import java.io.Serializable;
 
-import com.google.common.base.Optional;
-import hudson.Extension;
-import hudson.util.ListBoxModel;
-import jenkins.model.GlobalConfiguration;
-import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.plugins.jvctb.config.CredentialsHelper;
 import org.kohsuke.accmod.Restricted;
 import org.kohsuke.accmod.restrictions.NoExternalUse;
 import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.StaplerRequest;
-import se.bjurr.violations.lib.model.SEVERITY;
-import se.bjurr.violations.lib.reports.Parser;
 
-import static org.jenkinsci.plugins.jvctb.config.CredentialsHelper.migrateCredentials;
+import com.google.common.base.Optional;
+
+import hudson.Extension;
+import hudson.util.ListBoxModel;
+import jenkins.model.GlobalConfiguration;
+import net.sf.json.JSONObject;
+import se.bjurr.violations.lib.model.SEVERITY;
 
 /** Created by magnayn on 07/04/2016. */
 @Extension
@@ -42,13 +43,14 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
   @Deprecated private transient String username;
   private String usernamePasswordCredentialsId;
   private SEVERITY minSeverity = SEVERITY.INFO;
+  private String personalAccessTokenId;
 
   public ViolationsToBitbucketServerGlobalConfiguration() {
     load();
   }
 
   @Override
-  public boolean configure(StaplerRequest req, JSONObject json) throws FormException {
+  public boolean configure(final StaplerRequest req, final JSONObject json) throws FormException {
     req.bindJSON(this, json);
     save();
     return true;
@@ -56,8 +58,8 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
 
   @Restricted(NoExternalUse.class)
   public ListBoxModel doFillMinSeverityItems() {
-    ListBoxModel items = new ListBoxModel();
-    for (SEVERITY severity : SEVERITY.values()) {
+    final ListBoxModel items = new ListBoxModel();
+    for (final SEVERITY severity : SEVERITY.values()) {
       items.add(severity.name());
     }
     return items;
@@ -65,6 +67,10 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
 
   public ListBoxModel doFillUsernamePasswordCredentialsIdItems() {
     return CredentialsHelper.doFillUsernamePasswordCredentialsIdItems();
+  }
+
+  public ListBoxModel doFillPersonalAccessTokenIdItems() {
+    return CredentialsHelper.doFillPersonalAccessTokenIdItems();
   }
 
   public String getBitbucketServerUrl() {
@@ -84,7 +90,7 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
   }
 
   @DataBoundSetter
-  public void setMinSeverity(SEVERITY minSeverity) {
+  public void setMinSeverity(final SEVERITY minSeverity) {
     this.minSeverity = minSeverity;
   }
 
@@ -93,22 +99,32 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
   }
 
   @DataBoundSetter
-  public void setBitbucketServerUrl(String bitbucketServerUrl) {
+  public void setBitbucketServerUrl(final String bitbucketServerUrl) {
     this.bitbucketServerUrl = bitbucketServerUrl;
   }
 
   @DataBoundSetter
-  public void setProjectKey(String projectKey) {
+  public void setProjectKey(final String projectKey) {
     this.projectKey = projectKey;
   }
 
   @DataBoundSetter
-  public void setRepoSlug(String repoSlug) {
+  public void setRepoSlug(final String repoSlug) {
     this.repoSlug = repoSlug;
   }
 
-  public void setUsernamePasswordCredentialsId(String usernamePasswordCredentialsId) {
+  @DataBoundSetter
+  public void setUsernamePasswordCredentialsId(final String usernamePasswordCredentialsId) {
     this.usernamePasswordCredentialsId = usernamePasswordCredentialsId;
+  }
+
+  @DataBoundSetter
+  public void setPersonalAccessTokenId(final String personalAccessTokenId) {
+    this.personalAccessTokenId = personalAccessTokenId;
+  }
+
+  public String getPersonalAccessTokenId() {
+    return personalAccessTokenId;
   }
 
   private Object readResolve() {
@@ -126,6 +142,8 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
     int result = 1;
     result = prime * result + (bitbucketServerUrl == null ? 0 : bitbucketServerUrl.hashCode());
     result = prime * result + (minSeverity == null ? 0 : minSeverity.hashCode());
+    result =
+        prime * result + (personalAccessTokenId == null ? 0 : personalAccessTokenId.hashCode());
     result = prime * result + (projectKey == null ? 0 : projectKey.hashCode());
     result = prime * result + (repoSlug == null ? 0 : repoSlug.hashCode());
     result =
@@ -137,7 +155,7 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
   }
 
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals(final Object obj) {
     if (this == obj) {
       return true;
     }
@@ -147,7 +165,7 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
     if (getClass() != obj.getClass()) {
       return false;
     }
-    ViolationsToBitbucketServerGlobalConfiguration other =
+    final ViolationsToBitbucketServerGlobalConfiguration other =
         (ViolationsToBitbucketServerGlobalConfiguration) obj;
     if (bitbucketServerUrl == null) {
       if (other.bitbucketServerUrl != null) {
@@ -157,6 +175,13 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
       return false;
     }
     if (minSeverity != other.minSeverity) {
+      return false;
+    }
+    if (personalAccessTokenId == null) {
+      if (other.personalAccessTokenId != null) {
+        return false;
+      }
+    } else if (!personalAccessTokenId.equals(other.personalAccessTokenId)) {
       return false;
     }
     if (projectKey == null) {
@@ -195,6 +220,8 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
         + usernamePasswordCredentialsId
         + ", minSeverity="
         + minSeverity
+        + ", personalAccessTokenId="
+        + personalAccessTokenId
         + "]";
   }
 }

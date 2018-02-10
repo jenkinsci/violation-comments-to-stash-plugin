@@ -22,8 +22,11 @@ node {
     createCommentWithAllSingleFileComments: false, 
     createSingleFileComments: true, 
     projectKey: 'PROJ', 
-    repoSlug: 'violations-test', 
-    usernamePasswordCredentialsId: 'bitbucketservercredentials'
+    repoSlug: 'violations-test',
+    
+    usernamePasswordCredentialsId: 'bitbucketservercredentials', // You only need one of these
+    personalAccessTokenId: 'personalAccessTokenId',
+    
     pullRequestId: '1', 
     minSeverity: 'INFO',
     keepOldComments: false, 

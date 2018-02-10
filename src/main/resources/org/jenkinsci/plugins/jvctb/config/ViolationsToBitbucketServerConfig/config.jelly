@@ -15,6 +15,13 @@
         </f:description>
     </f:entry>
 
+    <f:entry title="Personal access token Crendential" field="personalAccessTokenId">
+        <c:select />
+        <f:description>
+            Will default to global config.
+        </f:description>
+    </f:entry>
+
     <f:entry>
         You may want to use <a target="_blank" href="https://github.com/tomasbjerre/pull-request-notifier-for-bitbucket">Pull Request Notifier for Bitbucket</a> to get these values.
     </f:entry>
