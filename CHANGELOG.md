@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.68
+### GitHub [#47](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/47) Personal Access Tokens
+
+**Personal Access Tokens #47**
+
+
+[041d262a7fcdced](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/041d262a7fcdced) Tomas Bjerre *2018-02-10 09:14:31*
+
+
 ## 1.67
 ### GitHub [#48](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/48) Plugin causes job hangs
 

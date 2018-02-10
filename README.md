@@ -182,8 +182,8 @@ git --no-pager log --max-count=10 --graph --abbrev-commit
     repoSlug("\$PULL_REQUEST_TO_REPO_SLUG")
     pullRequestId("\$PULL_REQUEST_ID")
 
-    usernamePasswordCredentialsId('bitbucketservercredentials'), // You only need one of these
-    personalAccessTokenId('bitbucketservertextcredentials'),
+    usernamePasswordCredentialsId('bitbucketservercredentials') // You only need one of these
+    personalAccessTokenId('bitbucketservertextcredentials')
 
     minSeverity('INFO')
     createSingleFileComments(true)
