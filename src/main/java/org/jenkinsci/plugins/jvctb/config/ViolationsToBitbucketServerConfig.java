@@ -33,18 +33,18 @@ public class ViolationsToBitbucketServerConfig
   private String bitbucketServerUrl;
   private boolean createCommentWithAllSingleFileComments;
   private boolean createSingleFileComments;
-  @Deprecated private transient String password;
   private String projectKey;
   private String pullRequestId;
   private String repoSlug;
-  @Deprecated private transient String username;
-  @Deprecated private String usernamePasswordCredentialsId;
-  @Deprecated private String personalAccessTokenId;
   private String credentialsId;
   private List<ViolationConfig> violationConfigs = newArrayList();
   private int commentOnlyChangedContentContext;
   private SEVERITY minSeverity;
   private boolean keepOldComments;
+  @Deprecated private transient String username;
+  @Deprecated private transient String password;
+  @Deprecated private transient String usernamePasswordCredentialsId;
+  @Deprecated private transient String personalAccessTokenId;
 
   public ViolationsToBitbucketServerConfig() {}
 

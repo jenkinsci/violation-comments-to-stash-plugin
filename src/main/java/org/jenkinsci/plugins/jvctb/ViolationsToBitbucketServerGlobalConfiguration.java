@@ -46,8 +46,8 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
   private String credentialsId;
   @Deprecated private transient String password;
   @Deprecated private transient String username;
-  @Deprecated private String usernamePasswordCredentialsId;
-  @Deprecated private String personalAccessTokenId;
+  @Deprecated private transient String usernamePasswordCredentialsId;
+  @Deprecated private transient String personalAccessTokenId;
 
   public ViolationsToBitbucketServerGlobalConfiguration() {
     load();
