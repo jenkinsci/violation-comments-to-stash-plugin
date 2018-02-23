@@ -3,7 +3,6 @@ package org.jenkinsci.plugins.jvctb;
 import javax.annotation.Nonnull;
 import java.io.IOException;
 
-import hudson.Extension;
 import hudson.FilePath;
 import hudson.Launcher;
 import hudson.model.Run;
