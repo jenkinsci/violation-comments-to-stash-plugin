@@ -9,11 +9,7 @@
          xmlns:c="/lib/credentials">
  <f:section title="Bitbucket Server Violations Server Defaults">
 
-  <f:entry title="Username / Password Crendential" field="usernamePasswordCredentialsId">
-      <c:select />
-  </f:entry>
-
-  <f:entry title="Personal access token Crendential" field="personalAccessTokenId">
+  <f:entry title="Credentials" field="credentialsId">
       <c:select />
   </f:entry>
 

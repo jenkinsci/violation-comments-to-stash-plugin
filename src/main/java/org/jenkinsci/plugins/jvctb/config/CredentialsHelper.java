@@ -1,17 +1,16 @@
 package org.jenkinsci.plugins.jvctb.config;
 
-import static com.cloudbees.plugins.credentials.CredentialsMatchers.allOf;
-import static com.cloudbees.plugins.credentials.CredentialsMatchers.firstOrNull;
-import static com.cloudbees.plugins.credentials.CredentialsMatchers.withId;
-import static com.cloudbees.plugins.credentials.CredentialsProvider.lookupCredentials;
 import static com.google.common.base.Optional.absent;
 import static com.google.common.base.Optional.fromNullable;
 import static com.google.common.base.Strings.isNullOrEmpty;
-import static hudson.security.ACL.SYSTEM;
 
 import java.util.List;
 
-import org.acegisecurity.Authentication;
+import com.cloudbees.plugins.credentials.common.StandardCredentials;
+import com.cloudbees.plugins.credentials.domains.URIRequirementBuilder;
+import hudson.model.Item;
+import hudson.model.Queue;
+import hudson.model.queue.Tasks;
 import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.plugins.plaincredentials.StringCredentials;
 
@@ -20,77 +19,48 @@ import com.cloudbees.plugins.credentials.CredentialsMatchers;
 import com.cloudbees.plugins.credentials.CredentialsProvider;
 import com.cloudbees.plugins.credentials.CredentialsScope;
 import com.cloudbees.plugins.credentials.SystemCredentialsProvider;
-import com.cloudbees.plugins.credentials.common.AbstractIdCredentialsListBoxModel;
 import com.cloudbees.plugins.credentials.common.StandardListBoxModel;
-import com.cloudbees.plugins.credentials.common.StandardUsernameCredentials;
-import com.cloudbees.plugins.credentials.common.StandardUsernameListBoxModel;
 import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
 import com.cloudbees.plugins.credentials.domains.DomainRequirement;
 import com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl;
 import com.google.common.base.Optional;
 
-import hudson.model.ItemGroup;
 import hudson.security.ACL;
 import hudson.util.ListBoxModel;
 import hudson.util.Secret;
 import jenkins.model.Jenkins;
 
 public class CredentialsHelper {
-  public static ListBoxModel doFillUsernamePasswordCredentialsIdItems() {
-    final List<StandardUsernamePasswordCredentials> credentials = getAllCredentials();
-    final AbstractIdCredentialsListBoxModel<
-            StandardUsernameListBoxModel, StandardUsernameCredentials>
-        listBoxModel = new StandardUsernameListBoxModel().includeEmptyValue();
-    for (final StandardUsernamePasswordCredentials credential : credentials) {
-      listBoxModel.with(credential);
+  public static ListBoxModel doFillCredentialsIdItems(
+      Item item, String credentialsId, String bitbucketServerUrl) {
+    if (!Jenkins.getInstance().hasPermission(Jenkins.ADMINISTER)) {
+      return new StandardListBoxModel().includeCurrentValue(credentialsId);
     }
-    return listBoxModel;
+    return new StandardListBoxModel() //
+        .includeEmptyValue() //
+        .includeMatchingAs(
+            item instanceof Queue.Task ? Tasks.getAuthenticationOf((Queue.Task) item) : ACL.SYSTEM,
+            item,
+            StandardCredentials.class,
+            URIRequirementBuilder.fromUri(bitbucketServerUrl).build(),
+            CredentialsMatchers.anyOf(
+                CredentialsMatchers.instanceOf(StandardUsernamePasswordCredentials.class),
+                CredentialsMatchers.instanceOf(StringCredentials.class)));
   }
 
-  public static ListBoxModel doFillPersonalAccessTokenIdItems() {
-    final List<StringCredentials> credentials = getAllCredentials(StringCredentials.class);
-    final ListBoxModel listBoxModel =
-        new StandardListBoxModel() //
-            .includeEmptyValue() //
-            .withAll(credentials);
-    return listBoxModel;
-  }
-
-  public static Optional<StandardUsernamePasswordCredentials> findCredentials(
-      final String usernamePasswordCredentialsId) {
-    if (isNullOrEmpty(usernamePasswordCredentialsId)) {
+  public static <C extends Credentials> Optional<C> findCredentials(
+      Class<C> clazz, String credentialId, String bitbucketServerUrl) {
+    if (isNullOrEmpty(credentialId)) {
       return absent();
     }
-
     return fromNullable(
-        firstOrNull(getAllCredentials(), allOf(withId(usernamePasswordCredentialsId))));
-  }
-
-  public static Optional<StringCredentials> findStringCredentials(final String stringCredentials) {
-    if (isNullOrEmpty(stringCredentials)) {
-      return absent();
-    }
-
-    return fromNullable(
-        firstOrNull(getAllCredentials(StringCredentials.class), allOf(withId(stringCredentials))));
-  }
-
-  private static <C extends Credentials> List<C> getAllCredentials(final Class<C> type) {
-    final ItemGroup<?> itemGroup = null;
-    final Authentication authentication = SYSTEM;
-    final DomainRequirement domainRequirement = null;
-
-    return lookupCredentials(type, itemGroup, authentication, domainRequirement);
-  }
-
-  public static List<StandardUsernamePasswordCredentials> getAllCredentials() {
-    final Class<StandardUsernamePasswordCredentials> type =
-        StandardUsernamePasswordCredentials.class;
-    final ItemGroup<?> itemGroup = null;
-    final Authentication authentication = SYSTEM;
-    final DomainRequirement domainRequirement = null;
-
-    return lookupCredentials(type, itemGroup, authentication, domainRequirement);
+        CredentialsMatchers.firstOrNull(
+            CredentialsProvider.lookupCredentials(
+                clazz,
+                Jenkins.getInstance(),
+                ACL.SYSTEM,
+                URIRequirementBuilder.fromUri(bitbucketServerUrl).build()),
+            CredentialsMatchers.withId(credentialId)));
   }
 
   public static String migrateCredentials(final String username, final String password) {
