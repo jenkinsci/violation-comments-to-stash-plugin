@@ -9,6 +9,7 @@ import java.util.List;
 import com.cloudbees.plugins.credentials.common.StandardCredentials;
 import com.cloudbees.plugins.credentials.domains.URIRequirementBuilder;
 import hudson.model.Item;
+import hudson.model.Job;
 import hudson.model.Queue;
 import hudson.model.queue.Tasks;
 import org.apache.commons.lang.StringUtils;
@@ -49,7 +50,7 @@ public class CredentialsHelper {
   }
 
   public static <C extends Credentials> Optional<C> findCredentials(
-      Class<C> clazz, String credentialId, String bitbucketServerUrl) {
+      Class<C> clazz, Job job, String credentialId, String bitbucketServerUrl) {
     if (isNullOrEmpty(credentialId)) {
       return absent();
     }
@@ -57,10 +58,12 @@ public class CredentialsHelper {
         CredentialsMatchers.firstOrNull(
             CredentialsProvider.lookupCredentials(
                 clazz,
-                Jenkins.getInstance(),
+                job,
                 ACL.SYSTEM,
                 URIRequirementBuilder.fromUri(bitbucketServerUrl).build()),
-            CredentialsMatchers.withId(credentialId)));
+            CredentialsMatchers.allOf(
+                CredentialsMatchers.withId(credentialId),
+                CredentialsMatchers.instanceOf(clazz))));
   }
 
   public static String migrateCredentials(final String username, final String password) {

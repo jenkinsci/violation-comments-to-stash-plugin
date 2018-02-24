@@ -32,6 +32,7 @@ import java.net.MalformedURLException;
 import java.util.List;
 import java.util.logging.Logger;
 
+import hudson.model.Job;
 import org.jenkinsci.plugins.jvctb.config.ViolationConfig;
 import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
 import org.jenkinsci.plugins.plaincredentials.StringCredentials;
@@ -189,15 +190,18 @@ public class JvctbPerformer {
       listener.getLogger().println("---");
       logConfiguration(configExpanded, build, listener);
 
+      Job job = build.getParent();
       final Optional<StringCredentials> personalAccessToken =
           findCredentials(
               StringCredentials.class,
+              job,
               configExpanded.getCredentialsId(),
               configExpanded.getBitbucketServerUrl());
 
       final Optional<StandardUsernamePasswordCredentials> credentials =
           findCredentials(
               StandardUsernamePasswordCredentials.class,
+              job,
               configExpanded.getCredentialsId(),
               configExpanded.getBitbucketServerUrl());
 
