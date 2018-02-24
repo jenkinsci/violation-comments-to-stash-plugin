@@ -12,10 +12,10 @@ import hudson.model.Item;
 import hudson.model.Job;
 import hudson.model.Queue;
 import hudson.model.queue.Tasks;
+import hudson.util.FormValidation;
 import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.plugins.plaincredentials.StringCredentials;
 
-import com.cloudbees.plugins.credentials.Credentials;
 import com.cloudbees.plugins.credentials.CredentialsMatchers;
 import com.cloudbees.plugins.credentials.CredentialsProvider;
 import com.cloudbees.plugins.credentials.CredentialsScope;
@@ -34,10 +34,18 @@ import jenkins.model.Jenkins;
 public class CredentialsHelper {
   public static ListBoxModel doFillCredentialsIdItems(
       Item item, String credentialsId, String bitbucketServerUrl) {
-    if (!Jenkins.getInstance().hasPermission(Jenkins.ADMINISTER)) {
-      return new StandardListBoxModel().includeCurrentValue(credentialsId);
+    StandardListBoxModel result = new StandardListBoxModel();
+    if (item == null) {
+      if (!Jenkins.getInstance().hasPermission(Jenkins.ADMINISTER)) {
+        return result.includeCurrentValue(credentialsId);
+      }
+    } else {
+      if (!item.hasPermission(Item.EXTENDED_READ)
+          && !item.hasPermission(CredentialsProvider.USE_ITEM)) {
+        return result.includeCurrentValue(credentialsId);
+      }
     }
-    return new StandardListBoxModel() //
+    return result //
         .includeEmptyValue() //
         .includeMatchingAs(
             item instanceof Queue.Task ? Tasks.getAuthenticationOf((Queue.Task) item) : ACL.SYSTEM,
@@ -46,11 +54,41 @@ public class CredentialsHelper {
             URIRequirementBuilder.fromUri(bitbucketServerUrl).build(),
             CredentialsMatchers.anyOf(
                 CredentialsMatchers.instanceOf(StandardUsernamePasswordCredentials.class),
-                CredentialsMatchers.instanceOf(StringCredentials.class)));
+                CredentialsMatchers.instanceOf(StringCredentials.class)))
+        .includeCurrentValue(credentialsId);
   }
 
-  public static <C extends Credentials> Optional<C> findCredentials(
-      Class<C> clazz, Job job, String credentialId, String bitbucketServerUrl) {
+  public static FormValidation doCheckFillCredentialsId(
+      Item item, String credentialsId, String bitbucketServerUrl) {
+    if (item == null) {
+      if (!Jenkins.getInstance().hasPermission(Jenkins.ADMINISTER)) {
+        return FormValidation.ok();
+      }
+    } else {
+      if (!item.hasPermission(Item.EXTENDED_READ)
+          && !item.hasPermission(CredentialsProvider.USE_ITEM)) {
+        return FormValidation.ok();
+      }
+    }
+    if (isNullOrEmpty(credentialsId)) {
+      return FormValidation.ok();
+    }
+    // TODO: We could do a actual check credentials works on the service depending on the API
+    Optional<StandardCredentials> credentials =
+        findCredentials(item, credentialsId, bitbucketServerUrl);
+    if (!(credentials.isPresent())) {
+      return FormValidation.error("Cannot find currently selected credentials");
+    }
+    StandardCredentials standardCredentials = credentials.get();
+    if (!(standardCredentials instanceof StringCredentials
+        || standardCredentials instanceof StandardUsernamePasswordCredentials)) {
+      return FormValidation.error("Unsupported credentials");
+    }
+    return FormValidation.ok();
+  }
+
+  public static Optional<StandardCredentials> findCredentials(
+      Item item, String credentialId, String uri) {
     if (isNullOrEmpty(credentialId)) {
       return absent();
     }

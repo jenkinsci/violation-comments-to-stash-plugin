@@ -5,6 +5,7 @@ import static org.jenkinsci.plugins.jvctb.config.CredentialsHelper.migrateCreden
 import java.io.Serializable;
 
 import hudson.model.Item;
+import hudson.util.FormValidation;
 import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.plugins.jvctb.config.CredentialsHelper;
 import org.kohsuke.accmod.Restricted;
@@ -75,6 +76,14 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
       @QueryParameter String credentialsId,
       @QueryParameter String bitbucketServerUrl) {
     return CredentialsHelper.doFillCredentialsIdItems(item, credentialsId, bitbucketServerUrl);
+  }
+
+  @SuppressWarnings("unused") // Used by stapler
+  public FormValidation doCheckCredentialsId(
+      @AncestorInPath Item item,
+      @QueryParameter String value,
+      @QueryParameter String bitbucketServerUrl) {
+    return CredentialsHelper.doCheckFillCredentialsId(item, value, bitbucketServerUrl);
   }
 
   public String getBitbucketServerUrl() {

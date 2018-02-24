@@ -10,6 +10,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import hudson.model.Item;
+import hudson.util.FormValidation;
 import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.plugins.jvctb.ViolationsToBitbucketServerGlobalConfiguration;
 import org.kohsuke.accmod.Restricted;
@@ -356,6 +357,14 @@ public class ViolationsToBitbucketServerConfig
         @QueryParameter String credentialsId,
         @QueryParameter String bitbucketServerUrl) {
       return CredentialsHelper.doFillCredentialsIdItems(item, credentialsId, bitbucketServerUrl);
+    }
+
+    @SuppressWarnings("unused") // Used by stapler
+    public FormValidation doCheckCredentialsId(
+        @AncestorInPath Item item,
+        @QueryParameter String value,
+        @QueryParameter String bitbucketServerUrl) {
+      return CredentialsHelper.doCheckFillCredentialsId(item, value, bitbucketServerUrl);
     }
   }
 }
