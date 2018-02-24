@@ -30,9 +30,9 @@ import hudson.util.ListBoxModel;
 import hudson.util.Secret;
 import jenkins.model.Jenkins;
 
+/* Read more about credentials api here: https://github.com/jenkinsci/credentials-plugin/blob/master/docs/consumer.adoc */
 public class CredentialsHelper {
-  public static ListBoxModel doFillCredentialsIdItems(
-      Item item, String credentialsId, String uri) {
+  public static ListBoxModel doFillCredentialsIdItems(Item item, String credentialsId, String uri) {
     StandardListBoxModel result = new StandardListBoxModel();
     if (item == null) {
       if (!Jenkins.getInstance().hasPermission(Jenkins.ADMINISTER)) {
@@ -72,23 +72,15 @@ public class CredentialsHelper {
     if (isNullOrEmpty(credentialsId)) {
       return FormValidation.ok();
     }
-    // TODO: We could do a actual check credentials works on the service depending on the API
-    Optional<StandardCredentials> credentials =
-        findCredentials(item, credentialsId, uri);
-    if (!(credentials.isPresent())) {
+    if (!(findCredentials(item, credentialsId, uri).isPresent())) {
       return FormValidation.error("Cannot find currently selected credentials");
-    }
-    StandardCredentials standardCredentials = credentials.get();
-    if (!(standardCredentials instanceof StringCredentials
-        || standardCredentials instanceof StandardUsernamePasswordCredentials)) {
-      return FormValidation.error("Unsupported credentials");
     }
     return FormValidation.ok();
   }
 
   public static Optional<StandardCredentials> findCredentials(
-      Item item, String credentialId, String uri) {
-    if (isNullOrEmpty(credentialId)) {
+      Item item, String credentialsId, String uri) {
+    if (isNullOrEmpty(credentialsId)) {
       return absent();
     }
     return fromNullable(
@@ -101,7 +93,7 @@ public class CredentialsHelper {
                     : ACL.SYSTEM,
                 URIRequirementBuilder.fromUri(uri).build()),
             CredentialsMatchers.allOf(
-                CredentialsMatchers.withId(credentialId),
+                CredentialsMatchers.withId(credentialsId),
                 CredentialsMatchers.anyOf(
                     CredentialsMatchers.instanceOf(StandardUsernamePasswordCredentials.class),
                     CredentialsMatchers.instanceOf(StringCredentials.class)))));

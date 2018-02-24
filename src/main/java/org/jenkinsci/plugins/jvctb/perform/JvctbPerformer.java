@@ -46,7 +46,6 @@ import com.google.common.io.CharStreams;
 import hudson.EnvVars;
 import hudson.FilePath;
 import hudson.FilePath.FileCallable;
-import hudson.model.Job;
 import hudson.model.Run;
 import hudson.model.TaskListener;
 import hudson.remoting.VirtualChannel;
@@ -192,10 +191,11 @@ public class JvctbPerformer {
       listener.getLogger().println("---");
       logConfiguration(configExpanded, build, listener);
 
-      Job job = build.getParent();
       final Optional<StandardCredentials> credentials =
           findCredentials(
-              job, configExpanded.getCredentialsId(), configExpanded.getBitbucketServerUrl());
+              build.getParent(),
+              configExpanded.getCredentialsId(),
+              configExpanded.getBitbucketServerUrl());
 
       if (!credentials.isPresent()) {
         listener.getLogger().println("Credentials not found!");
