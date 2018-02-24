@@ -8,11 +8,9 @@
          xmlns:t="/lib/hudson"
          xmlns:c="/lib/credentials">
 
-    <f:entry title="Credentials" field="credentialsId">
+    <f:entry title="Credentials" description="Will default to global config."
+             field="credentialsId" help="/plugin/violation-comments-to-stash/help/credentials.html">
         <c:select />
-        <f:description>
-            Will default to global config.
-        </f:description>
     </f:entry>
 
     <f:entry>

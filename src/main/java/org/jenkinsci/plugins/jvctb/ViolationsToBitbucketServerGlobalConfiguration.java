@@ -132,7 +132,7 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
   }
 
   private Object readResolve() {
-    if (credentialsId == null) {
+    if (StringUtils.isBlank(credentialsId)) {
       if (personalAccessTokenId != null) {
         credentialsId = personalAccessTokenId;
       } else if (usernamePasswordCredentialsId != null) {

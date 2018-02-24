@@ -9,8 +9,8 @@
          xmlns:c="/lib/credentials">
  <f:section title="Bitbucket Server Violations Server Defaults">
 
-  <f:entry title="Credentials" field="credentialsId">
-      <c:select />
+  <f:entry title="Credentials" field="credentialsId" help="/plugin/violation-comments-to-stash/help/credentials.html">
+    <c:select />
   </f:entry>
 
   <f:entry title="Base URL (Default is: https://localhost:7990/bitbucket/)" field="bitbucketServerUrl">
