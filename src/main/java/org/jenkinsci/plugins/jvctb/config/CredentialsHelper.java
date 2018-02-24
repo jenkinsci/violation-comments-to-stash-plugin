@@ -32,7 +32,7 @@ import jenkins.model.Jenkins;
 
 public class CredentialsHelper {
   public static ListBoxModel doFillCredentialsIdItems(
-      Item item, String credentialsId, String bitbucketServerUrl) {
+      Item item, String credentialsId, String uri) {
     StandardListBoxModel result = new StandardListBoxModel();
     if (item == null) {
       if (!Jenkins.getInstance().hasPermission(Jenkins.ADMINISTER)) {
@@ -50,7 +50,7 @@ public class CredentialsHelper {
             item instanceof Queue.Task ? Tasks.getAuthenticationOf((Queue.Task) item) : ACL.SYSTEM,
             item,
             StandardCredentials.class,
-            URIRequirementBuilder.fromUri(bitbucketServerUrl).build(),
+            URIRequirementBuilder.fromUri(uri).build(),
             CredentialsMatchers.anyOf(
                 CredentialsMatchers.instanceOf(StandardUsernamePasswordCredentials.class),
                 CredentialsMatchers.instanceOf(StringCredentials.class)))
@@ -58,7 +58,7 @@ public class CredentialsHelper {
   }
 
   public static FormValidation doCheckFillCredentialsId(
-      Item item, String credentialsId, String bitbucketServerUrl) {
+      Item item, String credentialsId, String uri) {
     if (item == null) {
       if (!Jenkins.getInstance().hasPermission(Jenkins.ADMINISTER)) {
         return FormValidation.ok();
@@ -74,7 +74,7 @@ public class CredentialsHelper {
     }
     // TODO: We could do a actual check credentials works on the service depending on the API
     Optional<StandardCredentials> credentials =
-        findCredentials(item, credentialsId, bitbucketServerUrl);
+        findCredentials(item, credentialsId, uri);
     if (!(credentials.isPresent())) {
       return FormValidation.error("Cannot find currently selected credentials");
     }
