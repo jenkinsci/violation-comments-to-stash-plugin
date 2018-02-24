@@ -123,11 +123,12 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
   }
 
   private Object readResolve() {
-    if (usernamePasswordCredentialsId != null) {
-      credentialsId = usernamePasswordCredentialsId;
-    }
-    if (personalAccessTokenId != null) {
-      credentialsId = personalAccessTokenId;
+    if (credentialsId == null) {
+      if (personalAccessTokenId != null) {
+        credentialsId = personalAccessTokenId;
+      } else if (usernamePasswordCredentialsId != null) {
+        credentialsId = usernamePasswordCredentialsId;
+      }
     }
     if (StringUtils.isBlank(credentialsId) && username != null && password != null) {
       credentialsId = migrateCredentials(username, password);
