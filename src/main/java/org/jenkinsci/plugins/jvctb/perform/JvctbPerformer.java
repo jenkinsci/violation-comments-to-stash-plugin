@@ -32,6 +32,7 @@ import java.net.MalformedURLException;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.cloudbees.plugins.credentials.common.StandardCredentials;
 import hudson.model.Job;
 import org.jenkinsci.plugins.jvctb.config.ViolationConfig;
 import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
@@ -62,8 +63,7 @@ public class JvctbPerformer {
   public static void doPerform(
       final ViolationsToBitbucketServerConfig config,
       final File workspace,
-      final StandardUsernamePasswordCredentials standardUsernamePasswordCredentials,
-      final StringCredentials personalAccessToken,
+      final StandardCredentials credentials,
       final TaskListener listener)
       throws MalformedURLException {
     if (isNullOrEmpty(config.getPullRequestId())) {
@@ -112,14 +112,16 @@ public class JvctbPerformer {
 
     try {
       final ViolationCommentsToBitbucketServerApi b = violationCommentsToBitbucketServerApi();
-      if (standardUsernamePasswordCredentials != null) {
+      if (credentials instanceof StandardUsernamePasswordCredentials) {
+        StandardUsernamePasswordCredentials usernamePassword =
+            (StandardUsernamePasswordCredentials) credentials;
         b //
-            .withUsername(standardUsernamePasswordCredentials.getUsername()) //
-            .withPassword(Secret.toString(standardUsernamePasswordCredentials.getPassword()));
-      }
-      if (personalAccessToken != null) {
+            .withUsername(usernamePassword.getUsername()) //
+            .withPassword(Secret.toString(usernamePassword.getPassword()));
+      } else if (credentials instanceof StringCredentials) {
+        StringCredentials personalAccessToken = (StringCredentials) credentials;
         b //
-            .withPersonalAccessToken(personalAccessToken.getSecret().getPlainText());
+            .withPersonalAccessToken(Secret.toString(personalAccessToken.getSecret()));
       }
       b //
           .withBitbucketServerUrl(config.getBitbucketServerUrl()) //
@@ -191,21 +193,11 @@ public class JvctbPerformer {
       logConfiguration(configExpanded, build, listener);
 
       Job job = build.getParent();
-      final Optional<StringCredentials> personalAccessToken =
+      final Optional<StandardCredentials> credentials =
           findCredentials(
-              StringCredentials.class,
-              job,
-              configExpanded.getCredentialsId(),
-              configExpanded.getBitbucketServerUrl());
+              job, configExpanded.getCredentialsId(), configExpanded.getBitbucketServerUrl());
 
-      final Optional<StandardUsernamePasswordCredentials> credentials =
-          findCredentials(
-              StandardUsernamePasswordCredentials.class,
-              job,
-              configExpanded.getCredentialsId(),
-              configExpanded.getBitbucketServerUrl());
-
-      if (!credentials.isPresent() && !personalAccessToken.isPresent()) {
+      if (!credentials.isPresent()) {
         listener.getLogger().println("Credentials not found!");
         return;
       }
@@ -225,12 +217,7 @@ public class JvctbPerformer {
                 throws IOException, InterruptedException {
               setupFindBugsMessages();
               listener.getLogger().println("Workspace: " + workspace.getAbsolutePath());
-              doPerform(
-                  configExpanded,
-                  workspace,
-                  credentials.orNull(),
-                  personalAccessToken.orNull(),
-                  listener);
+              doPerform(configExpanded, workspace, credentials.orNull(), listener);
               return null;
             }
           });

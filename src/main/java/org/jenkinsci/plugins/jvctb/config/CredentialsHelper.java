@@ -9,7 +9,6 @@ import java.util.List;
 import com.cloudbees.plugins.credentials.common.StandardCredentials;
 import com.cloudbees.plugins.credentials.domains.URIRequirementBuilder;
 import hudson.model.Item;
-import hudson.model.Job;
 import hudson.model.Queue;
 import hudson.model.queue.Tasks;
 import hudson.util.FormValidation;
@@ -95,9 +94,17 @@ public class CredentialsHelper {
     return fromNullable(
         CredentialsMatchers.firstOrNull(
             CredentialsProvider.lookupCredentials(
-                clazz, job, ACL.SYSTEM, URIRequirementBuilder.fromUri(bitbucketServerUrl).build()),
+                StandardCredentials.class,
+                item,
+                item instanceof Queue.Task
+                    ? Tasks.getAuthenticationOf((Queue.Task) item)
+                    : ACL.SYSTEM,
+                URIRequirementBuilder.fromUri(uri).build()),
             CredentialsMatchers.allOf(
-                CredentialsMatchers.withId(credentialId), CredentialsMatchers.instanceOf(clazz))));
+                CredentialsMatchers.withId(credentialId),
+                CredentialsMatchers.anyOf(
+                    CredentialsMatchers.instanceOf(StandardUsernamePasswordCredentials.class),
+                    CredentialsMatchers.instanceOf(StringCredentials.class)))));
   }
 
   public static String migrateCredentials(final String username, final String password) {
