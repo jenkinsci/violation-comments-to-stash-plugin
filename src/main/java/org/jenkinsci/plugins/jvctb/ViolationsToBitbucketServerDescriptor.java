@@ -3,7 +3,6 @@ package org.jenkinsci.plugins.jvctb;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_MINSEVERITY;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.Symbol;
 import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
@@ -45,12 +44,9 @@ public final class ViolationsToBitbucketServerDescriptor extends BuildStepDescri
   }
 
   @Override
-  @SuppressFBWarnings(
-    value = "NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE",
-    justification = "Stapler Request cannot be null, but due to legacy it is marked as such"
-  )
   public Publisher newInstance(final StaplerRequest req, @NonNull final JSONObject formData)
       throws hudson.model.Descriptor.FormException {
+    assert req != null;
     if (formData.has("config")) {
       final JSONObject config = formData.getJSONObject("config");
       final String minSeverity = config.getString(FIELD_MINSEVERITY);
