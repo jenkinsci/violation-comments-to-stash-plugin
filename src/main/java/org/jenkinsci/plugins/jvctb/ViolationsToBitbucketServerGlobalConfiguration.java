@@ -4,8 +4,6 @@ import static org.jenkinsci.plugins.jvctb.config.CredentialsHelper.migrateCreden
 
 import java.io.Serializable;
 
-import hudson.model.Item;
-import hudson.util.FormValidation;
 import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.plugins.jvctb.config.CredentialsHelper;
 import org.kohsuke.accmod.Restricted;
@@ -18,6 +16,8 @@ import org.kohsuke.stapler.StaplerRequest;
 import com.google.common.base.Optional;
 
 import hudson.Extension;
+import hudson.model.Item;
+import hudson.util.FormValidation;
 import hudson.util.ListBoxModel;
 import jenkins.model.GlobalConfiguration;
 import net.sf.json.JSONObject;

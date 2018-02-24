@@ -1,7 +1,13 @@
 package org.jenkinsci.plugins.jvctb;
 
+import static hudson.tasks.BuildStepMonitor.NONE;
+import static org.jenkinsci.plugins.jvctb.perform.JvctbPerformer.jvctsPerform;
+
 import javax.annotation.Nonnull;
 import java.io.IOException;
+
+import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
+import org.kohsuke.stapler.DataBoundConstructor;
 
 import hudson.FilePath;
 import hudson.Launcher;
@@ -12,11 +18,6 @@ import hudson.tasks.BuildStepMonitor;
 import hudson.tasks.Publisher;
 import hudson.tasks.Recorder;
 import jenkins.tasks.SimpleBuildStep;
-import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
-import org.kohsuke.stapler.DataBoundConstructor;
-
-import static hudson.tasks.BuildStepMonitor.NONE;
-import static org.jenkinsci.plugins.jvctb.perform.JvctbPerformer.jvctsPerform;
 
 public class ViolationsToBitbucketServerRecorder extends Recorder implements SimpleBuildStep {
 

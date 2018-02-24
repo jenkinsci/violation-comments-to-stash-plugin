@@ -32,13 +32,12 @@ import java.net.MalformedURLException;
 import java.util.List;
 import java.util.logging.Logger;
 
-import com.cloudbees.plugins.credentials.common.StandardCredentials;
-import hudson.model.Job;
 import org.jenkinsci.plugins.jvctb.config.ViolationConfig;
 import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
 import org.jenkinsci.plugins.plaincredentials.StringCredentials;
 import org.jenkinsci.remoting.RoleChecker;
 
+import com.cloudbees.plugins.credentials.common.StandardCredentials;
 import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
@@ -47,6 +46,7 @@ import com.google.common.io.CharStreams;
 import hudson.EnvVars;
 import hudson.FilePath;
 import hudson.FilePath.FileCallable;
+import hudson.model.Job;
 import hudson.model.Run;
 import hudson.model.TaskListener;
 import hudson.remoting.VirtualChannel;

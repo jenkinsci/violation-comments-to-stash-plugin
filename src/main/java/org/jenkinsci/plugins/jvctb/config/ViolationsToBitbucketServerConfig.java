@@ -7,10 +7,6 @@ import static org.jenkinsci.plugins.jvctb.config.CredentialsHelper.migrateCreden
 import java.io.Serializable;
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
-import hudson.model.Item;
-import hudson.util.FormValidation;
 import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.plugins.jvctb.ViolationsToBitbucketServerGlobalConfiguration;
 import org.kohsuke.accmod.Restricted;
@@ -18,13 +14,16 @@ import org.kohsuke.accmod.restrictions.NoExternalUse;
 import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
+import org.kohsuke.stapler.QueryParameter;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Extension;
 import hudson.Util;
 import hudson.model.AbstractDescribableImpl;
 import hudson.model.Descriptor;
+import hudson.model.Item;
+import hudson.util.FormValidation;
 import hudson.util.ListBoxModel;
-import org.kohsuke.stapler.QueryParameter;
 import se.bjurr.violations.lib.model.SEVERITY;
 
 public class ViolationsToBitbucketServerConfig
@@ -335,7 +334,7 @@ public class ViolationsToBitbucketServerConfig
 
   @Extension
   public static class DescriptorImpl extends Descriptor<ViolationsToBitbucketServerConfig> {
-    @Nonnull
+    @NonNull
     @Override
     public String getDisplayName() {
       return "Violations To Bitbucket Server Config";
