@@ -57,13 +57,9 @@ public class CredentialsHelper {
     return fromNullable(
         CredentialsMatchers.firstOrNull(
             CredentialsProvider.lookupCredentials(
-                clazz,
-                job,
-                ACL.SYSTEM,
-                URIRequirementBuilder.fromUri(bitbucketServerUrl).build()),
+                clazz, job, ACL.SYSTEM, URIRequirementBuilder.fromUri(bitbucketServerUrl).build()),
             CredentialsMatchers.allOf(
-                CredentialsMatchers.withId(credentialId),
-                CredentialsMatchers.instanceOf(clazz))));
+                CredentialsMatchers.withId(credentialId), CredentialsMatchers.instanceOf(clazz))));
   }
 
   public static String migrateCredentials(final String username, final String password) {
