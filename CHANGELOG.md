@@ -2,7 +2,7 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
-## Unreleased
+## 1.70
 ### GitHub [#50](https://github.com/jenkinsci/violation-comments-to-stash-plugin/pull/50) Combined credentials and item always being null
 
 **Combined credentials and item always being null (#50)**
@@ -29,6 +29,11 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ### No issue
+
+**Doc**
+
+
+[495a8cc7b46cd5f](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/495a8cc7b46cd5f) Tomas Bjerre *2018-02-27 18:24:15*
 
 **Update Jenkinsfile**
 
