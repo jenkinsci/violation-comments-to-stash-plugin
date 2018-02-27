@@ -7,19 +7,22 @@ import static org.jenkinsci.plugins.jvctb.config.CredentialsHelper.migrateCreden
 import java.io.Serializable;
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.plugins.jvctb.ViolationsToBitbucketServerGlobalConfiguration;
 import org.kohsuke.accmod.Restricted;
 import org.kohsuke.accmod.restrictions.NoExternalUse;
+import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
+import org.kohsuke.stapler.QueryParameter;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Extension;
 import hudson.Util;
 import hudson.model.AbstractDescribableImpl;
 import hudson.model.Descriptor;
+import hudson.model.Item;
+import hudson.util.FormValidation;
 import hudson.util.ListBoxModel;
 import se.bjurr.violations.lib.model.SEVERITY;
 
@@ -30,17 +33,18 @@ public class ViolationsToBitbucketServerConfig
   private String bitbucketServerUrl;
   private boolean createCommentWithAllSingleFileComments;
   private boolean createSingleFileComments;
-  @Deprecated private transient String password;
   private String projectKey;
   private String pullRequestId;
   private String repoSlug;
-  @Deprecated private transient String username;
-  private String usernamePasswordCredentialsId;
-  private String personalAccessTokenId;
+  private String credentialsId;
   private List<ViolationConfig> violationConfigs = newArrayList();
   private int commentOnlyChangedContentContext;
   private SEVERITY minSeverity;
   private boolean keepOldComments;
+  @Deprecated private transient String username;
+  @Deprecated private transient String password;
+  @Deprecated private transient String usernamePasswordCredentialsId;
+  @Deprecated private transient String personalAccessTokenId;
 
   public ViolationsToBitbucketServerConfig() {}
 
@@ -60,8 +64,7 @@ public class ViolationsToBitbucketServerConfig
     repoSlug = rhs.repoSlug;
     pullRequestId = rhs.pullRequestId;
     bitbucketServerUrl = rhs.bitbucketServerUrl;
-    usernamePasswordCredentialsId = rhs.usernamePasswordCredentialsId;
-    personalAccessTokenId = rhs.personalAccessTokenId;
+    credentialsId = rhs.credentialsId;
     commentOnlyChangedContent = rhs.commentOnlyChangedContent;
     commentOnlyChangedContentContext = rhs.commentOnlyChangedContentContext;
     this.minSeverity = rhs.minSeverity;
@@ -72,11 +75,8 @@ public class ViolationsToBitbucketServerConfig
     if (isNullOrEmpty(bitbucketServerUrl)) {
       bitbucketServerUrl = defaults.getBitbucketServerUrl();
     }
-    if (isNullOrEmpty(usernamePasswordCredentialsId)) {
-      usernamePasswordCredentialsId = defaults.getUsernamePasswordCredentialsId();
-    }
-    if (isNullOrEmpty(personalAccessTokenId)) {
-      personalAccessTokenId = defaults.getPersonalAccessTokenId();
+    if (isNullOrEmpty(credentialsId)) {
+      credentialsId = defaults.getCredentialsId();
     }
     if (isNullOrEmpty(repoSlug)) {
       repoSlug = defaults.getRepoSlug();
@@ -90,10 +90,15 @@ public class ViolationsToBitbucketServerConfig
   }
 
   private Object readResolve() {
-    if (StringUtils.isBlank(usernamePasswordCredentialsId)
-        && username != null
-        && password != null) {
-      usernamePasswordCredentialsId = migrateCredentials(username, password);
+    if (StringUtils.isBlank(credentialsId)) {
+      if (personalAccessTokenId != null) {
+        credentialsId = personalAccessTokenId;
+      } else if (usernamePasswordCredentialsId != null) {
+        credentialsId = usernamePasswordCredentialsId;
+      }
+    }
+    if (StringUtils.isBlank(credentialsId) && username != null && password != null) {
+      credentialsId = migrateCredentials(username, password);
     }
     return this;
   }
@@ -135,13 +140,6 @@ public class ViolationsToBitbucketServerConfig
     if (minSeverity != other.minSeverity) {
       return false;
     }
-    if (personalAccessTokenId == null) {
-      if (other.personalAccessTokenId != null) {
-        return false;
-      }
-    } else if (!personalAccessTokenId.equals(other.personalAccessTokenId)) {
-      return false;
-    }
     if (projectKey == null) {
       if (other.projectKey != null) {
         return false;
@@ -163,11 +161,11 @@ public class ViolationsToBitbucketServerConfig
     } else if (!repoSlug.equals(other.repoSlug)) {
       return false;
     }
-    if (usernamePasswordCredentialsId == null) {
-      if (other.usernamePasswordCredentialsId != null) {
+    if (credentialsId == null) {
+      if (other.credentialsId != null) {
         return false;
       }
-    } else if (!usernamePasswordCredentialsId.equals(other.usernamePasswordCredentialsId)) {
+    } else if (!credentialsId.equals(other.credentialsId)) {
       return false;
     }
     if (violationConfigs == null) {
@@ -212,8 +210,8 @@ public class ViolationsToBitbucketServerConfig
     return repoSlug;
   }
 
-  public String getUsernamePasswordCredentialsId() {
-    return usernamePasswordCredentialsId;
+  public String getCredentialsId() {
+    return credentialsId;
   }
 
   public List<ViolationConfig> getViolationConfigs() {
@@ -231,16 +229,10 @@ public class ViolationsToBitbucketServerConfig
     result = prime * result + (createSingleFileComments ? 1231 : 1237);
     result = prime * result + (keepOldComments ? 1231 : 1237);
     result = prime * result + (minSeverity == null ? 0 : minSeverity.hashCode());
-    result =
-        prime * result + (personalAccessTokenId == null ? 0 : personalAccessTokenId.hashCode());
     result = prime * result + (projectKey == null ? 0 : projectKey.hashCode());
     result = prime * result + (pullRequestId == null ? 0 : pullRequestId.hashCode());
     result = prime * result + (repoSlug == null ? 0 : repoSlug.hashCode());
-    result =
-        prime * result
-            + (usernamePasswordCredentialsId == null
-                ? 0
-                : usernamePasswordCredentialsId.hashCode());
+    result = prime * result + (credentialsId == null ? 0 : credentialsId.hashCode());
     result = prime * result + (violationConfigs == null ? 0 : violationConfigs.hashCode());
     return result;
   }
@@ -293,17 +285,8 @@ public class ViolationsToBitbucketServerConfig
   }
 
   @DataBoundSetter
-  public void setUsernamePasswordCredentialsId(final String usernamePasswordCredentialsId) {
-    this.usernamePasswordCredentialsId = Util.fixEmptyAndTrim(usernamePasswordCredentialsId);
-  }
-
-  @DataBoundSetter
-  public void setPersonalAccessTokenId(final String personalAccessTokenId) {
-    this.personalAccessTokenId = personalAccessTokenId;
-  }
-
-  public String getPersonalAccessTokenId() {
-    return personalAccessTokenId;
+  public void setCredentialsId(final String credentialsId) {
+    this.credentialsId = Util.fixEmptyAndTrim(credentialsId);
   }
 
   @DataBoundSetter
@@ -327,10 +310,8 @@ public class ViolationsToBitbucketServerConfig
         + pullRequestId
         + ", repoSlug="
         + repoSlug
-        + ", usernamePasswordCredentialsId="
-        + usernamePasswordCredentialsId
-        + ", personalAccessTokenId="
-        + personalAccessTokenId
+        + ", credentialsId="
+        + credentialsId
         + ", violationConfigs="
         + violationConfigs
         + ", commentOnlyChangedContentContext="
@@ -353,7 +334,7 @@ public class ViolationsToBitbucketServerConfig
 
   @Extension
   public static class DescriptorImpl extends Descriptor<ViolationsToBitbucketServerConfig> {
-    @Nonnull
+    @NonNull
     @Override
     public String getDisplayName() {
       return "Violations To Bitbucket Server Config";
@@ -369,12 +350,20 @@ public class ViolationsToBitbucketServerConfig
       return items;
     }
 
-    public ListBoxModel doFillUsernamePasswordCredentialsIdItems() {
-      return CredentialsHelper.doFillUsernamePasswordCredentialsIdItems();
+    @SuppressWarnings("unused") // Used by stapler
+    public ListBoxModel doFillCredentialsIdItems(
+        @AncestorInPath Item item,
+        @QueryParameter String credentialsId,
+        @QueryParameter String bitbucketServerUrl) {
+      return CredentialsHelper.doFillCredentialsIdItems(item, credentialsId, bitbucketServerUrl);
     }
 
-    public ListBoxModel doFillPersonalAccessTokenIdItems() {
-      return CredentialsHelper.doFillPersonalAccessTokenIdItems();
+    @SuppressWarnings("unused") // Used by stapler
+    public FormValidation doCheckCredentialsId(
+        @AncestorInPath Item item,
+        @QueryParameter String value,
+        @QueryParameter String bitbucketServerUrl) {
+      return CredentialsHelper.doCheckFillCredentialsId(item, value, bitbucketServerUrl);
     }
   }
 }

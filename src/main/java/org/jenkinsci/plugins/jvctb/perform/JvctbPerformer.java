@@ -6,19 +6,17 @@ import static com.google.common.base.Throwables.propagate;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.util.logging.Level.SEVERE;
 import static org.jenkinsci.plugins.jvctb.config.CredentialsHelper.findCredentials;
-import static org.jenkinsci.plugins.jvctb.config.CredentialsHelper.findStringCredentials;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_BITBUCKETSERVERURL;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_COMMENTONLYCHANGEDCONTENT;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_COMMENTONLYCHANGEDCONTENTCONTEXT;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_CREATECOMMENTWITHALLSINGLEFILECOMMENTS;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_CREATESINGLEFILECOMMENTS;
+import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_CREDENTIALSID;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_KEEP_OLD_COMMENTS;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_MINSEVERITY;
-import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_PERSONALACCESSTOKEN;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_PROJECTKEY;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_PULLREQUESTID;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_REPOSLUG;
-import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_USERNAMEPASSWORDCREDENTIALSID;
 import static se.bjurr.violations.comments.bitbucketserver.lib.ViolationCommentsToBitbucketServerApi.violationCommentsToBitbucketServerApi;
 import static se.bjurr.violations.lib.ViolationsApi.violationsApi;
 import static se.bjurr.violations.lib.parsers.FindbugsParser.setFindbugsMessagesXml;
@@ -39,6 +37,7 @@ import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
 import org.jenkinsci.plugins.plaincredentials.StringCredentials;
 import org.jenkinsci.remoting.RoleChecker;
 
+import com.cloudbees.plugins.credentials.common.StandardCredentials;
 import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
@@ -63,8 +62,7 @@ public class JvctbPerformer {
   public static void doPerform(
       final ViolationsToBitbucketServerConfig config,
       final File workspace,
-      final StandardUsernamePasswordCredentials standardUsernamePasswordCredentials,
-      final StringCredentials personalAccessToken,
+      final StandardCredentials credentials,
       final TaskListener listener)
       throws MalformedURLException {
     if (isNullOrEmpty(config.getPullRequestId())) {
@@ -113,14 +111,16 @@ public class JvctbPerformer {
 
     try {
       final ViolationCommentsToBitbucketServerApi b = violationCommentsToBitbucketServerApi();
-      if (standardUsernamePasswordCredentials != null) {
+      if (credentials instanceof StandardUsernamePasswordCredentials) {
+        StandardUsernamePasswordCredentials usernamePassword =
+            (StandardUsernamePasswordCredentials) credentials;
         b //
-            .withUsername(standardUsernamePasswordCredentials.getUsername()) //
-            .withPassword(Secret.toString(standardUsernamePasswordCredentials.getPassword()));
-      }
-      if (personalAccessToken != null) {
+            .withUsername(usernamePassword.getUsername()) //
+            .withPassword(Secret.toString(usernamePassword.getPassword()));
+      } else if (credentials instanceof StringCredentials) {
+        StringCredentials personalAccessToken = (StringCredentials) credentials;
         b //
-            .withPersonalAccessToken(personalAccessToken.getSecret().getPlainText());
+            .withPersonalAccessToken(Secret.toString(personalAccessToken.getSecret()));
       }
       b //
           .withBitbucketServerUrl(config.getBitbucketServerUrl()) //
@@ -155,8 +155,7 @@ public class JvctbPerformer {
     expanded.setCreateCommentWithAllSingleFileComments(
         config.getCreateCommentWithAllSingleFileComments());
     expanded.setCreateSingleFileComments(config.getCreateSingleFileComments());
-    expanded.setUsernamePasswordCredentialsId(config.getUsernamePasswordCredentialsId());
-    expanded.setPersonalAccessTokenId(config.getPersonalAccessTokenId());
+    expanded.setCredentialsId(config.getCredentialsId());
     expanded.setCommentOnlyChangedContent(config.getCommentOnlyChangedContent());
     expanded.setCommentOnlyChangedContentContext(config.getCommentOnlyChangedContentContext());
     expanded.setMinSeverity(config.getMinSeverity());
@@ -192,13 +191,13 @@ public class JvctbPerformer {
       listener.getLogger().println("---");
       logConfiguration(configExpanded, build, listener);
 
-      final Optional<StringCredentials> personalAccessToken =
-          findStringCredentials(configExpanded.getPersonalAccessTokenId());
+      final Optional<StandardCredentials> credentials =
+          findCredentials(
+              build.getParent(),
+              configExpanded.getCredentialsId(),
+              configExpanded.getBitbucketServerUrl());
 
-      final Optional<StandardUsernamePasswordCredentials> credentials =
-          findCredentials(configExpanded.getUsernamePasswordCredentialsId());
-
-      if (!credentials.isPresent() && !personalAccessToken.isPresent()) {
+      if (!credentials.isPresent()) {
         listener.getLogger().println("Credentials not found!");
         return;
       }
@@ -218,12 +217,7 @@ public class JvctbPerformer {
                 throws IOException, InterruptedException {
               setupFindBugsMessages();
               listener.getLogger().println("Workspace: " + workspace.getAbsolutePath());
-              doPerform(
-                  configExpanded,
-                  workspace,
-                  credentials.orNull(),
-                  personalAccessToken.orNull(),
-                  listener);
+              doPerform(configExpanded, workspace, credentials.orNull(), listener);
               return null;
             }
           });
@@ -245,12 +239,7 @@ public class JvctbPerformer {
     logger.println(FIELD_PROJECTKEY + ": " + config.getProjectKey());
     logger.println(FIELD_REPOSLUG + ": " + config.getRepoSlug());
     logger.println(FIELD_PULLREQUESTID + ": " + config.getPullRequestId());
-    logger.println(
-        FIELD_USERNAMEPASSWORDCREDENTIALSID
-            + ": "
-            + !isNullOrEmpty(config.getUsernamePasswordCredentialsId()));
-    logger.println(
-        FIELD_PERSONALACCESSTOKEN + ": " + !isNullOrEmpty(config.getPersonalAccessTokenId()));
+    logger.println(FIELD_CREDENTIALSID + ": " + !isNullOrEmpty(config.getCredentialsId()));
     logger.println(FIELD_CREATESINGLEFILECOMMENTS + ": " + config.getCreateSingleFileComments());
     logger.println(
         FIELD_CREATECOMMENTWITHALLSINGLEFILECOMMENTS

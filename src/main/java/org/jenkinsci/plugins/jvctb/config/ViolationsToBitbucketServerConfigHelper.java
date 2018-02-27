@@ -11,8 +11,7 @@ public class ViolationsToBitbucketServerConfigHelper {
   public static final String FIELD_PROJECTKEY = "projectKey";
   public static final String FIELD_PULLREQUESTID = "pullRequestId";
   public static final String FIELD_REPOSLUG = "repoSlug";
-  public static final String FIELD_USERNAMEPASSWORDCREDENTIALSID = "usernamePasswordCredentialsId";
-  public static final String FIELD_PERSONALACCESSTOKEN = "personalAccessTokenId";
+  public static final String FIELD_CREDENTIALSID = "credentialsId";
   public static final String FIELD_MINSEVERITY = "minSeverity";
   public static final String FIELD_KEEP_OLD_COMMENTS = "keepOldComments";
 }

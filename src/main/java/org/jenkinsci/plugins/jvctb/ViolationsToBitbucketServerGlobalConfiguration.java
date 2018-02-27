@@ -8,12 +8,16 @@ import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.plugins.jvctb.config.CredentialsHelper;
 import org.kohsuke.accmod.Restricted;
 import org.kohsuke.accmod.restrictions.NoExternalUse;
+import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundSetter;
+import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
 
 import com.google.common.base.Optional;
 
 import hudson.Extension;
+import hudson.model.Item;
+import hudson.util.FormValidation;
 import hudson.util.ListBoxModel;
 import jenkins.model.GlobalConfiguration;
 import net.sf.json.JSONObject;
@@ -36,14 +40,15 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
         GlobalConfiguration.all().get(ViolationsToBitbucketServerGlobalConfiguration.class));
   }
 
-  public String bitbucketServerUrl;
-  @Deprecated private transient String password;
-  public String projectKey;
-  public String repoSlug;
-  @Deprecated private transient String username;
-  private String usernamePasswordCredentialsId;
+  private String bitbucketServerUrl;
+  private String projectKey;
+  private String repoSlug;
   private SEVERITY minSeverity = SEVERITY.INFO;
-  private String personalAccessTokenId;
+  private String credentialsId;
+  @Deprecated private transient String password;
+  @Deprecated private transient String username;
+  @Deprecated private transient String usernamePasswordCredentialsId;
+  @Deprecated private transient String personalAccessTokenId;
 
   public ViolationsToBitbucketServerGlobalConfiguration() {
     load();
@@ -65,12 +70,20 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
     return items;
   }
 
-  public ListBoxModel doFillUsernamePasswordCredentialsIdItems() {
-    return CredentialsHelper.doFillUsernamePasswordCredentialsIdItems();
+  @SuppressWarnings("unused") // Used by stapler
+  public ListBoxModel doFillCredentialsIdItems(
+      @AncestorInPath Item item,
+      @QueryParameter String credentialsId,
+      @QueryParameter String bitbucketServerUrl) {
+    return CredentialsHelper.doFillCredentialsIdItems(item, credentialsId, bitbucketServerUrl);
   }
 
-  public ListBoxModel doFillPersonalAccessTokenIdItems() {
-    return CredentialsHelper.doFillPersonalAccessTokenIdItems();
+  @SuppressWarnings("unused") // Used by stapler
+  public FormValidation doCheckCredentialsId(
+      @AncestorInPath Item item,
+      @QueryParameter String value,
+      @QueryParameter String bitbucketServerUrl) {
+    return CredentialsHelper.doCheckFillCredentialsId(item, value, bitbucketServerUrl);
   }
 
   public String getBitbucketServerUrl() {
@@ -85,8 +98,8 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
     return this.repoSlug;
   }
 
-  public String getUsernamePasswordCredentialsId() {
-    return this.usernamePasswordCredentialsId;
+  public String getCredentialsId() {
+    return this.credentialsId;
   }
 
   @DataBoundSetter
@@ -114,24 +127,20 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
   }
 
   @DataBoundSetter
-  public void setUsernamePasswordCredentialsId(final String usernamePasswordCredentialsId) {
-    this.usernamePasswordCredentialsId = usernamePasswordCredentialsId;
-  }
-
-  @DataBoundSetter
-  public void setPersonalAccessTokenId(final String personalAccessTokenId) {
-    this.personalAccessTokenId = personalAccessTokenId;
-  }
-
-  public String getPersonalAccessTokenId() {
-    return personalAccessTokenId;
+  public void setCredentialsId(final String credentialsId) {
+    this.credentialsId = credentialsId;
   }
 
   private Object readResolve() {
-    if (StringUtils.isBlank(usernamePasswordCredentialsId)
-        && username != null
-        && password != null) {
-      usernamePasswordCredentialsId = migrateCredentials(username, password);
+    if (StringUtils.isBlank(credentialsId)) {
+      if (personalAccessTokenId != null) {
+        credentialsId = personalAccessTokenId;
+      } else if (usernamePasswordCredentialsId != null) {
+        credentialsId = usernamePasswordCredentialsId;
+      }
+    }
+    if (StringUtils.isBlank(credentialsId) && username != null && password != null) {
+      credentialsId = migrateCredentials(username, password);
     }
     return this;
   }
@@ -142,15 +151,9 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
     int result = 1;
     result = prime * result + (bitbucketServerUrl == null ? 0 : bitbucketServerUrl.hashCode());
     result = prime * result + (minSeverity == null ? 0 : minSeverity.hashCode());
-    result =
-        prime * result + (personalAccessTokenId == null ? 0 : personalAccessTokenId.hashCode());
     result = prime * result + (projectKey == null ? 0 : projectKey.hashCode());
     result = prime * result + (repoSlug == null ? 0 : repoSlug.hashCode());
-    result =
-        prime * result
-            + (usernamePasswordCredentialsId == null
-                ? 0
-                : usernamePasswordCredentialsId.hashCode());
+    result = prime * result + (credentialsId == null ? 0 : credentialsId.hashCode());
     return result;
   }
 
@@ -177,13 +180,6 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
     if (minSeverity != other.minSeverity) {
       return false;
     }
-    if (personalAccessTokenId == null) {
-      if (other.personalAccessTokenId != null) {
-        return false;
-      }
-    } else if (!personalAccessTokenId.equals(other.personalAccessTokenId)) {
-      return false;
-    }
     if (projectKey == null) {
       if (other.projectKey != null) {
         return false;
@@ -198,11 +194,11 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
     } else if (!repoSlug.equals(other.repoSlug)) {
       return false;
     }
-    if (usernamePasswordCredentialsId == null) {
-      if (other.usernamePasswordCredentialsId != null) {
+    if (credentialsId == null) {
+      if (other.credentialsId != null) {
         return false;
       }
-    } else if (!usernamePasswordCredentialsId.equals(other.usernamePasswordCredentialsId)) {
+    } else if (!credentialsId.equals(other.credentialsId)) {
       return false;
     }
     return true;
@@ -216,12 +212,10 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
         + projectKey
         + ", repoSlug="
         + repoSlug
-        + ", usernamePasswordCredentialsId="
-        + usernamePasswordCredentialsId
+        + ", credentialsId="
+        + credentialsId
         + ", minSeverity="
         + minSeverity
-        + ", personalAccessTokenId="
-        + personalAccessTokenId
         + "]";
   }
 }

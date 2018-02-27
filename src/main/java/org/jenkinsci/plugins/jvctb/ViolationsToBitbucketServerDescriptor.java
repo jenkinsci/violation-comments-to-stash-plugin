@@ -7,6 +7,7 @@ import org.jenkinsci.Symbol;
 import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
 import org.kohsuke.stapler.StaplerRequest;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Extension;
 import hudson.model.AbstractProject;
 import hudson.tasks.BuildStepDescriptor;
@@ -43,9 +44,10 @@ public final class ViolationsToBitbucketServerDescriptor extends BuildStepDescri
   }
 
   @Override
-  public Publisher newInstance(final StaplerRequest req, final JSONObject formData)
+  public Publisher newInstance(final StaplerRequest req, @NonNull final JSONObject formData)
       throws hudson.model.Descriptor.FormException {
-    if (formData != null) {
+    assert req != null;
+    if (formData.has("config")) {
       final JSONObject config = formData.getJSONObject("config");
       final String minSeverity = config.getString(FIELD_MINSEVERITY);
       if (StringUtils.isBlank(minSeverity)) {

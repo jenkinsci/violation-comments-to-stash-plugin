@@ -1,9 +1,14 @@
 package org.jenkinsci.plugins.jvctb;
 
-import javax.annotation.Nonnull;
+import static hudson.tasks.BuildStepMonitor.NONE;
+import static org.jenkinsci.plugins.jvctb.perform.JvctbPerformer.jvctsPerform;
+
 import java.io.IOException;
 
-import hudson.Extension;
+import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
+import org.kohsuke.stapler.DataBoundConstructor;
+
+import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.FilePath;
 import hudson.Launcher;
 import hudson.model.Run;
@@ -13,11 +18,6 @@ import hudson.tasks.BuildStepMonitor;
 import hudson.tasks.Publisher;
 import hudson.tasks.Recorder;
 import jenkins.tasks.SimpleBuildStep;
-import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
-import org.kohsuke.stapler.DataBoundConstructor;
-
-import static hudson.tasks.BuildStepMonitor.NONE;
-import static org.jenkinsci.plugins.jvctb.perform.JvctbPerformer.jvctsPerform;
 
 public class ViolationsToBitbucketServerRecorder extends Recorder implements SimpleBuildStep {
 
@@ -49,10 +49,10 @@ public class ViolationsToBitbucketServerRecorder extends Recorder implements Sim
 
   @Override
   public void perform(
-      @Nonnull Run<?, ?> build,
-      @Nonnull FilePath filePath,
-      @Nonnull Launcher launcher,
-      @Nonnull TaskListener listener)
+      @NonNull Run<?, ?> build,
+      @NonNull FilePath filePath,
+      @NonNull Launcher launcher,
+      @NonNull TaskListener listener)
       throws InterruptedException, IOException {
 
     ViolationsToBitbucketServerConfig combinedConfig =
