@@ -24,8 +24,7 @@ node {
     projectKey: 'PROJ', 
     repoSlug: 'violations-test',
     
-    usernamePasswordCredentialsId: 'bitbucketservercredentials', // You only need one of these
-    personalAccessTokenId: 'personalAccessTokenId',
+    credentialsId: 'bitbucketservercredentials',
     
     pullRequestId: '1', 
     minSeverity: 'INFO',

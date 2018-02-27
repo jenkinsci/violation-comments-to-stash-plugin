@@ -2,6 +2,49 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## Unreleased
+### GitHub [#50](https://github.com/jenkinsci/violation-comments-to-stash-plugin/pull/50) Combined credentials and item always being null
+
+**Combined credentials and item always being null (#50)**
+
+ * fix java classes to eol of lf to avoid commit nightmare on windows 
+ * because of build&#39;s use of format plugin 
+ * Combine credentials into one 
+ * cleanup/fix findbug warnings 
+ * missed transient on deprecated fields 
+ * Correct find Credential to use item to get a folder credential correctly 
+ * Correct readResolve 
+ * Code Style bummer :sob: 
+ * assert req is not null instead of suppressing the error 
+ * fixup 
+ * add DoCheck and adhere to consumer doc 
+ * Correct usage of credentials 
+ * Follow the import style 
+ * use uri as name instead 
+ * Nonnull is bad for licensing 
+ * minor tweaks 
+ * description and help 
+
+[e1882073fc256f5](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/e1882073fc256f5) Joseph Petersen *2018-02-27 18:15:17*
+
+
+### No issue
+
+**Update Jenkinsfile**
+
+
+[19ba0150826779c](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/19ba0150826779c) Joseph Petersen *2018-02-24 15:01:03*
+
+
+## 1.69
+### No issue
+
+**PCLint**
+
+
+[6323a6c9837ff84](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/6323a6c9837ff84) Tomas Bjerre *2018-02-13 19:07:12*
+
+
 ## 1.68
 ### GitHub [#47](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/47) Personal Access Tokens
 
