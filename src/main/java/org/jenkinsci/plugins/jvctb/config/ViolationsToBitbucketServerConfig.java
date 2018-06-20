@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.jenkinsci.plugins.jvctb.ViolationsToBitbucketServerGlobalConfiguration;
 import org.kohsuke.accmod.Restricted;
 import org.kohsuke.accmod.restrictions.NoExternalUse;
 import org.kohsuke.stapler.AncestorInPath;
@@ -71,21 +70,24 @@ public class ViolationsToBitbucketServerConfig
     this.keepOldComments = rhs.keepOldComments;
   }
 
-  public void applyDefaults(final ViolationsToBitbucketServerGlobalConfiguration defaults) {
+  public void apply(final ViolationsToBitbucketServerConfig config) {
     if (isNullOrEmpty(bitbucketServerUrl)) {
-      bitbucketServerUrl = defaults.getBitbucketServerUrl();
+      bitbucketServerUrl = config.getBitbucketServerUrl();
     }
     if (isNullOrEmpty(credentialsId)) {
-      credentialsId = defaults.getCredentialsId();
+      credentialsId = config.getCredentialsId();
     }
     if (isNullOrEmpty(repoSlug)) {
-      repoSlug = defaults.getRepoSlug();
+      repoSlug = config.getRepoSlug();
     }
     if (isNullOrEmpty(projectKey)) {
-      projectKey = defaults.getProjectKey();
+      projectKey = config.getProjectKey();
+    }
+    if (isNullOrEmpty(pullRequestId)) {
+      pullRequestId = config.getPullRequestId();
     }
     if (this.minSeverity == null) {
-      this.minSeverity = defaults.getMinSeverity();
+      this.minSeverity = config.getMinSeverity();
     }
   }
 

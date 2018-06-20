@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.plugins.jvctb.config.CredentialsHelper;
+import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
 import org.kohsuke.accmod.Restricted;
 import org.kohsuke.accmod.restrictions.NoExternalUse;
 import org.kohsuke.stapler.AncestorInPath;
@@ -84,6 +85,16 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
       @QueryParameter String value,
       @QueryParameter String bitbucketServerUrl) {
     return CredentialsHelper.doCheckFillCredentialsId(item, value, bitbucketServerUrl);
+  }
+
+  public ViolationsToBitbucketServerConfig getConfig() {
+    final ViolationsToBitbucketServerConfig config = new ViolationsToBitbucketServerConfig();
+    config.setBitbucketServerUrl(bitbucketServerUrl);
+    config.setCredentialsId(credentialsId);
+    config.setProjectKey(projectKey);
+    config.setRepoSlug(repoSlug);
+
+    return config;
   }
 
   public String getBitbucketServerUrl() {

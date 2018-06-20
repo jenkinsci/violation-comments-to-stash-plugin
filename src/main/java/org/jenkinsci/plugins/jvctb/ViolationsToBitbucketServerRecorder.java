@@ -8,6 +8,8 @@ import java.io.IOException;
 import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
 import org.kohsuke.stapler.DataBoundConstructor;
 
+import com.google.common.base.Optional;
+
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.FilePath;
 import hudson.Launcher;
@@ -57,11 +59,19 @@ public class ViolationsToBitbucketServerRecorder extends Recorder implements Sim
 
     ViolationsToBitbucketServerConfig combinedConfig =
         new ViolationsToBitbucketServerConfig(this.config);
-    ViolationsToBitbucketServerGlobalConfiguration defaults =
-        ViolationsToBitbucketServerGlobalConfiguration.get()
-            .or(new ViolationsToBitbucketServerGlobalConfiguration());
 
-    combinedConfig.applyDefaults(defaults);
+    ViolationsToBitbucketServerConfig defaults =
+        ViolationsToBitbucketServerGlobalConfiguration.get()
+            .or(new ViolationsToBitbucketServerGlobalConfiguration())
+            .getConfig();
+
+    combinedConfig.apply(defaults);
+
+    Optional<ViolationsToBitbucketServerConfig> jobConfig =
+        ViolationsToBitbucketServerJobConfiguration.getConfig(build);
+    if (jobConfig.isPresent()) {
+      combinedConfig.apply(jobConfig.get());
+    }
 
     jvctsPerform(combinedConfig, filePath, build, listener);
   }
