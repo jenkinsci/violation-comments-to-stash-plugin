@@ -13,6 +13,11 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 ### No issue
 
+**Custom template**
+
+
+[7848e95f1bae3d2](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/7848e95f1bae3d2) Tomas Bjerre *2018-07-04 13:24:34*
+
 **Correcting license**
 
 
