@@ -41,6 +41,7 @@ public class ViolationsToBitbucketServerConfig
   private int commentOnlyChangedContentContext;
   private SEVERITY minSeverity;
   private boolean keepOldComments;
+  private String commentTemplate;
   @Deprecated private transient String username;
   @Deprecated private transient String password;
   @Deprecated private transient String usernamePasswordCredentialsId;
@@ -69,6 +70,7 @@ public class ViolationsToBitbucketServerConfig
     commentOnlyChangedContentContext = rhs.commentOnlyChangedContentContext;
     this.minSeverity = rhs.minSeverity;
     this.keepOldComments = rhs.keepOldComments;
+    this.commentTemplate = rhs.commentTemplate;
   }
 
   public void applyDefaults(final ViolationsToBitbucketServerGlobalConfiguration defaults) {
@@ -327,6 +329,15 @@ public class ViolationsToBitbucketServerConfig
     return keepOldComments;
   }
 
+  public String getCommentTemplate() {
+    return commentTemplate;
+  }
+
+  @DataBoundSetter
+  public void setCommentTemplate(final String commentTemplate) {
+    this.commentTemplate = commentTemplate;
+  }
+
   @DataBoundSetter
   public void setKeepOldComments(final boolean keepOldComments) {
     this.keepOldComments = keepOldComments;
@@ -352,17 +363,17 @@ public class ViolationsToBitbucketServerConfig
 
     @SuppressWarnings("unused") // Used by stapler
     public ListBoxModel doFillCredentialsIdItems(
-        @AncestorInPath Item item,
-        @QueryParameter String credentialsId,
-        @QueryParameter String bitbucketServerUrl) {
+        @AncestorInPath final Item item,
+        @QueryParameter final String credentialsId,
+        @QueryParameter final String bitbucketServerUrl) {
       return CredentialsHelper.doFillCredentialsIdItems(item, credentialsId, bitbucketServerUrl);
     }
 
     @SuppressWarnings("unused") // Used by stapler
     public FormValidation doCheckCredentialsId(
-        @AncestorInPath Item item,
-        @QueryParameter String value,
-        @QueryParameter String bitbucketServerUrl) {
+        @AncestorInPath final Item item,
+        @QueryParameter final String value,
+        @QueryParameter final String bitbucketServerUrl) {
       return CredentialsHelper.doCheckFillCredentialsId(item, value, bitbucketServerUrl);
     }
   }

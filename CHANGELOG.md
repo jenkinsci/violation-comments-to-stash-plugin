@@ -2,6 +2,28 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## Unreleased
+### GitHub [#33](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/33) No PR comments for Finbugs
+
+**NullAway #33**
+
+
+[7d5295cf45980fe](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/7d5295cf45980fe) Tomas Bjerre *2018-04-14 05:17:26*
+
+
+### No issue
+
+**Correcting license**
+
+
+[e18a627299de812](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/e18a627299de812) Tomas Bjerre *2018-06-21 17:21:06*
+
+**Licenseus**
+
+
+[e05c853098ca607](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/e05c853098ca607) Tomas Bjerre *2018-06-14 15:28:51*
+
+
 ## 1.70
 ### GitHub [#50](https://github.com/jenkinsci/violation-comments-to-stash-plugin/pull/50) Combined credentials and item always being null
 

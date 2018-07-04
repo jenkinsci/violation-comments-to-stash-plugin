@@ -59,6 +59,13 @@
         </f:description>
     </f:optionalBlock>
 
+  <f:entry title="Comment template" field="commentTemplate">
+    <f:textarea style="width: 500px; height: 200px"/>
+    <f:description>
+     Optional, leave empty for default template. It is documented <a href="https://github.com/tomasbjerre/violation-comments-lib" targe="_blank">here</a>.
+    </f:description>
+  </f:entry>
+
     <f:entry>
         <table class="xmlFilenamePatterns" cellspacing="5">
             <tr>

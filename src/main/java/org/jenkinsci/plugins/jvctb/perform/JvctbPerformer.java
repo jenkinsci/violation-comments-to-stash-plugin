@@ -112,16 +112,17 @@ public class JvctbPerformer {
     try {
       final ViolationCommentsToBitbucketServerApi b = violationCommentsToBitbucketServerApi();
       if (credentials instanceof StandardUsernamePasswordCredentials) {
-        StandardUsernamePasswordCredentials usernamePassword =
+        final StandardUsernamePasswordCredentials usernamePassword =
             (StandardUsernamePasswordCredentials) credentials;
         b //
             .withUsername(usernamePassword.getUsername()) //
             .withPassword(Secret.toString(usernamePassword.getPassword()));
       } else if (credentials instanceof StringCredentials) {
-        StringCredentials personalAccessToken = (StringCredentials) credentials;
+        final StringCredentials personalAccessToken = (StringCredentials) credentials;
         b //
             .withPersonalAccessToken(Secret.toString(personalAccessToken.getSecret()));
       }
+      final String commentTemplate = config.getCommentTemplate();
       b //
           .withBitbucketServerUrl(config.getBitbucketServerUrl()) //
           .withPullRequestId(pullRequestIdInt) //
@@ -134,6 +135,7 @@ public class JvctbPerformer {
           .withCommentOnlyChangedContent(config.getCommentOnlyChangedContent()) //
           .withCommentOnlyChangedContentContext(config.getCommentOnlyChangedContentContext()) //
           .withShouldKeepOldComments(config.isKeepOldComments()) //
+          .withCommentTemplate(commentTemplate) //
           .toPullRequest();
     } catch (final Exception e) {
       Logger.getLogger(JvctbPerformer.class.getName()).log(SEVERE, "", e);
@@ -160,6 +162,7 @@ public class JvctbPerformer {
     expanded.setCommentOnlyChangedContentContext(config.getCommentOnlyChangedContentContext());
     expanded.setMinSeverity(config.getMinSeverity());
     expanded.setKeepOldComments(config.isKeepOldComments());
+    expanded.setCommentTemplate(config.getCommentTemplate());
 
     for (final ViolationConfig violationConfig : config.getViolationConfigs()) {
       final String pattern = environment.expand(violationConfig.getPattern());
@@ -252,6 +255,7 @@ public class JvctbPerformer {
             + config.getCommentOnlyChangedContentContext());
     logger.println(FIELD_MINSEVERITY + ": " + config.getMinSeverity());
     logger.println(FIELD_KEEP_OLD_COMMENTS + ": " + config.isKeepOldComments());
+    logger.println("commentTemplate: " + config.getCommentTemplate());
 
     for (final ViolationConfig violationConfig : config.getViolationConfigs()) {
       logger.println(
