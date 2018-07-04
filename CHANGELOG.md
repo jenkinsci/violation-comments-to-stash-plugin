@@ -2,7 +2,16 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
-## Unreleased
+## 1.72
+### No issue
+
+**GCC, ARM GCC and Doxygen**
+
+
+[d58d69fe3184abe](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/d58d69fe3184abe) Tomas Bjerre *2018-07-04 18:22:28*
+
+
+## 1.71
 ### GitHub [#33](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/33) No PR comments for Finbugs
 
 **NullAway #33**
