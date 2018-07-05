@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.73
+### No issue
+
+**Using proxy if configured**
+
+
+[1e1695e17d9e2d2](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/1e1695e17d9e2d2) Tomas Bjerre *2018-07-05 14:30:14*
+
+
 ## 1.72
 ### No issue
 
