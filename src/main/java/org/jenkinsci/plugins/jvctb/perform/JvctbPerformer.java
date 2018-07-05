@@ -28,7 +28,11 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
+import java.net.Proxy;
+import java.net.SocketAddress;
+import java.net.URL;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -46,10 +50,12 @@ import com.google.common.io.CharStreams;
 import hudson.EnvVars;
 import hudson.FilePath;
 import hudson.FilePath.FileCallable;
+import hudson.ProxyConfiguration;
 import hudson.model.Run;
 import hudson.model.TaskListener;
 import hudson.remoting.VirtualChannel;
 import hudson.util.Secret;
+import jenkins.model.Jenkins;
 import se.bjurr.violations.comments.bitbucketserver.lib.ViolationCommentsToBitbucketServerApi;
 import se.bjurr.violations.lib.model.SEVERITY;
 import se.bjurr.violations.lib.model.Violation;
@@ -122,6 +128,9 @@ public class JvctbPerformer {
         b //
             .withPersonalAccessToken(Secret.toString(personalAccessToken.getSecret()));
       }
+
+      configureProxy(listener.getLogger(), b, config.getBitbucketServerUrl());
+
       final String commentTemplate = config.getCommentTemplate();
       b //
           .withBitbucketServerUrl(config.getBitbucketServerUrl()) //
@@ -142,6 +151,49 @@ public class JvctbPerformer {
       final StringWriter sw = new StringWriter();
       e.printStackTrace(new PrintWriter(sw));
       listener.getLogger().println(sw.toString());
+    }
+  }
+
+  private static void configureProxy(
+      final PrintStream logger,
+      final ViolationCommentsToBitbucketServerApi b,
+      final String urlString)
+      throws MalformedURLException {
+    final Jenkins jenkins = Jenkins.getInstance();
+    if (jenkins == null) {
+      logger.println("Not using proxy, no Jenkins instance.");
+      return;
+    }
+
+    final ProxyConfiguration proxyConfig = jenkins.proxy;
+    if (proxyConfig == null) {
+      logger.println("Not using proxy, no proxy configured.");
+      return;
+    }
+
+    final Proxy proxy = proxyConfig.createProxy(new URL(urlString).getHost());
+    if (proxy == null || proxy.type() != Proxy.Type.HTTP) {
+      logger.println("Not using proxy, not HTTP.");
+      return;
+    }
+
+    final SocketAddress addr = proxy.address();
+    if (addr == null || !(addr instanceof InetSocketAddress)) {
+      logger.println("Not using proxy, addr not InetSocketAddress.");
+      return;
+    }
+
+    final InetSocketAddress proxyAddr = (InetSocketAddress) addr;
+    final String proxyHost = proxyAddr.getAddress().getHostAddress();
+    final int proxyPort = proxyAddr.getPort();
+    b.withProxyHostNameOrIp(proxyHost);
+    b.withProxyHostPort(proxyPort);
+
+    final String proxyUser = proxyConfig.getUserName();
+    if (proxyUser != null) {
+      final String proxyPass = proxyConfig.getPassword();
+      b.withProxyUser(proxyUser);
+      b.withProxyPassword(proxyPass);
     }
   }
 
