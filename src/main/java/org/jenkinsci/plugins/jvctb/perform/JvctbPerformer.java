@@ -141,6 +141,7 @@ public class JvctbPerformer {
           .withCreateCommentWithAllSingleFileComments(
               config.getCreateCommentWithAllSingleFileComments()) //
           .withCreateSingleFileComments(config.getCreateSingleFileComments()) //
+          .withCreateSingleFileCommentsTasks(config.getCreateSingleFileCommentsTasks()) //
           .withCommentOnlyChangedContent(config.getCommentOnlyChangedContent()) //
           .withCommentOnlyChangedContentContext(config.getCommentOnlyChangedContentContext()) //
           .withShouldKeepOldComments(config.isKeepOldComments()) //
@@ -209,6 +210,7 @@ public class JvctbPerformer {
     expanded.setCreateCommentWithAllSingleFileComments(
         config.getCreateCommentWithAllSingleFileComments());
     expanded.setCreateSingleFileComments(config.getCreateSingleFileComments());
+    expanded.setCreateSingleFileCommentsTasks(config.getCreateSingleFileCommentsTasks());
     expanded.setCredentialsId(config.getCredentialsId());
     expanded.setCommentOnlyChangedContent(config.getCommentOnlyChangedContent());
     expanded.setCommentOnlyChangedContentContext(config.getCommentOnlyChangedContentContext());
@@ -296,6 +298,7 @@ public class JvctbPerformer {
     logger.println(FIELD_PULLREQUESTID + ": " + config.getPullRequestId());
     logger.println(FIELD_CREDENTIALSID + ": " + !isNullOrEmpty(config.getCredentialsId()));
     logger.println(FIELD_CREATESINGLEFILECOMMENTS + ": " + config.getCreateSingleFileComments());
+    logger.println("createSingleFileCommentsTasks: " + config.getCreateSingleFileCommentsTasks());
     logger.println(
         FIELD_CREATECOMMENTWITHALLSINGLEFILECOMMENTS
             + ": "

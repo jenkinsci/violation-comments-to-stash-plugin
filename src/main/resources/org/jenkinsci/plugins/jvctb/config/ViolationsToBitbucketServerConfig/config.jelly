@@ -45,6 +45,10 @@
         <f:checkbox default="true" />
     </f:entry>
 
+    <f:entry title="Create one task per violation" field="createSingleFileCommentsTasks">
+        <f:checkbox default="true" />
+    </f:entry>
+
     <f:entry title="Create one big comment with all violations" field="createCommentWithAllSingleFileComments">
         <f:checkbox />
     </f:entry>

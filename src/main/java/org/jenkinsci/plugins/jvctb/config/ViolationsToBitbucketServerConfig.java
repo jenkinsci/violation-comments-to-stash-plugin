@@ -33,6 +33,7 @@ public class ViolationsToBitbucketServerConfig
   private String bitbucketServerUrl;
   private boolean createCommentWithAllSingleFileComments;
   private boolean createSingleFileComments;
+  private boolean createSingleFileCommentsTasks;
   private String projectKey;
   private String pullRequestId;
   private String repoSlug;
@@ -71,6 +72,7 @@ public class ViolationsToBitbucketServerConfig
     this.minSeverity = rhs.minSeverity;
     this.keepOldComments = rhs.keepOldComments;
     this.commentTemplate = rhs.commentTemplate;
+    this.createSingleFileCommentsTasks = rhs.createSingleFileCommentsTasks;
   }
 
   public void applyDefaults(final ViolationsToBitbucketServerGlobalConfiguration defaults) {
@@ -130,10 +132,27 @@ public class ViolationsToBitbucketServerConfig
     if (commentOnlyChangedContentContext != other.commentOnlyChangedContentContext) {
       return false;
     }
+    if (commentTemplate == null) {
+      if (other.commentTemplate != null) {
+        return false;
+      }
+    } else if (!commentTemplate.equals(other.commentTemplate)) {
+      return false;
+    }
     if (createCommentWithAllSingleFileComments != other.createCommentWithAllSingleFileComments) {
       return false;
     }
     if (createSingleFileComments != other.createSingleFileComments) {
+      return false;
+    }
+    if (createSingleFileCommentsTasks != other.createSingleFileCommentsTasks) {
+      return false;
+    }
+    if (credentialsId == null) {
+      if (other.credentialsId != null) {
+        return false;
+      }
+    } else if (!credentialsId.equals(other.credentialsId)) {
       return false;
     }
     if (keepOldComments != other.keepOldComments) {
@@ -161,13 +180,6 @@ public class ViolationsToBitbucketServerConfig
         return false;
       }
     } else if (!repoSlug.equals(other.repoSlug)) {
-      return false;
-    }
-    if (credentialsId == null) {
-      if (other.credentialsId != null) {
-        return false;
-      }
-    } else if (!credentialsId.equals(other.credentialsId)) {
       return false;
     }
     if (violationConfigs == null) {
@@ -227,14 +239,16 @@ public class ViolationsToBitbucketServerConfig
     result = prime * result + (bitbucketServerUrl == null ? 0 : bitbucketServerUrl.hashCode());
     result = prime * result + (commentOnlyChangedContent ? 1231 : 1237);
     result = prime * result + commentOnlyChangedContentContext;
+    result = prime * result + (commentTemplate == null ? 0 : commentTemplate.hashCode());
     result = prime * result + (createCommentWithAllSingleFileComments ? 1231 : 1237);
     result = prime * result + (createSingleFileComments ? 1231 : 1237);
+    result = prime * result + (createSingleFileCommentsTasks ? 1231 : 1237);
+    result = prime * result + (credentialsId == null ? 0 : credentialsId.hashCode());
     result = prime * result + (keepOldComments ? 1231 : 1237);
     result = prime * result + (minSeverity == null ? 0 : minSeverity.hashCode());
     result = prime * result + (projectKey == null ? 0 : projectKey.hashCode());
     result = prime * result + (pullRequestId == null ? 0 : pullRequestId.hashCode());
     result = prime * result + (repoSlug == null ? 0 : repoSlug.hashCode());
-    result = prime * result + (credentialsId == null ? 0 : credentialsId.hashCode());
     result = prime * result + (violationConfigs == null ? 0 : violationConfigs.hashCode());
     return result;
   }
@@ -294,6 +308,15 @@ public class ViolationsToBitbucketServerConfig
   @DataBoundSetter
   public void setViolationConfigs(final List<ViolationConfig> parsers) {
     violationConfigs = parsers;
+  }
+
+  public boolean getCreateSingleFileCommentsTasks() {
+    return createSingleFileCommentsTasks;
+  }
+
+  @DataBoundSetter
+  public void setCreateSingleFileCommentsTasks(final boolean createSingleFileCommentsTasks) {
+    this.createSingleFileCommentsTasks = createSingleFileCommentsTasks;
   }
 
   @Override
