@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.74
+### No issue
+
+**Optionally create tasks for each violation**
+
+
+[3d3363205915f98](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/3d3363205915f98) Tomas Bjerre *2018-07-06 15:49:09*
+
+
 ## 1.73
 ### No issue
 
