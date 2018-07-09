@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.75
+### No issue
+
+**Avoiding NPE when removing comment**
+
+
+[4746286d3643e8d](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/4746286d3643e8d) Tomas Bjerre *2018-07-09 11:05:29*
+
+
 ## 1.74
 ### No issue
 
