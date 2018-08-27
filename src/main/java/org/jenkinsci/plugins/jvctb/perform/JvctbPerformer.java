@@ -66,6 +66,7 @@ public class JvctbPerformer {
 
   @VisibleForTesting
   public static void doPerform(
+      ViolationCommentsToBitbucketServerApi violationCommentsToBitbucketServerApi,
       final ViolationsToBitbucketServerConfig config,
       final File workspace,
       final StandardCredentials credentials,
@@ -116,23 +117,20 @@ public class JvctbPerformer {
                 + config.getBitbucketServerUrl());
 
     try {
-      final ViolationCommentsToBitbucketServerApi b = violationCommentsToBitbucketServerApi();
       if (credentials instanceof StandardUsernamePasswordCredentials) {
         final StandardUsernamePasswordCredentials usernamePassword =
             (StandardUsernamePasswordCredentials) credentials;
-        b //
+        violationCommentsToBitbucketServerApi //
             .withUsername(usernamePassword.getUsername()) //
             .withPassword(Secret.toString(usernamePassword.getPassword()));
       } else if (credentials instanceof StringCredentials) {
         final StringCredentials personalAccessToken = (StringCredentials) credentials;
-        b //
+        violationCommentsToBitbucketServerApi //
             .withPersonalAccessToken(Secret.toString(personalAccessToken.getSecret()));
       }
 
-      configureProxy(listener.getLogger(), b, config.getBitbucketServerUrl());
-
       final String commentTemplate = config.getCommentTemplate();
-      b //
+      violationCommentsToBitbucketServerApi //
           .withBitbucketServerUrl(config.getBitbucketServerUrl()) //
           .withPullRequestId(pullRequestIdInt) //
           .withProjectKey(config.getProjectKey()) //
@@ -152,49 +150,6 @@ public class JvctbPerformer {
       final StringWriter sw = new StringWriter();
       e.printStackTrace(new PrintWriter(sw));
       listener.getLogger().println(sw.toString());
-    }
-  }
-
-  private static void configureProxy(
-      final PrintStream logger,
-      final ViolationCommentsToBitbucketServerApi b,
-      final String urlString)
-      throws MalformedURLException {
-    final Jenkins jenkins = Jenkins.getInstance();
-    if (jenkins == null) {
-      logger.println("Not using proxy, no Jenkins instance.");
-      return;
-    }
-
-    final ProxyConfiguration proxyConfig = jenkins.proxy;
-    if (proxyConfig == null) {
-      logger.println("Not using proxy, no proxy configured.");
-      return;
-    }
-
-    final Proxy proxy = proxyConfig.createProxy(new URL(urlString).getHost());
-    if (proxy == null || proxy.type() != Proxy.Type.HTTP) {
-      logger.println("Not using proxy, not HTTP.");
-      return;
-    }
-
-    final SocketAddress addr = proxy.address();
-    if (addr == null || !(addr instanceof InetSocketAddress)) {
-      logger.println("Not using proxy, addr not InetSocketAddress.");
-      return;
-    }
-
-    final InetSocketAddress proxyAddr = (InetSocketAddress) addr;
-    final String proxyHost = proxyAddr.getAddress().getHostAddress();
-    final int proxyPort = proxyAddr.getPort();
-    b.withProxyHostNameOrIp(proxyHost);
-    b.withProxyHostPort(proxyPort);
-
-    final String proxyUser = proxyConfig.getUserName();
-    if (proxyUser != null) {
-      final String proxyPass = proxyConfig.getPassword();
-      b.withProxyUser(proxyUser);
-      b.withProxyPassword(proxyPass);
     }
   }
 
@@ -236,6 +191,7 @@ public class JvctbPerformer {
   }
 
   public static void jvctsPerform(
+      ViolationCommentsToBitbucketServerApi violationCommentsToBitbucketServerApi,
       final ViolationsToBitbucketServerConfig configUnexpanded,
       final FilePath fp,
       final Run<?, ?> build,
@@ -274,7 +230,12 @@ public class JvctbPerformer {
                 throws IOException, InterruptedException {
               setupFindBugsMessages();
               listener.getLogger().println("Workspace: " + workspace.getAbsolutePath());
-              doPerform(configExpanded, workspace, credentials.orNull(), listener);
+              doPerform(
+                  violationCommentsToBitbucketServerApi,
+                  configExpanded,
+                  workspace,
+                  credentials.orNull(),
+                  listener);
               return null;
             }
           });
