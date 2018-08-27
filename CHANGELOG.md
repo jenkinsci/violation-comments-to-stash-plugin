@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.76
+### GitHub [#56](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/56) Credentials not found error
+
+**Configuring proxy on master #56**
+
+
+[aaeaa779f700e50](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/aaeaa779f700e50) Tomas Bjerre *2018-08-27 09:01:48*
+
+
 ## 1.75
 ### No issue
 
