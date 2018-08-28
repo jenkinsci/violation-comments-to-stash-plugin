@@ -2,6 +2,23 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.77
+### GitHub # 
+
+**Fixing crash on slaves ##56**
+
+
+[c1565a4597cc001](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/c1565a4597cc001) Tomas Bjerre *2018-08-28 13:22:14*
+
+
+### GitHub [#56](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/56) Credentials not found error
+
+**Fixing crash on slaves ##56**
+
+
+[c1565a4597cc001](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/c1565a4597cc001) Tomas Bjerre *2018-08-28 13:22:14*
+
+
 ## 1.76
 ### GitHub [#56](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/56) Credentials not found error
 
