@@ -1,5 +1,37 @@
 package org.jenkinsci.plugins.jvctb.perform;
 
+import com.cloudbees.plugins.credentials.common.StandardCredentials;
+import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Optional;
+import com.google.common.io.CharStreams;
+import hudson.EnvVars;
+import hudson.FilePath;
+import hudson.FilePath.FileCallable;
+import hudson.model.Run;
+import hudson.model.TaskListener;
+import hudson.remoting.VirtualChannel;
+import hudson.util.Secret;
+import org.jenkinsci.plugins.jvctb.ProxyConfigDetails;
+import org.jenkinsci.plugins.jvctb.config.ViolationConfig;
+import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
+import org.jenkinsci.plugins.plaincredentials.StringCredentials;
+import org.jenkinsci.remoting.RoleChecker;
+import se.bjurr.violations.comments.bitbucketserver.lib.ViolationCommentsToBitbucketServerApi;
+import se.bjurr.violations.lib.model.SEVERITY;
+import se.bjurr.violations.lib.model.Violation;
+import se.bjurr.violations.lib.reports.Parser;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.net.MalformedURLException;
+import java.util.List;
+import java.util.logging.Logger;
+
 import static com.google.common.base.Charsets.UTF_8;
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.base.Throwables.propagate;
@@ -22,51 +54,12 @@ import static se.bjurr.violations.lib.ViolationsApi.violationsApi;
 import static se.bjurr.violations.lib.parsers.FindbugsParser.setFindbugsMessagesXml;
 import static se.bjurr.violations.lib.util.Filtering.withAtLEastSeverity;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.net.InetSocketAddress;
-import java.net.MalformedURLException;
-import java.net.Proxy;
-import java.net.SocketAddress;
-import java.net.URL;
-import java.util.List;
-import java.util.logging.Logger;
-
-import org.jenkinsci.plugins.jvctb.config.ViolationConfig;
-import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
-import org.jenkinsci.plugins.plaincredentials.StringCredentials;
-import org.jenkinsci.remoting.RoleChecker;
-
-import com.cloudbees.plugins.credentials.common.StandardCredentials;
-import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredentials;
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Optional;
-import com.google.common.io.CharStreams;
-
-import hudson.EnvVars;
-import hudson.FilePath;
-import hudson.FilePath.FileCallable;
-import hudson.ProxyConfiguration;
-import hudson.model.Run;
-import hudson.model.TaskListener;
-import hudson.remoting.VirtualChannel;
-import hudson.util.Secret;
-import jenkins.model.Jenkins;
-import se.bjurr.violations.comments.bitbucketserver.lib.ViolationCommentsToBitbucketServerApi;
-import se.bjurr.violations.lib.model.SEVERITY;
-import se.bjurr.violations.lib.model.Violation;
-import se.bjurr.violations.lib.reports.Parser;
-
 public class JvctbPerformer {
   private static Logger LOG = Logger.getLogger(JvctbPerformer.class.getSimpleName());
 
   @VisibleForTesting
   public static void doPerform(
-      ViolationCommentsToBitbucketServerApi violationCommentsToBitbucketServerApi,
+      ProxyConfigDetails proxyConfigDetails,
       final ViolationsToBitbucketServerConfig config,
       final File workspace,
       final StandardCredentials credentials,
@@ -115,7 +108,15 @@ public class JvctbPerformer {
                 + config.getPullRequestId()
                 + " on "
                 + config.getBitbucketServerUrl());
-
+    ViolationCommentsToBitbucketServerApi violationCommentsToBitbucketServerApi =
+        violationCommentsToBitbucketServerApi();
+    if (proxyConfigDetails != null) {
+      violationCommentsToBitbucketServerApi //
+          .withProxyHostNameOrIp(proxyConfigDetails.getHost()) //
+          .withProxyHostPort(proxyConfigDetails.getPort()) //
+          .withProxyUser(proxyConfigDetails.getUser()) //
+          .withProxyPassword(proxyConfigDetails.getPass());
+    }
     try {
       if (credentials instanceof StandardUsernamePasswordCredentials) {
         final StandardUsernamePasswordCredentials usernamePassword =
@@ -191,7 +192,7 @@ public class JvctbPerformer {
   }
 
   public static void jvctsPerform(
-      ViolationCommentsToBitbucketServerApi violationCommentsToBitbucketServerApi,
+      ProxyConfigDetails proxyConfigDetails,
       final ViolationsToBitbucketServerConfig configUnexpanded,
       final FilePath fp,
       final Run<?, ?> build,
@@ -231,11 +232,7 @@ public class JvctbPerformer {
               setupFindBugsMessages();
               listener.getLogger().println("Workspace: " + workspace.getAbsolutePath());
               doPerform(
-                  violationCommentsToBitbucketServerApi,
-                  configExpanded,
-                  workspace,
-                  credentials.orNull(),
-                  listener);
+                  proxyConfigDetails, configExpanded, workspace, credentials.orNull(), listener);
               return null;
             }
           });

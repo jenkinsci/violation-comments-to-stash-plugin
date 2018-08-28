@@ -1,8 +1,20 @@
 package org.jenkinsci.plugins.jvctb;
 
-import static hudson.tasks.BuildStepMonitor.NONE;
-import static org.jenkinsci.plugins.jvctb.perform.JvctbPerformer.jvctsPerform;
-import static se.bjurr.violations.comments.bitbucketserver.lib.ViolationCommentsToBitbucketServerApi.violationCommentsToBitbucketServerApi;
+import edu.umd.cs.findbugs.annotations.NonNull;
+import hudson.FilePath;
+import hudson.Launcher;
+import hudson.ProxyConfiguration;
+import hudson.model.Run;
+import hudson.model.TaskListener;
+import hudson.tasks.BuildStepDescriptor;
+import hudson.tasks.BuildStepMonitor;
+import hudson.tasks.Publisher;
+import hudson.tasks.Recorder;
+import jenkins.model.Jenkins;
+import jenkins.tasks.SimpleBuildStep;
+import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
+import org.kohsuke.stapler.DataBoundConstructor;
+import se.bjurr.violations.comments.bitbucketserver.lib.ViolationCommentsToBitbucketServerApi;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -12,22 +24,9 @@ import java.net.Proxy;
 import java.net.SocketAddress;
 import java.net.URL;
 
-import hudson.ProxyConfiguration;
-import jenkins.model.Jenkins;
-import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
-import org.kohsuke.stapler.DataBoundConstructor;
-
-import edu.umd.cs.findbugs.annotations.NonNull;
-import hudson.FilePath;
-import hudson.Launcher;
-import hudson.model.Run;
-import hudson.model.TaskListener;
-import hudson.tasks.BuildStepDescriptor;
-import hudson.tasks.BuildStepMonitor;
-import hudson.tasks.Publisher;
-import hudson.tasks.Recorder;
-import jenkins.tasks.SimpleBuildStep;
-import se.bjurr.violations.comments.bitbucketserver.lib.ViolationCommentsToBitbucketServerApi;
+import static hudson.tasks.BuildStepMonitor.NONE;
+import static org.jenkinsci.plugins.jvctb.perform.JvctbPerformer.jvctsPerform;
+import static se.bjurr.violations.comments.bitbucketserver.lib.ViolationCommentsToBitbucketServerApi.violationCommentsToBitbucketServerApi;
 
 public class ViolationsToBitbucketServerRecorder extends Recorder implements SimpleBuildStep {
 
@@ -74,55 +73,50 @@ public class ViolationsToBitbucketServerRecorder extends Recorder implements Sim
     combinedConfig.applyDefaults(defaults);
     ViolationCommentsToBitbucketServerApi violationCommentsToBitbucketServerApi =
         violationCommentsToBitbucketServerApi();
-    configureProxy(
-        listener.getLogger(),
-        violationCommentsToBitbucketServerApi,
-        config.getBitbucketServerUrl());
-    jvctsPerform(violationCommentsToBitbucketServerApi, combinedConfig, filePath, build, listener);
+    ProxyConfigDetails proxyConfigDetails =
+        createProxyConfigDetails(listener.getLogger(), config.getBitbucketServerUrl());
+    jvctsPerform(proxyConfigDetails, combinedConfig, filePath, build, listener);
   }
 
   /** The Jenkins.getInstance() will return null if not run on master! */
-  private void configureProxy(
-      final PrintStream logger,
-      final ViolationCommentsToBitbucketServerApi b,
-      final String urlString)
-      throws MalformedURLException {
+  private ProxyConfigDetails createProxyConfigDetails(
+      final PrintStream logger, final String urlString) throws MalformedURLException {
     final Jenkins jenkins = Jenkins.getInstance();
     if (jenkins == null) {
       logger.println("Not using proxy, no Jenkins instance.");
-      return;
+      return null;
     }
 
     final ProxyConfiguration proxyConfig = jenkins.proxy;
     if (proxyConfig == null) {
       logger.println("Not using proxy, no proxy configured.");
-      return;
+      return null;
     }
 
     final Proxy proxy = proxyConfig.createProxy(new URL(urlString).getHost());
     if (proxy == null || proxy.type() != Proxy.Type.HTTP) {
       logger.println("Not using proxy, not HTTP.");
-      return;
+      return null;
     }
 
     final SocketAddress addr = proxy.address();
     if (addr == null || !(addr instanceof InetSocketAddress)) {
       logger.println("Not using proxy, addr not InetSocketAddress.");
-      return;
+      return null;
     }
 
     final InetSocketAddress proxyAddr = (InetSocketAddress) addr;
     final String proxyHost = proxyAddr.getAddress().getHostAddress();
     final int proxyPort = proxyAddr.getPort();
-    b.withProxyHostNameOrIp(proxyHost);
-    b.withProxyHostPort(proxyPort);
+    ProxyConfigDetails proxyConfigDetails = new ProxyConfigDetails(proxyHost, proxyPort);
 
     final String proxyUser = proxyConfig.getUserName();
     if (proxyUser != null) {
       final String proxyPass = proxyConfig.getPassword();
-      b.withProxyUser(proxyUser);
-      b.withProxyPassword(proxyPass);
+      proxyConfigDetails.setUser(proxyUser);
+      proxyConfigDetails.setPass(proxyPass);
     }
+    return proxyConfigDetails;
   }
 
   public void setConfig(ViolationsToBitbucketServerConfig config) {
