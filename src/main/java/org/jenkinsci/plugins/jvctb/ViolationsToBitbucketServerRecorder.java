@@ -71,10 +71,8 @@ public class ViolationsToBitbucketServerRecorder extends Recorder implements Sim
             .or(new ViolationsToBitbucketServerGlobalConfiguration());
 
     combinedConfig.applyDefaults(defaults);
-    ViolationCommentsToBitbucketServerApi violationCommentsToBitbucketServerApi =
-        violationCommentsToBitbucketServerApi();
     ProxyConfigDetails proxyConfigDetails =
-        createProxyConfigDetails(listener.getLogger(), config.getBitbucketServerUrl());
+        createProxyConfigDetails(listener.getLogger(), combinedConfig.getBitbucketServerUrl());
     jvctsPerform(proxyConfigDetails, combinedConfig, filePath, build, listener);
   }
 
