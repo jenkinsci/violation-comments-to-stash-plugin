@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.78
+### GitHub [#57](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/57) NPE since v1.76
+
+**Avoid NPE when using global configured BBS URL #57**
+
+
+[66dbc4e31021887](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/66dbc4e31021887) Tomas Bjerre *2018-08-29 14:53:12*
+
+
 ## 1.77
 ### GitHub # 
 
