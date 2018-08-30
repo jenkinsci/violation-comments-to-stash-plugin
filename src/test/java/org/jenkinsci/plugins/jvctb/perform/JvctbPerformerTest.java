@@ -1,11 +1,10 @@
 package org.jenkinsci.plugins.jvctb.perform;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import hudson.EnvVars;
 
+import hudson.EnvVars;
 import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
 import org.junit.Test;
-
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 public class JvctbPerformerTest {

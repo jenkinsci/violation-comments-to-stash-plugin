@@ -1,5 +1,8 @@
 package org.jenkinsci.plugins.jvctb;
 
+import static hudson.tasks.BuildStepMonitor.NONE;
+import static org.jenkinsci.plugins.jvctb.perform.JvctbPerformer.jvctsPerform;
+
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.FilePath;
 import hudson.Launcher;
@@ -10,12 +13,6 @@ import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.BuildStepMonitor;
 import hudson.tasks.Publisher;
 import hudson.tasks.Recorder;
-import jenkins.model.Jenkins;
-import jenkins.tasks.SimpleBuildStep;
-import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
-import org.kohsuke.stapler.DataBoundConstructor;
-import se.bjurr.violations.comments.bitbucketserver.lib.ViolationCommentsToBitbucketServerApi;
-
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.InetSocketAddress;
@@ -23,10 +20,10 @@ import java.net.MalformedURLException;
 import java.net.Proxy;
 import java.net.SocketAddress;
 import java.net.URL;
-
-import static hudson.tasks.BuildStepMonitor.NONE;
-import static org.jenkinsci.plugins.jvctb.perform.JvctbPerformer.jvctsPerform;
-import static se.bjurr.violations.comments.bitbucketserver.lib.ViolationCommentsToBitbucketServerApi.violationCommentsToBitbucketServerApi;
+import jenkins.model.Jenkins;
+import jenkins.tasks.SimpleBuildStep;
+import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
+import org.kohsuke.stapler.DataBoundConstructor;
 
 public class ViolationsToBitbucketServerRecorder extends Recorder implements SimpleBuildStep {
 

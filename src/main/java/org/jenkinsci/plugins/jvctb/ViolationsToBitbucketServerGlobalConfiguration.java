@@ -2,8 +2,14 @@ package org.jenkinsci.plugins.jvctb;
 
 import static org.jenkinsci.plugins.jvctb.config.CredentialsHelper.migrateCredentials;
 
+import com.google.common.base.Optional;
+import hudson.Extension;
+import hudson.model.Item;
+import hudson.util.FormValidation;
+import hudson.util.ListBoxModel;
 import java.io.Serializable;
-
+import jenkins.model.GlobalConfiguration;
+import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.plugins.jvctb.config.CredentialsHelper;
 import org.kohsuke.accmod.Restricted;
@@ -12,15 +18,6 @@ import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
-
-import com.google.common.base.Optional;
-
-import hudson.Extension;
-import hudson.model.Item;
-import hudson.util.FormValidation;
-import hudson.util.ListBoxModel;
-import jenkins.model.GlobalConfiguration;
-import net.sf.json.JSONObject;
 import se.bjurr.violations.lib.model.SEVERITY;
 
 /** Created by magnayn on 07/04/2016. */

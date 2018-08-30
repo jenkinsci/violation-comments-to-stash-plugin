@@ -4,18 +4,6 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.collect.Lists.newArrayList;
 import static org.jenkinsci.plugins.jvctb.config.CredentialsHelper.migrateCredentials;
 
-import java.io.Serializable;
-import java.util.List;
-
-import org.apache.commons.lang.StringUtils;
-import org.jenkinsci.plugins.jvctb.ViolationsToBitbucketServerGlobalConfiguration;
-import org.kohsuke.accmod.Restricted;
-import org.kohsuke.accmod.restrictions.NoExternalUse;
-import org.kohsuke.stapler.AncestorInPath;
-import org.kohsuke.stapler.DataBoundConstructor;
-import org.kohsuke.stapler.DataBoundSetter;
-import org.kohsuke.stapler.QueryParameter;
-
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Extension;
 import hudson.Util;
@@ -24,6 +12,16 @@ import hudson.model.Descriptor;
 import hudson.model.Item;
 import hudson.util.FormValidation;
 import hudson.util.ListBoxModel;
+import java.io.Serializable;
+import java.util.List;
+import org.apache.commons.lang.StringUtils;
+import org.jenkinsci.plugins.jvctb.ViolationsToBitbucketServerGlobalConfiguration;
+import org.kohsuke.accmod.Restricted;
+import org.kohsuke.accmod.restrictions.NoExternalUse;
+import org.kohsuke.stapler.AncestorInPath;
+import org.kohsuke.stapler.DataBoundConstructor;
+import org.kohsuke.stapler.DataBoundSetter;
+import org.kohsuke.stapler.QueryParameter;
 import se.bjurr.violations.lib.model.SEVERITY;
 
 public class ViolationsToBitbucketServerConfig

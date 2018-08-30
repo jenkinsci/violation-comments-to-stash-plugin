@@ -3,7 +3,6 @@ package org.jenkinsci.plugins.jvctb.config;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 public class ViolationsToBitbucketServerConfigTest {
