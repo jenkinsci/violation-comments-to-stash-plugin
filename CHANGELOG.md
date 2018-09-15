@@ -2,7 +2,16 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
-## Unreleased
+## 1.80
+### No issue
+
+**YAMLLint**
+
+
+[1ecf399b35902aa](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/1ecf399b35902aa) Tomas Bjerre *2018-09-15 08:11:53*
+
+
+## 1.79
 ### No issue
 
 **Correcting ownerName and CPD**
