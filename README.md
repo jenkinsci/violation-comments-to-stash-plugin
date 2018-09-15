@@ -57,6 +57,7 @@ It supports:
  * [_Simian_](http://www.harukizaemon.com/simian/)
  * [_StyleCop_](https://stylecop.codeplex.com/)
  * [_XMLLint_](http://xmlsoft.org/xmllint.html)
+ * [_YAMLLint_](https://yamllint.readthedocs.io/en/stable/index.html)
  * [_ZPTLint_](https://pypi.python.org/pypi/zptlint)
 
  

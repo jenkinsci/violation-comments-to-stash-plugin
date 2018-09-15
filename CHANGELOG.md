@@ -2,6 +2,25 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## Unreleased
+### No issue
+
+**Correcting ownerName and CPD**
+
+
+[aae44a8fad98353](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/aae44a8fad98353) Tomas Bjerre *2018-09-13 05:14:24*
+
+**Updating readme with parsers**
+
+
+[88901e88902bf4b](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/88901e88902bf4b) Tomas Bjerre *2018-09-12 17:06:13*
+
+**Updating fmt-maven-plugin**
+
+
+[1853603d6bda23f](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/1853603d6bda23f) Tomas Bjerre *2018-08-30 17:53:07*
+
+
 ## 1.78
 ### GitHub [#57](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/57) NPE since v1.76
 
