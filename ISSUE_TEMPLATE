@@ -1,0 +1,19 @@
+It may be a good idea to look at old issues, both closed and open.
+
+Some recurring problems are:
+
+ * The user did not perform the merge before doing the analysis.
+ * No violations were reported because:
+   * The user tested the plugin on a PR that did not introduce any new violations.
+   * The user had both `createSingleFileComments` and `createCommentWithAllSingleFileComments` set to `false`
+
+When reporting a bug, please **try** to provide as much information as possible.
+
+ * Plugin version used.
+ * Jenkins version used.
+ * Your configuration.
+  * Pipeline script or screenshot.
+ * Expected result and actual result.
+ * Any information from the logs:
+   * Jenkins log: http://jenkins-server/log/
+   * Build log.
