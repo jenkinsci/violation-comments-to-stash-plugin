@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.81
+### No issue
+
+**Fix optional rule in YAMLLint**
+
+
+[321ac09362fad39](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/321ac09362fad39) Tomas Bjerre *2018-09-17 13:35:08*
+
+
 ## 1.80
 ### No issue
 
