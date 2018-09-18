@@ -42,6 +42,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jenkinsci.plugins.jvctb.ProxyConfigDetails;
 import org.jenkinsci.plugins.jvctb.config.ViolationConfig;
@@ -49,6 +50,7 @@ import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
 import org.jenkinsci.plugins.plaincredentials.StringCredentials;
 import org.jenkinsci.remoting.RoleChecker;
 import se.bjurr.violations.comments.bitbucketserver.lib.ViolationCommentsToBitbucketServerApi;
+import se.bjurr.violations.comments.lib.ViolationsLogger;
 import se.bjurr.violations.lib.model.SEVERITY;
 import se.bjurr.violations.lib.model.Violation;
 import se.bjurr.violations.lib.reports.Parser;
@@ -144,7 +146,20 @@ public class JvctbPerformer {
           .withCommentOnlyChangedContentContext(config.getCommentOnlyChangedContentContext()) //
           .withShouldKeepOldComments(config.isKeepOldComments()) //
           .withCommentTemplate(commentTemplate) //
-          .withViolationsLogger(string -> listener.getLogger().println(string)) //
+          .withViolationsLogger(
+              new ViolationsLogger() {
+                @Override
+                public void log(final Level level, final String string) {
+                  listener.getLogger().println(level + " " + string);
+                }
+
+                @Override
+                public void log(final Level level, final String string, final Throwable t) {
+                  final StringWriter sw = new StringWriter();
+                  t.printStackTrace(new PrintWriter(sw));
+                  listener.getLogger().println(level + " " + sw.toString());
+                }
+              }) //
           .toPullRequest();
     } catch (final Exception e) {
       Logger.getLogger(JvctbPerformer.class.getName()).log(SEVERE, "", e);
