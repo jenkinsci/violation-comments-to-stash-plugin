@@ -12,7 +12,7 @@ When reporting a bug, please **try** to provide as much information as possible.
  * Plugin version used.
  * Jenkins version used.
  * Your configuration.
-  * Pipeline script or screenshot.
+   * Pipeline script or screenshot.
  * Expected result and actual result.
  * Any information from the logs:
    * Jenkins log: http://jenkins-server/log/

@@ -144,6 +144,7 @@ public class JvctbPerformer {
           .withCommentOnlyChangedContentContext(config.getCommentOnlyChangedContentContext()) //
           .withShouldKeepOldComments(config.isKeepOldComments()) //
           .withCommentTemplate(commentTemplate) //
+          .withViolationsLogger(string -> listener.getLogger().println(string)) //
           .toPullRequest();
     } catch (final Exception e) {
       Logger.getLogger(JvctbPerformer.class.getName()).log(SEVERE, "", e);

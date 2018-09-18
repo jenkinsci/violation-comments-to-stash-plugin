@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## Unreleased
+### No issue
+
+**Issue template**
+
+
+[0bad21a203d9174](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/0bad21a203d9174) Tomas Bjerre *2018-09-17 16:57:38*
+
+
 ## 1.81
 ### No issue
 
