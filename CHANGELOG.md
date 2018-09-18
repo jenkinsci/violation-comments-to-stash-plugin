@@ -2,7 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
-## Unreleased
+## 1.82
+### GitHub [#58](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/58) Plugin doesn’t send comments to bitbucket
+
+**More information in log #58**
+
+
+[872fa4b2ffa0db4](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/872fa4b2ffa0db4) Tomas Bjerre *2018-09-18 09:58:03*
+
+
 ### No issue
 
 **Issue template**
