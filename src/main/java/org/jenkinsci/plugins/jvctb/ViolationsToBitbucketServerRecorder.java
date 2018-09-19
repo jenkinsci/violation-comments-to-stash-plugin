@@ -111,6 +111,8 @@ public class ViolationsToBitbucketServerRecorder extends Recorder implements Sim
       proxyConfigDetails.setUser(proxyUser);
       proxyConfigDetails.setPass(proxyPass);
     }
+    logger.println(
+        "Using proxy: " + proxyConfigDetails.getHost() + ":" + proxyConfigDetails.getPort());
     return proxyConfigDetails;
   }
 
