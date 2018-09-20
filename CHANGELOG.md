@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.88
+### No issue
+
+**Correcting Kotlin parsers**
+
+
+[77688826cf2e6ca](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/77688826cf2e6ca) Tomas Bjerre *2018-09-20 23:53:38*
+
+
 ## 1.87
 ### No issue
 
