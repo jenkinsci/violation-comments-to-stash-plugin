@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.87
+### No issue
+
+**Kotlin Maven and Gradle parsers**
+
+
+[742b8a110a2ed03](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/742b8a110a2ed03) Tomas Bjerre *2018-09-20 14:22:14*
+
+
 ## 1.86
 ### GitHub [#58](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/58) Plugin doesn’t send comments to bitbucket
 

@@ -200,6 +200,18 @@ git --no-pager log --max-count=10 --graph --abbrev-commit
     commentOnlyChangedContent(true)
     commentOnlyChangedContentContext(5)
     keepOldComments(false)
+    
+    commentTemplate("""
+    **Reporter**: {{violation.reporter}}{{#violation.rule}}
+    
+    **Rule**: {{violation.rule}}{{/violation.rule}}
+    **Severity**: {{violation.severity}}
+    **File**: {{violation.file}} L{{violation.startLine}}{{#violation.source}}
+    
+    **Source**: {{violation.source}}{{/violation.source}}
+    
+    {{violation.message}}
+    """)
 
     violationConfigs {
      violationConfig {
@@ -254,6 +266,18 @@ node {
    repoSlug: 'violations-test', // Use environment variable here
    
    credentialsId: 'theid',
+   
+   commentTemplate: """
+   **Reporter**: {{violation.reporter}}{{#violation.rule}}
+   
+   **Rule**: {{violation.rule}}{{/violation.rule}}
+   **Severity**: {{violation.severity}}
+   **File**: {{violation.file}} L{{violation.startLine}}{{#violation.source}}
+   
+   **Source**: {{violation.source}}{{/violation.source}}
+   
+   {{violation.message}}
+   """,
    
    violationConfigs: [
     // Many more formats available, check https://github.com/tomasbjerre/violations-lib
