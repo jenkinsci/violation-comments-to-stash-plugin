@@ -13,6 +13,10 @@
 		<jenkins.version>2.7.4</jenkins.version>
 		<findbugs.failOnError>false</findbugs.failOnError>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
+		<violations-lib>1.66</violations-lib>
+		<violations-maven>1.13</violations-maven>
+		<changelog>1.55</changelog>
+		<fmt>2.5.1</fmt>
 	</properties>
 
 	<artifactId>violation-comments-to-stash</artifactId>
@@ -80,7 +84,7 @@
 			<plugin>
 				<groupId>se.bjurr.gitchangelog</groupId>
 				<artifactId>git-changelog-maven-plugin</artifactId>
-				<version>1.38</version>
+				<version>${changelog}</version>
 				<executions>
 					<execution>
 						<id>GenerateGitChangelog</id>
@@ -138,7 +142,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 			<plugin>
 				<groupId>com.coveo</groupId>
 				<artifactId>fmt-maven-plugin</artifactId>
-				<version>2.5.1</version>
+				<version>${fmt}</version>
 				<executions>
 					<execution>
 						<goals>
@@ -150,7 +154,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 			<plugin>
 				<groupId>se.bjurr.violations</groupId>
 				<artifactId>violations-maven-plugin</artifactId>
-				<version>1.7</version>
+				<version>${violations-maven}</version>
 				<configuration>
 					<minSeverity>INFO</minSeverity>
 					<detailLevel>VERBOSE</detailLevel>
@@ -186,7 +190,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 		<dependency>
 			<groupId>se.bjurr.violations</groupId>
 			<artifactId>violation-comments-to-bitbucket-server-lib</artifactId>
-			<version>1.66</version>
+			<version>${violations-lib}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jenkins-ci.plugins</groupId>
