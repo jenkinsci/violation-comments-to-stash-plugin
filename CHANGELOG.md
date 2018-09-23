@@ -2,8 +2,13 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
-## Unreleased
+## 1.89
 ### No issue
+
+**Clarifying parsers**
+
+
+[e759b00eb2f3791](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/e759b00eb2f3791) Tomas Bjerre *2018-09-23 13:32:57*
 
 **Automating reporters in readme**
 
