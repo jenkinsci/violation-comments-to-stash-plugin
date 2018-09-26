@@ -8,7 +8,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 **Automatically stepping dependencies**
 
 
-[62d7d4cf3efd5ed](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/62d7d4cf3efd5ed) Tomas Bjerre *2018-09-23 15:32:01*
+[510ef7ce336b999](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/510ef7ce336b999) Tomas Bjerre *2018-09-23 19:06:36*
 
 
 ## 1.89
