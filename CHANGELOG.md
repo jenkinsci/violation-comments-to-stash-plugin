@@ -2,7 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
-## Unreleased
+## 1.90
+### GitHub [#60](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/60) Recognition of changed lines seems to not work correclty
+
+**Getting diff of each file to avoid truncation #60**
+
+
+[c91866840bb62cc](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/c91866840bb62cc) Tomas Bjerre *2018-09-26 16:52:22*
+
+
 ### No issue
 
 **Automatically stepping dependencies**
