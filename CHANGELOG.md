@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.91
+### No issue
+
+**Removing subtasks and comments**
+
+
+[ba37f17c3df0d71](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/ba37f17c3df0d71) Tomas Bjerre *2018-10-02 16:00:12*
+
+
 ## 1.90
 ### GitHub [#60](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/60) Recognition of changed lines seems to not work correclty
 
