@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.92
+### No issue
+
+**Including entire rule in Flake8**
+
+
+[ca69e0329289126](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/ca69e0329289126) Tomas Bjerre *2018-10-06 06:46:31*
+
+
 ## 1.91
 ### No issue
 
