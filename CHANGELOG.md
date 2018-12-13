@@ -2,6 +2,20 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.93
+### No issue
+
+**Add retrieval of outdated pull request comments**
+
+
+[224695633f3d5ce](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/224695633f3d5ce) Tomas Bjerre *2018-12-13 16:27:32*
+
+**Removing custom Optional**
+
+
+[cc9758696bb8d26](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/cc9758696bb8d26) Tomas Bjerre *2018-10-08 17:15:35*
+
+
 ## 1.92
 ### No issue
 
