@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.94
+### No issue
+
+**Correcting AnsibleLint parsing**
+
+
+[978f39718f9e600](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/978f39718f9e600) Tomas Bjerre *2019-01-02 21:18:13*
+
+
 ## 1.93
 ### No issue
 
