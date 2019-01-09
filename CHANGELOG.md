@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.95
+### No issue
+
+**Making CodeNarc respect source directory**
+
+
+[f3dcc17a984c9bf](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/f3dcc17a984c9bf) Tomas Bjerre *2019-01-09 19:43:29*
+
+
 ## 1.94
 ### No issue
 
