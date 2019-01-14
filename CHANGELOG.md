@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.96
+### No issue
+
+**Avoiding faulty slash with CodeNarc**
+
+
+[0d04cd77369ade4](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/0d04cd77369ade4) Tomas Bjerre *2019-01-14 17:49:22*
+
+
 ## 1.95
 ### No issue
 
