@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.97
+### No issue
+
+**MSCPP and IAR**
+
+
+[84dbba61e61134c](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/84dbba61e61134c) Tomas Bjerre *2019-01-29 17:16:12*
+
+
 ## 1.96
 ### No issue
 
