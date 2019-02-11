@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.98
+### No issue
+
+**Fixing Flake8 parser**
+
+
+[764ee97febeccd0](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/764ee97febeccd0) Tomas Bjerre *2019-02-11 19:55:13*
+
+
 ## 1.97
 ### No issue
 
