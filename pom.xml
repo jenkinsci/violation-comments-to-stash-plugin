@@ -13,7 +13,7 @@
 		<jenkins.version>2.7.4</jenkins.version>
 		<findbugs.failOnError>false</findbugs.failOnError>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
-		<violations-lib>1.77</violations-lib>
+		<violations-lib>1.78</violations-lib>
 		<violations-maven>1.15</violations-maven>
 		<changelog>1.59</changelog>
 		<fmt>2.8</fmt>
