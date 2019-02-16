@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.99
+### GitHub [#63](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/63) Violation plugin iterates over files not mentioned in report
+
+**Not searching comments on files when not commenting files #63**
+
+
+[0f7d2a10e4a029e](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/0f7d2a10e4a029e) Tomas Bjerre *2019-02-16 19:00:50*
+
+
 ## 1.98
 ### No issue
 
