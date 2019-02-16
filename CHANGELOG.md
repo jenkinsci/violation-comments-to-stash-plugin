@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.100
+### No issue
+
+**Correctly getting global comments**
+
+
+[42483800df8dc51](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/42483800df8dc51) Tomas Bjerre *2019-02-16 19:52:36*
+
+
 ## 1.99
 ### GitHub [#63](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/63) Violation plugin iterates over files not mentioned in report
 
