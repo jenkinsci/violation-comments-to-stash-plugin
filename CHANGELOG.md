@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.101
+### No issue
+
+**golangci-lint**
+
+
+[aac4d9af8bd18f5](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/aac4d9af8bd18f5) Tomas Bjerre *2019-03-07 16:31:57*
+
+
 ## 1.100
 ### No issue
 
