@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.102
+### No issue
+
+**Klocwork line numbers**
+
+
+[8c577bbf283dbbc](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/8c577bbf283dbbc) Tomas Bjerre *2019-03-13 19:26:13*
+
+
 ## 1.101
 ### No issue
 
