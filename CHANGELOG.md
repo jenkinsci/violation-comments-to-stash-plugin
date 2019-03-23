@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.103
+### No issue
+
+**Sonar Report**
+
+
+[7bf4790cf06df22](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/7bf4790cf06df22) Tomas Bjerre *2019-03-23 15:09:59*
+
+
 ## 1.102
 ### No issue
 
