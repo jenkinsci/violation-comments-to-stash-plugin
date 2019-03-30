@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.104
+### No issue
+
+**Correcting Sonar severity**
+
+
+[4bb375d8df92540](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/4bb375d8df92540) Tomas Bjerre *2019-03-30 06:10:37*
+
+
 ## 1.103
 ### No issue
 
