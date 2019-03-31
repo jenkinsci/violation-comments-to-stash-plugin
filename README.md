@@ -209,6 +209,7 @@ git --no-pager log --max-count=10 --graph --abbrev-commit
     credentialsId('bitbucketservercredentials')
 
     minSeverity('INFO')
+    maxNumberOfViolations(99999)
     createSingleFileComments(true)
     createCommentWithAllSingleFileComments(false)
     commentOnlyChangedContent(true)
@@ -274,6 +275,7 @@ node {
    commentOnlyChangedContentContext: 5,
    createCommentWithAllSingleFileComments: false,
    createSingleFileComments: true,
+   maxNumberOfViolations: 99999,
    keepOldComments: true,
    projectKey: 'PROJ', // Use environment variable here
    pullRequestId: '1', // Use environment variable here

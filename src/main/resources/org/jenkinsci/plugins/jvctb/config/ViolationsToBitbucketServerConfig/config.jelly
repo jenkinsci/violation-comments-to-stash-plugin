@@ -36,6 +36,13 @@
     <f:entry title="Comment only if severity at least" field="minSeverity">
         <f:select />
     </f:entry>
+  
+    <f:entry title="Max number of violations" field="maxNumberOfViolations">
+     <f:textbox />
+     <f:description>
+      If there are more violations than this, they will be ignored. Leave empty to include all violations.
+     </f:description>
+    </f:entry>
 
     <f:entry title="Keep old comments" field="keepOldComments">
         <f:checkbox />

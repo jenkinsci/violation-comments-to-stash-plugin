@@ -45,6 +45,7 @@ public class ViolationsToBitbucketServerConfig
   @Deprecated private transient String password;
   @Deprecated private transient String usernamePasswordCredentialsId;
   @Deprecated private transient String personalAccessTokenId;
+  private Integer maxNumberOfViolations;
 
   public ViolationsToBitbucketServerConfig() {}
 
@@ -71,6 +72,7 @@ public class ViolationsToBitbucketServerConfig
     this.keepOldComments = rhs.keepOldComments;
     this.commentTemplate = rhs.commentTemplate;
     this.createSingleFileCommentsTasks = rhs.createSingleFileCommentsTasks;
+    this.maxNumberOfViolations = rhs.maxNumberOfViolations;
   }
 
   public void applyDefaults(final ViolationsToBitbucketServerGlobalConfiguration defaults) {
@@ -362,6 +364,15 @@ public class ViolationsToBitbucketServerConfig
   @DataBoundSetter
   public void setKeepOldComments(final boolean keepOldComments) {
     this.keepOldComments = keepOldComments;
+  }
+
+  @DataBoundSetter
+  public void setMaxNumberOfViolations(final Integer maxNumberOfViolations) {
+    this.maxNumberOfViolations = maxNumberOfViolations;
+  }
+
+  public Integer getMaxNumberOfViolations() {
+    return maxNumberOfViolations;
   }
 
   @Extension

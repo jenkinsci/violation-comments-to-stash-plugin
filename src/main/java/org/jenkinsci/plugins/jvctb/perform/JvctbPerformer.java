@@ -60,7 +60,7 @@ public class JvctbPerformer {
 
   @VisibleForTesting
   public static void doPerform(
-      ProxyConfigDetails proxyConfigDetails,
+      final ProxyConfigDetails proxyConfigDetails,
       final ViolationsToBitbucketServerConfig config,
       final File workspace,
       final StandardCredentials credentials,
@@ -109,7 +109,7 @@ public class JvctbPerformer {
                 + config.getPullRequestId()
                 + " on "
                 + config.getBitbucketServerUrl());
-    ViolationCommentsToBitbucketServerApi violationCommentsToBitbucketServerApi =
+    final ViolationCommentsToBitbucketServerApi violationCommentsToBitbucketServerApi =
         violationCommentsToBitbucketServerApi();
     if (proxyConfigDetails != null) {
       violationCommentsToBitbucketServerApi //
@@ -146,6 +146,7 @@ public class JvctbPerformer {
           .withCommentOnlyChangedContentContext(config.getCommentOnlyChangedContentContext()) //
           .withShouldKeepOldComments(config.isKeepOldComments()) //
           .withCommentTemplate(commentTemplate) //
+          .withMaxNumberOfViolations(config.getMaxNumberOfViolations()) //
           .withViolationsLogger(
               new ViolationsLogger() {
                 @Override
@@ -157,7 +158,7 @@ public class JvctbPerformer {
                 public void log(final Level level, final String string, final Throwable t) {
                   final StringWriter sw = new StringWriter();
                   t.printStackTrace(new PrintWriter(sw));
-                  listener.getLogger().println(level + " " + sw.toString());
+                  listener.getLogger().println(level + " " + string + "\n" + sw.toString());
                 }
               }) //
           .toPullRequest();
@@ -188,6 +189,7 @@ public class JvctbPerformer {
     expanded.setMinSeverity(config.getMinSeverity());
     expanded.setKeepOldComments(config.isKeepOldComments());
     expanded.setCommentTemplate(config.getCommentTemplate());
+    expanded.setMaxNumberOfViolations(config.getMaxNumberOfViolations());
 
     for (final ViolationConfig violationConfig : config.getViolationConfigs()) {
       final String pattern = environment.expand(violationConfig.getPattern());
@@ -207,7 +209,7 @@ public class JvctbPerformer {
   }
 
   public static void jvctsPerform(
-      ProxyConfigDetails proxyConfigDetails,
+      final ProxyConfigDetails proxyConfigDetails,
       final ViolationsToBitbucketServerConfig configUnexpanded,
       final FilePath fp,
       final Run<?, ?> build,
@@ -284,6 +286,7 @@ public class JvctbPerformer {
     logger.println(FIELD_MINSEVERITY + ": " + config.getMinSeverity());
     logger.println(FIELD_KEEP_OLD_COMMENTS + ": " + config.isKeepOldComments());
     logger.println("commentTemplate: " + config.getCommentTemplate());
+    logger.println("maxNumberOfViolations: " + config.getMaxNumberOfViolations());
 
     for (final ViolationConfig violationConfig : config.getViolationConfigs()) {
       logger.println(
