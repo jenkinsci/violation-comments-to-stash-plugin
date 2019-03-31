@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.105
+### No issue
+
+**maxNumberOfComments**
+
+
+[c97527bbdfa3d8a](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/c97527bbdfa3d8a) Tomas Bjerre *2019-03-31 13:34:43*
+
+
 ## 1.104
 ### No issue
 
