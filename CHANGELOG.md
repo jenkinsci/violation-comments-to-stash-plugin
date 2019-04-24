@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.106
+### No issue
+
+**Cpplint correction to handle line None**
+
+
+[7a7628b4fd3f40b](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/7a7628b4fd3f40b) Tomas Bjerre *2019-04-24 16:42:43*
+
+
 ## 1.105
 ### No issue
 
