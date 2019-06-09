@@ -8,6 +8,8 @@ It uses [Violation Comments to Bitbucket Server Lib](https://github.com/tomasbje
 
 Example of supported reports are available [here](https://github.com/tomasbjerre/violations-lib/tree/master/src/test/resources).
 
+**Note:** Using **Bitbucket Cloud**? You may have a look at [Violation Comments to Bitbucket Cloud Command Line](https://github.com/tomasbjerre/violation-comments-to-bitbucket-cloud-command-line). This will only work with Bitbucket Server.
+
 A number of **parsers** have been implemented. Some **parsers** can parse output from several **reporters**.
 
 | Reporter | Parser | Notes
