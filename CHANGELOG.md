@@ -2,6 +2,20 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.107
+### No issue
+
+**Removing dependency on javax.xml**
+
+
+[fb77128a58ac2be](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/fb77128a58ac2be) Tomas Bjerre *2019-06-12 16:19:55*
+
+**doc**
+
+
+[bd62d270156298e](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/bd62d270156298e) Tomas Bjerre *2019-06-09 17:12:45*
+
+
 ## 1.106
 ### No issue
 
