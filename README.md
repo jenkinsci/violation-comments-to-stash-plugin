@@ -10,6 +10,8 @@ Example of supported reports are available [here](https://github.com/tomasbjerre
 
 **Note:** Using **Bitbucket Cloud**? You may have a look at [Violation Comments to Bitbucket Cloud Command Line](https://github.com/tomasbjerre/violation-comments-to-bitbucket-cloud-command-line). This will only work with Bitbucket Server.
 
+You can also do this with a [command line tool](https://www.npmjs.com/package/violation-comments-to-bitbucket-server-command-line).
+
 A number of **parsers** have been implemented. Some **parsers** can parse output from several **reporters**.
 
 | Reporter | Parser | Notes
