@@ -69,6 +69,10 @@
             Any comment within a changed line +/- context will be used.
         </f:description>
     </f:optionalBlock>
+    
+    <f:entry title="Comment only changed files">
+      <f:checkbox field="commentOnlyChangedFiles" />
+    </f:entry>
 
   <f:entry title="Comment template" field="commentTemplate">
     <f:textarea style="width: 500px; height: 200px"/>

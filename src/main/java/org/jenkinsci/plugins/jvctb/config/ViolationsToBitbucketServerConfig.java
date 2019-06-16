@@ -28,6 +28,7 @@ public class ViolationsToBitbucketServerConfig
     extends AbstractDescribableImpl<ViolationsToBitbucketServerConfig> implements Serializable {
   private static final long serialVersionUID = 4851568645021422528L;
   private boolean commentOnlyChangedContent;
+  private boolean commentOnlyChangedFiles = true;
   private String bitbucketServerUrl;
   private boolean createCommentWithAllSingleFileComments;
   private boolean createSingleFileComments;
@@ -68,6 +69,7 @@ public class ViolationsToBitbucketServerConfig
     credentialsId = rhs.credentialsId;
     commentOnlyChangedContent = rhs.commentOnlyChangedContent;
     commentOnlyChangedContentContext = rhs.commentOnlyChangedContentContext;
+    commentOnlyChangedFiles = rhs.commentOnlyChangedFiles;
     this.minSeverity = rhs.minSeverity;
     this.keepOldComments = rhs.keepOldComments;
     this.commentTemplate = rhs.commentTemplate;
@@ -127,6 +129,9 @@ public class ViolationsToBitbucketServerConfig
       return false;
     }
     if (commentOnlyChangedContent != other.commentOnlyChangedContent) {
+      return false;
+    }
+    if (commentOnlyChangedFiles != other.commentOnlyChangedFiles) {
       return false;
     }
     if (commentOnlyChangedContentContext != other.commentOnlyChangedContentContext) {
@@ -204,6 +209,15 @@ public class ViolationsToBitbucketServerConfig
     return commentOnlyChangedContentContext;
   }
 
+  @DataBoundSetter
+  public void setCommentOnlyChangedFiles(final boolean commentOnlyChangedFiles) {
+    this.commentOnlyChangedFiles = commentOnlyChangedFiles;
+  }
+
+  public boolean getCommentOnlyChangedFiles() {
+    return commentOnlyChangedFiles;
+  }
+
   public boolean getCreateCommentWithAllSingleFileComments() {
     return createCommentWithAllSingleFileComments;
   }
@@ -238,6 +252,7 @@ public class ViolationsToBitbucketServerConfig
     int result = 1;
     result = prime * result + (bitbucketServerUrl == null ? 0 : bitbucketServerUrl.hashCode());
     result = prime * result + (commentOnlyChangedContent ? 1231 : 1237);
+    result = prime * result + (commentOnlyChangedFiles ? 1231 : 1237);
     result = prime * result + commentOnlyChangedContentContext;
     result = prime * result + (commentTemplate == null ? 0 : commentTemplate.hashCode());
     result = prime * result + (createCommentWithAllSingleFileComments ? 1231 : 1237);

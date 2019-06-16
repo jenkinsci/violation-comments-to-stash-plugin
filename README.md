@@ -44,6 +44,7 @@ A number of **parsers** have been implemented. Some **parsers** can parse output
 | [_Infer_](http://fbinfer.com/)                                                        | `PMD`                | Facebook Infer. With `--pmd-xml`.
 | [_JCReport_](https://github.com/jCoderZ/fawkez/wiki/JcReport)                         | `JCREPORT`           | 
 | [_JSHint_](http://jshint.com/)                                                        | `JSHINT`             | 
+| [_JUnit_](https://junit.org/junit4/)                                                  | `JUNIT`              | 
 | [_KTLint_](https://github.com/shyiko/ktlint)                                          | `CHECKSTYLE`         | 
 | [_Klocwork_](http://www.klocwork.com/products-services/klocwork/static-code-analysis)  | `KLOCWORK`           | 
 | [_KotlinGradle_](https://github.com/JetBrains/kotlin)                                 | `KOTLINGRADLE`       | Output from Kotlin Gradle Plugin.
@@ -97,7 +98,7 @@ Available in Jenkins [here](https://wiki.jenkins-ci.org/display/JENKINS/Violatio
 
 **You must perform the merge before build**. If you don't perform the merge, the reported violations will refer to other lines then those in the pull request. The merge can be done with a shell script like this.
 
-```
+```shell
 echo ---
 echo --- Merging from $FROM in $FROMREPO to $TO in $TOREPO
 echo ---
@@ -119,7 +120,7 @@ This plugin can be used with the Job DSL Plugin. Here is an example.
 
 I trigger it with [Pull Request Notifier for Bitbucket Server](https://github.com/tomasbjerre/pull-request-notifier-for-bitbucket) with URL like `http://jenkins:8080/job/Bitbucket_Server_PR_Builder/buildWithParameters?${EVERYTHING_URL}`,  I report back to Bitbucket Server with [HTTP Request Plugin](https://wiki.jenkins-ci.org/display/JENKINS/HTTP+Request+Plugin) and [Conditional BuildStep Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Conditional+BuildStep+Plugin).
 
-```
+```groovy
 job('Bitbucket_Server_PR_Builder') {
  concurrentBuild()
  quietPeriod(0)
@@ -218,6 +219,7 @@ git --no-pager log --max-count=10 --graph --abbrev-commit
     createCommentWithAllSingleFileComments(false)
     commentOnlyChangedContent(true)
     commentOnlyChangedContentContext(5)
+    commentOnlyChangedFiles(true)
     keepOldComments(false)
     
     commentTemplate("""
@@ -254,7 +256,7 @@ git --no-pager log --max-count=10 --graph --abbrev-commit
 
 This plugin can be used with the Pipeline Plugin:
 
-```
+```groovy
 node {
  deleteDir()
  
@@ -277,6 +279,7 @@ node {
    bitbucketServerUrl: 'http://localhost:7990/',
    commentOnlyChangedContent: true,
    commentOnlyChangedContentContext: 5,
+   commentOnlyChangedFiles: true,
    createCommentWithAllSingleFileComments: false,
    createSingleFileComments: true,
    maxNumberOfViolations: 99999,

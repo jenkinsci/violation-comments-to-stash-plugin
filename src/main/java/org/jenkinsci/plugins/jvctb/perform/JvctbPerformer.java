@@ -144,6 +144,7 @@ public class JvctbPerformer {
           .withCreateSingleFileCommentsTasks(config.getCreateSingleFileCommentsTasks()) //
           .withCommentOnlyChangedContent(config.getCommentOnlyChangedContent()) //
           .withCommentOnlyChangedContentContext(config.getCommentOnlyChangedContentContext()) //
+          .withShouldCommentOnlyChangedFiles(config.getCommentOnlyChangedFiles()) //
           .withShouldKeepOldComments(config.isKeepOldComments()) //
           .withCommentTemplate(commentTemplate) //
           .withMaxNumberOfViolations(config.getMaxNumberOfViolations()) //
@@ -186,6 +187,7 @@ public class JvctbPerformer {
     expanded.setCredentialsId(config.getCredentialsId());
     expanded.setCommentOnlyChangedContent(config.getCommentOnlyChangedContent());
     expanded.setCommentOnlyChangedContentContext(config.getCommentOnlyChangedContentContext());
+    expanded.setCommentOnlyChangedFiles(config.getCommentOnlyChangedFiles());
     expanded.setMinSeverity(config.getMinSeverity());
     expanded.setKeepOldComments(config.isKeepOldComments());
     expanded.setCommentTemplate(config.getCommentTemplate());
@@ -283,6 +285,7 @@ public class JvctbPerformer {
         FIELD_COMMENTONLYCHANGEDCONTENTCONTEXT
             + ": "
             + config.getCommentOnlyChangedContentContext());
+    logger.println("commentOnlyChangedFiles: " + config.getCommentOnlyChangedFiles());
     logger.println(FIELD_MINSEVERITY + ": " + config.getMinSeverity());
     logger.println(FIELD_KEEP_OLD_COMMENTS + ": " + config.isKeepOldComments());
     logger.println("commentTemplate: " + config.getCommentTemplate());
