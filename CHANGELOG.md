@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.109
+### No issue
+
+**Changing name of JSHINT parser to JSLINT**
+
+
+[60036b616948bf8](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/60036b616948bf8) Tomas Bjerre *2019-08-03 11:56:56*
+
+
 ## 1.108
 ### No issue
 
