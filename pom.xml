@@ -13,7 +13,8 @@
 		<jenkins.version>2.7.4</jenkins.version>
 		<findbugs.failOnError>false</findbugs.failOnError>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
-		<violations-lib>1.90</violations-lib>
+		<violation-comments-lib>1.90</violation-comments-lib>
+		<violations-lib>1.96</violations-lib>
 		<violations-maven>1.19</violations-maven>
 		<changelog>1.60</changelog>
 		<fmt>2.9</fmt>
@@ -190,6 +191,11 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 		<dependency>
 			<groupId>se.bjurr.violations</groupId>
 			<artifactId>violation-comments-to-bitbucket-server-lib</artifactId>
+			<version>${violation-comments-lib}</version>
+		</dependency>
+		<dependency>
+			<groupId>se.bjurr.violations</groupId>
+			<artifactId>violations-lib</artifactId>
 			<version>${violations-lib}</version>
 		</dependency>
 		<dependency>
