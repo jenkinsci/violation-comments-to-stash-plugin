@@ -2,13 +2,21 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
-## Unreleased
+## 1.110
 ### GitHub [#67](https://github.com/jenkinsci/violation-comments-to-stash-plugin/pull/67) Use HTTPS URLs in pom.xml
 
 **Use HTTPS URLs in pom.xml (#67)**
 
 
 [ff94f2eff0c5858](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/ff94f2eff0c5858) daniel-beck-bot *2019-10-08 11:46:55*
+
+
+### GitHub [#68](https://github.com/jenkinsci/violation-comments-to-stash-plugin/pull/68) Correcting ReSharper och PyDocStyle
+
+**Correcting ReSharper och PyDocStyle (#68)**
+
+
+[ebb2e865c811719](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/ebb2e865c811719) Tomas Bjerre *2019-10-14 15:52:13*
 
 
 ### No issue
