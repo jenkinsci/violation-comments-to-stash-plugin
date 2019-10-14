@@ -15,6 +15,7 @@ import com.cloudbees.plugins.credentials.domains.DomainRequirement;
 import com.cloudbees.plugins.credentials.domains.URIRequirementBuilder;
 import com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl;
 import com.google.common.base.Optional;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import hudson.model.Item;
 import hudson.model.Queue;
 import hudson.model.queue.Tasks;
@@ -29,8 +30,10 @@ import org.jenkinsci.plugins.plaincredentials.StringCredentials;
 
 /* Read more about credentials api here: https://github.com/jenkinsci/credentials-plugin/blob/master/docs/consumer.adoc */
 public class CredentialsHelper {
-  public static ListBoxModel doFillCredentialsIdItems(Item item, String credentialsId, String uri) {
-    StandardListBoxModel result = new StandardListBoxModel();
+  @SuppressFBWarnings("NP_NULL_PARAM_DEREF")
+  public static ListBoxModel doFillCredentialsIdItems(
+      final Item item, final String credentialsId, final String uri) {
+    final StandardListBoxModel result = new StandardListBoxModel();
     if (item == null) {
       if (!Jenkins.getInstance().hasPermission(Jenkins.ADMINISTER)) {
         return result.includeCurrentValue(credentialsId);
@@ -55,7 +58,7 @@ public class CredentialsHelper {
   }
 
   public static FormValidation doCheckFillCredentialsId(
-      Item item, String credentialsId, String uri) {
+      final Item item, final String credentialsId, final String uri) {
     if (item == null) {
       if (!Jenkins.getInstance().hasPermission(Jenkins.ADMINISTER)) {
         return FormValidation.ok();
@@ -69,14 +72,14 @@ public class CredentialsHelper {
     if (isNullOrEmpty(credentialsId)) {
       return FormValidation.ok();
     }
-    if (!(findCredentials(item, credentialsId, uri).isPresent())) {
+    if (!findCredentials(item, credentialsId, uri).isPresent()) {
       return FormValidation.error("Cannot find currently selected credentials");
     }
     return FormValidation.ok();
   }
 
   public static Optional<StandardCredentials> findCredentials(
-      Item item, String credentialsId, String uri) {
+      final Item item, final String credentialsId, final String uri) {
     if (isNullOrEmpty(credentialsId)) {
       return absent();
     }
