@@ -4,6 +4,7 @@ import static hudson.tasks.BuildStepMonitor.NONE;
 import static org.jenkinsci.plugins.jvctb.perform.JvctbPerformer.jvctsPerform;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import hudson.FilePath;
 import hudson.Launcher;
 import hudson.ProxyConfiguration;
@@ -35,7 +36,7 @@ public class ViolationsToBitbucketServerRecorder extends Recorder implements Sim
   public ViolationsToBitbucketServerRecorder() {}
 
   @DataBoundConstructor
-  public ViolationsToBitbucketServerRecorder(ViolationsToBitbucketServerConfig config) {
+  public ViolationsToBitbucketServerRecorder(final ViolationsToBitbucketServerConfig config) {
     this.config = config;
   }
 
@@ -55,25 +56,26 @@ public class ViolationsToBitbucketServerRecorder extends Recorder implements Sim
 
   @Override
   public void perform(
-      @NonNull Run<?, ?> build,
-      @NonNull FilePath filePath,
-      @NonNull Launcher launcher,
-      @NonNull TaskListener listener)
+      @NonNull final Run<?, ?> build,
+      @NonNull final FilePath filePath,
+      @NonNull final Launcher launcher,
+      @NonNull final TaskListener listener)
       throws InterruptedException, IOException {
 
-    ViolationsToBitbucketServerConfig combinedConfig =
+    final ViolationsToBitbucketServerConfig combinedConfig =
         new ViolationsToBitbucketServerConfig(this.config);
-    ViolationsToBitbucketServerGlobalConfiguration defaults =
+    final ViolationsToBitbucketServerGlobalConfiguration defaults =
         ViolationsToBitbucketServerGlobalConfiguration.get()
             .or(new ViolationsToBitbucketServerGlobalConfiguration());
 
     combinedConfig.applyDefaults(defaults);
-    ProxyConfigDetails proxyConfigDetails =
+    final ProxyConfigDetails proxyConfigDetails =
         createProxyConfigDetails(listener.getLogger(), combinedConfig.getBitbucketServerUrl());
     jvctsPerform(proxyConfigDetails, combinedConfig, filePath, build, listener);
   }
 
   /** The Jenkins.getInstance() will return null if not run on master! */
+  @SuppressFBWarnings("RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE")
   private ProxyConfigDetails createProxyConfigDetails(
       final PrintStream logger, final String urlString) throws MalformedURLException {
     final Jenkins jenkins = Jenkins.getInstance();
@@ -103,7 +105,7 @@ public class ViolationsToBitbucketServerRecorder extends Recorder implements Sim
     final InetSocketAddress proxyAddr = (InetSocketAddress) addr;
     final String proxyHost = proxyAddr.getAddress().getHostAddress();
     final int proxyPort = proxyAddr.getPort();
-    ProxyConfigDetails proxyConfigDetails = new ProxyConfigDetails(proxyHost, proxyPort);
+    final ProxyConfigDetails proxyConfigDetails = new ProxyConfigDetails(proxyHost, proxyPort);
 
     final String proxyUser = proxyConfig.getUserName();
     if (proxyUser != null) {
@@ -116,7 +118,7 @@ public class ViolationsToBitbucketServerRecorder extends Recorder implements Sim
     return proxyConfigDetails;
   }
 
-  public void setConfig(ViolationsToBitbucketServerConfig config) {
+  public void setConfig(final ViolationsToBitbucketServerConfig config) {
     this.config = config;
   }
 }

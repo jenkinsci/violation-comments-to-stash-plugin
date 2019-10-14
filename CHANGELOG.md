@@ -2,6 +2,23 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## Unreleased
+### GitHub [#67](https://github.com/jenkinsci/violation-comments-to-stash-plugin/pull/67) Use HTTPS URLs in pom.xml
+
+**Use HTTPS URLs in pom.xml (#67)**
+
+
+[ff94f2eff0c5858](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/ff94f2eff0c5858) daniel-beck-bot *2019-10-08 11:46:55*
+
+
+### No issue
+
+**Create FUNDING.yml**
+
+
+[aa2decab78598ba](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/aa2decab78598ba) Tomas Bjerre *2019-09-28 06:53:03*
+
+
 ## 1.109
 ### No issue
 
