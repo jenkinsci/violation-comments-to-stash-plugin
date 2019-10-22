@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.111
+### GitHub #79 
+
+**Protolint tomasbjerre/violations-lib#79**
+
+
+[6674d966b16b663](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/6674d966b16b663) Tomas Bjerre *2019-10-22 03:35:00*
+
+
 ## 1.110
 ### GitHub [#67](https://github.com/jenkinsci/violation-comments-to-stash-plugin/pull/67) Use HTTPS URLs in pom.xml
 
