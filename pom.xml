@@ -15,7 +15,7 @@
 		<maven.javadoc.skip>true</maven.javadoc.skip>
 		<violation-comments-lib>1.90</violation-comments-lib>
 		<violations-lib>1.107</violations-lib>
-		<violations-maven>1.29</violations-maven>
+		<violations-maven>1.30</violations-maven>
 		<changelog>1.60</changelog>
 		<fmt>2.9</fmt>
 	</properties>
@@ -25,7 +25,7 @@
 	<packaging>hpi</packaging>
 	<name>Jenkins Violation Comments to Bitbucket Server Plugin</name>
 	<description>Finds violations reported by code analyzers and comments Bitbucket Server (or Stash) pull requests (or commits) with them.</description>
-	<url>https://wiki.jenkins-ci.org/display/JENKINS/Violation+Comments+to+Bitbucket+Server+Plugin</url>
+	<url>https://github.com/jenkinsci/violation-comments-to-stash-plugin</url>
 
 	<licenses>
 		<license>
