@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.112
+### No issue
+
+**Setting URL to README.md to update plugins.jenkins.io**
+
+
+[dedb0c1edff03e4](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/dedb0c1edff03e4) Tomas Bjerre *2019-10-24 18:49:29*
+
+
 ## 1.111
 ### GitHub #79 
 
