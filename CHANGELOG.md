@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.113
+### GitHub #80 
+
+**Add support for sonar issue report formats >= v7.5 tomasbjerre/violations-lib#80**
+
+
+[ca9fa29f0a46589](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/ca9fa29f0a46589) Tomas Bjerre *2020-01-03 07:49:19*
+
+
 ## 1.112
 ### No issue
 
