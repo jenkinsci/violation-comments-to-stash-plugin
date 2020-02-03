@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.114
+### GitHub #82 
+
+**CPPCheckParser with auto closed <error/> tags tomasbjerre/violations-lib#82**
+
+
+[2129851c10579c6](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/2129851c10579c6) Tomas Bjerre *2020-02-03 16:49:16*
+
+
 ## 1.113
 ### GitHub #80 
 
