@@ -16,3 +16,5 @@ gradlew
 build
 .okhttpcache
 .idea/
+pom.xml.*
+release.properties

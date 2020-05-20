@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## Unreleased
+### No issue
+
+**Fixing SECURITY-1854**
+
+
+[5dac027248a6f26](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/5dac027248a6f26) Tomas Bjerre *2020-05-20 14:55:29*
+
+
 ## 1.114
 ### GitHub #82 
 
