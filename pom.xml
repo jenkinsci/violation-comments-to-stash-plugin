@@ -13,11 +13,10 @@
 		<jenkins.version>2.7.4</jenkins.version>
 		<findbugs.failOnError>false</findbugs.failOnError>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
-		<violation-comments-lib>1.92</violation-comments-lib>
-		<violations-lib>1.116</violations-lib>
+		<violation-comments-lib>1.93</violation-comments-lib>
+		<violations-lib>1.118</violations-lib>
 		<violations-maven>1.36</violations-maven>
 		<changelog>1.61</changelog>
-		<fmt>2.9</fmt>
 	</properties>
 
 	<artifactId>violation-comments-to-stash</artifactId>
@@ -143,7 +142,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 			<plugin>
 				<groupId>com.coveo</groupId>
 				<artifactId>fmt-maven-plugin</artifactId>
-				<version>${fmt}</version>
+				<version>2.9</version>
 				<executions>
 					<execution>
 						<goals>
