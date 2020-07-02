@@ -2,13 +2,13 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
-## Unreleased
+## 1.118
 ### No issue
 
 **Fix: avoiding trying to delete twice causing NPE in server log**
 
 
-[001cfabce42a836](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/001cfabce42a836) Tomas Bjerre *2020-07-02 17:24:27*
+[ff0f38b16f2e3f2](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/ff0f38b16f2e3f2) Tomas Bjerre *2020-07-02 17:26:23*
 
 
 ## 1.115
