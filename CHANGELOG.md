@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.119
+### No issue
+
+**Fix: less logging**
+
+
+[109556cd0f7eba3](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/109556cd0f7eba3) Tomas Bjerre *2020-07-03 13:00:26*
+
+
 ## 1.118
 ### No issue
 
