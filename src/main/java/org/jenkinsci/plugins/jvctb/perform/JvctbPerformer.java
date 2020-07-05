@@ -3,7 +3,6 @@ package org.jenkinsci.plugins.jvctb.perform;
 import static com.google.common.base.Charsets.UTF_8;
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.base.Throwables.propagate;
-import static com.google.common.collect.Lists.newArrayList;
 import static java.util.logging.Level.SEVERE;
 import static org.jenkinsci.plugins.jvctb.config.CredentialsHelper.findCredentials;
 import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfigHelper.FIELD_BITBUCKETSERVERURL;
@@ -41,7 +40,8 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
-import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jenkinsci.plugins.jvctb.ProxyConfigDetails;
@@ -50,7 +50,8 @@ import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
 import org.jenkinsci.plugins.plaincredentials.StringCredentials;
 import org.jenkinsci.remoting.RoleChecker;
 import se.bjurr.violations.comments.bitbucketserver.lib.ViolationCommentsToBitbucketServerApi;
-import se.bjurr.violations.comments.lib.ViolationsLogger;
+import se.bjurr.violations.lib.FilteringViolationsLogger;
+import se.bjurr.violations.lib.ViolationsLogger;
 import se.bjurr.violations.lib.model.SEVERITY;
 import se.bjurr.violations.lib.model.Violation;
 import se.bjurr.violations.lib.reports.Parser;
@@ -75,11 +76,28 @@ public class JvctbPerformer {
     }
     final Integer pullRequestIdInt = Integer.valueOf(config.getPullRequestId());
 
-    final List<Violation> allParsedViolations = newArrayList();
+    final ViolationsLogger violationsLogger =
+        FilteringViolationsLogger.filterLevel(
+            new ViolationsLogger() {
+              @Override
+              public void log(final Level level, final String string) {
+                listener.getLogger().println(level + " " + string);
+              }
+
+              @Override
+              public void log(final Level level, final String string, final Throwable t) {
+                final StringWriter sw = new StringWriter();
+                t.printStackTrace(new PrintWriter(sw));
+                listener.getLogger().println(level + " " + string + "\n" + sw.toString());
+              }
+            });
+
+    final Set<Violation> allParsedViolations = new TreeSet<>();
     for (final ViolationConfig violationConfig : config.getViolationConfigs()) {
       if (!isNullOrEmpty(violationConfig.getPattern())) {
-        List<Violation> parsedViolations =
+        Set<Violation> parsedViolations =
             violationsApi() //
+                .withViolationsLogger(violationsLogger) //
                 .findAll(violationConfig.getParser()) //
                 .withReporter(violationConfig.getReporter()) //
                 .inFolder(workspace.getAbsolutePath()) //
@@ -148,20 +166,7 @@ public class JvctbPerformer {
           .withShouldKeepOldComments(config.isKeepOldComments()) //
           .withCommentTemplate(commentTemplate) //
           .withMaxNumberOfViolations(config.getMaxNumberOfViolations()) //
-          .withViolationsLogger(
-              new ViolationsLogger() {
-                @Override
-                public void log(final Level level, final String string) {
-                  listener.getLogger().println(level + " " + string);
-                }
-
-                @Override
-                public void log(final Level level, final String string, final Throwable t) {
-                  final StringWriter sw = new StringWriter();
-                  t.printStackTrace(new PrintWriter(sw));
-                  listener.getLogger().println(level + " " + string + "\n" + sw.toString());
-                }
-              }) //
+          .withViolationsLogger(violationsLogger) //
           .toPullRequest();
     } catch (final Exception e) {
       Logger.getLogger(JvctbPerformer.class.getName()).log(SEVERE, "", e);
