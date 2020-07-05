@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.120
+### No issue
+
+**New: custom logging in violations-lib**
+
+
+[8cf6e6ff180332a](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/8cf6e6ff180332a) Tomas Bjerre *2020-07-05 12:04:50*
+
+
 ## 1.119
 ### No issue
 
