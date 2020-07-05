@@ -26,7 +26,6 @@ import com.cloudbees.plugins.credentials.common.StandardUsernamePasswordCredenti
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Optional;
 import com.google.common.io.CharStreams;
-
 import hudson.EnvVars;
 import hudson.FilePath;
 import hudson.FilePath.FileCallable;
@@ -34,7 +33,6 @@ import hudson.model.Run;
 import hudson.model.TaskListener;
 import hudson.remoting.VirtualChannel;
 import hudson.util.Secret;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -46,16 +44,12 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import org.jenkinsci.plugins.jvctb.ProxyConfigDetails;
 import org.jenkinsci.plugins.jvctb.config.ViolationConfig;
 import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
-import org.jenkinsci.plugins.jvctg.perform.JvctgPerformer;
 import org.jenkinsci.plugins.plaincredentials.StringCredentials;
 import org.jenkinsci.remoting.RoleChecker;
-
 import se.bjurr.violations.comments.bitbucketserver.lib.ViolationCommentsToBitbucketServerApi;
-import se.bjurr.violations.lib.FilteringViolationsLogger;
 import se.bjurr.violations.lib.ViolationsLogger;
 import se.bjurr.violations.lib.model.SEVERITY;
 import se.bjurr.violations.lib.model.Violation;
@@ -81,26 +75,24 @@ public class JvctbPerformer {
     }
     final Integer pullRequestIdInt = Integer.valueOf(config.getPullRequestId());
 
-	final ViolationsLogger violationsLogger = new ViolationsLogger() {
-		@Override
-		public void log(final Level level, final String string,
-				final Throwable e) {
-			Logger.getLogger(JvctbPerformer.class.getName()).log(level,
-					string, e);
-			final StringWriter sw = new StringWriter();
-			e.printStackTrace(new PrintWriter(sw));
-			listener.getLogger().println(string + "\n" + sw.toString());
-		}
+    final ViolationsLogger violationsLogger =
+        new ViolationsLogger() {
+          @Override
+          public void log(final Level level, final String string, final Throwable e) {
+            Logger.getLogger(JvctbPerformer.class.getName()).log(level, string, e);
+            final StringWriter sw = new StringWriter();
+            e.printStackTrace(new PrintWriter(sw));
+            listener.getLogger().println(string + "\n" + sw.toString());
+          }
 
-		@Override
-		public void log(final Level level, final String string) {
-			Logger.getLogger(JvctbPerformer.class.getName()).log(level,
-					string);
-			if (level != Level.FINE) {
-				listener.getLogger().println(string);
-			}
-		}
-	};
+          @Override
+          public void log(final Level level, final String string) {
+            Logger.getLogger(JvctbPerformer.class.getName()).log(level, string);
+            if (level != Level.FINE) {
+              listener.getLogger().println(string);
+            }
+          }
+        };
 
     final Set<Violation> allParsedViolations = new TreeSet<>();
     for (final ViolationConfig violationConfig : config.getViolationConfigs()) {
