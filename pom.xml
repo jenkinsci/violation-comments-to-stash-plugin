@@ -20,7 +20,7 @@
 	</properties>
 
 	<artifactId>violation-comments-to-stash</artifactId>
-	<version>1.123</version>
+	<version>1.124-SNAPSHOT</version>
 	<packaging>hpi</packaging>
 	<name>Jenkins Violation Comments to Bitbucket Server Plugin</name>
 	<description>Finds violations reported by code analyzers and comments Bitbucket Server (or Stash) pull requests (or commits) with them.</description>
@@ -50,7 +50,7 @@
 		<connection>scm:git:git://github.com/jenkinsci/${project.artifactId}-plugin.git</connection>
 		<developerConnection>scm:git:git@github.com:jenkinsci/${project.artifactId}-plugin.git</developerConnection>
 		<url>http://github.com/jenkinsci/${project.artifactId}-plugin</url>
-		<tag>violation-comments-to-stash-1.123</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<repositories>

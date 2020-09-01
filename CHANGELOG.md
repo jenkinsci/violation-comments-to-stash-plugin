@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.123
+### GitHub [#14](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/14) CredentialsId not working
+
+**VIOLATIONS_KEYSTORE_PATH tomasbjerre/violation-comments-to-bitbucket-server-lib#14**
+
+
+[96c0d9549a45ff5](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/96c0d9549a45ff5) Tomas Bjerre *2020-09-01 14:41:16*
+
+
 ## 1.122
 ### GitHub [#70](https://github.com/jenkinsci/violation-comments-to-stash-plugin/pull/70) Remove unneeded configuration in buildPlugin
 
