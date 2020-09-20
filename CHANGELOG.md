@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.124
+### No issue
+
+**violations-lib 1.128**
+
+
+[41dcf2efb0a5282](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/41dcf2efb0a5282) Tomas Bjerre *2020-09-20 13:22:32*
+
+
 ## 1.123
 ### GitHub [#14](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/14) CredentialsId not working
 
