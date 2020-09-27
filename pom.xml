@@ -162,10 +162,10 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 					<printViolations>true</printViolations>
 					<violations>
 						<violation>
-							<parser>FINDBUGS</parser>
-							<reporter>Findbugs</reporter>
-							<folder>.</folder>
-							<pattern>.*/findbugsXml.*\.xml$</pattern>
+                                                        <parser>FINDBUGS</parser>
+                                                        <reporter>Spotbugs</reporter>
+                                                        <folder>.</folder>
+                                                        <pattern>.*/spotbugsXml.*\.xml$</pattern>
 						</violation>
 					</violations>
 				</configuration>
