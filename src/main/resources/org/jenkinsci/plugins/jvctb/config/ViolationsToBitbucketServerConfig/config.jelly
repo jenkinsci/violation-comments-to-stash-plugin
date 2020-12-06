@@ -81,6 +81,16 @@
     </f:description>
   </f:entry>
 
+  <f:entry title="Ignore paths">
+    <f:repeatableProperty field="ignorePaths">
+      <f:entry title="">
+        <div align="right">
+          <f:repeatableDeleteButton/>
+        </div>
+      </f:entry>
+    </f:repeatableProperty>
+  </f:entry>
+
     <f:entry>
         <table class="xmlFilenamePatterns" cellspacing="5">
             <tr>

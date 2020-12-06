@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## Unreleased
+### No issue
+
+**Spotbugs report**
+
+
+[e426fcfd12a60cc](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/e426fcfd12a60cc) Tomas Bjerre *2020-09-27 17:33:00*
+
+
 ## 1.125
 ### No issue
 

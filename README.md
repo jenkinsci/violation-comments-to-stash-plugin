@@ -308,6 +308,11 @@ node {
    {{violation.message}}
    """,
    
+   ignorePaths: [
+       [path: 'node_modules'],
+       [path: '.yarn']
+   ],
+
    violationConfigs: [
     // Many more formats available, check https://github.com/tomasbjerre/violations-lib
     [parser: 'FINDBUGS', pattern: '.*/findbugs/.*\\.xml\$', reporter: 'Findbugs'],

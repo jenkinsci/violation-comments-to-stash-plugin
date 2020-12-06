@@ -99,6 +99,7 @@ public class JvctbPerformer {
                 .withReporter(violationConfig.getReporter()) //
                 .inFolder(workspace.getAbsolutePath()) //
                 .withPattern(violationConfig.getPattern()) //
+                .withIgnorePaths(config.getIgnorePathStrings())
                 .violations();
         final SEVERITY minSeverity = config.getMinSeverity();
         if (minSeverity != null) {
@@ -153,6 +154,7 @@ public class JvctbPerformer {
           .withProjectKey(config.getProjectKey()) //
           .withRepoSlug(config.getRepoSlug()) //
           .withViolations(allParsedViolations) //
+          .withIgnorePaths(config.getIgnorePathStrings())
           .withCreateCommentWithAllSingleFileComments(
               config.getCreateCommentWithAllSingleFileComments()) //
           .withCreateSingleFileComments(config.getCreateSingleFileComments()) //
@@ -194,7 +196,7 @@ public class JvctbPerformer {
     expanded.setKeepOldComments(config.isKeepOldComments());
     expanded.setCommentTemplate(config.getCommentTemplate());
     expanded.setMaxNumberOfViolations(config.getMaxNumberOfViolations());
-
+    expanded.setIgnorePaths(config.getIgnorePaths());
     for (final ViolationConfig violationConfig : config.getViolationConfigs()) {
       final String pattern = environment.expand(violationConfig.getPattern());
       final String reporter = violationConfig.getReporter();
@@ -291,6 +293,7 @@ public class JvctbPerformer {
     logger.println(FIELD_KEEP_OLD_COMMENTS + ": " + config.isKeepOldComments());
     logger.println("commentTemplate: " + config.getCommentTemplate());
     logger.println("maxNumberOfViolations: " + config.getMaxNumberOfViolations());
+    logger.println("ignorePaths: " + config.getIgnorePathStrings());
 
     for (final ViolationConfig violationConfig : config.getViolationConfigs()) {
       logger.println(
