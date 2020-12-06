@@ -2,7 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
-## Unreleased
+## 1.126
+### GitHub [#72](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/72) Feature: ignore certain folders/paths/globs
+
+**Making isIgnored public jenkinsci/violation-comments-to-stash-plugin#72**
+
+
+[d203db899efcb54](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/d203db899efcb54) Tomas Bjerre *2020-12-06 11:54:53*
+
+
 ### No issue
 
 **Spotbugs report**
