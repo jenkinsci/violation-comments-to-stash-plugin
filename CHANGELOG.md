@@ -8,6 +8,25 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 **[maven-release-plugin] prepare for next development iteration**
 
 
+[a722252c1d37839](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/a722252c1d37839) Tomas Bjerre *2021-06-16 17:23:54*
+
+
+## 1.127
+### No issue
+
+**[maven-release-plugin] prepare release violation-comments-to-stash-1.127**
+
+
+[bf5251b8d063bdb](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/bf5251b8d063bdb) Tomas Bjerre *2021-06-16 17:23:47*
+
+**feat: MSBuild parser**
+
+
+[394a91a91a36fe3](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/394a91a91a36fe3) Tomas Bjerre *2021-06-16 17:22:48*
+
+**[maven-release-plugin] prepare for next development iteration**
+
+
 [b7c4e1cee6fd0a0](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/b7c4e1cee6fd0a0) Tomas Bjerre *2020-12-06 11:57:12*
 
 
