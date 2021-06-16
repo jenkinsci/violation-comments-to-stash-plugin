@@ -13,10 +13,10 @@
 		<jenkins.version>2.7.4</jenkins.version>
 		<findbugs.failOnError>false</findbugs.failOnError>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
-		<violation-comments-lib>1.100</violation-comments-lib>
-		<violations-lib>1.139</violations-lib>
-		<violations-maven>1.42</violations-maven>
-		<changelog>1.63</changelog>
+		<violation-comments-lib>1.101.2</violation-comments-lib>
+		<violations-lib>1.144.5</violations-lib>
+		<violations-maven>1.43</violations-maven>
+		<changelog>1.77</changelog>
 	</properties>
 
 	<artifactId>violation-comments-to-stash</artifactId>
