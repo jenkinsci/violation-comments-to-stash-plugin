@@ -13,10 +13,10 @@
 		<jenkins.version>2.7.4</jenkins.version>
 		<findbugs.failOnError>false</findbugs.failOnError>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
-		<violation-comments-lib>1.101.2</violation-comments-lib>
-		<violations-lib>1.144.5</violations-lib>
-		<violations-maven>1.43</violations-maven>
-		<changelog>1.77</changelog>
+		<violation-comments-lib>1.101.3</violation-comments-lib>
+		<violations-lib>1.145.4</violations-lib>
+		<violations-maven>1.48</violations-maven>
+		<changelog>1.78</changelog>
 	</properties>
 
 	<artifactId>violation-comments-to-stash</artifactId>
@@ -94,8 +94,6 @@
 						</goals>
 						<configuration>
 							<readableTagName>-([^-]+?)$</readableTagName>
-							<gitHubApi>https://api.github.com/repos/jenkinsci/violation-comments-to-stash-plugin</gitHubApi>
-							<gitHubToken>${GITHUB_OAUTH2TOKEN}</gitHubToken>
 							<gitHubIssuePattern>#([0-9]*)</gitHubIssuePattern>
 							<jiraIssuePattern>\bJENKINS-([0-9]+)\b</jiraIssuePattern>
 							<filePath>CHANGELOG.md</filePath>
@@ -109,12 +107,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 ## {{name}}
  {{#issues}}
   {{#hasIssue}}
-   {{#hasLink}}
-### {{name}} [{{issue}}]({{link}}) {{title}}
-   {{/hasLink}}
-   {{^hasLink}}
 ### {{name}} {{issue}} {{title}}
-   {{/hasLink}}
   {{/hasIssue}}
   {{^hasIssue}}
 ### {{name}}

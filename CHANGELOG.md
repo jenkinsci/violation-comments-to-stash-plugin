@@ -8,7 +8,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 **[maven-release-plugin] prepare for next development iteration**
 
 
-[a722252c1d37839](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/a722252c1d37839) Tomas Bjerre *2021-06-16 17:23:54*
+[dd735af6bfcce0b](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/dd735af6bfcce0b) Tomas Bjerre *2021-06-16 17:25:29*
 
 
 ## 1.127
@@ -31,7 +31,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.126
-### GitHub [#72](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/72) Feature: ignore certain folders/paths/globs
+### GitHub #72 Feature: ignore certain folders/paths/globs
 
 **Making isIgnored public jenkinsci/violation-comments-to-stash-plugin#72**
 
@@ -96,7 +96,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.123
-### GitHub [#14](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/14) CredentialsId not working
+### GitHub #14 CredentialsId not working
 
 **VIOLATIONS_KEYSTORE_PATH tomasbjerre/violation-comments-to-bitbucket-server-lib#14**
 
@@ -118,7 +118,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.122
-### GitHub [#70](https://github.com/jenkinsci/violation-comments-to-stash-plugin/pull/70) Remove unneeded configuration in buildPlugin
+### GitHub #70 Remove unneeded configuration in buildPlugin
 
 **Remove unneeded configuration in buildPlugin (#70)**
 
@@ -127,7 +127,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 [eaa6587049d654d](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/eaa6587049d654d) Tim Jacomb *2020-07-26 06:27:24*
 
 
-### GitHub [#71](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/71) Add support for client certificate as credentials
+### GitHub #71 Add support for client certificate as credentials
 
 **update violations-lib #71**
 
@@ -352,7 +352,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.110
-### GitHub [#67](https://github.com/jenkinsci/violation-comments-to-stash-plugin/pull/67) Use HTTPS URLs in pom.xml
+### GitHub #67 Use HTTPS URLs in pom.xml
 
 **Use HTTPS URLs in pom.xml (#67)**
 
@@ -360,7 +360,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 [ff94f2eff0c5858](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/ff94f2eff0c5858) daniel-beck-bot *2019-10-08 11:46:55*
 
 
-### GitHub [#68](https://github.com/jenkinsci/violation-comments-to-stash-plugin/pull/68) Correcting ReSharper och PyDocStyle
+### GitHub #68 Correcting ReSharper och PyDocStyle
 
 **Correcting ReSharper och PyDocStyle (#68)**
 
@@ -587,7 +587,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.99
-### GitHub [#63](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/63) Violation plugin iterates over files not mentioned in report
+### GitHub #63 Violation plugin iterates over files not mentioned in report
 
 **Not searching comments on files when not commenting files #63**
 
@@ -766,7 +766,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.90
-### GitHub [#60](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/60) Recognition of changed lines seems to not work correclty
+### GitHub #60 Recognition of changed lines seems to not work correclty
 
 **Getting diff of each file to avoid truncation #60**
 
@@ -865,7 +865,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.86
-### GitHub [#58](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/58) Plugin doesn’t send comments to bitbucket
+### GitHub #58 Plugin doesn’t send comments to bitbucket
 
 **Logging each HTTP request #58**
 
@@ -887,7 +887,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.85
-### GitHub [#58](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/58) Plugin doesn’t send comments to bitbucket
+### GitHub #58 Plugin doesn’t send comments to bitbucket
 
 **Adding logging to show which proxy is used, if any #58**
 
@@ -928,7 +928,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.83
-### GitHub [#58](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/58) Plugin doesn’t send comments to bitbucket
+### GitHub #58 Plugin doesn’t send comments to bitbucket
 
 **More logging #58**
 
@@ -950,7 +950,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.82
-### GitHub [#58](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/58) Plugin doesn’t send comments to bitbucket
+### GitHub #58 Plugin doesn’t send comments to bitbucket
 
 **More information in log #58**
 
@@ -1044,7 +1044,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.78
-### GitHub [#57](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/57) NPE since v1.76
+### GitHub #57 NPE since v1.76
 
 **Avoid NPE when using global configured BBS URL #57**
 
@@ -1074,7 +1074,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 [c1565a4597cc001](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/c1565a4597cc001) Tomas Bjerre *2018-08-28 13:22:14*
 
 
-### GitHub [#56](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/56) Credentials not found error
+### GitHub #56 Credentials not found error
 
 **Fixing crash on slaves ##56**
 
@@ -1096,7 +1096,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.76
-### GitHub [#56](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/56) Credentials not found error
+### GitHub #56 Credentials not found error
 
 **Configuring proxy on master #56**
 
@@ -1194,7 +1194,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.71
-### GitHub [#33](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/33) No PR comments for Finbugs
+### GitHub #33 No PR comments for Finbugs
 
 **NullAway #33**
 
@@ -1231,7 +1231,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.70
-### GitHub [#50](https://github.com/jenkinsci/violation-comments-to-stash-plugin/pull/50) Combined credentials and item always being null
+### GitHub #50 Combined credentials and item always being null
 
 **Combined credentials and item always being null (#50)**
 
@@ -1256,7 +1256,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 [e1882073fc256f5](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/e1882073fc256f5) Joseph Petersen *2018-02-27 18:15:17*
 
 
-### GitHub [#51](https://github.com/jenkinsci/violation-comments-to-stash-plugin/pull/51) Update Jenkinsfile
+### GitHub #51 Update Jenkinsfile
 
 **Merge pull request #51 from casz/patch-2**
 
@@ -1308,7 +1308,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.68
-### GitHub [#47](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/47) Personal Access Tokens
+### GitHub #47 Personal Access Tokens
 
 **Personal Access Tokens #47**
 
@@ -1330,7 +1330,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.67
-### GitHub [#48](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/48) Plugin causes job hangs
+### GitHub #48 Plugin causes job hangs
 
 **Setting timeout to 30s #48**
 
@@ -1376,7 +1376,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.65
-### GitHub [#43](https://github.com/jenkinsci/violation-comments-to-stash-plugin/pull/43) Give it a symbol and extension
+### GitHub #43 Give it a symbol and extension
 
 **Merge pull request #43 from casz/symbol**
 
@@ -1385,7 +1385,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 [35796716d4da7bb](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/35796716d4da7bb) Tomas Bjerre *2018-01-24 18:28:49*
 
 
-### GitHub [#45](https://github.com/jenkinsci/violation-comments-to-stash-plugin/pull/45) Prettify step generator and deprecate password
+### GitHub #45 Prettify step generator and deprecate password
 
 **Merge pull request #45 from casz/prettifyStepGenerator**
 
@@ -1394,7 +1394,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 [120ee1b46a57c87](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/120ee1b46a57c87) Tomas Bjerre *2018-01-27 17:37:57*
 
 
-### GitHub [#46](https://github.com/jenkinsci/violation-comments-to-stash-plugin/pull/46) Update Jenkinsfile
+### GitHub #46 Update Jenkinsfile
 
 **Merge pull request #46 from casz/patch-1**
 
@@ -1681,7 +1681,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.54
-### GitHub [#37](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/37) Individual comments and keeping previous comments
+### GitHub #37 Individual comments and keeping previous comments
 
 **Keeping comments and adjusting checkstyle #37**
 
@@ -1706,7 +1706,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.53
-### GitHub [#36](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/36) java.lang.NullPointerException from violations-lib
+### GitHub #36 java.lang.NullPointerException from violations-lib
 
 **Ignoring violation configs with null config #36**
 
@@ -1902,7 +1902,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.46
-### GitHub [#15](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/15) File path on all comments in one message is absolute
+### GitHub #15 File path on all comments in one message is absolute
 
 **Commenting with file name from server #15**
 
@@ -2062,7 +2062,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.38
-### GitHub [#30](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/30) Changelog missing from last few releases
+### GitHub #30 Changelog missing from last few releases
 
 **Updating changelog #30**
 
@@ -2089,7 +2089,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.37
-### GitHub [#29](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/29) Error when enabling the commentOnlyChangedContent option
+### GitHub #29 Error when enabling the commentOnlyChangedContent option
 
 **More details if response cannot be parsed #29**
 
@@ -2130,7 +2130,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.35
-### GitHub [#27](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/27) Comment only violations that relate to a diff
+### GitHub #27 Comment only violations that relate to a diff
 
 **Adding context lines field #27**
 
@@ -2152,7 +2152,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.34
-### GitHub [#27](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/27) Comment only violations that relate to a diff
+### GitHub #27 Comment only violations that relate to a diff
 
 **Enabling commenting only changed parts of files #27**
 
@@ -2342,7 +2342,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.25
-### GitHub [#17](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/17) Plugin aborts if it fails to delete a message
+### GitHub #17 Plugin aborts if it fails to delete a message
 
 **Avoiding crash when unable to remove comment #17**
 
@@ -2394,7 +2394,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.22
-### GitHub [#14](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/14) CredentialsId not working
+### GitHub #14 CredentialsId not working
 
 **Evaluating credentials on master #14**
 
@@ -2445,7 +2445,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.20
-### GitHub [#13](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/13) Problem with Pipeline Snippet Generation
+### GitHub #13 Problem with Pipeline Snippet Generation
 
 **Correcting job DSL #13**
 
@@ -2472,7 +2472,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.19
-### GitHub [#13](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/13) Problem with Pipeline Snippet Generation
+### GitHub #13 Problem with Pipeline Snippet Generation
 
 **job-dsl-plugin compatible #13**
 
@@ -2497,7 +2497,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.18
-### GitHub [#10](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/10) Nothing seems to be happening, and no logging for debugging
+### GitHub #10 Nothing seems to be happening, and no logging for debugging
 
 **Credentials #10 #11**
 
@@ -2506,7 +2506,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 [0b3f20a5ae650a4](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/0b3f20a5ae650a4) Tomas Bjerre *2016-08-02 18:09:25*
 
 
-### GitHub [#11](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/11) Use Credentials
+### GitHub #11 Use Credentials
 
 **Credentials #10 #11**
 
@@ -2553,7 +2553,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.16
-### GitHub [#5](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/5) Use Violation Comments Lib
+### GitHub #5 Use Violation Comments Lib
 
 **Using Violation Comments to Bitbucket Server Lib #5 #6 #7**
 
@@ -2562,7 +2562,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 [d7cc91692e328b8](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/d7cc91692e328b8) Tomas Bjerre *2016-07-29 20:01:41*
 
 
-### GitHub [#6](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/6) [Help] java.io.IOException: Unable to serialize
+### GitHub #6 [Help] java.io.IOException: Unable to serialize
 
 **Using Violation Comments to Bitbucket Server Lib #5 #6 #7**
 
@@ -2571,7 +2571,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 [d7cc91692e328b8](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/d7cc91692e328b8) Tomas Bjerre *2016-07-29 20:01:41*
 
 
-### GitHub [#7](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/7) Pipeline plugin compatibility
+### GitHub #7 Pipeline plugin compatibility
 
 **Using Violation Comments to Bitbucket Server Lib #5 #6 #7**
 
@@ -2621,7 +2621,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.14
-### GitHub [#4](https://github.com/jenkinsci/violation-comments-to-stash-plugin/pull/4) make remoting work
+### GitHub #4 make remoting work
 
 **Merge pull request #4 from mihu/remoting**
 
@@ -2746,7 +2746,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.9
-### GitHub [#12](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/12) Comment commits
+### GitHub #12 Comment commits
 
 **Adding header 'X-Atlassian-Token: no-check' to be compatible with Stash 4.0 #12**
 
@@ -2773,7 +2773,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.8
-### GitHub [#3](https://github.com/jenkinsci/violation-comments-to-stash-plugin/pull/3) Accept cookies sent from server
+### GitHub #3 Accept cookies sent from server
 
 **Merge pull request #3 from szpak/patch-1**
 
@@ -2807,7 +2807,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.7
-### GitHub [#1](https://github.com/jenkinsci/violation-comments-to-stash-plugin/pull/1) Fix displaying stash user in build output
+### GitHub #1 Fix displaying stash user in build output
 
 **Merge pull request #2 from tomasbjerre/master**
 
@@ -2827,7 +2827,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 [8ef2755b75f105a](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/8ef2755b75f105a) Tomas Bjerre *2015-06-22 14:15:55*
 
 
-### GitHub [#2](https://github.com/jenkinsci/violation-comments-to-stash-plugin/pull/2) Using Violations 0.8.0-alpha-1 #1
+### GitHub #2 Using Violations 0.8.0-alpha-1 #1
 
 **Merge pull request #2 from tomasbjerre/master**
 
@@ -2865,7 +2865,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.6
-### GitHub [#10](https://github.com/jenkinsci/violation-comments-to-stash-plugin/issues/10) Nothing seems to be happening, and no logging for debugging
+### GitHub #10 Nothing seems to be happening, and no logging for debugging
 
 **Handling Windows-style file paths and using password field in confg GUI #9 #10**
 
@@ -2874,7 +2874,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 [7539e18f456c585](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/7539e18f456c585) Tomas Bjerre *2015-05-31 15:47:44*
 
 
-### GitHub [#9](https://github.com/jenkinsci/violation-comments-to-stash-plugin/pull/9) Using hudston.util.Secret to encrypt the password instead of storing plain text
+### GitHub #9 Using hudston.util.Secret to encrypt the password instead of storing plain text
 
 **Handling Windows-style file paths and using password field in confg GUI #9 #10**
 
@@ -3001,7 +3001,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.1
-### GitHub [#2](https://github.com/jenkinsci/violation-comments-to-stash-plugin/pull/2) Using Violations 0.8.0-alpha-1 #1
+### GitHub #2 Using Violations 0.8.0-alpha-1 #1
 
 **Adding limit parameter to changes request in Stash Client #2**
 

@@ -26,6 +26,7 @@ A number of **parsers** have been implemented. Some **parsers** can parse output
 | [_CPPLint_](https://github.com/theandrewdavis/cpplint)                                | `CPPLINT`            | 
 | [_CSSLint_](https://github.com/CSSLint/csslint)                                       | `CSSLINT`            | 
 | [_Checkstyle_](http://checkstyle.sourceforge.net/)                                    | `CHECKSTYLE`         | 
+| [_CloudFormation Linter_](https://github.com/aws-cloudformation/cfn-lint)             | `JUNIT`              | `cfn-lint . -f junit --output-file report-junit.xml`
 | [_CodeClimate_](https://codeclimate.com/)                                             | `CODECLIMATE`        | 
 | [_CodeNarc_](http://codenarc.sourceforge.net/)                                        | `CODENARC`           | 
 | [_Detekt_](https://github.com/arturbosch/detekt)                                      | `CHECKSTYLE`         | With `--output-format xml`.
@@ -46,6 +47,7 @@ A number of **parsers** have been implemented. Some **parsers** can parse output
 | [_HadoLint_](https://github.com/hadolint/hadolint/)                                   | `CHECKSTYLE`         | With `-f checkstyle`
 | [_IAR_](https://www.iar.com/iar-embedded-workbench/)                                  | `IAR`                | With `--no_wrap_diagnostics`
 | [_Infer_](http://fbinfer.com/)                                                        | `PMD`                | Facebook Infer. With `--pmd-xml`.
+| [_JACOCO_](https://www.jacoco.org/)                                                   | `JACOCO`             | 
 | [_JCReport_](https://github.com/jCoderZ/fawkez/wiki/JcReport)                         | `JCREPORT`           | 
 | [_JSHint_](http://jshint.com/)                                                        | `JSLINT`             | With `--reporter=jslint` or the CHECKSTYLE parser with `--reporter=checkstyle`
 | [_JUnit_](https://junit.org/junit4/)                                                  | `JUNIT`              | It only contains the failures.
