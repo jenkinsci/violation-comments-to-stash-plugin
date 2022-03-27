@@ -1,6 +1,5 @@
 # Violation Comments to Bitbucket Server
 
-[![Build Status](https://ci.jenkins.io/job/Plugins/job/violation-comments-to-stash-plugin/job/master/badge/icon)](https://ci.jenkins.io/job/Plugins/job/violation-comments-to-stash-plugin)
 
 It comments pull requests in  Bitbucket Server (or Stash) with violations found in report files from static code analysis.
 
@@ -29,6 +28,7 @@ A number of **parsers** have been implemented. Some **parsers** can parse output
 | [_CloudFormation Linter_](https://github.com/aws-cloudformation/cfn-lint)             | `JUNIT`              | `cfn-lint . -f junit --output-file report-junit.xml`
 | [_CodeClimate_](https://codeclimate.com/)                                             | `CODECLIMATE`        | 
 | [_CodeNarc_](http://codenarc.sourceforge.net/)                                        | `CODENARC`           | 
+| [_Dart_](https://dart.dev/)                                                           | `MACHINE`            | With `dart analyze --format=machine`
 | [_Detekt_](https://github.com/arturbosch/detekt)                                      | `CHECKSTYLE`         | With `--output-format xml`.
 | [_DocFX_](http://dotnet.github.io/docfx/)                                             | `DOCFX`              | 
 | [_Doxygen_](https://www.stack.nl/~dimitri/doxygen/)                                   | `CLANG`              | 
@@ -75,6 +75,7 @@ A number of **parsers** have been implemented. Some **parsers** can parse output
 | [_PyLint_](https://www.pylint.org/)                                                   | `PYLINT`             | With `pylint --output-format=parseable`.
 | [_ReSharper_](https://www.jetbrains.com/resharper/)                                   | `RESHARPER`          | 
 | [_RubyCop_](http://rubocop.readthedocs.io/en/latest/formatters/)                      | `CLANG`              | With `rubycop -f clang file.rb`
+| [_SARIF_](https://github.com/oasis-tcs/sarif-spec)                                    | `SARIF`              | 
 | [_SbtScalac_](http://www.scala-sbt.org/)                                              | `SBTSCALAC`          | 
 | [_Scalastyle_](http://www.scalastyle.org/)                                            | `CHECKSTYLE`         | 
 | [_Simian_](http://www.harukizaemon.com/simian/)                                       | `SIMIAN`             | 
@@ -83,10 +84,13 @@ A number of **parsers** have been implemented. Some **parsers** can parse output
 | [_StyleCop_](https://stylecop.codeplex.com/)                                          | `STYLECOP`           | 
 | [_SwiftLint_](https://github.com/realm/SwiftLint)                                     | `CHECKSTYLE`         | With `--reporter checkstyle`.
 | [_TSLint_](https://palantir.github.io/tslint/usage/cli/)                              | `CHECKSTYLE`         | With `-t checkstyle`
+| [_Valgrind_](https://valgrind.org/)                                                   | `VALGRIND`           | With `--xml=yes`.
 | [_XMLLint_](http://xmlsoft.org/xmllint.html)                                          | `XMLLINT`            | 
 | [_XUnit_](https://xunit.net/)                                                         | `XUNIT`              | It only contains the failures.
 | [_YAMLLint_](https://yamllint.readthedocs.io/en/stable/index.html)                    | `YAMLLINT`           | With `-f parsable`
 | [_ZPTLint_](https://pypi.python.org/pypi/zptlint)                                     | `ZPTLINT`            |
+
+48 parsers and 74 reporters.
 
 Missing a format? Open an issue [here](https://github.com/tomasbjerre/violations-lib/issues)!
 

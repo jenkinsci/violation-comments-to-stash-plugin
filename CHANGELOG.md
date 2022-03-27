@@ -8,7 +8,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 **[maven-release-plugin] prepare for next development iteration**
 
 
-[19b38fb7f417c49](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/19b38fb7f417c49) Tomas Bjerre *2021-10-18 16:13:46*
+[30ddbec33be2af4](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/30ddbec33be2af4) Tomas Bjerre *2021-10-18 16:14:53*
 
 
 ## 1.128
@@ -50,20 +50,17 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.126
-### GitHub #72 Feature: ignore certain folders/paths/globs
-
-**Making isIgnored public jenkinsci/violation-comments-to-stash-plugin#72**
-
-
-[d203db899efcb54](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/d203db899efcb54) Tomas Bjerre *2020-12-06 11:54:53*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.126**
 
 
 [14c23be86500af6](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/14c23be86500af6) Tomas Bjerre *2020-12-06 11:55:48*
+
+**Making isIgnored public jenkinsci/violation-comments-to-stash-plugin#72**
+
+
+[d203db899efcb54](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/d203db899efcb54) Tomas Bjerre *2020-12-06 11:54:53*
 
 **Spotbugs report**
 
@@ -115,20 +112,17 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.123
-### GitHub #14 CredentialsId not working
-
-**VIOLATIONS_KEYSTORE_PATH tomasbjerre/violation-comments-to-bitbucket-server-lib#14**
-
-
-[96c0d9549a45ff5](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/96c0d9549a45ff5) Tomas Bjerre *2020-09-01 14:41:16*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.123**
 
 
 [083484b93492493](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/083484b93492493) Tomas Bjerre *2020-09-01 14:42:15*
+
+**VIOLATIONS_KEYSTORE_PATH tomasbjerre/violation-comments-to-bitbucket-server-lib#14**
+
+
+[96c0d9549a45ff5](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/96c0d9549a45ff5) Tomas Bjerre *2020-09-01 14:41:16*
 
 **[maven-release-plugin] prepare for next development iteration**
 
@@ -137,29 +131,23 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.122
-### GitHub #70 Remove unneeded configuration in buildPlugin
-
-**Remove unneeded configuration in buildPlugin (#70)**
-
- * Spotbugs reporting is being enabled by default in https://github.com/jenkins-infra/pipeline-library/pull/121, update to parent pom 4.x to use spotbugs instead of findbugs. 
-
-[eaa6587049d654d](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/eaa6587049d654d) Tim Jacomb *2020-07-26 06:27:24*
-
-
-### GitHub #71 Add support for client certificate as credentials
-
-**update violations-lib #71**
-
-
-[d29e4deb16f1258](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/d29e4deb16f1258) Tomas Bjerre *2020-08-29 13:48:53*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.122**
 
 
 [dffdcd385581c3d](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/dffdcd385581c3d) Tomas Bjerre *2020-08-29 13:49:59*
+
+**update violations-lib #71**
+
+
+[d29e4deb16f1258](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/d29e4deb16f1258) Tomas Bjerre *2020-08-29 13:48:53*
+
+**Remove unneeded configuration in buildPlugin (#70)**
+
+ * Spotbugs reporting is being enabled by default in https://github.com/jenkins-infra/pipeline-library/pull/121, update to parent pom 4.x to use spotbugs instead of findbugs. 
+
+[eaa6587049d654d](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/eaa6587049d654d) Tim Jacomb *2020-07-26 06:27:24*
 
 **[maven-release-plugin] prepare for next development iteration**
 
@@ -286,20 +274,17 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.114
-### GitHub #82 
-
-**CPPCheckParser with auto closed <error/> tags tomasbjerre/violations-lib#82**
-
-
-[2129851c10579c6](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/2129851c10579c6) Tomas Bjerre *2020-02-03 16:49:16*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.114**
 
 
 [db7a7d292e469b4](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/db7a7d292e469b4) Tomas Bjerre *2020-02-03 16:50:15*
+
+**CPPCheckParser with auto closed <error/> tags tomasbjerre/violations-lib#82**
+
+
+[2129851c10579c6](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/2129851c10579c6) Tomas Bjerre *2020-02-03 16:49:16*
 
 **[maven-release-plugin] prepare for next development iteration**
 
@@ -308,20 +293,17 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.113
-### GitHub #80 
-
-**Add support for sonar issue report formats >= v7.5 tomasbjerre/violations-lib#80**
-
-
-[ca9fa29f0a46589](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/ca9fa29f0a46589) Tomas Bjerre *2020-01-03 07:49:19*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.113**
 
 
 [8563f89ee00b86c](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/8563f89ee00b86c) Tomas Bjerre *2020-01-03 07:50:13*
+
+**Add support for sonar issue report formats >= v7.5 tomasbjerre/violations-lib#80**
+
+
+[ca9fa29f0a46589](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/ca9fa29f0a46589) Tomas Bjerre *2020-01-03 07:49:19*
 
 **[maven-release-plugin] prepare for next development iteration**
 
@@ -349,20 +331,17 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.111
-### GitHub #79 
-
-**Protolint tomasbjerre/violations-lib#79**
-
-
-[6674d966b16b663](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/6674d966b16b663) Tomas Bjerre *2019-10-22 03:35:00*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.111**
 
 
 [4b13458588f14f5](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/4b13458588f14f5) Tomas Bjerre *2019-10-22 03:35:49*
+
+**Protolint tomasbjerre/violations-lib#79**
+
+
+[6674d966b16b663](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/6674d966b16b663) Tomas Bjerre *2019-10-22 03:35:00*
 
 **[maven-release-plugin] prepare for next development iteration**
 
@@ -371,28 +350,22 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.110
-### GitHub #67 Use HTTPS URLs in pom.xml
-
-**Use HTTPS URLs in pom.xml (#67)**
-
-
-[ff94f2eff0c5858](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/ff94f2eff0c5858) daniel-beck-bot *2019-10-08 11:46:55*
-
-
-### GitHub #68 Correcting ReSharper och PyDocStyle
-
-**Correcting ReSharper och PyDocStyle (#68)**
-
-
-[ebb2e865c811719](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/ebb2e865c811719) Tomas Bjerre *2019-10-14 15:52:13*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.110**
 
 
 [00c09910475b6f2](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/00c09910475b6f2) Tomas Bjerre *2019-10-14 15:53:20*
+
+**Correcting ReSharper och PyDocStyle (#68)**
+
+
+[ebb2e865c811719](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/ebb2e865c811719) Tomas Bjerre *2019-10-14 15:52:13*
+
+**Use HTTPS URLs in pom.xml (#67)**
+
+
+[ff94f2eff0c5858](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/ff94f2eff0c5858) daniel-beck-bot *2019-10-08 11:46:55*
 
 **Create FUNDING.yml**
 
@@ -606,20 +579,17 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.99
-### GitHub #63 Violation plugin iterates over files not mentioned in report
-
-**Not searching comments on files when not commenting files #63**
-
-
-[0f7d2a10e4a029e](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/0f7d2a10e4a029e) Tomas Bjerre *2019-02-16 19:00:50*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.99**
 
 
 [38c263cf7d9e294](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/38c263cf7d9e294) Tomas Bjerre *2019-02-16 19:02:21*
+
+**Not searching comments on files when not commenting files #63**
+
+
+[0f7d2a10e4a029e](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/0f7d2a10e4a029e) Tomas Bjerre *2019-02-16 19:00:50*
 
 **[maven-release-plugin] prepare for next development iteration**
 
@@ -785,20 +755,17 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.90
-### GitHub #60 Recognition of changed lines seems to not work correclty
-
-**Getting diff of each file to avoid truncation #60**
-
-
-[c91866840bb62cc](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/c91866840bb62cc) Tomas Bjerre *2018-09-26 16:52:22*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.90**
 
 
 [c7101591e40e37d](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/c7101591e40e37d) Tomas Bjerre *2018-09-26 16:53:15*
+
+**Getting diff of each file to avoid truncation #60**
+
+
+[c91866840bb62cc](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/c91866840bb62cc) Tomas Bjerre *2018-09-26 16:52:22*
 
 **Automatically stepping dependencies**
 
@@ -884,20 +851,17 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.86
-### GitHub #58 Plugin doesn’t send comments to bitbucket
-
-**Logging each HTTP request #58**
-
-
-[b8107f7b325e6fc](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/b8107f7b325e6fc) Tomas Bjerre *2018-09-19 12:37:53*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.86**
 
 
 [b840fe2d3d4ac23](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/b840fe2d3d4ac23) Tomas Bjerre *2018-09-19 12:39:18*
+
+**Logging each HTTP request #58**
+
+
+[b8107f7b325e6fc](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/b8107f7b325e6fc) Tomas Bjerre *2018-09-19 12:37:53*
 
 **[maven-release-plugin] prepare for next development iteration**
 
@@ -906,20 +870,17 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.85
-### GitHub #58 Plugin doesn’t send comments to bitbucket
-
-**Adding logging to show which proxy is used, if any #58**
-
-
-[b3a858b87dffd96](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/b3a858b87dffd96) Tomas Bjerre *2018-09-19 11:24:46*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.85**
 
 
 [4680d36e10b2a02](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/4680d36e10b2a02) Tomas Bjerre *2018-09-19 11:25:42*
+
+**Adding logging to show which proxy is used, if any #58**
+
+
+[b3a858b87dffd96](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/b3a858b87dffd96) Tomas Bjerre *2018-09-19 11:24:46*
 
 **[maven-release-plugin] prepare for next development iteration**
 
@@ -947,20 +908,17 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.83
-### GitHub #58 Plugin doesn’t send comments to bitbucket
-
-**More logging #58**
-
-
-[f84cbff409bd916](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/f84cbff409bd916) Tomas Bjerre *2018-09-18 16:03:26*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.83**
 
 
 [c09493e0292c93c](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/c09493e0292c93c) Tomas Bjerre *2018-09-18 16:04:11*
+
+**More logging #58**
+
+
+[f84cbff409bd916](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/f84cbff409bd916) Tomas Bjerre *2018-09-18 16:03:26*
 
 **[maven-release-plugin] prepare for next development iteration**
 
@@ -969,20 +927,17 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.82
-### GitHub #58 Plugin doesn’t send comments to bitbucket
-
-**More information in log #58**
-
-
-[872fa4b2ffa0db4](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/872fa4b2ffa0db4) Tomas Bjerre *2018-09-18 09:58:03*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.82**
 
 
 [de563380e78c7d3](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/de563380e78c7d3) Tomas Bjerre *2018-09-18 09:58:49*
+
+**More information in log #58**
+
+
+[872fa4b2ffa0db4](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/872fa4b2ffa0db4) Tomas Bjerre *2018-09-18 09:58:03*
 
 **Issue template**
 
@@ -1063,20 +1018,17 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.78
-### GitHub #57 NPE since v1.76
-
-**Avoid NPE when using global configured BBS URL #57**
-
-
-[66dbc4e31021887](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/66dbc4e31021887) Tomas Bjerre *2018-08-29 14:53:12*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.78**
 
 
 [dda1a1757eefa8a](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/dda1a1757eefa8a) Tomas Bjerre *2018-08-29 14:53:52*
+
+**Avoid NPE when using global configured BBS URL #57**
+
+
+[66dbc4e31021887](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/66dbc4e31021887) Tomas Bjerre *2018-08-29 14:53:12*
 
 **[maven-release-plugin] prepare for next development iteration**
 
@@ -1085,28 +1037,17 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.77
-### GitHub # 
-
-**Fixing crash on slaves ##56**
-
-
-[c1565a4597cc001](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/c1565a4597cc001) Tomas Bjerre *2018-08-28 13:22:14*
-
-
-### GitHub #56 Credentials not found error
-
-**Fixing crash on slaves ##56**
-
-
-[c1565a4597cc001](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/c1565a4597cc001) Tomas Bjerre *2018-08-28 13:22:14*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.77**
 
 
 [688830a3d79ede5](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/688830a3d79ede5) Tomas Bjerre *2018-08-28 13:22:58*
+
+**Fixing crash on slaves ##56**
+
+
+[c1565a4597cc001](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/c1565a4597cc001) Tomas Bjerre *2018-08-28 13:22:14*
 
 **[maven-release-plugin] prepare for next development iteration**
 
@@ -1115,20 +1056,17 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.76
-### GitHub #56 Credentials not found error
-
-**Configuring proxy on master #56**
-
-
-[aaeaa779f700e50](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/aaeaa779f700e50) Tomas Bjerre *2018-08-27 09:01:48*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.76**
 
 
 [406b4fa4f9fef84](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/406b4fa4f9fef84) Tomas Bjerre *2018-08-27 09:02:37*
+
+**Configuring proxy on master #56**
+
+
+[aaeaa779f700e50](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/aaeaa779f700e50) Tomas Bjerre *2018-08-27 09:01:48*
 
 **[maven-release-plugin] prepare for next development iteration**
 
@@ -1213,14 +1151,6 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.71
-### GitHub #33 No PR comments for Finbugs
-
-**NullAway #33**
-
-
-[7d5295cf45980fe](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/7d5295cf45980fe) Tomas Bjerre *2018-04-14 05:17:26*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.71**
@@ -1243,6 +1173,11 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 [e05c853098ca607](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/e05c853098ca607) Tomas Bjerre *2018-06-14 15:28:51*
 
+**NullAway #33**
+
+
+[7d5295cf45980fe](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/7d5295cf45980fe) Tomas Bjerre *2018-04-14 05:17:26*
+
 **[maven-release-plugin] prepare for next development iteration**
 
 
@@ -1250,7 +1185,17 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.70
-### GitHub #50 Combined credentials and item always being null
+### No issue
+
+**[maven-release-plugin] prepare release violation-comments-to-stash-1.70**
+
+
+[fabce8e3d0529e6](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/fabce8e3d0529e6) Tomas Bjerre *2018-02-27 18:25:06*
+
+**Doc**
+
+
+[495a8cc7b46cd5f](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/495a8cc7b46cd5f) Tomas Bjerre *2018-02-27 18:24:15*
 
 **Combined credentials and item always being null (#50)**
 
@@ -1274,27 +1219,11 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 [e1882073fc256f5](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/e1882073fc256f5) Joseph Petersen *2018-02-27 18:15:17*
 
-
-### GitHub #51 Update Jenkinsfile
-
 **Merge pull request #51 from casz/patch-2**
 
  * Update Jenkinsfile 
 
 [8aefbd3036e10b4](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/8aefbd3036e10b4) Tomas Bjerre *2018-02-24 18:20:48*
-
-
-### No issue
-
-**[maven-release-plugin] prepare release violation-comments-to-stash-1.70**
-
-
-[fabce8e3d0529e6](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/fabce8e3d0529e6) Tomas Bjerre *2018-02-27 18:25:06*
-
-**Doc**
-
-
-[495a8cc7b46cd5f](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/495a8cc7b46cd5f) Tomas Bjerre *2018-02-27 18:24:15*
 
 **Update Jenkinsfile**
 
@@ -1327,20 +1256,17 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.68
-### GitHub #47 Personal Access Tokens
-
-**Personal Access Tokens #47**
-
-
-[041d262a7fcdced](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/041d262a7fcdced) Tomas Bjerre *2018-02-10 09:14:31*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.68**
 
 
 [688445f25b8ca4b](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/688445f25b8ca4b) Tomas Bjerre *2018-02-10 09:17:27*
+
+**Personal Access Tokens #47**
+
+
+[041d262a7fcdced](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/041d262a7fcdced) Tomas Bjerre *2018-02-10 09:14:31*
 
 **[maven-release-plugin] prepare for next development iteration**
 
@@ -1349,20 +1275,17 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.67
-### GitHub #48 Plugin causes job hangs
-
-**Setting timeout to 30s #48**
-
-
-[3234f72e0379fb6](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/3234f72e0379fb6) Tomas Bjerre *2018-02-06 18:08:03*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.67**
 
 
 [2e73b3741032d80](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/2e73b3741032d80) Tomas Bjerre *2018-02-06 18:09:05*
+
+**Setting timeout to 30s #48**
+
+
+[3234f72e0379fb6](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/3234f72e0379fb6) Tomas Bjerre *2018-02-06 18:08:03*
 
 **[maven-release-plugin] prepare for next development iteration**
 
@@ -1395,33 +1318,6 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.65
-### GitHub #43 Give it a symbol and extension
-
-**Merge pull request #43 from casz/symbol**
-
- * Give it a symbol and extension 
-
-[35796716d4da7bb](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/35796716d4da7bb) Tomas Bjerre *2018-01-24 18:28:49*
-
-
-### GitHub #45 Prettify step generator and deprecate password
-
-**Merge pull request #45 from casz/prettifyStepGenerator**
-
- * Prettify step generator and deprecate password 
-
-[120ee1b46a57c87](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/120ee1b46a57c87) Tomas Bjerre *2018-01-27 17:37:57*
-
-
-### GitHub #46 Update Jenkinsfile
-
-**Merge pull request #46 from casz/patch-1**
-
- * Update Jenkinsfile 
-
-[07ff991cbe8a1e8](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/07ff991cbe8a1e8) Tomas Bjerre *2018-01-25 04:45:50*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.65**
@@ -1433,6 +1329,12 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 [5ccb8b505d87118](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/5ccb8b505d87118) Tomas Bjerre *2018-01-27 22:00:16*
+
+**Merge pull request #45 from casz/prettifyStepGenerator**
+
+ * Prettify step generator and deprecate password 
+
+[120ee1b46a57c87](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/120ee1b46a57c87) Tomas Bjerre *2018-01-27 17:37:57*
 
 **Formatting**
 
@@ -1475,10 +1377,22 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 [037e30e6268e71b](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/037e30e6268e71b) Joseph *2018-01-25 07:12:12*
 
+**Merge pull request #46 from casz/patch-1**
+
+ * Update Jenkinsfile 
+
+[07ff991cbe8a1e8](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/07ff991cbe8a1e8) Tomas Bjerre *2018-01-25 04:45:50*
+
 **Update Jenkinsfile**
 
 
 [d54f6eb2cfbe9aa](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/d54f6eb2cfbe9aa) Joseph Petersen *2018-01-24 21:33:31*
+
+**Merge pull request #43 from casz/symbol**
+
+ * Give it a symbol and extension 
+
+[35796716d4da7bb](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/35796716d4da7bb) Tomas Bjerre *2018-01-24 18:28:49*
 
 **Give it a symbol and extension**
 
@@ -1597,20 +1511,17 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.59
-### Jira JENKINS-48648 
-
-**Using UTF-8 in Bitbucket client JENKINS-48648**
-
-
-[e64417e9dc01233](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/e64417e9dc01233) Tomas Bjerre *2017-12-20 20:31:01*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.59**
 
 
 [9180faf1d290193](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/9180faf1d290193) Tomas Bjerre *2017-12-20 20:32:43*
+
+**Using UTF-8 in Bitbucket client JENKINS-48648**
+
+
+[e64417e9dc01233](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/e64417e9dc01233) Tomas Bjerre *2017-12-20 20:31:01*
 
 **[maven-release-plugin] prepare for next development iteration**
 
@@ -1700,7 +1611,12 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.54
-### GitHub #37 Individual comments and keeping previous comments
+### No issue
+
+**[maven-release-plugin] prepare release violation-comments-to-stash-1.54**
+
+
+[0d43ca0ce20a9a0](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/0d43ca0ce20a9a0) Tomas Bjerre *2017-09-02 17:34:47*
 
 **Keeping comments and adjusting checkstyle #37**
 
@@ -1710,14 +1626,6 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 [61d8abc9aa05c0f](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/61d8abc9aa05c0f) Tomas Bjerre *2017-09-02 17:33:45*
 
-
-### No issue
-
-**[maven-release-plugin] prepare release violation-comments-to-stash-1.54**
-
-
-[0d43ca0ce20a9a0](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/0d43ca0ce20a9a0) Tomas Bjerre *2017-09-02 17:34:47*
-
 **[maven-release-plugin] prepare for next development iteration**
 
 
@@ -1725,20 +1633,17 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.53
-### GitHub #36 java.lang.NullPointerException from violations-lib
-
-**Ignoring violation configs with null config #36**
-
-
-[0f4e03444485c59](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/0f4e03444485c59) Tomas Bjerre *2017-08-11 11:30:01*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.53**
 
 
 [06f338762a1f4cb](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/06f338762a1f4cb) Tomas Bjerre *2017-08-11 11:31:21*
+
+**Ignoring violation configs with null config #36**
+
+
+[0f4e03444485c59](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/0f4e03444485c59) Tomas Bjerre *2017-08-11 11:30:01*
 
 **doc**
 
@@ -1921,20 +1826,17 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.46
-### GitHub #15 File path on all comments in one message is absolute
-
-**Commenting with file name from server #15**
-
-
-[1f2901d8bbe75c9](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/1f2901d8bbe75c9) Tomas Bjerre *2017-02-19 21:33:11*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.46**
 
 
 [387e2cccd0899d4](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/387e2cccd0899d4) Tomas Bjerre *2017-02-19 21:33:58*
+
+**Commenting with file name from server #15**
+
+
+[1f2901d8bbe75c9](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/1f2901d8bbe75c9) Tomas Bjerre *2017-02-19 21:33:11*
 
 **doc**
 
@@ -2081,14 +1983,6 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.38
-### GitHub #30 Changelog missing from last few releases
-
-**Updating changelog #30**
-
-
-[d3fabd6d41680ef](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/d3fabd6d41680ef) Tomas Bjerre *2016-12-14 16:31:17*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.38**
@@ -2101,6 +1995,11 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 [d44df03bbd768ab](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/d44df03bbd768ab) Tomas Bjerre *2016-12-21 17:28:07*
 
+**Updating changelog #30**
+
+
+[d3fabd6d41680ef](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/d3fabd6d41680ef) Tomas Bjerre *2016-12-14 16:31:17*
+
 **[maven-release-plugin] prepare for next development iteration**
 
 
@@ -2108,20 +2007,17 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.37
-### GitHub #29 Error when enabling the commentOnlyChangedContent option
-
-**More details if response cannot be parsed #29**
-
-
-[40be4277acb46de](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/40be4277acb46de) Tomas Bjerre *2016-12-12 17:15:34*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.37**
 
 
 [85f522ad2189984](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/85f522ad2189984) Tomas Bjerre *2016-12-12 17:16:28*
+
+**More details if response cannot be parsed #29**
+
+
+[40be4277acb46de](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/40be4277acb46de) Tomas Bjerre *2016-12-12 17:15:34*
 
 **[maven-release-plugin] prepare for next development iteration**
 
@@ -2149,20 +2045,17 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.35
-### GitHub #27 Comment only violations that relate to a diff
-
-**Adding context lines field #27**
-
-
-[5f1805b5f22a0a3](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/5f1805b5f22a0a3) Tomas Bjerre *2016-11-01 20:18:20*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.35**
 
 
 [6666e8745316aba](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/6666e8745316aba) Tomas Bjerre *2016-11-01 20:19:37*
+
+**Adding context lines field #27**
+
+
+[5f1805b5f22a0a3](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/5f1805b5f22a0a3) Tomas Bjerre *2016-11-01 20:18:20*
 
 **[maven-release-plugin] prepare for next development iteration**
 
@@ -2171,20 +2064,17 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.34
-### GitHub #27 Comment only violations that relate to a diff
-
-**Enabling commenting only changed parts of files #27**
-
-
-[fcfe5cd5310e553](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/fcfe5cd5310e553) Tomas Bjerre *2016-11-01 18:30:33*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.34**
 
 
 [6e74457021602db](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/6e74457021602db) Tomas Bjerre *2016-11-01 18:31:54*
+
+**Enabling commenting only changed parts of files #27**
+
+
+[fcfe5cd5310e553](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/fcfe5cd5310e553) Tomas Bjerre *2016-11-01 18:30:33*
 
 **Optionally let only changed lines to be commented**
 
@@ -2361,14 +2251,6 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.25
-### GitHub #17 Plugin aborts if it fails to delete a message
-
-**Avoiding crash when unable to remove comment #17**
-
-
-[6b1112806fc3fce](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/6b1112806fc3fce) Tomas Bjerre *2016-08-19 05:09:28*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.25**
@@ -2406,6 +2288,11 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 [c750b4a53908222](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/c750b4a53908222) Tomas Bjerre *2016-08-19 15:23:29*
 
+**Avoiding crash when unable to remove comment #17**
+
+
+[6b1112806fc3fce](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/6b1112806fc3fce) Tomas Bjerre *2016-08-19 05:09:28*
+
 **[maven-release-plugin] prepare for next development iteration**
 
 
@@ -2413,20 +2300,17 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.22
-### GitHub #14 CredentialsId not working
-
-**Evaluating credentials on master #14**
-
-
-[50fb4a9190692c3](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/50fb4a9190692c3) Tomas Bjerre *2016-08-13 08:43:53*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.22**
 
 
 [cc44c481f41d4b8](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/cc44c481f41d4b8) Tomas Bjerre *2016-08-13 09:06:49*
+
+**Evaluating credentials on master #14**
+
+
+[50fb4a9190692c3](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/50fb4a9190692c3) Tomas Bjerre *2016-08-13 08:43:53*
 
 **doc**
 
@@ -2464,20 +2348,17 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.20
-### GitHub #13 Problem with Pipeline Snippet Generation
-
-**Correcting job DSL #13**
-
-
-[26df3123352a132](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/26df3123352a132) Tomas Bjerre *2016-08-10 17:17:00*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.20**
 
 
 [40c4acff1a63e6f](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/40c4acff1a63e6f) Tomas Bjerre *2016-08-10 17:19:42*
+
+**Correcting job DSL #13**
+
+
+[26df3123352a132](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/26df3123352a132) Tomas Bjerre *2016-08-10 17:17:00*
 
 **Cleaning up pom.xml**
 
@@ -2491,7 +2372,12 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.19
-### GitHub #13 Problem with Pipeline Snippet Generation
+### No issue
+
+**[maven-release-plugin] prepare release violation-comments-to-stash-1.19**
+
+
+[51bd50c2c2278aa](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/51bd50c2c2278aa) Tomas Bjerre *2016-08-09 17:59:47*
 
 **job-dsl-plugin compatible #13**
 
@@ -2501,14 +2387,6 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 [2ef1c84ac4b40e3](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/2ef1c84ac4b40e3) Tomas Bjerre *2016-08-09 17:58:19*
 
-
-### No issue
-
-**[maven-release-plugin] prepare release violation-comments-to-stash-1.19**
-
-
-[51bd50c2c2278aa](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/51bd50c2c2278aa) Tomas Bjerre *2016-08-09 17:59:47*
-
 **[maven-release-plugin] prepare for next development iteration**
 
 
@@ -2516,24 +2394,6 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.18
-### GitHub #10 Nothing seems to be happening, and no logging for debugging
-
-**Credentials #10 #11**
-
- * Also adding better logging. 
-
-[0b3f20a5ae650a4](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/0b3f20a5ae650a4) Tomas Bjerre *2016-08-02 18:09:25*
-
-
-### GitHub #11 Use Credentials
-
-**Credentials #10 #11**
-
- * Also adding better logging. 
-
-[0b3f20a5ae650a4](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/0b3f20a5ae650a4) Tomas Bjerre *2016-08-02 18:09:25*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.18**
@@ -2550,6 +2410,12 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 [91f3c5eebabc8fe](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/91f3c5eebabc8fe) Tomas Bjerre *2016-08-02 18:13:33*
+
+**Credentials #10 #11**
+
+ * Also adding better logging. 
+
+[0b3f20a5ae650a4](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/0b3f20a5ae650a4) Tomas Bjerre *2016-08-02 18:09:25*
 
 **doc**
 
@@ -2572,39 +2438,18 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.16
-### GitHub #5 Use Violation Comments Lib
-
-**Using Violation Comments to Bitbucket Server Lib #5 #6 #7**
-
- * This is a major change! As I dont have time for proper testing, I will simply release it &quot;as is&quot; &#x3D;) 
-
-[d7cc91692e328b8](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/d7cc91692e328b8) Tomas Bjerre *2016-07-29 20:01:41*
-
-
-### GitHub #6 [Help] java.io.IOException: Unable to serialize
-
-**Using Violation Comments to Bitbucket Server Lib #5 #6 #7**
-
- * This is a major change! As I dont have time for proper testing, I will simply release it &quot;as is&quot; &#x3D;) 
-
-[d7cc91692e328b8](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/d7cc91692e328b8) Tomas Bjerre *2016-07-29 20:01:41*
-
-
-### GitHub #7 Pipeline plugin compatibility
-
-**Using Violation Comments to Bitbucket Server Lib #5 #6 #7**
-
- * This is a major change! As I dont have time for proper testing, I will simply release it &quot;as is&quot; &#x3D;) 
-
-[d7cc91692e328b8](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/d7cc91692e328b8) Tomas Bjerre *2016-07-29 20:01:41*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.16**
 
 
 [9eac584a9b17ea7](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/9eac584a9b17ea7) Tomas Bjerre *2016-07-29 20:07:58*
+
+**Using Violation Comments to Bitbucket Server Lib #5 #6 #7**
+
+ * This is a major change! As I dont have time for proper testing, I will simply release it &quot;as is&quot; &#x3D;) 
+
+[d7cc91692e328b8](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/d7cc91692e328b8) Tomas Bjerre *2016-07-29 20:01:41*
 
 
 ## refs/tags/1.15
@@ -2640,15 +2485,6 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.14
-### GitHub #4 make remoting work
-
-**Merge pull request #4 from mihu/remoting**
-
- * make remoting work 
-
-[e8de3d39003ec91](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/e8de3d39003ec91) Tomas Bjerre *2016-04-23 16:42:45*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.14**
@@ -2665,6 +2501,12 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 [fd660e5a2611d6e](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/fd660e5a2611d6e) Tomas Bjerre *2016-04-23 16:46:43*
+
+**Merge pull request #4 from mihu/remoting**
+
+ * make remoting work 
+
+[e8de3d39003ec91](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/e8de3d39003ec91) Tomas Bjerre *2016-04-23 16:42:45*
 
 **make remoting work**
 
@@ -2765,20 +2607,17 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.9
-### GitHub #12 Comment commits
-
-**Adding header 'X-Atlassian-Token: no-check' to be compatible with Stash 4.0 #12**
-
-
-[36550adbc5ffe83](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/36550adbc5ffe83) Tomas Bjerre *2015-09-14 16:05:11*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.9**
 
 
 [72a72cf4ce3d7cd](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/72a72cf4ce3d7cd) Tomas Bjerre *2015-09-14 16:07:04*
+
+**Adding header 'X-Atlassian-Token: no-check' to be compatible with Stash 4.0 #12**
+
+
+[36550adbc5ffe83](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/36550adbc5ffe83) Tomas Bjerre *2015-09-14 16:05:11*
 
 **Adding htmllint checkstyle test**
 
@@ -2792,15 +2631,6 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.8
-### GitHub #3 Accept cookies sent from server
-
-**Merge pull request #3 from szpak/patch-1**
-
- * Accept cookies sent from server 
-
-[6ad4b93a4d3a5a2](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/6ad4b93a4d3a5a2) Tomas Bjerre *2015-07-01 20:57:04*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.8**
@@ -2812,6 +2642,12 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 [180db540dd510ec](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/180db540dd510ec) Tomas Bjerre *2015-07-01 21:03:38*
+
+**Merge pull request #3 from szpak/patch-1**
+
+ * Accept cookies sent from server 
+
+[6ad4b93a4d3a5a2](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/6ad4b93a4d3a5a2) Tomas Bjerre *2015-07-01 20:57:04*
 
 **Accept cookies sent from server**
 
@@ -2826,7 +2662,12 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.7
-### GitHub #1 Fix displaying stash user in build output
+### No issue
+
+**[maven-release-plugin] prepare release violation-comments-to-stash-1.7**
+
+
+[f28ac78c91ceef9](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/f28ac78c91ceef9) Tomas Bjerre *2015-06-23 19:59:07*
 
 **Merge pull request #2 from tomasbjerre/master**
 
@@ -2839,33 +2680,16 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 [c506992c461df21](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/c506992c461df21) Tomas Bjerre *2015-06-23 19:49:00*
 
+**Adding test cases after merge**
+
+
+[7b07ce13006da3f](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/7b07ce13006da3f) Tomas Bjerre *2015-06-22 14:27:23*
+
 **Merge pull request #1 from szpak/patch-1**
 
  * Fix displaying stash user in build output 
 
 [8ef2755b75f105a](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/8ef2755b75f105a) Tomas Bjerre *2015-06-22 14:15:55*
-
-
-### GitHub #2 Using Violations 0.8.0-alpha-1 #1
-
-**Merge pull request #2 from tomasbjerre/master**
-
- * Using Violations 0.8.0-alpha-1 #1 
-
-[191146a6591ef78](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/191146a6591ef78) Tomas Bjerre *2015-06-23 19:57:27*
-
-
-### No issue
-
-**[maven-release-plugin] prepare release violation-comments-to-stash-1.7**
-
-
-[f28ac78c91ceef9](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/f28ac78c91ceef9) Tomas Bjerre *2015-06-23 19:59:07*
-
-**Adding test cases after merge**
-
-
-[7b07ce13006da3f](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/7b07ce13006da3f) Tomas Bjerre *2015-06-22 14:27:23*
 
 **Fix displaying stash user in build output**
 
@@ -2884,30 +2708,18 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.6
-### GitHub #10 Nothing seems to be happening, and no logging for debugging
-
-**Handling Windows-style file paths and using password field in confg GUI #9 #10**
-
- * Replacing back-slashes (Windows style file paths) from reports with forward-slashes. So that they match file paths reported in Stash Rest API. 
-
-[7539e18f456c585](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/7539e18f456c585) Tomas Bjerre *2015-05-31 15:47:44*
-
-
-### GitHub #9 Using hudston.util.Secret to encrypt the password instead of storing plain text
-
-**Handling Windows-style file paths and using password field in confg GUI #9 #10**
-
- * Replacing back-slashes (Windows style file paths) from reports with forward-slashes. So that they match file paths reported in Stash Rest API. 
-
-[7539e18f456c585](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/7539e18f456c585) Tomas Bjerre *2015-05-31 15:47:44*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.6**
 
 
 [494d5da9cea6218](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/494d5da9cea6218) Tomas Bjerre *2015-05-31 15:54:31*
+
+**Handling Windows-style file paths and using password field in confg GUI #9 #10**
+
+ * Replacing back-slashes (Windows style file paths) from reports with forward-slashes. So that they match file paths reported in Stash Rest API. 
+
+[7539e18f456c585](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/7539e18f456c585) Tomas Bjerre *2015-05-31 15:47:44*
 
 **[maven-release-plugin] prepare for next development iteration**
 
@@ -3020,20 +2832,17 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 ## 1.1
-### GitHub #2 Using Violations 0.8.0-alpha-1 #1
-
-**Adding limit parameter to changes request in Stash Client #2**
-
-
-[34b1ba31b493b4f](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/34b1ba31b493b4f) Tomas Bjerre *2015-05-21 09:23:13*
-
-
 ### No issue
 
 **[maven-release-plugin] prepare release violation-comments-to-stash-1.1**
 
 
 [217754b7aac5e62](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/217754b7aac5e62) Tomas Bjerre *2015-05-21 09:46:34*
+
+**Adding limit parameter to changes request in Stash Client #2**
+
+
+[34b1ba31b493b4f](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/34b1ba31b493b4f) Tomas Bjerre *2015-05-21 09:23:13*
 
 **Build and doc updates**
 
@@ -3103,5 +2912,10 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 
 
 [deaa65ba9f7dbd7](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/deaa65ba9f7dbd7) Tomas Bjerre *2015-05-01 19:58:47*
+
+**Initial commit**
+
+
+[812f801724fd8e8](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/812f801724fd8e8) Tomas Bjerre *2015-05-01 18:07:36*
 
 
