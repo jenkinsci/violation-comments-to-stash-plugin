@@ -21,7 +21,7 @@
 	</properties>
 
 	<artifactId>violation-comments-to-stash</artifactId>
-	<version>1.130</version>
+	<version>1.131-SNAPSHOT</version>
 	<packaging>hpi</packaging>
 	<name>Jenkins Violation Comments to Bitbucket Server Plugin</name>
 	<url>https://github.com/jenkinsci/violation-comments-to-stash-plugin</url>
@@ -50,7 +50,7 @@
 		<connection>scm:git:git://github.com/jenkinsci/${project.artifactId}-plugin.git</connection>
 		<developerConnection>scm:git:git@github.com:jenkinsci/${project.artifactId}-plugin.git</developerConnection>
 		<url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
-		<tag>violation-comments-to-stash-1.130</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<repositories>
@@ -97,6 +97,7 @@
 							<gitHubIssuePattern>#([0-9]*)</gitHubIssuePattern>
 							<jiraIssuePattern>\bJENKINS-([0-9]+)\b</jiraIssuePattern>
 							<filePath>CHANGELOG.md</filePath>
+							<ignoreCommitsIfMessageMatches>^\[maven-release-plugin\].*|^\[Gradle Release Plugin\].*|^Merge.*|.*\[GRADLE SCRIPT\].*</ignoreCommitsIfMessageMatches>
 							<templateContent>
 <![CDATA[
 # Violation Comments to Bitbucket Server Plugin Changelog
