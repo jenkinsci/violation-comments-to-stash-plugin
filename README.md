@@ -38,6 +38,7 @@ A number of **parsers** have been implemented. Some **parsers** can parse output
 | [_Flake8_](http://flake8.readthedocs.org/en/latest/)                                  | `FLAKE8`             | 
 | [_FxCop_](https://en.wikipedia.org/wiki/FxCop)                                        | `FXCOP`              | 
 | [_GCC_](https://gcc.gnu.org/)                                                         | `CLANG`              | 
+| [_GHS_](https://www.ghs.com/)                                                         | `GHS`                | 
 | [_Gendarme_](http://www.mono-project.com/docs/tools+libraries/tools/gendarme/)        | `GENDARME`           | 
 | [_Generic reporter_]()                                                                | `GENERIC`            | Will create one single violation with all the content as message.
 | [_GoLint_](https://github.com/golang/lint)                                            | `GOLINT`             | 
@@ -75,7 +76,7 @@ A number of **parsers** have been implemented. Some **parsers** can parse output
 | [_PyLint_](https://www.pylint.org/)                                                   | `PYLINT`             | With `pylint --output-format=parseable`.
 | [_ReSharper_](https://www.jetbrains.com/resharper/)                                   | `RESHARPER`          | 
 | [_RubyCop_](http://rubocop.readthedocs.io/en/latest/formatters/)                      | `CLANG`              | With `rubycop -f clang file.rb`
-| [_SARIF_](https://github.com/oasis-tcs/sarif-spec)                                    | `SARIF`              | 
+| [_SARIF_](https://github.com/oasis-tcs/sarif-spec)                                    | `SARIF`              | v2.x. Microsoft Visual C# can generate it with `ErrorLog="BuildErrors.sarif,version=2"`.
 | [_SbtScalac_](http://www.scala-sbt.org/)                                              | `SBTSCALAC`          | 
 | [_Scalastyle_](http://www.scalastyle.org/)                                            | `CHECKSTYLE`         | 
 | [_Simian_](http://www.harukizaemon.com/simian/)                                       | `SIMIAN`             | 
@@ -90,7 +91,7 @@ A number of **parsers** have been implemented. Some **parsers** can parse output
 | [_YAMLLint_](https://yamllint.readthedocs.io/en/stable/index.html)                    | `YAMLLINT`           | With `-f parsable`
 | [_ZPTLint_](https://pypi.python.org/pypi/zptlint)                                     | `ZPTLINT`            |
 
-48 parsers and 74 reporters.
+49 parsers and 75 reporters.
 
 Missing a format? Open an issue [here](https://github.com/tomasbjerre/violations-lib/issues)!
 
