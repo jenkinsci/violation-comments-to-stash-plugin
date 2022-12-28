@@ -179,7 +179,7 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 		<dependency>
 			<groupId>org.jenkins-ci.plugins</groupId>
 			<artifactId>credentials</artifactId>
-			<version>2.1.4</version>
+			<version>2.6.1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>se.bjurr.violations</groupId>
