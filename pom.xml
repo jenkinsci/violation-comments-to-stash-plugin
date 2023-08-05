@@ -5,13 +5,13 @@
 	<parent>
 		<groupId>org.jenkins-ci.plugins</groupId>
 		<artifactId>plugin</artifactId>
-		<version>4.53</version>
+		<version>4.71</version>
 		<relativePath />
 	</parent>
 
 	<properties>
 		<java.level>11</java.level>
-		<jenkins.version>2.361.4</jenkins.version>
+		<jenkins.version>2.375.4</jenkins.version>
 		<findbugs.failOnError>false</findbugs.failOnError>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
 		<violation-comments-lib>1.101.4</violation-comments-lib>
@@ -52,6 +52,17 @@
 		<url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
 		<tag>HEAD</tag>
 	</scm>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>io.jenkins.tools.bom</groupId>
+				<artifactId>bom-2.375.x</artifactId>
+				<version>2198.v39c76fc308ca</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<repositories>
 		<repository>
@@ -179,7 +190,6 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 		<dependency>
 			<groupId>org.jenkins-ci.plugins</groupId>
 			<artifactId>credentials</artifactId>
-			<version>2.1.4</version>
 		</dependency>
 		<dependency>
 			<groupId>se.bjurr.violations</groupId>
@@ -194,12 +204,10 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
 		<dependency>
 			<groupId>org.jenkins-ci.plugins</groupId>
 			<artifactId>structs</artifactId>
-			<version>1.10</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jenkins-ci.plugins</groupId>
 			<artifactId>plain-credentials</artifactId>
-			<version>1.2</version>
 		</dependency>
 
 		<!-- test // -->
