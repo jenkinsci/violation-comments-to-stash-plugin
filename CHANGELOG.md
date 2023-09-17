@@ -2,6 +2,34 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.131
+### No issue
+
+**fix: allow MSBuild in Program Files (x86) and support NU1701**
+
+
+[e06fb777cb21c95](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/e06fb777cb21c95) Tomas Bjerre *2023-09-17 07:07:17*
+
+**chore(CODEOWNERS): add plugin development team (#82)**
+
+ * Use this link to re-run the recipe: https://app.moderne.io/recipes/org.openrewrite.jenkins.github.AddTeamToCodeowners 
+ * Co-authored-by: Moderne &lt;team@moderne.io&gt; 
+
+[5031c1b7333fe80](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/5031c1b7333fe80) Steve Hill *2023-08-23 04:47:22*
+
+**feat: Modernize to Jenkins 2.375.4 (#80)**
+
+ * Use this link to re-run the recipe: https://app.moderne.io/recipes/org.openrewrite.jenkins.ModernizePlugin 
+ * Co-authored-by: Moderne &lt;team@moderne.io&gt; 
+
+[5073eb3f7ab152c](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/5073eb3f7ab152c) Steve Hill *2023-08-05 06:49:55*
+
+**chore: Build on Java 11 and 17 (#81)**
+
+
+[788b9bc7b3c0ad2](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/788b9bc7b3c0ad2) Steve Hill *2023-08-05 06:12:44*
+
+
 ## 1.130
 ### No issue
 
@@ -1270,6 +1298,10 @@ Changelog of Violation Comments to Bitbucket Server Plugin.
  * Also adding better logging. 
 
 [0b3f20a5ae650a4](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/0b3f20a5ae650a4) Tomas Bjerre *2016-08-02 18:09:25*
+
+
+## 1.17
+### No issue
 
 **doc**
 
