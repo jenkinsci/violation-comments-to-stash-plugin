@@ -15,9 +15,9 @@
 		<findbugs.failOnError>false</findbugs.failOnError>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
 		<violation-comments-lib>1.101.4</violation-comments-lib>
-		<violations-lib>1.155.3</violations-lib>
-		<violations-maven>1.50.4</violations-maven>
-		<changelog>1.95.4</changelog>
+		<violations-lib>1.156.6</violations-lib>
+		<violations-maven>1.50.8</violations-maven>
+		<changelog>1.99.0</changelog>
 	</properties>
 
 	<artifactId>violation-comments-to-stash</artifactId>
