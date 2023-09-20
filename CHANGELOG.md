@@ -2,6 +2,17 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.132
+### No issue
+
+**feat: rebaseline Jenkins to 2.387.3 (#83)**
+
+ * Use this link to re-run the recipe: https://app.moderne.io/recipes/org.openrewrite.jenkins.ModernizePlugin 
+ * Co-authored-by: Moderne &lt;team@moderne.io&gt; 
+
+[4341d193ff38d9d](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/4341d193ff38d9d) Steve Hill *2023-09-20 18:49:01*
+
+
 ## 1.131
 ### No issue
 

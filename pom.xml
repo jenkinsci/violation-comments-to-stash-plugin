@@ -21,7 +21,7 @@
 	</properties>
 
 	<artifactId>violation-comments-to-stash</artifactId>
-	<version>1.132</version>
+	<version>1.133-SNAPSHOT</version>
 	<packaging>hpi</packaging>
 	<name>Jenkins Violation Comments to Bitbucket Server Plugin</name>
 	<url>https://github.com/jenkinsci/violation-comments-to-stash-plugin</url>
