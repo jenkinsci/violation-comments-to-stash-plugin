@@ -2,8 +2,13 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
-## Unreleased
+## 1.133
 ### No issue
+
+**feat: coverity parser**
+
+
+[7f0d36bd347735b](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/7f0d36bd347735b) Tomas Bjerre *2024-03-24 17:49:57*
 
 **chore: Modernize to Jenkins 2.401.3 (#84)**
 
