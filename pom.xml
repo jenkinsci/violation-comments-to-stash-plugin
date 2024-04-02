@@ -15,7 +15,7 @@
 		<findbugs.failOnError>false</findbugs.failOnError>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
 		<violation-comments-lib>2.0.0</violation-comments-lib>
-		<violations-lib>1.157.0</violations-lib>
+		<violations-lib>1.157.1</violations-lib>
 		<violations-maven>2.1.0</violations-maven>
 		<changelog>2.1.0</changelog>
 	</properties>
