@@ -2,6 +2,15 @@
 
 Changelog of Violation Comments to Bitbucket Server Plugin.
 
+## 1.134
+### No issue
+
+**fix: avoid repeated message in the Coverity parser**
+
+
+[b832898861d4af4](https://github.com/jenkinsci/violation-comments-to-stash-plugin/commit/b832898861d4af4) Tomas Bjerre *2024-04-02 15:21:41*
+
+
 ## 1.133
 ### No issue
 
