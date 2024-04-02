@@ -21,7 +21,7 @@
 	</properties>
 
 	<artifactId>violation-comments-to-stash</artifactId>
-	<version>1.134-SNAPSHOT</version>
+	<version>1.134</version>
 	<packaging>hpi</packaging>
 	<name>Jenkins Violation Comments to Bitbucket Server Plugin</name>
 	<url>https://github.com/jenkinsci/violation-comments-to-stash-plugin</url>
@@ -50,7 +50,7 @@
 		<connection>scm:git:git://github.com/jenkinsci/${project.artifactId}-plugin.git</connection>
 		<developerConnection>scm:git:git@github.com:jenkinsci/${project.artifactId}-plugin.git</developerConnection>
 		<url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
-		<tag>violation-comments-to-stash-1.132</tag>
+		<tag>violation-comments-to-stash-1.134</tag>
 	</scm>
 	<dependencyManagement>
 		<dependencies>
