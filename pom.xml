@@ -11,7 +11,9 @@
 
 	<properties>
 		<java.level>11</java.level>
-		<jenkins.version>2.414.3</jenkins.version>
+		<!-- https://www.jenkins.io/doc/developer/plugin-development/choosing-jenkins-baseline/ -->
+		<jenkins.baseline>2.414</jenkins.baseline>
+		<jenkins.version>${jenkins.baseline}.3</jenkins.version>
 		<findbugs.failOnError>false</findbugs.failOnError>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
 		<violation-comments-lib>2.0.0</violation-comments-lib>
@@ -56,7 +58,7 @@
 		<dependencies>
 			<dependency>
 				<groupId>io.jenkins.tools.bom</groupId>
-				<artifactId>bom-2.414.x</artifactId>
+				<artifactId>bom-${jenkins.baseline}.x</artifactId>
 				<version>2884.vc36b_64ce114a_</version>
 				<type>pom</type>
 				<scope>import</scope>
