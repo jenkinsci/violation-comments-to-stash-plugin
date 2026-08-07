@@ -4,13 +4,13 @@ import static org.jenkinsci.plugins.jvctb.config.CredentialsHelper.migrateCreden
 
 import com.google.common.base.Optional;
 import hudson.Extension;
+import hudson.Util;
 import hudson.model.Item;
 import hudson.util.FormValidation;
 import hudson.util.ListBoxModel;
 import java.io.Serializable;
 import jenkins.model.GlobalConfiguration;
 import net.sf.json.JSONObject;
-import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.plugins.jvctb.config.CredentialsHelper;
 import org.kohsuke.accmod.Restricted;
 import org.kohsuke.accmod.restrictions.NoExternalUse;
@@ -129,14 +129,14 @@ public class ViolationsToBitbucketServerGlobalConfiguration extends GlobalConfig
   }
 
   private Object readResolve() {
-    if (StringUtils.isBlank(credentialsId)) {
+    if (Util.fixEmptyAndTrim(credentialsId) == null) {
       if (personalAccessTokenId != null) {
         credentialsId = personalAccessTokenId;
       } else if (usernamePasswordCredentialsId != null) {
         credentialsId = usernamePasswordCredentialsId;
       }
     }
-    if (StringUtils.isBlank(credentialsId) && username != null && password != null) {
+    if (Util.fixEmptyAndTrim(credentialsId) == null && username != null && password != null) {
       credentialsId = migrateCredentials(username, password);
     }
     return this;

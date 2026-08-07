@@ -15,7 +15,6 @@ import hudson.util.ListBoxModel;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.plugins.jvctb.ViolationsToBitbucketServerGlobalConfiguration;
 import org.kohsuke.accmod.Restricted;
 import org.kohsuke.accmod.restrictions.NoExternalUse;
@@ -99,14 +98,16 @@ public class ViolationsToBitbucketServerConfig
   }
 
   private Object readResolve() {
-    if (StringUtils.isBlank(this.credentialsId)) {
+    if (Util.fixEmptyAndTrim(this.credentialsId) == null) {
       if (this.personalAccessTokenId != null) {
         this.credentialsId = this.personalAccessTokenId;
       } else if (this.usernamePasswordCredentialsId != null) {
         this.credentialsId = this.usernamePasswordCredentialsId;
       }
     }
-    if (StringUtils.isBlank(this.credentialsId) && this.username != null && this.password != null) {
+    if (Util.fixEmptyAndTrim(this.credentialsId) == null
+        && this.username != null
+        && this.password != null) {
       this.credentialsId = migrateCredentials(this.username, this.password);
     }
     return this;

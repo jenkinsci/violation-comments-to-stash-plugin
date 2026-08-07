@@ -16,6 +16,7 @@ import com.cloudbees.plugins.credentials.domains.URIRequirementBuilder;
 import com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl;
 import com.google.common.base.Optional;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import hudson.Util;
 import hudson.model.Item;
 import hudson.model.Queue;
 import hudson.model.queue.Tasks;
@@ -24,8 +25,8 @@ import hudson.util.FormValidation;
 import hudson.util.ListBoxModel;
 import hudson.util.Secret;
 import java.util.List;
+import java.util.Objects;
 import jenkins.model.Jenkins;
-import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.plugins.plaincredentials.StringCredentials;
 
 /* Read more about credentials api here: https://github.com/jenkinsci/credentials-plugin/blob/master/docs/consumer.adoc */
@@ -111,13 +112,13 @@ public class CredentialsHelper {
                 domainRequirement),
             CredentialsMatchers.withUsername(username));
     for (final StandardUsernamePasswordCredentials cred : credentials) {
-      if (StringUtils.equals(password, Secret.toString(cred.getPassword()))) {
+      if (Objects.equals(password, Secret.toString(cred.getPassword()))) {
         // If some credentials have the same username/password, use those.
         credentialsId = cred.getId();
         break;
       }
     }
-    if (StringUtils.isBlank(credentialsId)) {
+    if (Util.fixEmptyAndTrim(credentialsId) == null) {
       // If we couldn't find any existing credentials,
       // create new credentials with the principal and secret and use it.
       final StandardUsernamePasswordCredentials newCredentials =
@@ -130,7 +131,7 @@ public class CredentialsHelper {
       SystemCredentialsProvider.getInstance().getCredentials().add(newCredentials);
       credentialsId = newCredentials.getId();
     }
-    if (StringUtils.isNotEmpty(credentialsId)) {
+    if (Util.fixEmpty(credentialsId) != null) {
       return credentialsId;
     } else {
       return null;
