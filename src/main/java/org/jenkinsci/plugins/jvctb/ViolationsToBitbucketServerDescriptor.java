@@ -4,11 +4,11 @@ import static org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConf
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Extension;
+import hudson.Util;
 import hudson.model.AbstractProject;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Publisher;
 import net.sf.json.JSONObject;
-import org.apache.commons.lang.StringUtils;
 import org.jenkinsci.Symbol;
 import org.jenkinsci.plugins.jvctb.config.ViolationsToBitbucketServerConfig;
 import org.kohsuke.stapler.StaplerRequest;
@@ -49,7 +49,7 @@ public final class ViolationsToBitbucketServerDescriptor extends BuildStepDescri
     if (formData.has("config")) {
       final JSONObject config = formData.getJSONObject("config");
       final String minSeverity = config.getString(FIELD_MINSEVERITY);
-      if (StringUtils.isBlank(minSeverity)) {
+      if (Util.fixEmptyAndTrim(minSeverity) == null) {
         config.remove(FIELD_MINSEVERITY);
       }
     }
